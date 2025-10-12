@@ -1,0 +1,20 @@
+{
+  "name": "Collections Section",
+  "description": "قسم المجموعات والتصنيفات",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": "المجموعات المعروضة"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "المجموعات"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "#"
+    }
+  }
+} 

@@ -1,0 +1,11 @@
+{
+  "layout": "layout",
+  "title": "الصفحة الرئيسية",
+  "widgets": [
+    {
+      "name": "product-details",
+      "widget": "product-details",
+      "settings": {}
+    }
+  ]
+}

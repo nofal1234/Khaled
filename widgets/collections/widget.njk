@@ -1,0 +1,104 @@
+<main class="transition-all duration-300" :class="scrolled ? 'pt-24' : 'pt-36'">
+    <div class="container py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8 font-cairo">اقسام المتجر</h1>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for collection in context.collections %}
+            <div
+                class="bg-white rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 overflow-hidden transition-all duration-300 group transform hover:-translate-y-1">
+                <a href="collection/{{ collection.slug }}" class="block relative">
+                    <div class="w-full aspect-square p-3 bg-white">
+                        {% if collection.image and collection.image.fileUrl %}
+                        <img src="{{ collection.image.fileUrl }}" alt="{{ collection.title }}"
+                            class="w-full h-full object-contain">
+                        {% else %}
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <span class="text-gray-500 text-sm">لا توجد صورة</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </a>
+                <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base font-cairo leading-tight min-h-[3rem] flex items-center justify-center">
+                    <a href="collection/{{ collection.slug }}" class="hover:text-gray-700 transition-colors duration-200">{{ collection.title }}</a>
+                </h3>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- قائمة المنتجات الإضافية (مخفية افتراضياً) -->
+        <div class="mt-12" x-data="{ showMore: false }" @show-more-products.window="showMore = !showMore">
+            <div x-show="showMore" x-transition class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center font-cairo">تصنيفات إضافية</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- الإلكترونيات -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">الإلكترونيات</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الهواتف الذكية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الحواسيب المحمولة</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الأجهزة اللوحية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الساعات الذكية</div>
+                        </div>
+                    </div>
+
+                    <!-- الملابس -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">الملابس</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">ملابس الرجال</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer.transition-colors duration-200">ملابس النساء</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">ملابس الأطفال</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الأحذية</div>
+                        </div>
+                    </div>
+
+                    <!-- المنزل والحديقة -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">المنزل والحديقة</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الأثاث</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">الإضاءة</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">الديكورات</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">أدوات المطبخ</div>
+                        </div>
+                    </div>
+
+                    <!-- الرياضة -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">الرياضة</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">ملابس رياضية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">أدوات رياضية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">معدات اللياقة</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600.cursor-pointer transition-colors duration-200">أحذية رياضية</div>
+                        </div>
+                    </div>
+
+                    <!-- الجمال والعناية -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">الجمال والعناية</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">مستحضرات التجميل</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">العناية بالبشرة</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">العناية بالشعر</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">العطور</div>
+                        </div>
+                    </div>
+
+                    <!-- الكتب والتعليم -->
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-200 pb-2">الكتب والتعليم</h3>
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الكتب العربية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">الكتب الإنجليزية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200">أدوات مكتبية</div>
+                            <div class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer transition-colors.duration-200">ألعاب تعليمية</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

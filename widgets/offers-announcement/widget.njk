@@ -1,0 +1,28 @@
+{% if widget.data.show_top_bar | default(true) %}
+<!-- Top Bar - Hidden on mobile -->
+<div class="bg-black bg-opacity-80 text-white py-2 hidden md:block absolute top-0 left-0 w-full z-40">
+  <div class="container mx-auto px-4 flex items-center justify-between text-sm">
+    <div class="flex items-center gap-2 cursor-pointer hover:text-mainColor transition">
+      <i class="ph ph-caret-down"></i>
+      <span class="text-xl">{{ widget.data.location | default('Cairo') }}</span>
+    </div>
+
+    <div class="flex items-center gap-10">
+      <button class="hover:text-mainColor transition" onclick="previousBrand()">
+        <i class="ph ph-caret-right px-6"></i>
+      </button>
+      <span class="text-xl" style="direction: ltr">{{ widget.data.brands_text | default('1,800+ brands') }}</span>
+      <button class="hover:text-mainColor transition" onclick="nextBrand()">
+        <i class="ph ph-caret-left px-6"></i>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="cursor-pointer hover:text-mainColor text-xl transition" onclick="changeLanguage('en')">{{ widget.data.english_text | default('English') }}</span>
+      <span>|</span>
+      <span class="cursor-pointer hover:text-mainColor text-xl transition" onclick="changeLanguage('ar')">{{ widget.data.arabic_text | default('العربية') }}</span>
+    </div>
+  </div>
+</div>
+{% endif %}
+

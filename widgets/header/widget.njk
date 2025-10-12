@@ -1,0 +1,98 @@
+ <!-- MAIN HEADER -->
+ <div class="bg-transparent absolute top-12 left-0 w-full z-50 md:top-12">
+    <div class="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+              <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-12 md:h-20 w-auto" />
+      </div>
+
+      <!-- Desktop Search & Icons -->
+      <div class="hidden lg:flex items-center gap-6 flex-1 max-w-5xl px-8">
+        <div class="relative flex-1">
+            <input
+              type="text"
+              name="search"
+              placeholder="ابحث عن المنتج..."
+              class="text-white w-full py-3 px-6 pr-12 rounded-full border border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
+            />
+          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white">
+            <i class="ph ph-magnifying-glass text-xl"></i>
+          </button>
+        </div>
+
+        <button class="text-white transition" title="المفضلة">
+          <i class="ph ph-heart text-2xl"></i>
+        </button>
+
+        <a href="/cart" class="relative text-white transition" title="السلة">
+          <i class="ph-light ph-shopping-cart text-2xl"></i>
+        </a>
+
+        <button class="text-white transition" title="الحساب">
+          <i class="ph ph-user text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile: show small inline search input  -->
+      <div class="flex lg:hidden items-center gap-3">
+        <div class="flex-1">
+          <input
+            type="text"
+            name="mobile-search"
+            placeholder="ابحث..."
+            class="w-full py-2 px-3 rounded-full border border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-mainColor"
+          />
+        </div>
+
+        <a href="/cart" class="relative text-white transition">
+          <i class="ph ph-shopping-bag text-xl"></i>
+        </a>
+
+        <button @click="toggleMobileMenu" class="text-white transition">
+          <i class="ph ph-list text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      v-if="showMobileMenu"
+      @click="toggleMobileMenu"
+      class=" inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+    ></div>
+
+    <!-- Mobile Menu -->
+    <div
+      class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 lg:hidden"
+      :class="{ 'active': showMobileMenu }"
+    >
+      <div class="p-4">
+        <button @click="toggleMobileMenu" class="mb-6 text-gray-600">
+          <i class="ph ph-x text-2xl"></i>
+        </button>
+
+        <nav class="space-y-4">
+          <div class="pt-4 border-t">
+            <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition">
+              <i class="ph ph-user"></i>
+              <span>الحساب</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4">
+              <i class="ph ph-heart"></i>
+              <span>المفضلة</span>
+            </a>
+            <a href="/cart" class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4">
+              <i class="ph ph-shopping-cart"></i>
+              <span>السلة</span>
+            </a>
+          </div>
+          <div class="pt-4 border-t">
+            <button class="w-full text-right text-gray-700 hover:text-mainColor transition">
+              English
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

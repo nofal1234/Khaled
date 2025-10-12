@@ -1,0 +1,11 @@
+{
+  "name": "Hero Banner",
+  "description": "قسم البانر الرئيسي الذي يحتوي على عنوان وصورة وزر",
+  "settings": {},
+  "blocks": {
+    "products": {
+      "name": "products",
+      "settings": {}
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+    "name": "Footer",
+    "settings": {
+        "company_description": {
+          "type": "textarea",
+          "label": "وصف الشركة",
+          "default": "نحن شركة متخصصة في [مجال الشركة]، نقدم لك أفضل المنتجات والخدمات بجودة عالية."
+        },
+        "footer_menu": {
+          "type": "menu",
+          "label": "القائمة السفلية",
+          "default": "header"
+        },
+        "contact_phone": {
+          "type": "string",
+          "label": "رقم الهاتف",
+          "default": "01093106133"
+        },
+        "contact_location": {
+          "type": "string",
+          "label": "العنوان",
+          "default": "القاهرة، مصر"
+        },
+        "contact_email": {
+          "type": "string",
+          "label": "البريد الإلكتروني",
+          "default": "info@minikid.com"
+        },
+        "policy_links": {
+          "type": "array",
+          "label": "روابط السياسات",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "label": "عنوان الرابط"
+              },
+              "url": {
+                "type": "string",
+                "label": "رابط الرابط"
+              }
+            }
+          },
+          "default": [
+            {
+              "title": "سياسة الخصوصية",
+              "url": "#"
+            },
+            {
+              "title": "سياسة الاسترجاع",
+              "url": "#"
+            },
+            {
+              "title": "سياسة الشحن",
+              "url": "#"
+            },
+            {
+              "title": "شروط الاستخدام",
+              "url": "#"
+            }
+          ]
+        },
+        "support_links": {
+          "type": "array",
+          "label": "روابط الدعم",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "label": "عنوان الرابط"
+              },
+              "url": {
+                "type": "string",
+                "label": "رابط الرابط"
+              }
+            }
+          },
+          "default": [
+            {
+              "title": "الأسئلة الشائعة",
+              "url": "#"
+            },
+            {
+              "title": "حسابي",
+              "url": "#"
+            },
+            {
+              "title": "تتبع طلبي",
+              "url": "#"
+            },
+            {
+              "title": "خدمة العملاء",
+              "url": "#"
+            },
+            {
+              "title": "الدعم الفني",
+              "url": "#"
+            }
+          ]
+        },
+        "facebook_link": {
+          "type": "string",
+          "label": "رابط فيسبوك",
+          "default": "#"
+        },
+        "x_link": {
+          "type": "string",
+          "label": "رابط X (تويتر سابقًا)",
+          "default": "#"
+        },
+        "instagram_link": {
+          "type": "string",
+          "label": "رابط انستجرام",
+          "default": "#"
+        },
+        "p_link": {
+          "type": "string",
+          "label": "رابط P",
+          "default": "#"
+        },
+        "powered_text": {
+          "type": "string",
+          "label": "نص المشغل",
+          "default": "مشغل بواسطة قمره"
+        },
+        "powered_logo": {
+          "type": "image",
+          "label": "لوجو المشغل",
+          "default": "/assets/logo/qumra.svg"
+        }
+      }
+      
+      
+}

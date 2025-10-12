@@ -1,0 +1,25 @@
+{
+  "blocks": {
+    "header": {
+      "cart": "Panier"
+    },
+    "appBanner": {
+      "download_now": "télécharger maintenant"
+    }
+  },
+  "pages": {
+    "cart": {
+      "cart_options": "Options du panier"
+    },
+    "order": {
+      "can_edit_or_delete_your_review_within": "Vous pouvez modifier ou supprimer votre avis dans",
+      "edit_period_ended": "La période pour modifier l'avis est terminée",
+      "delete_period_ended": "La période pour supprimer l'avis est terminée",
+      "days_since_added": "jours depuis son ajout"
+    }
+  },
+  "common": {
+    "bank_offer_sub_title_multiple": "Payez vos achats avec l'une des cartes bancaires suivantes et obtenez la réduction spécifiée",
+    "bank_offer_sub_title_single": "Payez vos achats avec la carte bancaire :bank_name et obtenez une réduction"
+  }
+}

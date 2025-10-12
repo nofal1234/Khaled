@@ -1,0 +1,109 @@
+{
+  "name": "قسم البانر",
+  "description": "بانر دعائي مع خلفية وصورة ونص",
+  "settings": {
+    "banner_image": {
+      "type": "image_picker",
+      "label": "صورة البانر",
+      "description": "الصورة الخلفية للبانر"
+    },
+    "title": {
+      "type": "string",
+      "label": "العنوان الرئيسي",
+      "default": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة",
+      "description": "العنوان الرئيسي للبانر"
+    },
+    "subtitle": {
+      "type": "string",
+      "label": "العنوان الفرعي",
+      "default": "غيّر مظهرك هذا الموسم",
+      "description": "العنوان الفرعي للبانر"
+    },
+    "button_text": {
+      "type": "string",
+      "label": "نص الزر",
+      "default": "اطلب الان",
+      "description": "النص الذي يظهر على الزر"
+    },
+    "button_link": {
+      "type": "string",
+      "label": "رابط الزر",
+      "default": "#",
+      "description": "الرابط الذي ينتقل إليه عند الضغط على الزر"
+    },
+    "background_color": {
+      "type": "color",
+      "label": "لون الخلفية",
+      "default": "#000000",
+      "description": "لون الخلفية للبانر"
+    },
+    "text_color": {
+      "type": "color",
+      "label": "لون النص",
+      "default": "#ffffff",
+      "description": "لون النص في البانر"
+    },
+    "button_color": {
+      "type": "color",
+      "label": "لون الزر",
+      "default": "#ffffff",
+      "description": "لون النص في الزر"
+    },
+    "button_border_color": {
+      "type": "color",
+      "label": "لون حدود الزر",
+      "default": "#ffffff",
+      "description": "لون حدود الزر"
+    },
+    "padding_y": {
+      "type": "select",
+      "label": "المسافة العمودية",
+      "default": "py-10",
+      "options": [
+        { "value": "py-6", "label": "صغير" },
+        { "value": "py-8", "label": "متوسط" },
+        { "value": "py-10", "label": "كبير" },
+        { "value": "py-12", "label": "كبير جداً" },
+        { "value": "py-16", "label": "ضخم" }
+      ],
+      "description": "المسافة العمودية للبانر"
+    },
+    "text_alignment": {
+      "type": "select",
+      "label": "محاذاة النص",
+      "default": "text-right",
+      "options": [
+        { "value": "text-right", "label": "يمين" },
+        { "value": "text-center", "label": "وسط" },
+        { "value": "text-left", "label": "يسار" }
+      ],
+      "description": "محاذاة النص في البانر"
+    },
+    "show_button": {
+      "type": "checkbox",
+      "label": "إظهار الزر",
+      "default": true,
+      "description": "إظهار أو إخفاء الزر"
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "🎯 بانر دعائي",
+      "settings": {
+        "banner_image": "banner.png",
+        "title": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة",
+        "subtitle": "غيّر مظهرك هذا الموسم",
+        "button_text": "اطلب الان",
+        "button_link": "#",
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "button_color": "#ffffff",
+        "button_border_color": "#ffffff",
+        "padding_y": "py-10",
+        "text_alignment": "text-right",
+        "show_button": true
+      }
+    }
+  ]
+}

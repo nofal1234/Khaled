@@ -1,0 +1,22 @@
+{
+  "name": "Products section",
+  "description": "قسم المنتجات",
+  "settings": {
+    "products": {
+      "type": "products",
+      "label": "العنوان",
+      "default": "latest"
+    },
+    "view_all_text": {
+      "type": "string",
+      "label": "نص عرض الكل",
+      "default": "عرض الكل"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "#"
+    }
+  }
+}
+

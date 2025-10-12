@@ -1,0 +1,130 @@
+{
+  "name": "رأس الصفحة",
+  "settings": {
+    "logo": {
+      "type": "image_picker",
+      "label": "الشعار",
+      "description": "قم بتحميل شعار الموقع"
+    },
+    "search_placeholder": {
+      "type": "string",
+      "label": "نص البحث",
+      "default": "ابحث عن المنتج...",
+      "description": "النص الذي يظهر في مربع البحث"
+    },
+    "mobile_search_placeholder": {
+      "type": "string",
+      "label": "نص البحث في الموبايل",
+      "default": "ابحث...",
+      "description": "النص المختصر الذي يظهر في مربع البحث في الموبايل"
+    },
+    "show_wishlist": {
+      "type": "checkbox",
+      "label": "إظهار المفضلة",
+      "default": true,
+      "description": "إظهار أو إخفاء أيقونة المفضلة"
+    },
+    "show_cart": {
+      "type": "checkbox",
+      "label": "إظهار السلة",
+      "default": true,
+      "description": "إظهار أو إخفاء أيقونة السلة"
+    },
+    "show_user": {
+      "type": "checkbox",
+      "label": "إظهار الحساب",
+      "default": true,
+      "description": "إظهار أو إخفاء أيقونة الحساب"
+    },
+    "wishlist_tooltip": {
+      "type": "string",
+      "label": "نص المفضلة",
+      "default": "المفضلة",
+      "description": "النص الذي يظهر عند التمرير على أيقونة المفضلة"
+    },
+    "cart_tooltip": {
+      "type": "string",
+      "label": "نص السلة",
+      "default": "السلة",
+      "description": "النص الذي يظهر عند التمرير على أيقونة السلة"
+    },
+    "user_tooltip": {
+      "type": "string",
+      "label": "نص الحساب",
+      "default": "الحساب",
+      "description": "النص الذي يظهر عند التمرير على أيقونة الحساب"
+    },
+    "mobile_menu_text": {
+      "type": "string",
+      "label": "نص القائمة في الموبايل",
+      "default": "الحساب",
+      "description": "النص الذي يظهر في القائمة الجانبية للموبايل"
+    },
+    "language_button_text": {
+      "type": "string",
+      "label": "نص زر اللغة",
+      "default": "English",
+      "description": "النص الذي يظهر على زر تغيير اللغة"
+    },
+    "background_color": {
+      "type": "color",
+      "label": "لون الخلفية",
+      "default": "transparent",
+      "description": "لون خلفية الهيدر"
+    },
+    "logo_height": {
+      "type": "select",
+      "label": "ارتفاع الشعار",
+      "options": [
+        {
+          "value": "h-8",
+          "label": "صغير (32px)"
+        },
+        {
+          "value": "h-10",
+          "label": "متوسط (40px)"
+        },
+        {
+          "value": "h-12",
+          "label": "كبير (48px)"
+        },
+        {
+          "value": "h-16",
+          "label": "أكبر (64px)"
+        },
+        {
+          "value": "h-20",
+          "label": "أكبر بكثير (80px)"
+        }
+      ],
+      "default": "h-12",
+      "description": "اختر ارتفاع الشعار المناسب"
+    },
+    "search_style": {
+      "type": "select",
+      "label": "نمط البحث",
+      "options": [
+        {
+          "value": "rounded-full",
+          "label": "مدور"
+        },
+        {
+          "value": "rounded-lg",
+          "label": "مستطيل بزوايا مدورة"
+        },
+        {
+          "value": "rounded-none",
+          "label": "مستطيل"
+        }
+      ],
+      "default": "rounded-full",
+      "description": "اختر نمط مربع البحث"
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "⭐ رأس الصفحة الجديد"
+    }
+  ]
+}

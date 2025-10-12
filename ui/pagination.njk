@@ -1,0 +1,43 @@
+{% set current = context.pagination.currentPage|default(1) %}
+{% set total = context.pagination.totalPages|default(1) %}
+
+<div dir="rtl" class="py-8 flex justify-center">
+  <nav class="inline-flex items-center gap-6 md:gap-8 
+              rounded-full border-2 border-gray-200 bg-white shadow-sm">
+
+    {# السابق #}
+    {% if current > 1 %}
+    <a href="?page={{ current - 1 }}" rel="prev" aria-label="الصفحة السابقة" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
+                transition transform hover:scale-105">
+      <i class="fi fi-ts-angle-right  text-gray-700 text-xl md:text-2xl"></i>
+    </a>
+    {% else %}
+    <span aria-disabled="true" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
+           cursor-not-allowed">
+      <i class="fi fi-ts-angle-double-right text-gray-700  text-xl md:text-2xl"></i>
+
+    </span>
+    {% endif %}
+
+    {# الوسط: current / total #}
+    <span class="select-none text-xl md:text-2xl font-medium tracking-wide">
+      <span class="tabular-nums">{{ current }}</span>
+      <span class="mx-2 text-gray-400">/</span>
+      <span class="tabular-nums">{{ total }}</span>
+    </span>
+
+    {# التالي #}
+    {% if current < total %} <a href="?page={{ current + 1 }}" rel="next" aria-label="الصفحة التالية" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
+                
+                transition transform hover:scale-105  ">
+      <i class="fi fi-ts-angle-left  text-gray-700 text-xl md:text-2xl"></i>
+      </a>
+      {% else %}
+      <span aria-disabled="true" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center  cursor-not-allowed">
+        <i class="fi fi-ts-angle-double-left text-gray-700  text-xl md:text-2xl"></i>
+
+      </span>
+      {% endif %}
+
+  </nav>
+</div>

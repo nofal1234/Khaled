@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ context.page.title | default("Store") }}</title>
+    {% seo %}
+    {% qumra_head %}
+    <style>
+        :root {
+          --mainColor: {{settings.mainColor}};
+          --darkColor: {{settings.darkColor}};
+          --swiper-navigation-size: 25px;
+        }
+    </style>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'tajawal': ['tajawal'],
+            },
+            colors: {
+              mainColor: {
+                DEFAULT: '{{settings.mainColor}}',
+              },
+              dark: {
+                DEFAULT: '{{settings.darkColor}}',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Iconify for Flat Icons -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <!-- Flaticon UIcons Regular Rounded -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+
+
+  </head>
+  <body >
+    <div x-data="GlobalState" x-init="init()">
+      {%ui "loading-screen.njk" %}
+      {# {% header %} #}
+      {% template "header" %}
+      
+      <main>
+        {% content %}
+      </main>
+    {% template "footer" %}
+      {# {% footer %} #}
+    </div>
+    {% qumra_scripts %}
+    <script>
+      console.log("Global Data", __qumra__);
+    </script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script src="{{ 'main.js' | assets }}"></script>
+    <script src="{{ 'cart.js' | assets }}"></script>
+    <script src="{{ 'product.js' | assets }}"></script>
+    <script src="{{ 'wishlist.js' | assets }}"></script>
+    <script src="{{ 'sidebar.js' | assets }}"></script>
+    <script src="{{ 'search.js' | assets }}"></script>
+    <script src="{{ 'swiper-init.js' | assets }}"></script>
+  </body>
+</html>

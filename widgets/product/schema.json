@@ -1,0 +1,36 @@
+{
+    "name": "Hero Banner",
+    "description": "قسم البانر الرئيسي الذي يحتوي على عنوان وصورة وزر",
+    "settings": [
+      {
+        "key": "title",
+        "type": "text",
+        "label": "العنوان الرئيسي",
+        "default": "مرحبًا بك في متجرنا"
+      },
+      {
+        "key": "subtitle",
+        "type": "text",
+        "label": "الوصف الفرعي",
+        "default": "أفضل المنتجات في مكان واحد"
+      },
+      {
+        "key": "image",
+        "type": "image",
+        "label": "صورة البانر",
+        "default": ""
+      },
+      {
+        "key": "button_text",
+        "type": "text",
+        "label": "نص الزر",
+        "default": "تسوق الآن"
+      },
+      {
+        "key": "button_link",
+        "type": "url",
+        "label": "رابط الزر",
+        "default": "/collections/all"
+      }
+    ]
+  }

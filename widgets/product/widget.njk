@@ -1,0 +1,88 @@
+<!-- Hero Banner Section -->
+<section class="relative w-full overflow-hidden py-6">
+  <div class="relative w-full h-[600px] overflow-hidden hero-container">
+    <div class="w-full h-full flex items-center justify-center">
+      {% if widget.data.image and widget.data.image.fileUrl %}
+        <div class="relative w-full h-full">
+          <img 
+            src="{{ widget.data.image.fileUrl }}" 
+            alt="{{ widget.data.title | default('Hero Banner') }}" 
+            loading="lazy"
+            class="w-full h-full object-cover object-center"
+          />
+          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center px-4 text-white">
+              <h1 class="text-4xl md:text-6xl font-bold mb-4 font-cairo">{{ widget.data.title }}</h1>
+              <p class="text-xl md:text-2xl mb-8 font-cairo">{{ widget.data.subtitle }}</p>
+              <a href="{{ widget.data.button_link | default('#') }}" 
+                 class="inline-block bg-white text-black px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 font-cairo">
+                {{ widget.data.button_text | default('تسوق الآن') }}
+              </a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="w-full h-full flex items-center justify-center">
+          <div class="text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-600 mb-4 font-cairo">{{ widget.data.title | default('مرحبًا بك في متجرنا') }}</h1>
+            <p class="text-xl md:text-2xl text-gray-500 mb-8 font-cairo">{{ widget.data.subtitle | default('أفضل المنتجات في مكان واحد') }}</p>
+            <a href="{{ widget.data.button_link | default('#') }}" 
+               class="inline-block bg-[#003033] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#004d4d] transition-colors duration-200 font-cairo">
+              {{ widget.data.button_text | default('تسوق الآن') }}
+            </a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Mobile and Tablet Responsive Fixes - Same height as other sections */
+@media (max-width: 768px) {
+  .hero-container {
+    height: 400px !important;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-description {
+    font-size: 1.125rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-container {
+    height: 500px !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-container {
+    height: 600px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+}
+</style>

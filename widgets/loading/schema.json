@@ -1,0 +1,27 @@
+{
+  "name": "Loading",
+  "description": "ودجت تحميل بسيط يمكن إضافته للفوتر أو أي مكان",
+  "settings": {
+    "align_center": {
+      "type": "boolean",
+      "label": "محاذاة في الوسط",
+      "default": true
+    },
+    "padding_y": {
+      "type": "number",
+      "label": "المسافة الرأسية (py)",
+      "default": 6,
+      "min": 0,
+      "max": 20
+    }
+  },
+  "blocks": {},
+  "presets": [
+    {
+      "category": "footer",
+      "name": "Loading (Footer)"
+    }
+  ]
+}
+
+

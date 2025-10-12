@@ -1,0 +1,21 @@
+{
+  "name": "New Arrivals Section",
+  "description": "قسم المنتجات الجديدة القادمة",
+  "settings": {
+    "products": {
+      "type": "products",
+      "label": "المنتجات المعروضة",
+      "default": "latest"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "القادمون الجدد"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "#"
+    }
+  }
+} 

@@ -1,0 +1,71 @@
+{
+    "title": "Header Group",
+    "widgets": [
+        {
+            "name": "Offers Announcement Bar",
+            "widget": "offers-announcement",
+            "settings": {
+                "announcement_link": "#",
+                "announcement_alt": "Offers Announcement",
+                "enable_marquee": true,
+                "marquee_speed": 30,
+                "show_separator": true
+            },
+            "blocks": [
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان الأول ",
+                    "settings": {
+                        "text": "عروض مستمرة وهدايا مفاجئة كل يوم سيبسيبسيبسيب",
+                        "link": "#"
+                    }
+                },
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان الثاني",
+                    "settings": {
+                        "text": "اطلب دلوقتي وخليك أول المستفيدين",
+                        "link": "#"
+                    }
+                },
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان الثالث",
+                    "settings": {
+                        "text": "وفر وقتك… الشراء دلوقتي والدفع لاحقًا",
+                        "link": "#"
+                    }
+                },
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان الرابع",
+                    "settings": {
+                        "text": "منتجات جديدة بتنزل بشكل حصري عندنا",
+                        "link": "#"
+                    }
+                },
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان الخامس",
+                    "settings": {
+                        "text": "تسوق بسهولة وخلّيها تجربة مختلفة",
+                        "link": "#"
+                    }
+                },
+                {
+                    "block": "announcementItem",
+                    "name": "الإعلان السادس",
+                    "settings": {
+                        "text": "الجودة اللي بتدور عليها في مكان واحد",
+                        "link": "#"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "header",
+            "widget": "header",
+            "settings": {}
+        }
+    ]
+}

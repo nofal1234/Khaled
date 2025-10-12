@@ -1,0 +1,169 @@
+
+
+    <!-- Categories Section -->
+    <section class="my-6 md:my-10 px-4 container mx-auto">
+        <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('الاقسام') }}</h1>
+                <a href="{{ widget.data.view_all_link | default('/Category.html') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+            </div>
+
+            <!-- Categories Swiper -->
+            <div class="relative">
+                <div class="swiper categorySwiper">
+                    <div class="swiper-wrapper">
+                        {% if widget.data.collections and widget.data.collections | length > 0 %}
+                        <!-- Collections from Builder -->
+                        {% for collection in widget.data.collections %}
+                        <div class="swiper-slide">
+                            <div class="category-card flex flex-col items-center rounded-2xl p-4 w-32 md:w-40 cursor-pointer">
+                                {% if collection.image and collection.image.fileUrl %}
+                                <img src="{{ collection.image.fileUrl }}" alt="{{ collection.title }}" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover mb-3 border-2 border-black-100">
+                                {% else %}
+                                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 mb-3 border-2 border-black-100 flex items-center justify-center">
+                                    <span class="text-gray-500 text-xs">لا توجد صورة</span>
+                                </div>
+                                {% endif %}
+                                <span class="text-sm md:text-base font-medium text-center">{{ collection.title }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <!-- Fallback to blocks if no collections selected -->
+                        {% for block in widget.blocks %}
+                        {% if block.type == 'categoryItem' %}
+                        <div class="swiper-slide">
+                            <div class="category-card flex flex-col items-center rounded-2xl p-4 w-32 md:w-40 cursor-pointer">
+                                {% if block.settings.image %}
+                                <img src="{{ block.settings.image | assets }}" alt="{{ block.settings.alt_text | default(block.settings.name) }}" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover mb-3 border-2 border-black-100">
+                                {% else %}
+                                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 mb-3 border-2 border-black-100 flex items-center justify-center">
+                                    <span class="text-gray-500 text-xs">لا توجد صورة</span>
+                                </div>
+                                {% endif %}
+                                <span class="text-sm md:text-base font-medium text-center">{{ block.settings.name }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const swiperElement = document.querySelector('.categorySwiper');
+  if (swiperElement) {
+    var categorySwiper = new Swiper('.categorySwiper', {
+      slidesPerView: 'auto',
+      spaceBetween: 0,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      grabCursor: true,
+      {% if widget.data.autoplay | default(true) %}
+      autoplay: {
+        delay: {{ widget.data.autoplay_delay | default(3000) }},
+        disableOnInteraction: false,
+      },
+      {% endif %}
+      breakpoints: {
+        640: {
+          slidesPerView: 3,
+          spaceBetween: 0,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 0,
+        },
+        1024: {
+          slidesPerView: 5,
+          spaceBetween: 0,
+        },
+      }
+    });
+  }
+});
+</script>
+
+<style>
+/* Category Card Styling */
+.category-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  margin-right: 16px;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Swiper Slide Styling */
+.swiper-slide {
+  width: auto !important;
+  margin-right: 0 !important;
+}
+
+/* Swiper Navigation Buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #6b7280;
+  background: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #374151;
+  transform: scale(1.1);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .category-card {
+    width: 120px;
+  }
+  
+  .category-card img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 12px;
+  }
+}
+</style>
+

@@ -1,0 +1,172 @@
+{
+  "name": "مزايا الخدمة",
+  "description": "عرض مزايا الخدمة مع الأيقونات والوصف",
+  "settings": {
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "مزايا الخدمة",
+      "description": "العنوان الرئيسي للقسم"
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#000000",
+      "description": "لون العنوان الرئيسي"
+    },
+    "background_color": {
+      "type": "color",
+      "label": "لون الخلفية",
+      "default": "#ffffff",
+      "description": "لون خلفية القسم"
+    },
+    "card_background": {
+      "type": "color",
+      "label": "لون خلفية البطاقات",
+      "default": "#ffffff",
+      "description": "لون خلفية بطاقات المزايا"
+    },
+    "icon_color": {
+      "type": "color",
+      "label": "لون الأيقونات",
+      "default": "#000000",
+      "description": "لون الأيقونات"
+    },
+    "text_color": {
+      "type": "color",
+      "label": "لون النص",
+      "default": "#333333",
+      "description": "لون النص الرئيسي"
+    },
+    "description_color": {
+      "type": "color",
+      "label": "لون الوصف",
+      "default": "#6b7280",
+      "description": "لون نص الوصف"
+    },
+    "show_hover_effect": {
+      "type": "checkbox",
+      "label": "إظهار تأثير التمرير",
+      "default": true,
+      "description": "إظهار تأثير التمرير على البطاقات"
+    },
+    "columns_mobile": {
+      "type": "select",
+      "label": "عدد الأعمدة في الشاشات الصغيرة",
+      "default": "1",
+      "options": [
+        {"value": "1", "label": "عمود واحد"},
+        {"value": "2", "label": "عمودين"}
+      ]
+    },
+    "columns_tablet": {
+      "type": "select",
+      "label": "عدد الأعمدة في الشاشات المتوسطة",
+      "default": "2",
+      "options": [
+        {"value": "1", "label": "عمود واحد"},
+        {"value": "2", "label": "عمودين"},
+        {"value": "3", "label": "ثلاثة أعمدة"}
+      ]
+    },
+    "columns_desktop": {
+      "type": "select",
+      "label": "عدد الأعمدة في الشاشات الكبيرة",
+      "default": "4",
+      "options": [
+        {"value": "2", "label": "عمودين"},
+        {"value": "3", "label": "ثلاثة أعمدة"},
+        {"value": "4", "label": "أربعة أعمدة"},
+        {"value": "5", "label": "خمسة أعمدة"},
+        {"value": "6", "label": "ستة أعمدة"}
+      ]
+    }
+  },
+  "blocks": {
+    "serviceFeature": {
+      "name": "ميزة الخدمة",
+      "settings": {
+        "icon": {
+          "type": "string",
+          "label": "أيقونة الميزة",
+          "default": "ph-thin ph-shield-check",
+          "description": "رمز الأيقونة (Phosphor Icons)"
+        },
+        "title": {
+          "type": "string",
+          "label": "عنوان الميزة",
+          "default": "خدمة مخصصة",
+          "description": "عنوان الميزة"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "وصف الميزة",
+          "default": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع).",
+          "description": "وصف مفصل للميزة"
+        },
+        "icon_size": {
+          "type": "select",
+          "label": "حجم الأيقونة",
+          "default": "text-7xl",
+          "options": [
+            {"value": "text-4xl", "label": "صغير"},
+            {"value": "text-5xl", "label": "متوسط"},
+            {"value": "text-6xl", "label": "كبير"},
+            {"value": "text-7xl", "label": "كبير جداً"},
+            {"value": "text-8xl", "label": "ضخم"}
+          ]
+        },
+        "custom_icon_color": {
+          "type": "color",
+          "label": "لون الأيقونة المخصص",
+          "default": "",
+          "description": "لون مخصص للأيقونة (اترك فارغاً لاستخدام اللون العام)"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "🚀 مزايا الخدمة",
+      "blocks": [
+        {
+          "block": "serviceFeature",
+          "settings": {
+            "icon": "ph-thin ph-shield-check",
+            "title": "خدمة مخصصة",
+            "description": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع).",
+            "icon_size": "text-7xl"
+          }
+        },
+        {
+          "block": "serviceFeature",
+          "settings": {
+            "icon": "ph-thin ph-clock",
+            "title": "العمل على مدار الساعة",
+            "description": "خدمة عملاء وغرفة عمليات تعمل على مدار الساعة.",
+            "icon_size": "text-7xl"
+          }
+        },
+        {
+          "block": "serviceFeature",
+          "settings": {
+            "icon": "ph-thin ph-gear-six",
+            "title": "أسعار مناسبة",
+            "description": "أسعار تنافسية وخطط تناسب جميع الشركات.",
+            "icon_size": "text-7xl"
+          }
+        },
+        {
+          "block": "serviceFeature",
+          "settings": {
+            "icon": "ph-thin ph-star",
+            "title": "دقة مواعيد",
+            "description": "التزام كامل بالمواعيد وخطوط السير.",
+            "icon_size": "text-7xl"
+          }
+        }
+      ]
+    }
+  ]
+}

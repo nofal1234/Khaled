@@ -1,0 +1,6 @@
+<!-- Loading Widget Wrapper -->
+<section class="w-full {% if widget.data.align_center | default(true) %}flex items-center justify-center{% endif %} py-{{ widget.data.padding_y | default(6) }}">
+  {%ui "loading.njk" %}
+</section>
+
+

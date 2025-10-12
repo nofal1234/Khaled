@@ -1,0 +1,83 @@
+{
+  "name": "Customer Reviews Section",
+  "description": "قسم آراء العملاء مع تقييم النجوم",
+  "settings": {
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "آراء عملائنا"
+    }
+  },
+  "blocks": {
+    "reviewItem": {
+      "name": "رأي العميل",
+      "settings": {
+        "name": {
+          "type": "string",
+          "label": "اسم العميل",
+          "default": "عميل سعيد"
+        },
+        "text": {
+          "type": "string",
+          "label": "التعليق",
+          "default": "تجربة ممتازة وخدمة رائعة!"
+        },
+        "image": {
+          "type": "media",
+          "label": "صورة العميل",
+          "default": ""
+        },
+        "stars": {
+          "type": "number",
+          "label": "عدد النجوم (1-5)",
+          "default": 5,
+          "min": 1,
+          "max": 5
+        },
+        "alt": {
+          "type": "string",
+          "label": "النص البديل للصورة",
+          "default": "صورة العميل"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "homepage",
+      "name": "⭐ آراء العملاء",
+      "blocks": [
+        {
+          "block": "reviewItem",
+          "name": "الرأي الأول",
+          "settings": {
+            "name": "أحمد كرم",
+            "text": "تجربة ممتازة وخدمة عملاء محترمة.",
+            "image": "",
+            "stars": 5
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "الرأي الثاني",
+          "settings": {
+            "name": "سارة محمد",
+            "text": "الشحن سريع والجودة عالية.",
+            "image": "",
+            "stars": 4
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "الرأي الثالث",
+          "settings": {
+            "name": "خالد عبدالله",
+            "text": "أسعار مناسبة وعروض مميزة.",
+            "image": "",
+            "stars": 5
+          }
+        }
+      ]
+    }
+  ]
+}

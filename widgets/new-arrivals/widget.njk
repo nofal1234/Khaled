@@ -1,0 +1,185 @@
+<!-- Flat Icon CDN -->
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+<!-- New Arrivals Section -->
+<section class="py-6 sm:py-8 md:py-10 lg:py-12 bg-white">
+  <div class="container mx-auto px-4"> 
+    <div class="flex justify-between items-center mb-6 px-1 sm:px-0"> 
+      <h2 class="text-2xl font-bold text-black pl-3">{{ widget.data.section_title | default('القادمون الجدد') }}</h2>
+      <a href="{{ widget.data.view_all_link | default('#') }}" class="text-sm font-semibold text-gray-800 hover:underline">عرض الكل ←</a>
+    </div>
+
+    {% if widget.data.products_collection | length >= 4 %}
+    <!-- Enhanced Swiper Slider with Custom Navigation -->
+    <div class="relative">
+      <!-- Custom Navigation Buttons -->
+      <button class="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white hover:bg-gray-50 border border-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl group" id="new-arrivals-prev">
+        <i class="fi fi-rr-angle-right text-gray-700 group-hover:text-[#003033] text-lg"></i>
+      </button>
+      
+      <button class="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white hover:bg-gray-50 border border-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl group" id="new-arrivals-next">
+        <i class="fi fi-rr-angle-left text-gray-700 group-hover:text-[#003033] text-lg"></i>
+      </button>
+
+      <div class="swiper new-arrivals-swiper px-4">
+        <div class="swiper-wrapper">
+          {% for product in widget.data.products_collection %}
+          <div class="swiper-slide">
+            {%ui "product-card.njk" ,product=product ,variant='index-swiper'%}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <!-- Grid Layout for less than 4 products -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-4">
+      {% for product in widget.data.products_collection %}
+      {%ui "product-card.njk" ,product=product ,variant='index-swiper'%}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<style>
+/* Mobile Padding Fix */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Enhanced Navigation Buttons Styling */
+#new-arrivals-prev,
+#new-arrivals-next {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 50%;
+  color: #111827 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 20;
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  #new-arrivals-prev,
+  #new-arrivals-next {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+  
+  #new-arrivals-prev {
+    right: 4px !important;
+  }
+  
+  #new-arrivals-next {
+    left: 4px !important;
+  }
+}
+
+#new-arrivals-prev:hover,
+#new-arrivals-next:hover {
+  background: #f9fafb;
+  border-color: #003033;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+
+#new-arrivals-prev:active,
+#new-arrivals-next:active {
+  transform: scale(0.95);
+}
+
+/* Responsive Slides */
+
+/* Mobile - 1.5 Cards */
+@media (max-width: 639px) {
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .new-arrivals-swiper .swiper-slide {
+    width: 280px !important;
+    margin-right: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Show arrows on mobile with smaller size */
+  #new-arrivals-prev,
+  #new-arrivals-next {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Tablet - 2 Cards */
+@media (min-width: 640px) and (max-width: 767px) {
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .new-arrivals-swiper .swiper-slide {
+    width: 280px !important;
+    margin-right: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Small Desktop - 3 Cards */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .new-arrivals-swiper .swiper-slide {
+    width: 280px !important;
+    margin-right: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Large Desktop - 4 Cards */
+@media (min-width: 1024px) {
+  .new-arrivals-swiper .swiper-slide {
+    width: 280px !important;
+    margin-right: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Only initialize Swiper if there are 4 or more products
+  const swiperElement = document.querySelector('.new-arrivals-swiper');
+  if (swiperElement) {
+    var newArrivalsSwiper = new Swiper('.new-arrivals-swiper', {
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      navigation: {
+        nextEl: '#new-arrivals-next',
+        prevEl: '#new-arrivals-prev',
+      },
+      grabCursor: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      }
+    });
+  }
+});
+</script>
+  

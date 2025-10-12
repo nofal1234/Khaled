@@ -1,0 +1,27 @@
+<section class="product-listing">
+  <div class="container mx-auto py-10">
+    {% if context.products | length > 0 %}
+    <div class=" flex  flex-col gap-4">
+      <!-- Mobile: horizontal list showing two cards visible -->
+      <div class="md:hidden -mx-4 px-4">
+        <div class="flex gap-0 overflow-x-auto snap-x snap-mandatory scrollbar-hide mobile-tight">
+          {% for product in context.products %}
+          <div class="min-w-[50%] snap-start">
+            {%ui "product-card.njk" ,product=product ,variant='index-swiper' %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Desktop Grid -->
+      <div class="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 gap-[10px] ">
+        {% for product in context.products %}
+        {%ui "product-card.njk" ,product=product %}
+        {% endfor %}
+      </div>
+      {%ui "pagination.njk" %}
+    </div>
+    {% else %}
+    {%ui "empty.njk" , BtnText="تصفح اقسام المنتجات",BtnUrl="/collections"%}
+    {% endif %}
+  </div>
+</section>

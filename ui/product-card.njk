@@ -1,0 +1,41 @@
+<div 
+    x-data='xDataproduct({{ data | dump | safe }})' 
+    class="bg-gray-50 rounded-lg shadow-md overflow-hidden group border flex flex-col h-[420px]">
+
+    <!-- Product Image -->
+    <a href="/product/{{ data.product.slug }}" class="group block">
+        <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/600x400/orange/white') }}"
+            alt="{{ data.product.title }}"
+            class="w-full h-64 object-cover transition-all duration-300 group-hover:scale-110 group-hover:opacity-90">
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-4 text-center flex flex-col h-full">
+        <div class="flex-1">
+            <h3 class="font-semibold text-sm text-gray-800 leading-relaxed mb-2">{{ data.product.title }}</h3>
+            <p class="text-black font-bold">{{ data.product.pricing.price | money }}</p>
+        </div>
+        
+        <!-- Add to Cart Button -->
+        <div class="mt-auto pt-3">
+            <button 
+                @click="addProductToCart('{{ data.product._id }}', 1, [])"
+                :disabled="loading.addToCart"
+                class="w-full bg-[#003033] hover:bg-[#004d4d] text-white py-3 px-4 rounded-lg text-sm font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md font-cairo font-medium flex items-center justify-center gap-2">
+                
+                <!-- Icon + Text -->
+                <i x-show="!loading.addToCart" class="fi fi-rr-shopping-cart text-lg"></i>
+                <span x-show="!loading.addToCart">أضف للسلة</span>
+
+                <!-- Loading -->
+                <svg x-show="loading.addToCart" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" 
+                        stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" 
+                        d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                <span x-show="loading.addToCart">جاري الإضافة...</span>
+            </button>
+        </div>
+    </div>
+</div>

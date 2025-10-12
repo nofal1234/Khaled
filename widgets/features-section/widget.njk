@@ -1,0 +1,71 @@
+<!-- Features Section -->
+<section class="my-1 md:my-2 px-4 container mx-auto">
+    <div class="py-1 md:py-2 px-4 md:px-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-1 md:mb-2">
+            <h1 class="text-xl md:text-2xl font-bold text-dark">تشكيلاتنا الخاصة</h1>
+            <span class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</span>
+        </div>
+
+        <!-- Features Swiper -->
+        <div class="relative">
+            <div class="swiper categorySwiper">
+                <div class="swiper-wrapper justify-center h-3/5 gap-1 w-full">
+                    <!-- Feature 1 -->
+                    <div class="swiper-slide">
+                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
+                            <img src="{{ 'one.png' | assets }}" alt="الملابس العلوية" class="w-full h-80 mb-1 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-center">الملابس العلوية</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="swiper-slide">
+                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
+                            <img src="{{ 'two.png' | assets }}" alt="الاكسسوارات" class="w-full h-80 mb-1 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-center">الاكسسوارات</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="swiper-slide">
+                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
+                            <img src="{{ 'three.png' | assets }}" alt="المابس السفلية" class="w-full h-80 mb-1 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-center">المابس السفلية</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Swiper for features
+    const featuresSwiper = new Swiper('.categorySwiper', {
+        slidesPerView: 1,
+        spaceBetween: 2,
+        loop: true,
+        grabCursor: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            480: { slidesPerView: 1.5, spaceBetween: 2 },
+            640: { slidesPerView: 2, spaceBetween: 3 },
+            768: { slidesPerView: 2.5, spaceBetween: 4 },
+            1024: { slidesPerView: 3, spaceBetween: 5 },
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        }
+    });
+});
+</script>

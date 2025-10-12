@@ -1,0 +1,130 @@
+{
+  "name": "قسم التشكيلات الخاصة",
+  "description": "عرض التشكيلات الخاصة مع Swiper للتنقل",
+  "settings": {
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "تشكيلاتنا الخاصة",
+      "description": "العنوان الرئيسي للقسم"
+    },
+    "view_all_text": {
+      "type": "string",
+      "label": "نص عرض الكل",
+      "default": "عرض الكل",
+      "description": "النص الذي يظهر على رابط عرض الكل"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "#",
+      "description": "الرابط الذي ينتقل إليه عند الضغط على عرض الكل"
+    },
+    "show_view_all": {
+      "type": "checkbox",
+      "label": "إظهار رابط عرض الكل",
+      "default": true,
+      "description": "إظهار أو إخفاء رابط عرض الكل"
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#333333",
+      "description": "لون العنوان الرئيسي"
+    },
+    "link_color": {
+      "type": "color",
+      "label": "لون رابط عرض الكل",
+      "default": "#6b7280",
+      "description": "لون رابط عرض الكل"
+    },
+    "show_navigation": {
+      "type": "checkbox",
+      "label": "إظهار أزرار التنقل",
+      "default": true,
+      "description": "إظهار أو إخفاء أزرار التنقل"
+    },
+    "autoplay": {
+      "type": "checkbox",
+      "label": "التشغيل التلقائي",
+      "default": true,
+      "description": "تشغيل Swiper تلقائياً"
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "مدة الانتظار (ملي ثانية)",
+      "default": 3000,
+      "min": 1000,
+      "max": 10000,
+      "description": "مدة الانتظار بين الشرائح"
+    }
+  },
+  "blocks": {
+    "featureItem": {
+      "name": "تشكيلة",
+      "settings": {
+        "name": {
+          "type": "string",
+          "label": "اسم التشكيلة",
+          "default": "الملابس العلوية",
+          "description": "اسم التشكيلة"
+        },
+        "image": {
+          "type": "image_picker",
+          "label": "صورة التشكيلة",
+          "description": "صورة تمثل التشكيلة"
+        },
+        "link": {
+          "type": "string",
+          "label": "رابط التشكيلة",
+          "default": "#",
+          "description": "الرابط الذي ينتقل إليه عند الضغط على التشكيلة"
+        },
+        "alt_text": {
+          "type": "string",
+          "label": "النص البديل",
+          "default": "صورة التشكيلة",
+          "description": "النص البديل للصورة"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "✨ تشكيلاتنا الخاصة",
+      "blocks": [
+        {
+          "block": "featureItem",
+          "name": "الملابس العلوية",
+          "settings": {
+            "name": "الملابس العلوية",
+            "image": "Featuers/one.png",
+            "link": "#",
+            "alt_text": "الملابس العلوية"
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "الاكسسوارات",
+          "settings": {
+            "name": "الاكسسوارات",
+            "image": "Featuers/two.png",
+            "link": "#",
+            "alt_text": "الاكسسوارات"
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "المابس السفلية",
+          "settings": {
+            "name": "المابس السفلية",
+            "image": "Featuers/three.png",
+            "link": "#",
+            "alt_text": "المابس السفلية"
+          }
+        }
+      ]
+    }
+  ]
+}

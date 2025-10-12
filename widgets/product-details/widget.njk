@@ -1,0 +1,184 @@
+<section id="{{ widget.id }}" x-data="xDataproduct({ product: context.product })" x-ref="productComponent"
+    class="min-h-screen bg-gray-50">
+
+    <div class="container py-8">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            
+            <!-- Product Gallery -->
+            <div x-data="{ imgSelected:0 }" class="product-gallery">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+                    <img id="main-product-image" :src="context.product.images[imgSelected].fileUrl"
+                        alt="صورة المنتج الرئيسية" 
+                        class="w-full h-96 object-contain rounded-lg">
+                </div>
+                
+                <!-- Thumbnail Images -->
+                <div class="flex gap-3 overflow-x-auto">
+                    <template x-for="(image, index) in context.product.images" :key="index">
+                        <img @click="imgSelected = index"
+                            class="w-16 h-16 rounded-lg border-2 object-cover cursor-pointer transition-all duration-200"
+                            :src="image.fileUrl"
+                            :class="imgSelected === index ? 'border-gray-900' : 'border-gray-200 hover:border-gray-300'">
+                    </template>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                
+                <!-- Product Title -->
+                <h1 class="text-3xl font-bold text-gray-900 font-cairo mb-4" x-text="context.product.title"></h1>
+                
+                <!-- Product Price -->
+                <div class="mb-6">
+                    <template x-if="context.product.pricing?.compareAtPrice && context.product.pricing?.compareAtPrice > context.product.pricing?.price">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl font-bold text-gray-900" x-text="context.product.pricing.price"></span>
+                            <span class="text-gray-900" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
+                            <span class="text-lg text-gray-500 line-through" x-text="context.product.pricing.compareAtPrice"></span>
+                        </div>
+                    </template>
+                    
+                    <template x-if="!context.product.pricing?.compareAtPrice || context.product.pricing?.compareAtPrice === context.product.pricing?.price">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-bold text-gray-900" x-text="context.product.pricing?.price"></span>
+                            <span class="text-gray-900" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Product Options -->
+                <div x-init="initOptions()" class="mb-6" x-show="context.product.options.length > 0">
+                    <template x-for="opt in context.product.options" :key="opt._id">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 font-cairo mb-2" x-text="opt.name"></label>
+                            <div class="flex flex-wrap gap-2">
+                                <template x-for="val in opt.values" :key="val._id">
+                                    <button type="button" 
+                                        :disabled="loading.optionsLoading"
+                                        class="px-4 py-2 rounded-lg border-2 transition-all duration-200 font-cairo text-sm flex items-center gap-2"
+                                        :class="selectedOptions[opt._id] === val._id
+                                            ? 'border-gray-900 bg-gray-900 text-white'
+                                            : 'border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'"
+                                        @click.prevent="selectOption(context.product,opt._id, val._id)">
+                                        <svg x-show="loading.optionsLoading && selectedOptions[opt._id] === val._id" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                        </svg>
+                                        <span x-text="val.label"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 font-cairo mb-2">الكمية:</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg w-fit">
+                        <button type="button"
+                            class="px-4 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
+                            @click="decreaseCartItem()" aria-label="تقليل الكمية">−</button>
+                        <span class="px-4 py-2 border-x border-gray-300 text-center min-w-[3rem] font-medium"
+                            x-text="productQuantity"></span>
+                        <button type="button"
+                            class="px-4 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
+                            @click="increaseCartItem()" aria-label="زيادة الكمية">+</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <form id="productForm" @submit="submitForm" class="space-y-3">
+                    <input type="hidden" name="product" :value="context.product._id">
+                    <input type="hidden" name="quantity" :value="productQuantity">
+                    <template x-for="opt in context.product.options" :key="opt._id">
+                        <input type="hidden" name="options[]" :value="selectedOptions[opt._id]">
+                    </template>
+                    
+                    <button type="submit" name="addToCart" value="addToCart"
+                        :disabled="loading.addToCart || loading.optionsLoading || productQuantity === 0"
+                        class="w-full bg-[#003033] hover:bg-[#004d4d] text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 font-cairo flex items-center justify-center gap-2">
+                        <svg x-show="loading.optionsLoading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        <span x-show="!loading.addToCart && !loading.optionsLoading">إضافة إلى السلة</span>
+                        <span x-show="loading.addToCart">جاري الإضافة...</span>
+                        <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
+                    </button>
+
+                    <button type="submit" name="buyNow" value="buyNow" 
+                        :disabled="loading.buyNow || loading.optionsLoading"
+                        class="w-full bg-white border-2 border-[#003033] text-[#003033] hover:bg-[#003033] hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 font-cairo flex items-center justify-center gap-2">
+                        <svg x-show="loading.optionsLoading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        <span x-show="!loading.buyNow && !loading.optionsLoading">اشترى الآن</span>
+                        <span x-show="loading.buyNow">جاري المعالجة...</span>
+                        <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
+                    </button>
+                </form>
+
+                <!-- Product Description -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 font-cairo mb-3">وصف المنتج</h3>
+                    <div x-html="context.product.description || 'لا يوجد وصف للمنتج'"
+                        class="text-gray-600 text-sm leading-relaxed font-cairo">
+                    </div>
+                </div>
+
+                <!-- Shipping Policy Accordion -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div x-data="{ open: false }" class="accordion-item">
+                        <button @click="open = !open" 
+                                class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none">
+                            <span class="font-semibold text-gray-900 font-cairo">سياسة الشحن</span>
+                            <svg :class="{'rotate-180': open}" 
+                                 class="w-5 h-5 text-gray-500 transition-transform duration-200" 
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform -translate-y-2"
+                             x-transition:enter-end="opacity-100 transform translate-y-0"
+                             x-transition:leave="transition ease-in duration-200"
+                             x-transition:leave-start="opacity-100 transform translate-y-0"
+                             x-transition:leave-end="opacity-0 transform -translate-y-2"
+                             class="px-4 pb-4">
+                            <div class="text-gray-600 text-sm leading-relaxed font-cairo mt-3">
+                                <p class="mb-2">يتم التوصيل داخل مصر عن طريق مندوب توصيل - تصلك الشحنة خلال 3-5 أيام.</p>
+                                <p class="mb-2">الشحن مجاني للطلبات التي تزيد عن 500 ج.م</p>
+                                <p class="mb-2">يمكنك تتبع طلبك من خلال رقم التتبع الذي سيتم إرساله لك</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if context.related_products | length > 0 %}
+        <section class="mt-16">
+            <h2 class="text-2xl font-bold text-center text-gray-900 font-cairo mb-8">منتجات مشابهة</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {% for item in context.related_products %}
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+                    <a href="/product/{{ item.slug }}">
+                        <img src={{ item.images[0].fileUrl }} alt="{{ item.title }}"
+                            class="w-full h-32 object-cover">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h3 class="font-semibold text-gray-900 font-cairo text-sm mb-2">{{ item.title }}</h3>
+                        <p class="text-gray-900 font-bold font-cairo">{{ item.pricing.price| money }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</section>

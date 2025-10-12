@@ -1,0 +1,13 @@
+{
+  "name": "collections",
+  "description": "مجموعة من الاقسام",
+  "settings": {},
+  "blocks": {
+    "products": {
+      "name": "products",
+      "description": "قائمة المنتجات",
+      "icon": "products",
+      "settings": {}
+    }
+  }
+}
