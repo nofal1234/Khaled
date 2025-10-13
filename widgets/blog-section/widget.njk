@@ -2,36 +2,77 @@
 <section class="my-6 md:my-10 px-4 container mx-auto">
     <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">منشورات المدونة</h1>
-            <span class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</span>
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('منشورات المدونة') }}</h1>
+            {% set viewAllHref = widget.data.view_all_link | default('/blog') %}
+            <a href="{{ viewAllHref }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
         </div>
+        {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=480&fit=crop" alt="أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام" class="w-full h-[30rem] object-cover">
-                <div class="p-4">
-                    <h3 class="text-lg font-bold text-dark mb-2">أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام</h3>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية</p>
-                    <button class="text-mainColor underline">اقرأ المزيد</button>
+            {% if hasBlocks %}
+                {% for block in widget.blocks %}
+                {% if loop.index0 < 3 and block.type == 'blogPost' %}
+                {% set img = (block.settings and block.settings.image and block.settings.image.fileUrl) or block.settings.image %}
+                {% set alt = (block.settings and block.settings.alt_text) or 'صورة المنشور' %}
+                {% set title = (block.settings and block.settings.title) or 'عنوان المنشور' %}
+                {% set desc = (block.settings and block.settings.description) or '' %}
+                {% set link = (block.settings and block.settings.link) or '#' %}
+                {% set btn = (block.settings and block.settings.button_text) or 'عرض المزيد' %}
+                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    {% if img %}
+                    <img src="{{ img }}" alt="{{ alt }}" class="w-full h-[30rem] object-cover">
+                    {% endif %}
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ title }}</h3>
+                        {% if desc %}
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ desc }}</p>
+                        {% endif %}
+                        <a href="{{ link }}" class="text-mainColor underline">{{ btn }}</a>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=480&fit=crop" alt="نصائح لاختيار الملابس المناسبة لكل مناسبة" class="w-full h-[30rem] object-cover">
-                <div class="p-4">
-                    <h3 class="text-lg font-bold text-dark mb-2">نصائح لاختيار الملابس المناسبة لكل مناسبة</h3>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات</p>
-                    <button class="text-mainColor underline">اقرأ المزيد</button>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                {% set dBtn = widget.data.default_button_text | default('عرض المزيد') %}
+                {# Card 1 #}
+                {% set dImg1 = (widget.data.default_image_1 and widget.data.default_image_1.fileUrl) or widget.data.default_image_1 or 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=480&fit=crop' %}
+                {% set dTitle1 = widget.data.default_title_1 | default('أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام') %}
+                {% set dDesc1 = widget.data.default_description_1 | default('استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية') %}
+                {% set dLink1 = widget.data.default_link_1 | default('#') %}
+                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="w-full h-[30rem] object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle1 }}</h3>
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc1 }}</p>
+                        <a href="{{ dLink1 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=480&fit=crop" alt="كيفية العناية بالملابس وإطالة عمرها" class="w-full h-[30rem] object-cover">
-                <div class="p-4">
-                    <h3 class="text-lg font-bold text-dark mb-2">كيفية العناية بالملابس وإطالة عمرها</h3>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة</p>
-                    <button class="text-mainColor underline">اقرأ المزيد</button>
+                {# Card 2 #}
+                {% set dImg2 = (widget.data.default_image_2 and widget.data.default_image_2.fileUrl) or widget.data.default_image_2 or 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=480&fit=crop' %}
+                {% set dTitle2 = widget.data.default_title_2 | default('نصائح لاختيار الملابس المناسبة لكل مناسبة') %}
+                {% set dDesc2 = widget.data.default_description_2 | default('دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات') %}
+                {% set dLink2 = widget.data.default_link_2 | default('#') %}
+                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="w-full h-[30rem] object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle2 }}</h3>
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc2 }}</p>
+                        <a href="{{ dLink2 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                    </div>
                 </div>
-            </div>
+                {# Card 3 #}
+                {% set dImg3 = (widget.data.default_image_3 and widget.data.default_image_3.fileUrl) or widget.data.default_image_3 or 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=480&fit=crop' %}
+                {% set dTitle3 = widget.data.default_title_3 | default('كيفية العناية بالملابس وإطالة عمرها') %}
+                {% set dDesc3 = widget.data.default_description_3 | default('تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة') %}
+                {% set dLink3 = widget.data.default_link_3 | default('#') %}
+                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="w-full h-[30rem] object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle3 }}</h3>
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc3 }}</p>
+                        <a href="{{ dLink3 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </section>

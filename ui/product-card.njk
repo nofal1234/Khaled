@@ -1,41 +1,30 @@
-<div 
-    x-data='xDataproduct({{ data | dump | safe }})' 
-    class="bg-gray-50 rounded-lg shadow-md overflow-hidden group border flex flex-col h-[420px]">
-
-    <!-- Product Image -->
-    <a href="/product/{{ data.product.slug }}" class="group block">
-        <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/600x400/orange/white') }}"
-            alt="{{ data.product.title }}"
-            class="w-full h-64 object-cover transition-all duration-300 group-hover:scale-110 group-hover:opacity-90">
-    </a>
-
-    <!-- Product Details -->
-    <div class="p-4 text-center flex flex-col h-full">
-        <div class="flex-1">
-            <h3 class="font-semibold text-sm text-gray-800 leading-relaxed mb-2">{{ data.product.title }}</h3>
-            <p class="text-black font-bold">{{ data.product.pricing.price | money }}</p>
+<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block">
+    <!-- Image Section -->
+    <div class="relative overflow-hidden bg-gray-100 product-card__image">
+        <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ data.product.title }}">
+        <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+            <i class="ph ph-heart text-xl"></i>
+        </button>
+        <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+            5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
         </div>
-        
-        <!-- Add to Cart Button -->
-        <div class="mt-auto pt-3">
-            <button 
-                @click="addProductToCart('{{ data.product._id }}', 1, [])"
-                :disabled="loading.addToCart"
-                class="w-full bg-[#003033] hover:bg-[#004d4d] text-white py-3 px-4 rounded-lg text-sm font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md font-cairo font-medium flex items-center justify-center gap-2">
-                
-                <!-- Icon + Text -->
-                <i x-show="!loading.addToCart" class="fi fi-rr-shopping-cart text-lg"></i>
-                <span x-show="!loading.addToCart">أضف للسلة</span>
+    </div>
 
-                <!-- Loading -->
-                <svg x-show="loading.addToCart" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" 
-                        stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" 
-                        d="M4 12a8 8 0 018-8v8z"></path>
-                </svg>
-                <span x-show="loading.addToCart">جاري الإضافة...</span>
+    <!-- Content Section -->
+    <div class="p-4 product-card__content">
+        <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ data.product.title }}</h3>
+        <!-- Price Section -->
+        <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between product-card__price-row">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xl md:text-2xl font-bold text-mainColor">{{ data.product.pricing.price | money }}</span>
+                {% if data.product.pricing.compareAtPrice %}
+                <span class="text-xs md:text-sm text-gray-400 line-through">{{ data.product.pricing.compareAtPrice | money }}</span>
+                <span class="text-xs text-red-500">{{ ((1 - (data.product.pricing.price / data.product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%-</span>
+                {% endif %}
+            </div>
+            <button @click.stop="addProductToCart('{{ data.product._id }}', 1, [])" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+                <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
             </button>
         </div>
     </div>
-</div>
+</a>

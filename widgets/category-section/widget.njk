@@ -4,8 +4,8 @@
     <section class="my-6 md:my-10 px-4 container mx-auto">
         <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
             <div class="flex items-center justify-between mb-4 md:mb-6">
-                <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('الاقسام') }}</h1>
-                <a href="{{ widget.data.view_all_link | default('/Category.html') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+                <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('المجموعات') }}</h1>
+                <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</a>
             </div>
 
             <!-- Categories Swiper -->
@@ -56,7 +56,6 @@
             </div>
         </div>
     </section>
-
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -69,30 +68,22 @@ document.addEventListener('DOMContentLoaded', function() {
   if (swiperElement) {
     var categorySwiper = new Swiper('.categorySwiper', {
       slidesPerView: 'auto',
-      spaceBetween: 0,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+      spaceBetween: 16,
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
       grabCursor: true,
-      {% if widget.data.autoplay | default(true) %}
-      autoplay: {
-        delay: {{ widget.data.autoplay_delay | default(3000) }},
-        disableOnInteraction: false,
-      },
-      {% endif %}
+      autoplay: { delay: 3000, disableOnInteraction: false },
       breakpoints: {
         640: {
           slidesPerView: 3,
-          spaceBetween: 0,
+          spaceBetween: 16,
         },
         768: {
           slidesPerView: 4,
-          spaceBetween: 0,
+          spaceBetween: 16,
         },
         1024: {
           slidesPerView: 5,
-          spaceBetween: 0,
+          spaceBetween: 16,
         },
       }
     });
@@ -105,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .category-card {
   transition: all 0.3s ease;
   border: 2px solid transparent;
-  margin-right: 16px;
+  margin-right: 0;
 }
 
 .category-card:hover {
@@ -166,4 +157,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }
 </style>
+
 

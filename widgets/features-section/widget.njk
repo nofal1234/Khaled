@@ -1,71 +1,69 @@
 <!-- Features Section -->
-<section class="my-1 md:my-2 px-4 container mx-auto">
-    <div class="py-1 md:py-2 px-4 md:px-6 rounded-2xl">
-        <div class="flex items-center justify-between mb-1 md:mb-2">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">تشكيلاتنا الخاصة</h1>
-            <span class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</span>
+{% set isLoading = widget.data.isLoading %}
+{% set features = widget.data.features or [] %}
+<section class="my-6 md:my-10 px-4 container mx-auto">
+    <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+        <div class="flex items-center justify-between mb-4 md:mb-6">
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('تشكيلاتنا الخاصة') }}</h1>
+            <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</a>
         </div>
 
-        <!-- Features Swiper -->
-        <div class="relative">
-            <div class="swiper categorySwiper">
-                <div class="swiper-wrapper justify-center h-3/5 gap-1 w-full">
-                    <!-- Feature 1 -->
-                    <div class="swiper-slide">
-                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
-                            <img src="{{ 'one.png' | assets }}" alt="الملابس العلوية" class="w-full h-80 mb-1 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-center">الملابس العلوية</span>
-                        </div>
-                    </div>
-
-                    <!-- Feature 2 -->
-                    <div class="swiper-slide">
-                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
-                            <img src="{{ 'two.png' | assets }}" alt="الاكسسوارات" class="w-full h-80 mb-1 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-center">الاكسسوارات</span>
-                        </div>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div class="swiper-slide">
-                        <div class="featuers-card flex flex-col items-center rounded-2xl p-1 w-full gap-0 cursor-pointer">
-                            <img src="{{ 'three.png' | assets }}" alt="المابس السفلية" class="w-full h-80 mb-1 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-center">المابس السفلية</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Navigation Buttons -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+        <!-- Loading Skeleton -->
+        {% if isLoading %}
+        <div class="flex gap-3 md:gap-4 overflow-hidden">
+            {% for i in [1,2,3,4,5,6] %}
+            <div class="flex flex-col items-center bg-white shadow-md rounded-2xl p-4 w-32 md:w-40">
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 mb-3"></div>
+                <div class="w-20 md:w-24 h-4 rounded bg-gray-200"></div>
             </div>
+            {% endfor %}
         </div>
-    </div>
-</section>
+        {% else %}
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper for features
-    const featuresSwiper = new Swiper('.categorySwiper', {
-        slidesPerView: 1,
-        spaceBetween: 2,
-        loop: true,
-        grabCursor: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-            480: { slidesPerView: 1.5, spaceBetween: 2 },
-            640: { slidesPerView: 2, spaceBetween: 3 },
-            768: { slidesPerView: 2.5, spaceBetween: 4 },
-            1024: { slidesPerView: 3, spaceBetween: 5 },
-        },
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-        }
-    });
-});
-</script>
+        {% set defaultTitles = [
+            widget.data.default_title_1 or 'الملابس العلوية',
+            widget.data.default_title_2 or 'الملابس السفلية',
+            widget.data.default_title_3 or 'الاكسسوارات'
+        ] %}
+
+        <!-- Desktop Layout: Side by Side -->
+        <div class="hidden sm:flex flex-row gap-2 sm:gap-3 md:gap-4 w-full">
+            {% for block in widget.blocks %}
+            {% if block.data and block.data.image and block.data.image.fileUrl %}
+            {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
+            {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
+            <a href="{{ block.data.link | default('#') }}" class="block flex-1">
+                <div class="w-full mb-3" style="aspect-ratio: 451 / 418;">
+                    <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                </div>
+                <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
+                {% if block.settings and block.settings.description %}
+                <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
+                {% endif %}
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Mobile Layout: Stacked -->
+        <div class="flex sm:hidden flex-col gap-3 w-full">
+            {% for block in widget.blocks %}
+            {% if block.data and block.data.image and block.data.image.fileUrl %}
+            {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
+            {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
+            <a href="{{ block.data.link | default('#') }}" class="block w-full">
+                <div class="w-full mb-3" style="aspect-ratio: 451 / 418;">
+                    <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                </div>
+                <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
+                {% if block.settings and block.settings.description %}
+                <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
+                {% endif %}
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
+</section>

@@ -1,0 +1,36 @@
+<!-- Service Features 2 Section -->
+{% set title = widget.data.section_title or 'مزايا الخدمة' %}
+<section class="my-12 md:my-16 px-4 container mx-auto">
+    <div class="py-8 md:py-12">
+        <h1 class="text-2xl md:text-3xl font-bold text-black text-center mb-10 md:mb-12">{{ title }}</h1>
+        {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
+        {% if hasBlocks %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-10 w-full md:w-4/5 mx-auto">
+            {% for block in widget.blocks %}
+            <div class="text-center flex flex-col items-center p-6 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="mb-2">
+                    {% set imgUrl = block.data and block.data.icon and block.data.icon.fileUrl %}
+                    {% if imgUrl %}
+                    <img src="{{ imgUrl }}" alt="{{ (block.data and block.data.alt) or (block.data and block.data.title) or (block.settings and block.settings.title) or 'icon' }}" class="w-16 h-16 mx-auto object-contain" />
+                    {% else %}
+                    <div class="w-16 h-16 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="{{ (block.settings and block.settings.icon_class) or 'ph-thin ph-star' }} text-4xl text-gray-400"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
+                {% if cardTitle %}
+                <h3 class="text-xl font-bold text-dark mt-5 mb-3 text-center">{{ cardTitle }}</h3>
+                {% endif %}
+                {% set cardDesc = (block.data and block.data.description) or (block.settings and block.settings.description) %}
+                {% if cardDesc %}
+                <p class="text-m text-gray-600 leading-relaxed text-center max-w-xs mx-auto">{{ cardDesc }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+

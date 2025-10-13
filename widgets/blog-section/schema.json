@@ -20,36 +20,7 @@
       "default": "#",
       "description": "الرابط الذي ينتقل إليه عند الضغط على عرض الكل"
     },
-    "show_view_all": {
-      "type": "checkbox",
-      "label": "إظهار رابط عرض الكل",
-      "default": true,
-      "description": "إظهار أو إخفاء رابط عرض الكل"
-    },
-    "title_color": {
-      "type": "color",
-      "label": "لون العنوان",
-      "default": "#333333",
-      "description": "لون العنوان الرئيسي"
-    },
-    "link_color": {
-      "type": "color",
-      "label": "لون رابط عرض الكل",
-      "default": "#6b7280",
-      "description": "لون رابط عرض الكل"
-    },
-    "card_background": {
-      "type": "color",
-      "label": "لون خلفية البطاقات",
-      "default": "#ffffff",
-      "description": "لون خلفية بطاقات المدونة"
-    },
-    "show_hover_effect": {
-      "type": "checkbox",
-      "label": "إظهار تأثير التمرير",
-      "default": true,
-      "description": "إظهار تأثير التمرير على البطاقات"
-    },
+    
     "columns_mobile": {
       "type": "select",
       "label": "عدد الأعمدة في الشاشات الصغيرة",
@@ -68,7 +39,25 @@
         {"value": "3", "label": "ثلاثة أعمدة"},
         {"value": "4", "label": "أربعة أعمدة"}
       ]
-    }
+    },
+    "default_button_text": {
+      "type": "string",
+      "label": "نص الرابط الافتراضي",
+      "default": "عرض المزيد",
+      "description": "النص المستخدم في الحالة الافتراضية عند عدم وجود بلوكات"
+    },
+    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام" },
+    "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية" },
+    "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "" },
+    "default_link_1": { "type": "string", "label": "رابط افتراضي 1", "default": "/blog" },
+    "default_title_2": { "type": "string", "label": "عنوان افتراضي 2", "default": "نصائح لاختيار الملابس المناسبة لكل مناسبة" },
+    "default_description_2": { "type": "textarea", "label": "وصف افتراضي 2", "default": "دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات" },
+    "default_image_2": { "type": "media", "label": "صورة افتراضية 2", "default": "" },
+    "default_link_2": { "type": "string", "label": "رابط افتراضي 2", "default": "/blog" },
+    "default_title_3": { "type": "string", "label": "عنوان افتراضي 3", "default": "كيفية العناية بالملابس وإطالة عمرها" },
+    "default_description_3": { "type": "textarea", "label": "وصف افتراضي 3", "default": "تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة" },
+    "default_image_3": { "type": "media", "label": "صورة افتراضية 3", "default": "" },
+    "default_link_3": { "type": "string", "label": "رابط افتراضي 3", "default": "/blog" }
   },
   "blocks": {
     "blogPost": {
@@ -87,15 +76,15 @@
           "description": "وصف مختصر للمنشور"
         },
         "image": {
-          "type": "image_picker",
+          "type": "media",
           "label": "صورة المنشور",
-          "description": "صورة تمثل محتوى المنشور"
+          "description": "قم برفع/اختيار صورة المنشور من البيلدر"
         },
         "button_text": {
           "type": "string",
-          "label": "نص الزر",
-          "default": "اقرأ المزيد",
-          "description": "النص الذي يظهر على زر القراءة"
+          "label": "نص الرابط",
+          "default": "عرض المزيد",
+          "description": "النص الذي يظهر على رابط القراءة"
         },
         "link": {
           "type": "string",
@@ -122,8 +111,8 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": "Blog/blog1.png",
-            "button_text": "اقرأ المزيد",
+            "image": { "fileUrl": "blog1.png" },
+            "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"
           }
@@ -133,8 +122,8 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": "Blog/blog2.png",
-            "button_text": "اقرأ المزيد",
+            "image": { "fileUrl": "blog2.png" },
+            "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"
           }
@@ -144,8 +133,8 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": "Blog/blog3.png",
-            "button_text": "اقرأ المزيد",
+            "image": { "fileUrl": "blog3.png" },
+            "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"
           }

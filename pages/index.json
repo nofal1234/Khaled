@@ -86,116 +86,6 @@
         "show_navigation": true,
         "autoplay": true,
         "autoplay_delay": 3000
-      },
-      "blocks": [
-        {
-          "block": "categoryItem",
-          "name": "نسائي",
-          "settings": {
-            "name": "نسائي",
-            "image": "Category/pic1.png",
-            "link": "/women",
-            "alt_text": "قسم النساء"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "رجالي",
-          "settings": {
-            "name": "رجالي",
-            "image": "Category/pic2.png",
-            "link": "/men",
-            "alt_text": "قسم الرجال"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "أطفال",
-          "settings": {
-            "name": "أطفال",
-            "image": "Category/pic3.png",
-            "link": "/kids",
-            "alt_text": "قسم الأطفال"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "أحذية",
-          "settings": {
-            "name": "أحذية",
-            "image": "Category/pic4.png",
-            "link": "/shoes",
-            "alt_text": "قسم الأحذية"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "رياضي",
-          "settings": {
-            "name": "رياضي",
-            "image": "Category/pic5.png",
-            "link": "/sports",
-            "alt_text": "القسم الرياضي"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "موسمي",
-          "settings": {
-            "name": "موسمي",
-            "image": "Category/pic6.png",
-            "link": "/seasonal",
-            "alt_text": "القسم الموسمي"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Video Section",
-      "widget": "video-section",
-      "settings": {
-        "default_title": "اكتشف افضل الخصومات",
-        "default_subtitle": "والعروض الحصريه",
-        "default_button_text": "تسوق الآن",
-        "default_button_link": "/collections"
-      }
-    },
-    {
-      "name": "products section",
-      "widget": "new-arrivals",
-      "settings": {
-        "section_title": "منتجات مميزة ⭐",
-        "view_all_link": "#",
-        "products": [
-          {
-            "image": "shop/files/1_0b1231d6-587d-4e1c-a19b-aba92da5b7bb_v=1731844752&width=600.png",
-            "name": "باور بانك Majentik MJ-32/ 10000 مللي أمبير",
-            "price": 899.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_e8167770-3061-4ce7-9013-710d7870a534_v=1720432304&width=600.png",
-            "name": "Majentik Power Bank MJ-11/ 20000 mah",
-            "price": 1100.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_97391f5e-53dd-4a79-b7be-fa873db02f01_v=1737188030&width=600.png",
-            "name": "Vacuum Magnetic Mobile Holder",
-            "price": 289.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/18mm-metal-watch-strap-milanese-loop-for-fossil-venture-hr-smart-original-imah4f62htcbcem5_34883f3a-457d-49be-98cc-ce1accf7dd99_v=1751885621&width=600.webp",
-            "name": "حزام معدني من الفولاذ المقاوم للصدأ",
-            "price": 149.00,
-            "old_price": 0,
-            "link": "#"
-          }
-        ]
       }
     },
     {
@@ -212,71 +102,20 @@
         "show_navigation": true,
         "autoplay": true,
         "autoplay_delay": 4000,
-        "products": [
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card1.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card2.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card3.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card1.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card2.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          }
-        ]
+        "products_collection": "latest"
       }
     },
     {
-      "name": "Banner Section",
+      "name": "⭐ لافتة العروض",
       "widget": "banner-section",
       "settings": {
-        "banner_image": "banner.png",
         "title": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة",
         "subtitle": "غيّر مظهرك هذا الموسم",
-        "button_text": "اطلب الان",
-        "button_link": "#",
-        "background_color": "#000000",
-        "text_color": "#ffffff",
-        "button_color": "#ffffff",
-        "button_border_color": "#ffffff",
-        "padding_y": "py-10",
-        "text_alignment": "text-right",
-        "show_button": true
+        "button_text": "اطلب الآن",
+        "button_link": "/collections",
+        "background_color": "#B9C4CB",
+        "image": "banner.png",
+        "alt": "صورة البانر"
       }
     },
     {
@@ -295,96 +134,41 @@
       },
       "blocks": [
         {
-          "block": "featureItem",
-          "name": "الملابس العلوية",
+          "block": "offerItem",
+          "name": "الصوره الاولي",
           "settings": {
-            "name": "الملابس العلوية",
-            "image": "Featuers/one.png",
+            "image": { "fileUrl": "one.png" },
             "link": "#",
-            "alt_text": "الملابس العلوية"
+            "alt": "العرض الأول",
+            "title": "",
+            "description": ""
           }
         },
         {
-          "block": "featureItem",
-          "name": "الاكسسوارات",
+          "block": "offerItem",
+          "name": "الصوره الثانيه",
           "settings": {
-            "name": "الاكسسوارات",
-            "image": "Featuers/two.png",
+            "image": { "fileUrl": "two.png" },
             "link": "#",
-            "alt_text": "الاكسسوارات"
+            "alt": "العرض الثاني",
+            "title": "",
+            "description": ""
           }
         },
         {
-          "block": "featureItem",
-          "name": "المابس السفلية",
+          "block": "offerItem",
+          "name": "الصوره الثالثه",
           "settings": {
-            "name": "المابس السفلية",
-            "image": "Featuers/three.png",
+            "image": { "fileUrl": "three.png" },
             "link": "#",
-            "alt_text": "المابس السفلية"
+            "alt": "العرض الثالث",
+            "title": "",
+            "description": ""
           }
         }
       ]
     },
-    {
-      "name": "Features Section",
-      "widget": "service-features",
-      "settings": {
-        "section_title": "مميزاتنا",
-        "title_color": "#000000",
-        "background_color": "#ffffff",
-        "card_background": "#ffffff",
-        "icon_color": "#000000",
-        "text_color": "#333333",
-        "description_color": "#6b7280",
-        "show_hover_effect": true,
-        "columns_mobile": "1",
-        "columns_tablet": "2",
-        "columns_desktop": "4"
-      },
-      "blocks": [
-        {
-          "block": "serviceFeature",
-          "name": "سهولة الاستخدام",
-          "settings": {
-            "icon": "ph-thin ph-touch-app",
-            "title": "سهولة الاستخدام",
-            "description": "تجربة شراء بسيطة وسريعة من أول دخول العميل لحد إتمام الطلب.",
-            "icon_size": "text-7xl"
-          }
-        },
-        {
-          "block": "serviceFeature",
-          "name": "الأمان والثقة",
-          "settings": {
-            "icon": "ph-thin ph-shield-check",
-            "title": "الأمان والثقة",
-            "description": "حماية كاملة لبيانات العملاء والدفع الإلكتروني الموثوق.",
-            "icon_size": "text-7xl"
-          }
-        },
-        {
-          "block": "serviceFeature",
-          "name": "السرعة والأداء",
-          "settings": {
-            "icon": "ph-thin ph-lightning",
-            "title": "السرعة والأداء",
-            "description": "صفحات سريعة التحميل ومتجر شغال 24/7 بدون أعطال.",
-            "icon_size": "text-7xl"
-          }
-        },
-        {
-          "block": "serviceFeature",
-          "name": "دعم مستمر",
-          "settings": {
-            "icon": "ph-thin ph-headset",
-            "title": "دعم مستمر",
-            "description": "خدمة عملاء سريعة ومتاحة لحل أي مشكلة أو استفسار.",
-            "icon_size": "text-7xl"
-          }
-        }
-      ]
-    },
+
     {
       "name": "Customer Reviews Section",
       "widget": "reviews-section",
@@ -428,45 +212,12 @@
       ]
     },
     {
-      "name": "FAQ Section",
-      "widget": "faq-section",
-      "settings": {
-        "section_title": "الأسئلة الشائعة"
-      },
-      "blocks": [
-        {
-          "block": "faqItem",
-          "name": "السؤال الأول",
-          "settings": {
-            "question": "كيف يمكنني إرجاع المنتج؟",
-            "answer": "يمكنك إرجاع المنتج خلال 14 يوم من تاريخ الشراء مع الحفاظ على حالة المنتج الأصلية."
-          }
-        },
-        {
-          "block": "faqItem",
-          "name": "السؤال الثاني",
-          "settings": {
-            "question": "ما هي مدة الشحن؟",
-            "answer": "مدة الشحن تتراوح بين 2-5 أيام عمل داخل القاهرة و 3-7 أيام للمحافظات الأخرى."
-          }
-        },
-        {
-          "block": "faqItem",
-          "name": "السؤال الثالث",
-          "settings": {
-            "question": "هل الشحن مجاني؟",
-            "answer": "نعم، الشحن مجاني للطلبات التي تزيد عن 500 جنيه داخل القاهرة و 800 جنيه للمحافظات."
-          }
-        }
-      ]
-    },
-    {
       "name": "Blog Section",
       "widget": "blog-section",
       "settings": {
         "section_title": "منشورات المدونة",
         "view_all_text": "عرض الكل",
-        "view_all_link": "#",
+        "view_all_link": "/blog",
         "show_view_all": true,
         "title_color": "#333333",
         "link_color": "#6b7280",
@@ -474,305 +225,6 @@
         "show_hover_effect": true,
         "columns_mobile": "1",
         "columns_desktop": "3"
-      }
-    },
-    {
-      "name": "Footer Section",
-      "widget": "footer",
-      "settings": {
-        "logo": "logo.png",
-        "description": "نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.",
-        "background_color": "#000000",
-        "text_color": "#ffffff",
-        "link_color": "#9ca3af",
-        "link_hover_color": "#ffffff",
-        "show_social_links": true
-      }
-    },
-    {
-      "name": "Special Offers Section",
-      "widget": "special-offers-section",
-      "settings": {
-        "section_title": "خصومات وعروض حصرية",
-        "view_all_link": "#",
-        "offer_1_image": {
-        },
-        "offer_1_link": "#",
-        "offer_1_alt": "عرض 1",
-        "offer_2_image": {
-        },
-        "offer_2_link": "#",
-        "offer_2_alt": "عرض 2",
-        "offer_3_image": {
-        },
-        "offer_3_link": "#",
-        "offer_3_alt": "عرض 3"
-      },
-      "blocks": [
-        {
-          "block": "offerItem",
-          "name": "العرض الأول",
-          "settings": {
-            "image": "",
-            "link": "#",
-            "alt": "العرض الأول",
-            "title": "",
-            "description": ""
-          }
-        },
-        {
-          "block": "offerItem",
-          "name": "العرض الثاني",
-          "settings": {
-            "image": "",
-            "link": "#",
-            "alt": "العرض الثاني",
-            "title": "",
-            "description": ""
-          }
-        },
-        {
-          "block": "offerItem",
-          "name": "العرض الثالث",
-          "settings": {
-            "image": "",
-            "link": "#",
-            "alt": "العرض الثالث",
-            "title": "",
-            "description": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "New Arrivals Section",
-      "widget": "new-arrivals",
-      "settings": {
-        "section_title": "القادمون الجدد",
-        "view_all_link": "#",
-        "products": [
-          {
-            "image": "shop/files/1_0b1231d6-587d-4e1c-a19b-aba92da5b7bb_v=1731844752&width=600.png",
-            "name": "باور بانك Majentik MJ-32/ 10000 مللي أمبير",
-            "price": 899.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_e8167770-3061-4ce7-9013-710d7870a534_v=1720432304&width=600.png",
-            "name": "Majentik Power Bank MJ-11/ 20000 mah",
-            "price": 1100.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_97391f5e-53dd-4a79-b7be-fa873db02f01_v=1737188030&width=600.png",
-            "name": "Vacuum Magnetic Mobile Holder",
-            "price": 289.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/18mm-metal-watch-strap-milanese-loop-for-fossil-venture-hr-smart-original-imah4f62htcbcem5_34883f3a-457d-49be-98cc-ce1accf7dd99_v=1751885621&width=600.webp",
-            "name": "حزام معدني من الفولاذ المقاوم للصدأ",
-            "price": 149.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/Android_Covers_Collection_Cover_v=1689107625&width=300.png",
-            "name": "For Samsung Galaxy Fit 3 Sport Band",
-            "price": 199.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/chargers-336078_v=1730466259&width=600.png",
-            "name": "محول طاقة USB-C بقوة 20 واط",
-            "price": 999.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/headset-879122_v=1730466296&width=600.png",
-            "name": "محول مقبس سماعة رأس بلوتوث",
-            "price": 134.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_8d65c5cc-f5e2-4269-a8d0-b5334860162e_v=1720431023&width=600.png",
-            "name": "تغيير إلى Ultra لساعات Apple",
-            "price": 269.00,
-            "old_price": 0,
-            "link": "#"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Collections Section",
-      "widget": "collections-section",
-      "settings": {
-        "section_title": "المجموعات",
-        "view_all_link": "#"
-      }
-    },
-    {
-      "name": "Best Sellers Section",
-      "widget": "new-arrivals",
-      "settings": {
-        "section_title": "الأكثر مبيعًا",
-        "view_all_link": "#",
-        "products": [
-          {
-            "image": "shop/files/1_0b1231d6-587d-4e1c-a19b-aba92da5b7bb_v=1731844752&width=600.png",
-            "name": "باور بانك Majentik MJ-32/ 10000 مللي أمبير",
-            "price": 899.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_e8167770-3061-4ce7-9013-710d7870a534_v=1720432304&width=600.png",
-            "name": "Majentik Power Bank MJ-11/ 20000 mah",
-            "price": 1100.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_97391f5e-53dd-4a79-b7be-fa873db02f01_v=1737188030&width=600.png",
-            "name": "Vacuum Magnetic Mobile Holder",
-            "price": 289.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/18mm-metal-watch-strap-milanese-loop-for-fossil-venture-hr-smart-original-imah4f62htcbcem5_34883f3a-457d-49be-98cc-ce1accf7dd99_v=1751885621&width=600.webp",
-            "name": "حزام معدني من الفولاذ المقاوم للصدأ",
-            "price": 149.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/Android_Covers_Collection_Cover_v=1689107625&width=300.png",
-            "name": "For Samsung Galaxy Fit 3 Sport Band",
-            "price": 199.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/chargers-336078_v=1730466259&width=600.png",
-            "name": "محول طاقة USB-C بقوة 20 واط",
-            "price": 999.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/headset-879122_v=1730466296&width=600.png",
-            "name": "محول مقبس سماعة رأس بلوتوث",
-            "price": 134.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_8d65c5cc-f5e2-4269-a8d0-b5334860162e_v=1720431023&width=600.png",
-            "name": "تغيير إلى Ultra لساعات Apple",
-            "price": 269.00,
-            "old_price": 0,
-            "link": "#"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Banner Section",
-      "widget": "banner-section",
-      "settings": {
-        "banner_image": {
-          "fileUrl": ""
-        },
-        "banner_link": "#",
-        "banner_alt": "UGREEN Nexode RG 65W"
-      },
-      "blocks": [
-        {
-          "block": "slideItem",
-          "name": "الشريحة الأولى",
-          "settings": {
-            "image": "",
-            "link": "#",
-            "alt": "Banner",
-            "title": "",
-            "subtitle": "",
-            "button_text": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "Offers Section",
-      "widget": "new-arrivals",
-      "settings": {
-        "section_title": "العروض 🔥",
-        "view_all_link": "#",
-        "products": [
-          {
-            "image": "shop/files/1_0b1231d6-587d-4e1c-a19b-aba92da5b7bb_v=1731844752&width=600.png",
-            "name": "باور بانك Majentik MJ-32/ 10000 مللي أمبير",
-            "price": 899.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_e8167770-3061-4ce7-9013-710d7870a534_v=1720432304&width=600.png",
-            "name": "Majentik Power Bank MJ-11/ 20000 mah",
-            "price": 1100.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_97391f5e-53dd-4a79-b7be-fa873db02f01_v=1737188030&width=600.png",
-            "name": "Vacuum Magnetic Mobile Holder",
-            "price": 289.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/18mm-metal-watch-strap-milanese-loop-for-fossil-venture-hr-smart-original-imah4f62htcbcem5_34883f3a-457d-49be-98cc-ce1accf7dd99_v=1751885621&width=600.webp",
-            "name": "حزام معدني من الفولاذ المقاوم للصدأ",
-            "price": 149.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/Android_Covers_Collection_Cover_v=1689107625&width=300.png",
-            "name": "For Samsung Galaxy Fit 3 Sport Band",
-            "price": 199.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/chargers-336078_v=1730466259&width=600.png",
-            "name": "محول طاقة USB-C بقوة 20 واط",
-            "price": 999.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/headset-879122_v=1730466296&width=600.png",
-            "name": "محول مقبس سماعة رأس بلوتوث",
-            "price": 134.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_8d65c5cc-f5e2-4269-a8d0-b5334860162e_v=1720431023&width=600.png",
-            "name": "تغيير إلى Ultra لساعات Apple",
-            "price": 269.00,
-            "old_price": 0,
-            "link": "#"
-          }
-        ]
       }
     },
     {
@@ -842,16 +294,6 @@
       }
     },
     {
-      "name": "Video Section",
-      "widget": "video-section",
-      "settings": {
-        "title": "اكتشف افضل الخصومات",
-        "subtitle": "والعروض الحصريه",
-        "button_text": "تسوق الآن",
-        "button_link": "/collections"
-      }
-    },
-    {
       "name": "Customer Reviews Section",
       "widget": "reviews-section",
       "settings": {
@@ -892,55 +334,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "Features Section",
-      "widget": "features-section",
-      "settings": {
-        "section_title": "مميزاتنا"
-      },
-      "blocks": [
-        {
-          "block": "featureItem",
-          "name": "الشحن المجاني",
-          "settings": {
-            "title": "الشحن مجاناً",
-            "description": "نحن نغطي كافة المناطق في مصر مع حلول الشحن السريع.",
-            "icon": "",
-            "alt": "أيقونة الشحن"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "دعم 24/7",
-          "settings": {
-            "title": "دعم 24/7",
-            "description": "اتصل بنا 24 ساعة في اليوم، 7 أيام في الأسبوع.",
-            "icon": "",
-            "alt": "أيقونة الدعم"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "دفع آمن",
-          "settings": {
-            "title": "دفع آمن بنسبة 100%",
-            "description": "نحن نضمن دفعًا آمنًا للغاية مع خصوصيتك.",
-            "icon": "",
-            "alt": "أيقونة الدفع الآمن"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "ضمان فعال",
-          "settings": {
-            "title": "ضمان فعال",
-            "description": "نحن نضمن منتجاتنا بشروط مرنة والضمان الحقيقي.",
-            "icon": "",
-            "alt": "أيقونة الضمان"
-          }
-        }
-      ]
     }
-  ]
-}
+      ]
+    }  

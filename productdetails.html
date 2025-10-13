@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme1</title>
+
+    <style>
+      :root {
+        --mainColor: #000000;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .product-card {
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .product-card img {
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .product-card:hover img {
+        transform: scale(1.05);
+      }
+
+      header {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+      }
+
+      main {
+        padding-top: 88px;
+      }
+
+      input {
+        background-color: #f7f7f7;
+      }
+
+      input::placeholder {
+        color: rgb(0, 0, 0) !important;
+        opacity: 0.8;
+      }
+
+      input:focus::placeholder {
+        opacity: 0.6;
+      }
+
+      .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      @keyframes modal {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-modal {
+    animation: modal 0.3s ease-out;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+      @media (max-width: 1024px) {
+        main {
+          padding-top: 76px;
+        }
+        .product-card img {
+          max-height: 260px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding-top: 140px;
+        }
+
+        .product-card img {
+          max-height: 200px;
+        }
+
+        .mobile-filters {
+          flex-direction: column;
+          gap: 0.75rem;
+          width: 100%;
+        }
+
+        .mobile-filters > div {
+          width: 100%;
+        }
+
+        .mobile-filters select,
+        .mobile-filters input {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              Tajawal: ["Tajawal"],
+            },
+            colors: {
+              mainColor: {
+                DEFAULT: "#000000",
+              },
+              dark: {
+                DEFAULT: "#333333",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="font-Tajawal">
+    <div id="app">
+      <div>
+        <!-- ==================== HEADER ==================== -->
+        <header class="">
+          <!-- Top Bar - Hidden on mobile -->
+          <div class="bg-black bg-opacity-80 text-white py-2 hidden md:block">
+            <div
+              class="container mx-auto px-4 flex items-center justify-between text-sm"
+            >
+              <div
+                class="flex items-center gap-2 cursor-pointer hover:text-mainColor transition"
+              >
+                <i class="ph ph-caret-down"></i>
+                <span class="text-xl">Cairo</span>
+              </div>
+
+              <div class="flex items-center gap-10">
+                <button class="hover:text-mainColor transition">
+                  <i class="ph ph-caret-right px-6"></i>
+                </button>
+                <span class="text-xl" style="direction: ltr"
+                  >1,800+ brands</span
+                >
+                <button class="hover:text-mainColor transition">
+                  <i class="ph ph-caret-left px-6"></i>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span
+                  class="cursor-pointer hover:text-mainColor text-xl transition"
+                  >English</span
+                >
+                <span>|</span>
+                <span
+                  class="cursor-pointer hover:text-mainColor text-xl transition"
+                  >العربية</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN HEADER -->
+          <div class="bg-transparent">
+            <div
+              class="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between"
+            >
+              <!-- Logo -->
+              <div class="flex items-center gap-2">
+                <img
+                  :src="header.logo"
+                  alt="Logo"
+                  class="h-12 md:h-20 w-auto"
+                />
+              </div>
+
+              <!-- Desktop Search & Icons -->
+              <div
+                class="hidden lg:flex items-center gap-6 flex-1 max-w-5xl px-8"
+              >
+                <div class="relative flex-1">
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="ابحث عن المنتج..."
+                    class="text-mainColor w-full py-3 px-6 pr-12 rounded-full bg-gray focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
+                  />
+                  <button
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-mainColor"
+                  >
+                    <i class="ph ph-magnifying-glass text-xl"></i>
+                  </button>
+                </div>
+
+                <button class="text-mainColor transition" title="المفضلة">
+                  <i class="ph ph-heart text-2xl"></i>
+                </button>
+
+                <a
+                  href="/cart"
+                  class="relative text-mainColor transition"
+                  title="السلة"
+                >
+                  <i class="ph-light ph-shopping-cart text-2xl"></i>
+                </a>
+
+                <button class="text-mainColor transition" title="الحساب">
+                  <i class="ph ph-user text-2xl"></i>
+                </button>
+              </div>
+
+              <!-- Mobile: show small inline search input  -->
+              <div class="flex lg:hidden items-center gap-3">
+                <div class="flex-1">
+                  <input
+                    type="text"
+                    name="mobile-search"
+                    placeholder="ابحث..."
+                    class="w-full py-2 px-3 rounded-full border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-mainColor"
+                  />
+                </div>
+
+                <a href="/cart" class="relative text-mainColor transition">
+                  <i class="ph ph-shopping-bag text-xl"></i>
+                </a>
+
+                <button
+                  @click="toggleMobileMenu"
+                  class="text-mainColor transition"
+                >
+                  <i class="ph ph-list text-xl"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Mobile Menu Overlay -->
+            <div
+              v-if="showMobileMenu"
+              @click="toggleMobileMenu"
+              class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            ></div>
+
+            <!-- Mobile Menu -->
+            <div
+              class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 lg:hidden"
+              :class="{ 'active': showMobileMenu }"
+            >
+              <div class="p-4">
+                <button @click="toggleMobileMenu" class="mb-6 text-gray-600">
+                  <i class="ph ph-x text-2xl"></i>
+                </button>
+
+                <nav class="space-y-4">
+                  <a
+                    v-for="(category, index) in navigator.categories"
+                    :key="index"
+                    href="#"
+                    @click.prevent="setActiveCategory(category); toggleMobileMenu()"
+                    class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition"
+                    :class="{'text-mainColor font-bold': navigator.activeCategory === category}"
+                  >
+                    <span>{{ category }}</span>
+                  </a>
+                  <div class="pt-4 border-t">
+                    <a
+                      href="#"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition"
+                    >
+                      <i class="ph ph-user"></i>
+                      <span>الحساب</span>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4"
+                    >
+                      <i class="ph ph-heart"></i>
+                      <span>المفضلة</span>
+                    </a>
+                    <a
+                      href="/cart"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4"
+                    >
+                      <i class="ph ph-shopping-cart"></i>
+                      <span>السلة</span>
+                    </a>
+                  </div>
+                  <div class="pt-4 border-t">
+                    <button
+                      class="w-full text-right text-gray-700 hover:text-mainColor transition"
+                    >
+                      English
+                    </button>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navbar -->
+          <nav
+            class="bg-white shadow-md hidden lg:flex justify-center items-center mb-5 px-6 py-3"
+          >
+            <ul class="hidden lg:flex items-center gap-8 text-mainColor">
+              <li
+                v-for="(category, index) in navigator.categories"
+                :key="index"
+                class="relative group"
+              >
+                <a
+                  href="#"
+                  :class="{'active-link -translate-y-1': navigator.activeCategory === category}"
+                  @click.prevent="setActiveCategory(category)"
+                  class="flex items-center gap-2 py-3 transition-all duration-300 group-hover:-translate-y-1"
+                >
+                  <span
+                    class="font-bold text-xl transition-colors duration-300 group-hover:text-black"
+                    :class="{'text-black': navigator.activeCategory === category}"
+                  >
+                    {{ category }}
+                  </span>
+                </a>
+                <div
+                  class="absolute bottom-0 left-0 h-0.5 bg-mainColor transition-all duration-300"
+                  :class="navigator.activeCategory === category ? 'w-full' : 'w-0 group-hover:w-full'"
+                ></div>
+              </li>
+            </ul>
+          </nav>
+        </header>
+
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <main class="min-h-screen px-4 md:px-6">
+          <!-- Breadcrumb -->
+          <div class="container mx-auto py-4">
+            <nav class="flex items-center gap-2 text-sm text-gray-600">
+              <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+              <span>/</span>
+              <a href="#" class="hover:text-mainColor transition">أطفال</a>
+              <span>/</span>
+              <span class="text-mainColor font-semibold">تفاصيل المنتج</span>
+            </nav>
+          </div>
+
+          <!-- Product Details Section -->
+          <section class="container mx-auto py-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+              <!-- Product Images -->
+              <div class="flex flex-col gap-4">
+                <!-- Main Image -->
+                <div class="bg-gray-100 rounded-2xl overflow-hidden">
+                  <img
+                    :src="selectedImage"
+                    :alt="selectedProduct.title"
+                    class="w-full object-cover"
+                  />
+                </div>
+
+                <!-- Thumbnail Images -->
+                <div class="grid grid-cols-3 gap-3">
+                  <div
+                    v-for="(img, index) in selectedProduct.images"
+                    :key="index"
+                    class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 hover:border-mainColor transition"
+                    :class="{'border-mainColor': selectedImage === img}"
+                    @click="selectedImage = img"
+                  >
+                    <img
+                      :src="img"
+                      alt="Thumbnail"
+                      class="w-64 h-40 object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Info -->
+              <div class="flex w-4/5 md-w-full flex-col gap-6">
+                <!-- Title -->
+                <div>
+                  <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">
+                    {{ selectedProduct.title }}
+                  </h1>
+                </div>
+
+                <!-- Description -->
+                <div>
+                  <p class="text-gray-600 leading-relaxed">
+                    {{ selectedProduct.description }} <button class="text-mainColor underline ml-2">اقرأ المزيد</button>
+                  </p> 
+                </div>
+
+                <!-- Price -->
+                <div class="flex  gap-4 flex-col">
+                  <h1 class="text-2xl text-mainColor">السعر</h1>
+                  <span class="text-4xl font-bold text-mainColor"
+                    >{{ selectedProduct.price }}  <span class="text-sm font-light text-gray-500"
+                    > الضرائب متضمنة. </span</span
+                  >
+                  
+                </div>
+
+                
+                <!-- Color Selection -->
+                <div>
+                    <h3 class="text-xl font-bold mb-3">اللون</h3>
+                    <div class="flex items-center gap-3">
+                      <button 
+                        v-for="(color, index) in selectedProduct.colors" 
+                        :key="index"
+                        class="relative group"
+                      >
+                        <img 
+                          :src="color.img" 
+                          alt="Color Option" 
+                          class="w-16 h-16 object-cover rounded-lg border-2 transition"
+                          :class="selectedColor === color.name ? 'border-mainColor ring-2 ring-mainColor ring-offset-2' : 'border-gray-300 hover:border-mainColor'"
+                        />
+                      </button>
+                    </div>
+                </div>
+
+
+                <!-- Size Selection -->
+                <div>
+                  <h3 class="text-2xl  text-mainColor mb-3">المقاسات</h3>
+                  <div class="flex items-center gap-3 flex-wrap">
+                    <button
+                      v-for="size in selectedProduct.sizes"
+                      :key="size"
+                      class="px-6 py-2  bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold texl-5xl"
+                      :class="{'bg-[#D9D9D9] text-[#000000] border border-black ': selectedSize === size}"
+                    >
+                      {{ size }}
+                    </button>
+                  </div>
+                  <button @click="showSizeGuide = true" class="flex items-center gap-2 text-mainColor px-4 py-2 pt-5 rounded-lg underline transition">
+    <i class="ph ph-ruler"></i>
+    <span>دليل المقاسات والأوزان</span>
+</button>
+                </div>
+
+
+                <!-- Quantity -->
+                <div class="flex gap-4 flex-col md:flex-row">
+                  <div class="flex items-center gap-3">
+                    <input
+                      type="number"
+                      v-model="quantity"
+                      min="1"
+                      class="w-20 h-12 text-center border-2 border-black rounded-full bg-white font-bold text-lg"
+                    /></div>
+                    <button
+                    class="flex-1 bg-mainColor text-white py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition flex items-center justify-center gap-2"
+                  >
+                    إضافة الي العربة
+                  </button>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="w-full">
+                  <button
+                    class="w-full px-6 py-4 border-2 border-mainColor rounded-full font-bold text-lg hover:bg-mainColor hover:text-white transition flex items-center justify-center"
+                  >
+                    شراء الان
+                  </button>
+                </div>
+
+
+                <!-- Additional Info -->
+                <div class="border-t border-gray-200 pt-6 space-y-4">
+                  <div class="flex items-center gap-3">
+                    <i class="ph-light ph-alarm text-2xl text-mainColor"></i>
+                    <div>
+                      <p class="font-bold">متبقي ١٠ قطع فقط في المخزون. اطلبها قريبًا. </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <i
+                      class="ph-light ph-check text-2xl text-mainColor"
+                    ></i>
+                    <div>
+                      <p class="font-bold"> التوصيل والشحن مجاني</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <i class="ph-light ph-check text-2xl text-mainColor"></i>
+                    <div>
+                      <p class="font-bold">الدفع الآمن عبر الإنترنت</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Features 2 Section -->
+<section class=" container">
+    <div class="">
+        <div class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
+            <div v-for="feature in features2" :key="feature.id"
+                 class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div class="w-24 h-16 rounded-full flex items-center justify-center ">
+                    <i :class="feature.icon" class="text-xl"></i>
+                </div>
+                <h3 class="text-base text-lg  text-dark ">{{ feature.title }}</h3>
+            </div>
+        </div>
+    </div>
+</section>
+              </div>
+            </div>
+          </section>
+
+          
+                <section class="lg:flex md:flex  px-4 container">
+                    <!-- FAQ Component -->
+<div id="faq-app" class="max-w-2xl mx-auto p-6">
+                        <h2 class="text-2xl md:text-3xl font-bold pb-10"> مزيد من المعلومات</h2>
+
+  <div class="space-y-4">
+    <!-- FAQ Item 1 -->
+    <div class="border-b border-gray-200">
+      <button 
+        @click="toggleItem(0)"
+        class="w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors"
+      >
+        <h3 class="text-lg font-semibold text-gray-900">الوصف</h3>
+        <span class="text-2xl text-gray-500 mr-4">{{ openItems.includes(0) ? '−' : '+' }}</span>
+      </button>
+      <div 
+        v-show="openItems.includes(0)"
+        class="pb-4 text-right"
+      >
+        <p class="text-gray-700 leading-relaxed">
+          سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي.
+        </p>
+        <p class="text-gray-700 leading-relaxed mt-3">
+          تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرانت الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Item 2 -->
+    <div class="border-b border-gray-200">
+      <button 
+        @click="toggleItem(1)"
+        class="w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors"
+      >
+        <h3 class="text-lg font-semibold text-gray-900">التسليم والارجاع</h3>
+        <span class="text-2xl text-gray-500 mr-4">{{ openItems.includes(1) ? '−' : '+' }}</span>
+      </button>
+      <div 
+        v-show="openItems.includes(1)"
+        class="pb-4 text-right"
+      >
+        <p class="text-gray-700 leading-relaxed">
+          معلومات التسليم والإرجاع هنا...
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Item 3 -->
+    <div class="border-b border-gray-200">
+      <button 
+        @click="toggleItem(2)"
+        class="w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors"
+      >
+        <h3 class="text-lg font-semibold text-gray-900">تواصل معانا</h3>
+        <span class="text-2xl text-gray-500 mr-4">{{ openItems.includes(2) ? '−' : '+' }}</span>
+      </button>
+      <div 
+        v-show="openItems.includes(2)"
+        class="pb-4 text-right"
+      >
+        <p class="text-gray-700 leading-relaxed">
+          معلومات التواصل هنا...
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+                   <div class="w-full  pt-6 ">
+                      <h2 class="text-2xl md:text-3xl font-bold pb-4"> عناصر يمكن ان تعجبك </h2>
+                  <section class="my-6 md:my-10 px-2 md:px-4 container mx-auto">
+          <div class=" flex gap-4 md:gap-6">
+            <div
+              v-for="product in products"
+              :key="product.id"
+              class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
+            >
+              <!-- Image Section -->
+              <div class="relative overflow-hidden bg-gray-100">
+                <img :src="product.image" :alt="product.title" class="w-full h-80 object-contain" />
+
+                <!-- Rating Badge -->
+                <div v-if="product.rate" class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+                  {{ product.rate }}
+                  <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+                </div>
+                
+                <!-- Favorite Button -->
+                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                  <i class="ph ph-heart text-xl"></i>
+                </button>
+              </div>
+
+              <!-- Content Section -->
+              <div class="p-3 md:p-4">
+                <h3 class="text-base md:text-lg font-bold text-dark mb-2">
+                  {{ product.title }}
+                </h3>
+                <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">
+                  {{ product.description }}
+                </p>
+
+                <!-- Price Section -->
+                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xl md:text-2xl font-bold text-mainColor">{{ product.price }}</span>
+                    <span v-if="product.oldPrice" class="text-xs md:text-sm text-gray-400 line-through">{{ product.oldPrice }}</span>
+                    <span class="text-xs text-red-500">{{ product.discount }}</span>
+                  </div>
+                  <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+                    <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
+                  </button>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </section>
+            </div>
+                </section>
+
+<!-- Reviews Section -->
+<section class="my-6 md:my-10 px-4 container mx-auto">
+    <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+        
+        <!-- Reviews Container with Flex -->
+        <div v-else class="flex flex-col justify-around lg:flex-row gap-6 lg:gap-8 items-center">
+            <!-- Left Side: Rating Summary -->
+            <div class="w-full lg:w-1/2 flex gap-6 items-center justify-center p-6 md:p-8">
+                <div class="text-center mb-6">
+                              <h1 class="text-2xl md:text-3xl font-bold text-black">التقييم و المراجعات</h1>
+                  <div class="flex items-center justify-center gap-2">
+                    <p class="text-gray-500 text-2xl pt-[4rem] font-['Montserrat']">5/</p>
+                    <h2 class="text-[10rem] font-500 font-['Montserrat'] text-black mb-2">4.5</h2>
+                    </div>
+                    <p class="text-gray-600 flex text-xs md:text-sm mt-2">( 30 تقييم جديد )</p>
+                </div>
+
+                <!-- Stars Ratings -->
+                <div class="w-1/2 space-y-2 md:space-y-3">
+                    <div class="flex items-center gap-3">
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500 rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-yellow-500 rounded-full" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Reviews List -->
+            <div class="lg:w-[30%] md:w-[100%] sm:w-[100%] border-2 border-gray p-4 rounded-lg flex flex-col gap-4">
+                    <div>
+                      <h2 class="text-lg md:text-xl font-bold text-dark mb-4">احمد محمد </h2>
+                      <div class="flex items-center gap-2 mb-2">
+                          <i class="ph-fill ph-star text-yellow-300 text-sm md:text-base"></i>
+                          <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                          <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                          <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                          <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                    </div>
+                    </div>
+
+                    <!-- Review Images (if any) -->
+                    <div class="flex gap-2 overflow-x-auto" v-if="selectedProduct.images && selectedProduct.images.length">
+                        <img v-for="(img, index) in selectedProduct.images" :key="index" 
+                             :src="img" 
+                             class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0">
+                    </div>
+
+                    <!-- Review Description -->
+                    <p class="text-xs md:text-sm text-gray-600 leading-relaxed">{{ selectedProduct.rev }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+          <!-- Related Products -->
+          <section class="container mx-auto px-8 py-8 md:py-12">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl md:text-3xl font-bold"> العروض </h2>
+              <a href="#" class="text-mainColor underline hover:no-underline"
+                >عرض الكل</a
+              >
+            </div>
+
+            <div
+              class="grid  gap-4 md:gap-6"
+            >        <section class="my-6 md:my-10 px-2 md:px-4 container mx-auto">
+          <div class="grid grid-cols-4  gap-4 ">
+            <div
+              v-for="product in products"
+              :key="product.id"
+              class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
+            >
+              <!-- Image Section -->
+              <div class="relative overflow-hidden bg-gray-100">
+                <img :src="product.image" :alt="product.title" class="w-full h-80 object-contain" />
+
+                <!-- Rating Badge -->
+                <div v-if="product.rate" class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+                  {{ product.rate }}
+                  <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+                </div>
+                
+                <!-- Favorite Button -->
+                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                  <i class="ph ph-heart text-xl"></i>
+                </button>
+              </div>
+
+              <!-- Content Section -->
+              <div class="p-3 md:p-4">
+                <h3 class="text-base md:text-lg font-bold text-dark mb-2">
+                  {{ product.title }}
+                </h3>
+                <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">
+                  {{ product.description }}
+                </p>
+
+                <!-- Price Section -->
+                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xl md:text-2xl font-bold text-mainColor">{{ product.price }}</span>
+                    <span v-if="product.oldPrice" class="text-xs md:text-sm text-gray-400 line-through">{{ product.oldPrice }}</span>
+                    <span class="text-xs text-red-500">{{ product.discount }}</span>
+                  </div>
+                  <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+                    <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
+                  </button>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </section>
+            </div>
+          </section>
+          
+        </main>
+
+
+
+<!-- Modal Overlay -->
+<div v-if="showSizeGuide" 
+     @click="showSizeGuide = false"
+     class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    
+    <!-- Modal Content -->
+    <div @click.stop 
+         class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto relative animate-modal">
+        <!-- Modal Header -->
+        <div class="p-6 flex ">
+            <h2 class="text-xl md:text-2xl font-bold text-center text-black">دليل المقاسات والأوزان</h2>
+                    <!-- Close Button -->
+        <button @click="showSizeGuide = false" 
+                class="absolute top-4 left-4 text-gray-600 hover:text-black transition z-10">
+            <i class="ph ph-x text-2xl"></i>
+        </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6">
+            <!-- Size Guide Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-center border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100">
+                          <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Japan</th>
+                          <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">EU</th>
+                          <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">UK</th>
+                            <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">US</th>
+                            <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="size in sizeGuideData" :key="size.name" class="hover:bg-gray-50 transition">
+                            <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">{{ size.japan }}</td>
+                            <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">{{ size.eu }}</td>
+                            <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">{{ size.uk }}</td>
+                            <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">{{ size.us }}</td>
+                            <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">{{ size.name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- ==================== FOOTER ==================== -->
+      <footer class="bg-black text-white py-12 md:py-16 px-4 md:px-6">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-10 mb-8">
+            <div class="col-span-2 md:col-span-1">
+              <div class="flex items-center gap-2 mb-4">
+                <img :src="footer.logo" alt="Logo" class="h-12 md:h-16 w-auto" />
+              </div>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">
+                {{ footer.description }}
+              </p>
+              <div class="flex gap-4 mt-6">
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-snapchat-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-instagram-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-twitter-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-facebook-logo text-xl md:text-2xl"></i>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">نسائي</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">رجالي</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">أطفال</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">صفحات أخري</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">الرئيسية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">المدونة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">تواصل معانا</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">السلة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">المفضلة</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pt-6 text-center md:text-right text-gray-400 flex flex-col md:flex-row justify-between items-center gap-4 w-full text-xs md:text-sm">
+            <span class="font-bold text-base md:text-lg text-white">
+              &copy; {{ footer.name }} . جميع الحقوق محفوظة.
+            </span>
+            <img :src="footer.paymentMethods" alt="Payment Methods" class="h-8 md:h-10 w-auto" />
+          </div>
+        </div>
+      </footer>
+      </div>
+    </div>
+
+    <!-- ==================== VUE.JS SCRIPT ==================== -->
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            showMobileMenu: false,
+            isLoading: false,
+            openItems: [0],
+            showSizeGuide: false,
+
+
+            header: {
+              logo: "/assets/darklogo.png",
+              cartCount: 0,
+            },
+
+            navigator: {
+              categories: [
+                "الرئيسية",
+                "نسائي",
+                "رجالي",
+                "أطفال",
+                "موسمي",
+                "أحدث العروض",
+                "افضل مبيعآ",
+                "شوهد مؤخرأ",
+              ],
+              activeCategory: "الرئيسية",
+            },
+            features2: [
+              {
+                id: 1,
+                icon: "ph-light ph-star text-mainColor",
+                title: "الشحن العالمي السريع",
+              },
+              {
+                id: 2,
+                icon: "ph-light ph-star text-mainColor",
+                title: "إرجاع مجاني",
+              },
+              {
+                id: 3,
+                icon: "ph-light ph-star text-mainColor",
+                title: "مدفوعات آمنة بنسبة 100%",
+              },
+              {
+                id: 4,
+                icon: "ph-light ph-star text-mainColor",
+                title: "شحن مجاني مع تعويض",
+              },
+            ],
+            products: [
+            {
+              id: 1,
+              title: "ملابس اطفال",
+              description: "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+              image: "/assets/Cards/card1.png",
+              rate: "5.0",
+              price: "570 $",
+              oldPrice: "950 $",
+              discount: "40%-",
+            },
+            {
+              id: 2,
+              title: "ملابس اطفال",
+              description: "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+              image: "/assets/Cards/card1.png",
+              rate: "5.0",
+              price: "570 $",
+              oldPrice: "950 $",
+              discount: "40%-",
+            }
+          ],
+                  sizeGuideData: [
+            { name: 'XS', us: '0-2', uk: '4-6', eu: '32-34', japan: '5' },
+            { name: 'S', us: '4-6', uk: '8-10', eu: '36-38', japan: '7' },
+            { name: 'M', us: '8-10', uk: '12-14', eu: '40-42', japan: '9' },
+            { name: 'L', us: '12-14', uk: '16-18', eu: '44-46', japan: '11' },
+            { name: 'XL', us: '16-18', uk: '20-22', eu: '48-50', japan: '13' },
+        ],
+            footer: {
+              logo: "/assets/logo.png",
+              name: "قمرة",
+              description:
+                "نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.",
+              paymentMethods: "/assets/payment-methods.jpg",
+            },
+
+            selectedProduct: {
+              id: 1,
+              title: "سترة منفوخة سوداء",
+              image: "/assets/Cards/card4.png",
+              images: [
+                "/assets/Cards/card6.png",
+                "/assets/Cards/card7.jpg",
+                "/assets/Cards/card5.png",
+              ],
+              rev: "أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.",
+              description:
+                "سواءً كنت تتجول في شوارع المدينة أو تنطلق في مغامرات خارجية، يضمن لك هذا الجاكيت المنفوخ الراحة والدفء أينما ذهبت. يتناسب لونه الأسود متعدد الاستخدامات مع أي إطلالة، مما يجعله الخيار الأمثل ",
+              price: "69.95 $",
+              sizes: ["XXL", "XL","L","M","S"],
+              colors: [
+                { name: "أسود", img: "/assets/Cards/card4.png" },
+                { name: "أبيض", img: "/assets/Cards/card5.png" },
+              ],
+              reviews: 30,
+            },
+
+            selectedImage: "/assets/Cards/card4.png",
+            selectedSize: null,
+            selectedColor: null,
+            quantity: 1,
+
+            reviews: [
+              {
+                id: 1,
+                name: "أحمد محمد",
+                comment: "أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.",
+              },
+            ],
+          };
+        },
+
+        methods: {
+          setActiveCategory(category) {
+            this.navigator.activeCategory = category;
+          },
+
+              toggleItem(index) {
+      const position = this.openItems.indexOf(index);
+      if (position > -1) {
+        this.openItems.splice(position, 1);
+      } else {
+        this.openItems.push(index);
+      }
+    },
+
+          toggleMobileMenu() {
+            this.showMobileMenu = !this.showMobileMenu;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

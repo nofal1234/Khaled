@@ -1,19 +1,21 @@
 <!-- Features Bar Section -->
 <section class="w-full py-2 sm:py-3 md:py-4 bg-black border-b border-gray-800">
     <div class="container mx-auto h-full px-1 sm:px-2">
-        <div class="h-full grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center sm:justify-evenly gap-1.5 sm:gap-2 md:gap-4">
-            <!-- Loop through features -->
-            {% for feature in widget.blocks %}
-            <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-3 px-1">
-                <!-- Icon -->
-                <span class="text-white text-xs sm:text-sm md:text-lg lg:text-xl flex-shrink-0">{{ feature.data.icon | safe }}</span>
-                
-                <!-- Title -->
-                <p class="text-white text-[8px] sm:text-[9px] md:text-xs lg:text-sm font-bold leading-tight text-center">
-                    {{ feature.data.title }}
-                </p>
+        <div class="ticker" dir="rtl">
+            <div class="ticker__track gap-[8.25px] sm:gap-3 md:gap-5">
+                {% for feature in widget.blocks %}
+                <div class="ticker__item gap-[8.25px] sm:gap-2 md:gap-3 px-[8.25px] sm:px-2 md:px-4">
+                    <span class="text-white text-xs sm:text-sm md:text-lg lg:text-xl flex-shrink-0">{{ feature.data.icon | safe }}</span>
+                    <span class="ticker__text text-white text-[8px] sm:text-[9px] md:text-xs lg:text-sm font-bold leading-tight">{{ feature.data.title }}</span>
+                </div>
+                {% endfor %}
+                {% for feature in widget.blocks %}
+                <div class="ticker__item gap-[8.25px] sm:gap-2 md:gap-3 px-[8.25px] sm:px-2 md:px-4">
+                    <span class="text-white text-xs sm:text-sm md:text-lg lg:text-xl flex-shrink-0">{{ feature.data.icon | safe }}</span>
+                    <span class="ticker__text text-white text-[8px] sm:text-[9px] md:text-xs lg:text-sm font-bold leading-tight">{{ feature.data.title }}</span>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </section>

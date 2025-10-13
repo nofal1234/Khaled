@@ -2,55 +2,77 @@
 <section class="my-6 md:my-10 px-4 container mx-auto">
     <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">اراء العملاء</h1>
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.title | default('اراء العملاء ') }}</h1>
             <span class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</span>
         </div>
         
-        <!-- Reviews Grid -->
+        {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
-                <div class="flex items-center w-full">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="هشام" class="w-16 h-16 object-cover mb-3 rounded-full">
-                    <div class="flex flex-col items-center gap-1 mr-4 w-full">
-                        <span class="text-sm md:text-base font-medium text-center">هشام</span>
-                        <span class="text-gray-600 md:text-base text-sm text-center">(3-4 Business Days)</span>
+            {% if hasBlocks %}
+                {% for block in widget.blocks %}
+                {% set name = (block.data and block.data.name) or 'عبدالرحمن محمد' %}
+                {% set text = (block.data and block.data.text) or 'تجربة تسوق سلسة وسهلة من البداية للنهاية. أعجبتني سرعة التوصيل والتغليف الآمن' %}
+                {% set img = (block.data and block.data.image and block.data.image.fileUrl) %}
+                {% set alt = (block.data and block.data.alt) or '[صورة العميل]' %}
+                <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
+                    <div class="flex items-center w-full">
+                        {% if img %}
+                        <img src="{{ img }}" alt="{{ alt }}" class="w-16 h-16 object-cover mb-3 rounded-full">
+                        {% else %}
+                        <img src="https://i.pravatar.cc/64?u={{ name | urlencode }}" alt="{{ alt }}" class="w-16 h-16 object-cover mb-3 rounded-full">
+                        {% endif %}
+                        <div class="flex flex-col items-center gap-1 mr-4 w-full">
+                            <span class="text-sm md:text-base font-medium text-center">{{ name }}</span>
+                        </div>
+                        <div class="flex justify-center mt-2 mb-4 w-full">
+                            <span class="text-white bg-black rounded-l text-lg font-bold">5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
+                        </div>
                     </div>
-                    <div class="flex justify-center mt-2 mb-4 w-full">
-                        <span class="text-white bg-black rounded-l text-lg font-bold">5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
-                    </div>
+                    <p class="font-xs mb-4">{{ text }}</p>
                 </div>
-                <p class="font-xs mb-4">خدمة ممتازة وسريعة! تم تسليم الطلب في الوقت المحدد وبحالة ممتازة. أنصح بالتعامل معهم.</p>
-            </div>
-            
-            <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
-                <div class="flex items-center w-full">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="سارة" class="w-16 h-16 object-cover mb-3 rounded-full">
-                    <div class="flex flex-col items-center gap-1 mr-4 w-full">
-                        <span class="text-sm md:text-base font-medium text-center">سارة</span>
-                        <span class="text-gray-600 md:text-base text-sm text-center">(2-3 Business Days)</span>
+                {% endfor %}
+            {% else %}
+                <!-- Defaults when no blocks -->
+                <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
+                    <div class="flex items-center w-full">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="هشام" class="w-16 h-16 object-cover mb-3 rounded-full">
+                        <div class="flex flex-col items-center gap-1 mr-4 w-full">
+                            <span class="text-sm md:text-base font-medium text-center">هشام</span>
+                            <span class="text-gray-600 md:text-base text-sm text-center">(3-4 Business Days)</span>
+                        </div>
+                        <div class="flex justify-center mt-2 mb-4 w-full">
+                            <span class="text-white bg-black rounded-l text-lg font-bold">5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
+                        </div>
                     </div>
-                    <div class="flex justify-center mt-2 mb-4 w-full">
-                        <span class="text-white bg-black rounded-l text-lg font-bold">4.8 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
-                    </div>
+                    <p class="font-xs mb-4">خدمة ممتازة وسريعة! تم تسليم الطلب في الوقت المحدد وبحالة ممتازة. أنصح بالتعامل معهم.</p>
                 </div>
-                <p class="font-xs mb-4">تجربة رائعة! المنتجات عالية الجودة والتسليم كان أسرع من المتوقع. شكراً لكم!</p>
-            </div>
-            
-            <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
-                <div class="flex items-center w-full">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="أحمد" class="w-16 h-16 object-cover mb-3 rounded-full">
-                    <div class="flex flex-col items-center gap-1 mr-4 w-full">
-                        <span class="text-sm md:text-base font-medium text-center">أحمد</span>
-                        <span class="text-gray-600 md:text-base text-sm text-center">(4-5 Business Days)</span>
+                <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
+                    <div class="flex items-center w-full">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="سارة" class="w-16 h-16 object-cover mb-3 rounded-full">
+                        <div class="flex flex-col items-center gap-1 mr-4 w-full">
+                            <span class="text-sm md:text-base font-medium text-center">سارة</span>
+                            <span class="text-gray-600 md:text-base text-sm text-center">(2-3 Business Days)</span>
+                        </div>
+                        <div class="flex justify-center mt-2 mb-4 w-full">
+                            <span class="text-white bg-black rounded-l text-lg font-bold">4.8 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
+                        </div>
                     </div>
-                    <div class="flex justify-center mt-2 mb-4 w-full">
-                        <span class="text-white bg-black rounded-l text-lg font-bold">5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
-                    </div>
+                    <p class="font-xs mb-4">تجربة رائعة! المنتجات عالية الجودة والتسليم كان أسرع من المتوقع. شكراً لكم!</p>
                 </div>
-                <p class="font-xs mb-4">خدمة عملاء ممتازة واهتمام بالتفاصيل. المنتجات وصلت بحالة مثالية والتغليف احترافي.</p>
-            </div>
+                <div class="review-card flex flex-col gap-3 items-center justify-center rounded-2xl p-4 w-full cursor-pointer bg-white shadow-md border-2 border-gray-200">
+                    <div class="flex items-center w-full">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="أحمد" class="w-16 h-16 object-cover mb-3 rounded-full">
+                        <div class="flex flex-col items-center gap-1 mr-4 w-full">
+                            <span class="text-sm md:text-base font-medium text-center">أحمد</span>
+                            <span class="text-gray-600 md:text-base text-sm text-center">(4-5 Business Days)</span>
+                        </div>
+                        <div class="flex justify-center mt-2 mb-4 w-full">
+                            <span class="text-white bg-black rounded-l text-lg font-bold">5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i></span>
+                        </div>
+                    </div>
+                    <p class="font-xs mb-4">خدمة عملاء ممتازة واهتمام بالتفاصيل. المنتجات وصلت بحالة مثالية والتغليف احترافي.</p>
+                </div>
+            {% endif %}
         </div>
     </div>
-</section>
-</section>
 </section>

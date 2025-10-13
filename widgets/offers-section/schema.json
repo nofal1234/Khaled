@@ -1,171 +1,27 @@
 {
-  "name": "قسم العروض",
-  "description": "عرض المنتجات والعروض مع Swiper للتنقل",
+  "name": "العروض",
+  "description": "قسم المنتجات",
   "settings": {
+    "products_collection": {
+      "type": "collection",
+      "label": "المعروضة",
+      "default": "home-page"
+    },
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "العروض",
-      "description": "العنوان الرئيسي للقسم"
-    },
-    "view_all_text": {
-      "type": "string",
-      "label": "نص عرض الكل",
-      "default": "عرض الكل",
-      "description": "النص الذي يظهر على رابط عرض الكل"
+      "default": "القادمون الجدد"
     },
     "view_all_link": {
       "type": "string",
       "label": "رابط عرض الكل",
-      "default": "#",
-      "description": "الرابط الذي ينتقل إليه عند الضغط على عرض الكل"
-    },
-    "show_view_all": {
-      "type": "checkbox",
-      "label": "إظهار رابط عرض الكل",
-      "default": true,
-      "description": "إظهار أو إخفاء رابط عرض الكل"
-    },
-    "title_color": {
-      "type": "color",
-      "label": "لون العنوان",
-      "default": "#333333",
-      "description": "لون العنوان الرئيسي"
-    },
-    "link_color": {
-      "type": "color",
-      "label": "لون رابط عرض الكل",
-      "default": "#6b7280",
-      "description": "لون رابط عرض الكل"
-    },
-    "card_border_color": {
-      "type": "color",
-      "label": "لون حدود البطاقات",
-      "default": "#e5e7eb",
-      "description": "لون حدود بطاقات المنتجات"
-    },
-    "show_navigation": {
-      "type": "checkbox",
-      "label": "إظهار أزرار التنقل",
-      "default": true,
-      "description": "إظهار أو إخفاء أزرار التنقل"
-    },
-    "autoplay": {
-      "type": "checkbox",
-      "label": "التشغيل التلقائي",
-      "default": true,
-      "description": "تشغيل Swiper تلقائياً"
-    },
-    "autoplay_delay": {
-      "type": "number",
-      "label": "مدة الانتظار (ملي ثانية)",
-      "default": 4000,
-      "min": 1000,
-      "max": 10000,
-      "description": "مدة الانتظار بين الشرائح"
-    },
-    "products": {
-      "type": "array",
-      "label": "المنتجات",
-      "description": "قائمة المنتجات المعروضة",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "label": "اسم المنتج"
-          },
-          "image": {
-            "type": "string",
-            "label": "صورة المنتج"
-          },
-          "price": {
-            "type": "number",
-            "label": "السعر"
-          },
-          "old_price": {
-            "type": "number",
-            "label": "السعر القديم"
-          },
-          "discount": {
-            "type": "string",
-            "label": "نسبة الخصم"
-          },
-          "rate": {
-            "type": "string",
-            "label": "التقييم"
-          },
-          "description": {
-            "type": "string",
-            "label": "وصف المنتج"
-          }
-        }
-      }
+      "default": "#"
     }
   },
   "presets": [
     {
       "category": "الصفحة الرئيسية",
-      "name": "🔥 قسم العروض",
-      "settings": {
-        "section_title": "العروض",
-        "view_all_text": "عرض الكل",
-        "view_all_link": "#",
-        "show_view_all": true,
-        "title_color": "#333333",
-        "link_color": "#6b7280",
-        "card_border_color": "#e5e7eb",
-        "show_navigation": true,
-        "autoplay": true,
-        "autoplay_delay": 4000,
-        "products": [
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card1.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card2.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card3.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card1.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          },
-          {
-            "name": "ملابس اطفال",
-            "image": "Cards/card2.png",
-            "price": 570,
-            "old_price": 950,
-            "discount": "40%-",
-            "rate": "5.0",
-            "description": "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان"
-          }
-        ]
-      }
+      "name": "سلايدر منتجات"
     }
   ]
 }

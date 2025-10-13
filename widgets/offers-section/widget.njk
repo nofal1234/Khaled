@@ -2,233 +2,51 @@
 <section class="my-6 md:my-10 px-4 container mx-auto">
     <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">العروض</h1>
-            <span class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</span>
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('القادمون الجدد') }}</h1>
+            <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</a>
     </div>
 
         <!-- Products Swiper -->
         <div class="relative">
             <div class="swiper productsSwiper">
       <div class="swiper-wrapper">
-                    <!-- Product 1 -->
+                {% set products = (widget.data.products_collection and widget.data.products_collection.products) or widget.data.products_collection or [] %}
+                {% for product in products %}
                     <div class="swiper-slide mb-5">
-                        <div class="product-card bg-white rounded-2xl border border-gray overflow-hidden">
-                            <!-- Image Section -->
-                            <div class="relative overflow-hidden bg-gray-100">
-                                <img src="{{ 'card1.png' | assets }}" alt="ملابس اطفال" class="w-64 h-80 object-contain">
-                                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                                    <i class="ph ph-heart text-xl"></i>
-                                </button>
-                                
-                                <!-- Discount Badge -->
-                                <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
+                  {%ui "product-card.njk" ,product=product %}
                                 </div>
-                            </div>
-
-                            <!-- Content Section -->
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-
-                                <!-- Price Section -->
-                                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                        <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                        <span class="text-xs text-red-500">40%-</span>
-                                    </div>
-                                    <button onclick="addToCart('ملابس اطفال')" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                        <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                                    </button>
-                                </div>                                         
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 2 -->
-                    <div class="swiper-slide mb-5">
-                        <div class="product-card bg-white rounded-2xl border border-gray overflow-hidden">
-                            <!-- Image Section -->
-                            <div class="relative overflow-hidden bg-gray-100">
-                                <img src="{{ 'card2.png' | assets }}" alt="ملابس اطفال" class="w-64 h-80 object-contain">
-                                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                                    <i class="ph ph-heart text-xl"></i>
-                                </button>
-                                
-                                <!-- Discount Badge -->
-                                <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
-                                </div>
-                            </div>
-
-                            <!-- Content Section -->
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-
-                                <!-- Price Section -->
-                                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                        <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                        <span class="text-xs text-red-500">40%-</span>
-                                    </div>
-                                    <button onclick="addToCart('ملابس اطفال')" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                        <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                                    </button>
-                                </div>                                         
-                            </div>
-                        </div>
-              </div>
-              
-                    <!-- Product 3 -->
-                    <div class="swiper-slide mb-5">
-                        <div class="product-card bg-white rounded-2xl border border-gray overflow-hidden">
-                            <!-- Image Section -->
-                            <div class="relative overflow-hidden bg-gray-100">
-                                <img src="{{ 'card3.png' | assets }}" alt="ملابس اطفال" class="w-64 h-80 object-contain">
-                                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                                    <i class="ph ph-heart text-xl"></i>
-                                </button>
-                                
-                                <!-- Discount Badge -->
-                                <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
-                                </div>
-                  </div>
-
-                            <!-- Content Section -->
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-
-                                <!-- Price Section -->
-                                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                        <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                        <span class="text-xs text-red-500">40%-</span>
-                  </div>
-                                    <button onclick="addToCart('ملابس اطفال')" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                        <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-                    <!-- Product 4 -->
-                    <div class="swiper-slide mb-5">
-                        <div class="product-card bg-white rounded-2xl border border-gray overflow-hidden">
-                            <!-- Image Section -->
-                            <div class="relative overflow-hidden bg-gray-100">
-                                <img src="{{ 'card1.png' | assets }}" alt="ملابس اطفال" class="w-64 h-80 object-contain">
-                                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                                    <i class="ph ph-heart text-xl"></i>
-                                </button>
-                                
-                                <!-- Discount Badge -->
-                                <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
-    </div>
-  </div>
-
-                            <!-- Content Section -->
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-
-                                <!-- Price Section -->
-                                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                        <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                        <span class="text-xs text-red-500">40%-</span>
-                                    </div>
-                                    <button onclick="addToCart('ملابس اطفال')" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                        <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                                    </button>
-                                </div>                                         
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="swiper-slide mb-5">
-                        <div class="product-card bg-white rounded-2xl border border-gray overflow-hidden">
-                            <!-- Image Section -->
-                            <div class="relative overflow-hidden bg-gray-100">
-                                <img src="{{ 'card2.png' | assets }}" alt="ملابس اطفال" class="w-64 h-80 object-contain">
-                                <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                                    <i class="ph ph-heart text-xl"></i>
-                                </button>
-                                
-                                <!-- Discount Badge -->
-                                <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
-                                </div>
-                            </div>
-
-                            <!-- Content Section -->
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-
-                                <!-- Price Section -->
-                                <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                        <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                        <span class="text-xs text-red-500">40%-</span>
-                                    </div>
-                                    <button onclick="addToCart('ملابس اطفال')" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                        <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                                    </button>
-                                </div>                                         
-                            </div>
-                        </div>
-                    </div>
+                {% endfor %}
                 </div>
             </div>
-
-            <!-- Navigation Buttons -->
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
     </div>
 </section>
 
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper for products
-    const productsSwiper = new Swiper('.productsSwiper', {
+    const swiperOptions = {
         slidesPerView: 1,
-        spaceBetween: 20,
+        spaceBetween: 16,
         loop: true,
         grabCursor: true,
-    navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-    },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        autoplay: { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
     breakpoints: {
-            480: { slidesPerView: 1.5, spaceBetween: 15 },
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            768: { slidesPerView: 2.5, spaceBetween: 20 },
-            1024: { slidesPerView: 3.5, spaceBetween: 25 },
-            1280: { slidesPerView: 4, spaceBetween: 30 },
-        },
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
+            480: { slidesPerView: 1.5, spaceBetween: 16 },
+            640: { slidesPerView: 2, spaceBetween: 16 },
+            768: { slidesPerView: 2.5, spaceBetween: 16 },
+            1024: { slidesPerView: 3.5, spaceBetween: 16 },
+            1280: { slidesPerView: 4, spaceBetween: 16 },
         }
-    });
-
-    // Add to cart function
-    window.addToCart = function(productName) {
-        console.log('تم إضافة المنتج للسلة:', productName);
-        // You can add more functionality here
     };
+    const productsSwiper = new Swiper('.productsSwiper', swiperOptions);
 });
 </script> 

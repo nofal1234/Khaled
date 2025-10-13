@@ -1,0 +1,89 @@
+{
+  "name": "مزايا الخدمة 2",
+  "description": "قسم مزايا بخيارات تغيير العنوان والأيقونات والنص",
+  "settings": {
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "مزايا الخدمة"
+    }
+  },
+  "blocks": {
+    "featureItem": {
+      "name": "ميزة",
+      "settings": {
+        "icon": {
+          "type": "media",
+          "label": "أيقونة الميزة (صورة)",
+          "default": "",
+          "description": "ارفع صورة أيقونة بحجم 64x64 تقريباً بخلفية شفافة إن أمكن"
+        },
+        "icon_class": {
+          "type": "string",
+          "label": "كلاس الأيقونة (اختياري إذا لم تكن هناك صورة)",
+          "default": ""
+        },
+        "title": {
+          "type": "string",
+          "label": "عنوان الميزة",
+          "default": "ميزة"
+        },
+        "description": {
+          "type": "string",
+          "label": "وصف الميزة",
+          "default": "وصف مختصر للميزة."
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "✨ مزايا الخدمة 2",
+      "blocks": [
+        {
+          "block": "featureItem",
+          "name": "دقة مواعيد",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-star",
+            "title": "دقة مواعيد",
+            "description": "التزام كامل بالمواعيد وخطوط السير."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "أسعار مناسبة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-gear-six",
+            "title": "أسعار مناسبة",
+            "description": "أسعار تنافسية وخطط تناسب جميع الشركات."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "العمل على مدار الساعة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-clock",
+            "title": "العمل على مدار الساعة",
+            "description": "خدمة عملاء وغرفة عمليات تعمل على مدار الساعة."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "خدمة مخصصة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-shield-check",
+            "title": "خدمة مخصصة",
+            "description": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع)."
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

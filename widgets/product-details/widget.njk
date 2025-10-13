@@ -1,184 +1,434 @@
-<section id="{{ widget.id }}" x-data="xDataproduct({ product: context.product })" x-ref="productComponent"
-    class="min-h-screen bg-gray-50">
+<section id="product-details" class="min-h-screen bg-white pt-44 md:pt-32 lg:pt-28">
+    <div class="container mx-auto px-4 md:px-6">
+        <!-- Breadcrumb -->
+        <div class="py-4 mt-12 md:mt-16">
+            <nav class="flex items-center gap-2 text-sm text-gray-600">
+                <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+                <span>/</span>
+                <a href="#" class="hover:text-mainColor transition">أطفال</a>
+                <span>/</span>
+                <span class="text-mainColor font-semibold">تفاصيل المنتج</span>
+            </nav>
+        </div>
+        <!-- Product Details Section -->
+        <section class="container mx-auto py-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                <!-- Product Images -->
+                <div class="flex flex-col gap-4">
+                    <!-- Main Image -->
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden">
+                        <img src="{{ 'card4.png' | assets }}" alt="صورة المنتج" class="w-full object-cover" />
+                    </div>
 
-    <div class="container py-8">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            
-            <!-- Product Gallery -->
-            <div x-data="{ imgSelected:0 }" class="product-gallery">
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
-                    <img id="main-product-image" :src="context.product.images[imgSelected].fileUrl"
-                        alt="صورة المنتج الرئيسية" 
-                        class="w-full h-96 object-contain rounded-lg">
+                    <!-- Thumbnail Images -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 hover:border-mainColor transition">
+                            <img src="{{ 'card6.png' | assets }}" alt="Thumbnail 1" class="w-64 h-40 object-cover" />
+                        </div>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 hover:border-mainColor transition">
+                            <img src="{{ 'card7.jpg' | assets }}" alt="Thumbnail 2" class="w-64 h-40 object-cover" />
+                        </div>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 hover:border-mainColor transition">
+                            <img src="{{ 'card5.png' | assets }}" alt="Thumbnail 3" class="w-64 h-40 object-cover" />
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Thumbnail Images -->
-                <div class="flex gap-3 overflow-x-auto">
-                    <template x-for="(image, index) in context.product.images" :key="index">
-                        <img @click="imgSelected = index"
-                            class="w-16 h-16 rounded-lg border-2 object-cover cursor-pointer transition-all duration-200"
-                            :src="image.fileUrl"
-                            :class="imgSelected === index ? 'border-gray-900' : 'border-gray-200 hover:border-gray-300'">
-                    </template>
+
+                <!-- Product Info -->
+                <div class="flex w-4/5 md-w-full flex-col gap-6">
+                    <!-- Title -->
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">عنوان المنتج</h1>
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <p class="text-gray-600 leading-relaxed">
+                            وصف مختصر للمنتج. <button class="text-mainColor underline ml-2">اقرأ المزيد</button>
+                        </p>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex gap-4 flex-col">
+                        <h1 class="text-2xl text-mainColor">السعر</h1>
+                        <span class="text-4xl font-bold text-mainColor">69.95 $ <span class="text-sm font-light text-gray-500"> الضرائب متضمنة. </span></span>
+                    </div>
+
+                    <!-- Color Selection -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-3">اللون</h3>
+                        <div class="flex items-center gap-3">
+                            <button class="relative group">
+                                <img src="{{ 'card4.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                            </button>
+                            <button class="relative group">
+                                <img src="{{ 'card5.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Size Selection -->
+                    <div>
+                        <h3 class="text-2xl text-mainColor mb-3">المقاسات</h3>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">S</button>
+                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">M</button>
+                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">L</button>
+                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">XL</button>
+                        </div>
+                        <button id="open-size-guide" class="flex items-center gap-2 text-mainColor px-4 py-2 pt-5 rounded-lg underline transition">
+                            <i class="ph ph-ruler"></i>
+                            <span>دليل المقاسات والأوزان</span>
+                        </button>
+                    </div>
+
+                    <!-- Quantity and Add to Cart -->
+                    <div class="flex gap-4 flex-col md:flex-row">
+                        <div class="flex items-center gap-3">
+                            <input type="number" min="1" value="1" class="w-20 h-12 text-center border-2 border-black rounded-full bg-white font-bold text-lg" />
+                        </div>
+                        <button class="flex-1 bg-mainColor text-white py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition flex items-center justify-center gap-2">إضافة الي العربة</button>
+                    </div>
+
+                    <!-- Buy Now -->
+                    <div class="w-full">
+                        <button class="w-full px-6 py-4 border-2 border-mainColor rounded-full font-bold text-lg hover:bg-mainColor hover:text-white transition flex items-center justify-center">شراء الان</button>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="border-t border-gray-200 pt-6 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="ph-light ph-alarm text-2xl text-mainColor"></i>
+                            <div>
+                                <p class="font-bold">متبقي ١٠ قطع فقط في المخزون. اطلبها قريبًا.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="ph-light ph-check text-2xl text-mainColor"></i>
+                            <div>
+                                <p class="font-bold">التوصيل والشحن مجاني</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="ph-light ph-check text-2xl text-mainColor"></i>
+                            <div>
+                                <p class="font-bold">الدفع الآمن عبر الإنترنت</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features 2 Section -->
+                    <section class="container">
+                        <div>
+                            <div class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
+                                <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                    <div class="w-24 h-16 rounded-full flex items-center justify-center">
+                                        <i class="ph-light ph-star text-mainColor text-xl"></i>
+                                    </div>
+                                    <h3 class="text-base text-lg text-dark">الشحن العالمي السريع</h3>
+                                </div>
+                                <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                    <div class="w-24 h-16 rounded-full flex items-center justify-center">
+                                        <i class="ph-light ph-star text-mainColor text-xl"></i>
+                                    </div>
+                                    <h3 class="text-base text-lg text-dark">إرجاع مجاني</h3>
+                                </div>
+                                <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                    <div class="w-24 h-16 rounded-full flex items-center justify-center">
+                                        <i class="ph-light ph-star text-mainColor text-xl"></i>
+                                    </div>
+                                    <h3 class="text-base text-lg text-dark">مدفوعات آمنة بنسبة 100%</h3>
+                                </div>
+                                <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                    <div class="w-24 h-16 rounded-full flex items-center justify-center">
+                                        <i class="ph-light ph-star text-mainColor text-xl"></i>
+                                    </div>
+                                    <h3 class="text-base text-lg text-dark">شحن مجاني مع تعويض</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
+        </section>
 
-            <!-- Product Details -->
-            <div class="product-details bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                
-                <!-- Product Title -->
-                <h1 class="text-3xl font-bold text-gray-900 font-cairo mb-4" x-text="context.product.title"></h1>
-                
-                <!-- Product Price -->
-                <div class="mb-6">
-                    <template x-if="context.product.pricing?.compareAtPrice && context.product.pricing?.compareAtPrice > context.product.pricing?.price">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl font-bold text-gray-900" x-text="context.product.pricing.price"></span>
-                            <span class="text-gray-900" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
-                            <span class="text-lg text-gray-500 line-through" x-text="context.product.pricing.compareAtPrice"></span>
-                        </div>
-                    </template>
-                    
-                    <template x-if="!context.product.pricing?.compareAtPrice || context.product.pricing?.compareAtPrice === context.product.pricing?.price">
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl font-bold text-gray-900" x-text="context.product.pricing?.price"></span>
-                            <span class="text-gray-900" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Product Options -->
-                <div x-init="initOptions()" class="mb-6" x-show="context.product.options.length > 0">
-                    <template x-for="opt in context.product.options" :key="opt._id">
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 font-cairo mb-2" x-text="opt.name"></label>
-                            <div class="flex flex-wrap gap-2">
-                                <template x-for="val in opt.values" :key="val._id">
-                                    <button type="button" 
-                                        :disabled="loading.optionsLoading"
-                                        class="px-4 py-2 rounded-lg border-2 transition-all duration-200 font-cairo text-sm flex items-center gap-2"
-                                        :class="selectedOptions[opt._id] === val._id
-                                            ? 'border-gray-900 bg-gray-900 text-white'
-                                            : 'border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'"
-                                        @click.prevent="selectOption(context.product,opt._id, val._id)">
-                                        <svg x-show="loading.optionsLoading && selectedOptions[opt._id] === val._id" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                                        </svg>
-                                        <span x-text="val.label"></span>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Quantity Selector -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 font-cairo mb-2">الكمية:</label>
-                    <div class="flex items-center border border-gray-300 rounded-lg w-fit">
-                        <button type="button"
-                            class="px-4 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
-                            @click="decreaseCartItem()" aria-label="تقليل الكمية">−</button>
-                        <span class="px-4 py-2 border-x border-gray-300 text-center min-w-[3rem] font-medium"
-                            x-text="productQuantity"></span>
-                        <button type="button"
-                            class="px-4 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
-                            @click="increaseCartItem()" aria-label="زيادة الكمية">+</button>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <form id="productForm" @submit="submitForm" class="space-y-3">
-                    <input type="hidden" name="product" :value="context.product._id">
-                    <input type="hidden" name="quantity" :value="productQuantity">
-                    <template x-for="opt in context.product.options" :key="opt._id">
-                        <input type="hidden" name="options[]" :value="selectedOptions[opt._id]">
-                    </template>
-                    
-                    <button type="submit" name="addToCart" value="addToCart"
-                        :disabled="loading.addToCart || loading.optionsLoading || productQuantity === 0"
-                        class="w-full bg-[#003033] hover:bg-[#004d4d] text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 font-cairo flex items-center justify-center gap-2">
-                        <svg x-show="loading.optionsLoading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                        </svg>
-                        <span x-show="!loading.addToCart && !loading.optionsLoading">إضافة إلى السلة</span>
-                        <span x-show="loading.addToCart">جاري الإضافة...</span>
-                        <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
+        <!-- Size Guide Modal -->
+        <div id="size-guide-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto relative">
+                <div class="p-6 flex items-center justify-center">
+                    <h2 class="text-xl md:text-2xl font-bold text-center text-black">دليل المقاسات والأوزان</h2>
+                    <button id="close-size-guide" class="absolute top-4 left-4 text-gray-600 hover:text-black transition">
+                        <i class="ph ph-x text-2xl"></i>
                     </button>
-
-                    <button type="submit" name="buyNow" value="buyNow" 
-                        :disabled="loading.buyNow || loading.optionsLoading"
-                        class="w-full bg-white border-2 border-[#003033] text-[#003033] hover:bg-[#003033] hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 font-cairo flex items-center justify-center gap-2">
-                        <svg x-show="loading.optionsLoading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                        </svg>
-                        <span x-show="!loading.buyNow && !loading.optionsLoading">اشترى الآن</span>
-                        <span x-show="loading.buyNow">جاري المعالجة...</span>
-                        <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
-                    </button>
-                </form>
-
-                <!-- Product Description -->
-                <div class="mt-8 pt-6 border-t border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 font-cairo mb-3">وصف المنتج</h3>
-                    <div x-html="context.product.description || 'لا يوجد وصف للمنتج'"
-                        class="text-gray-600 text-sm leading-relaxed font-cairo">
-                    </div>
                 </div>
-
-                <!-- Shipping Policy Accordion -->
-                <div class="mt-8 pt-6 border-t border-gray-200">
-                    <div x-data="{ open: false }" class="accordion-item">
-                        <button @click="open = !open" 
-                                class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none">
-                            <span class="font-semibold text-gray-900 font-cairo">سياسة الشحن</span>
-                            <svg :class="{'rotate-180': open}" 
-                                 class="w-5 h-5 text-gray-500 transition-transform duration-200" 
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <div x-show="open" 
-                             x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 transform -translate-y-2"
-                             x-transition:enter-end="opacity-100 transform translate-y-0"
-                             x-transition:leave="transition ease-in duration-200"
-                             x-transition:leave-start="opacity-100 transform translate-y-0"
-                             x-transition:leave-end="opacity-0 transform -translate-y-2"
-                             class="px-4 pb-4">
-                            <div class="text-gray-600 text-sm leading-relaxed font-cairo mt-3">
-                                <p class="mb-2">يتم التوصيل داخل مصر عن طريق مندوب توصيل - تصلك الشحنة خلال 3-5 أيام.</p>
-                                <p class="mb-2">الشحن مجاني للطلبات التي تزيد عن 500 ج.م</p>
-                                <p class="mb-2">يمكنك تتبع طلبك من خلال رقم التتبع الذي سيتم إرساله لك</p>
-                            </div>
-                        </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Japan</th>
+                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">EU</th>
+                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">UK</th>
+                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">US</th>
+                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">5</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">32-34</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">4-6</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">0-2</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">XS</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">7</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">36-38</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">8-10</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">4-6</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">S</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">9</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">40-42</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">12-14</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">8-10</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">M</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">11</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">44-46</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">16-18</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">12-14</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">L</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">13</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">48-50</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">20-22</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">16-18</td>
+                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">XL</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Related Products -->
-        {% if context.related_products | length > 0 %}
-        <section class="mt-16">
-            <h2 class="text-2xl font-bold text-center text-gray-900 font-cairo mb-8">منتجات مشابهة</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {% for item in context.related_products %}
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-                    <a href="/product/{{ item.slug }}">
-                        <img src={{ item.images[0].fileUrl }} alt="{{ item.title }}"
-                            class="w-full h-32 object-cover">
-                    </a>
-                    <div class="p-4 text-center">
-                        <h3 class="font-semibold text-gray-900 font-cairo text-sm mb-2">{{ item.title }}</h3>
-                        <p class="text-gray-900 font-bold font-cairo">{{ item.pricing.price| money }}</p>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var openBtn = document.getElementById('open-size-guide');
+            var modal = document.getElementById('size-guide-modal');
+            var closeBtn = document.getElementById('close-size-guide');
+            if (!openBtn || !modal) return;
+            function openModal(e){
+                if (e) e.preventDefault();
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            }
+            function closeModal(){
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }
+            openBtn.addEventListener('click', openModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+        });
+        </script>
+
+        <!-- FAQ Section -->
+        <section class="lg:flex md:flex px-4 container gap-6">
+            <div id="faq-app" class="w-full lg:w-1/2 p-6">
+                <h2 class="text-2xl md:text-3xl font-bold pb-10"> مزيد من المعلومات</h2>
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200">
+                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="true">
+                            <h3 class="text-lg font-semibold text-gray-900">الوصف</h3>
+                            <span class="faq-sign text-2xl text-gray-500 mr-4">−</span>
+                        </button>
+                        <div class="faq-content pb-4 text-right">
+                            <p class="text-gray-700 leading-relaxed">
+                                سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed mt-3">
+                                تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرانت الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200">
+                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
+                            <h3 class="text-lg font-semibold text-gray-900">التسليم والارجاع</h3>
+                            <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
+                        </button>
+                        <div class="faq-content pb-4 text-right hidden">
+                            <p class="text-gray-700 leading-relaxed">معلومات التسليم والإرجاع هنا...</p>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200">
+                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
+                            <h3 class="text-lg font-semibold text-gray-900">تواصل معانا</h3>
+                            <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
+                        </button>
+                        <div class="faq-content pb-4 text-right hidden">
+                            <p class="text-gray-700 leading-relaxed">معلومات التواصل هنا...</p>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+            </div>
+
+            <!-- You May Like Section -->
+            <div class="w-full lg:w-1/2 pt-6">
+                <h2 class="text-2xl md:text-3xl font-bold pb-4"> عناصر يمكن ان تعجبك </h2>
+                <section class="my-6 md:my-10 px-2 md:px-4">
+                    <div class="flex gap-4 md:gap-6">
+                        <div
+                          class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
+                        >
+                          <div class="relative overflow-hidden bg-gray-100">
+                            <img src="{{ 'card1.png' | assets }}" alt="منتج" class="w-full h-80 object-contain" />
+                            <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+                              5.0
+                              <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+                            </div>
+                            <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                              <i class="ph ph-heart text-xl"></i>
+                            </button>
+                          </div>
+                          <div class="p-3 md:p-4">
+                            <h3 class="text-base md:text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
+                            <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
+                            <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
+                              <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
+                                <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
+                                <span class="text-xs text-red-500">40%-</span>
+                              </div>
+                              <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+                                <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
+                              </button>
+                            </div>  
+                          </div>
+                        </div>
+                        <div
+                          class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
+                        >
+                          <div class="relative overflow-hidden bg-gray-100">
+                            <img src="{{ 'card1.png' | assets }}" alt="منتج" class="w-full h-80 object-contain" />
+                            <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+                              5.0
+                              <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+                            </div>
+                            <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+                              <i class="ph ph-heart text-xl"></i>
+                            </button>
+                          </div>
+                          <div class="p-3 md:p-4">
+                            <h3 class="text-base md:text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
+                            <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
+                            <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
+                              <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
+                                <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
+                                <span class="text-xs text-red-500">40%-</span>
+                              </div>
+                              <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+                                <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
+                              </button>
+                            </div>  
+                          </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </section>
-        {% endif %}
-    </div>
+        
+        <!-- Reviews Section -->
+        <section class="my-6 md:my-10 px-4 container mx-auto">
+            <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+                <div class="flex flex-col justify-around lg:flex-row gap-6 lg:gap-8 items-center">
+                    <div class="w-full lg:w-1/2 flex gap-6 items-center justify-center p-6 md:p-8">
+                        <div class="text-center mb-6">
+                            <h1 class="text-2xl md:text-3xl font-bold text-black">التقييم و المراجعات</h1>
+                            <div class="flex items-center justify-center gap-2">
+                                <p class="text-gray-500 text-2xl pt-[4rem]">5/</p>
+                                <h2 class="text-[8rem] md:text-[10rem] font-500 text-black mb-2">4.5</h2>
+                            </div>
+                            <p class="text-gray-600 flex text-xs md:text-sm mt-2">( 30 تقييم جديد )</p>
+                        </div>
+                        <div class="w-1/2 space-y-2 md:space-y-3">
+                            <div class="flex items-center gap-3">
+                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 90%"></div></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 70%"></div></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 20%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Side: Reviews List (with images) -->
+            <div class="lg:w-[30%] md:w-[100%] sm:w-[100%] border-2 border-gray p-4 rounded-lg flex flex-col gap-4">
+                <div>
+                    <h2 class="text-lg md:text-xl font-bold text-dark mb-4">احمد محمد</h2>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="ph-fill ph-star text-yellow-300 text-sm md:text-base"></i>
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
+                    </div>
+                </div>
+                        <!-- Review Images -->
+                        <div class="flex gap-2 overflow-x-auto">
+                            <img src="{{ 'card6.png' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 1">
+                            <img src="{{ 'card7.jpg' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 2">
+                            <img src="{{ 'card5.png' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 3">
+            </div>
+                        <!-- Review Description -->
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <script>
+        (function(){
+            var toggles = document.querySelectorAll('.faq-toggle');
+            if(!toggles || !toggles.length) return;
+            toggles.forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var expanded = btn.getAttribute('aria-expanded') === 'true';
+                    var content = btn.parentElement.querySelector('.faq-content');
+                    var sign = btn.querySelector('.faq-sign');
+                    if(!content || !sign) return;
+                    if(expanded){
+                        content.classList.add('hidden');
+                        btn.setAttribute('aria-expanded','false');
+                        sign.textContent = '+';
+                    } else {
+                        content.classList.remove('hidden');
+                        btn.setAttribute('aria-expanded','true');
+                        sign.textContent = '−';
+                    }
+                });
+            });
+        })();
+        </script>
+            </div>
+
 </section>

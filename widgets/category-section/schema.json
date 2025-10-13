@@ -1,177 +1,27 @@
 {
-  "name": "قسم الأقسام",
-  "description": "عرض فئات المنتجات مع Swiper للتنقل",
+  "name": "قسم الاقسام",
+  "description": "قسم المجموعات والتصنيفات",
   "settings": {
     "collections": {
       "type": "collections",
-      "label": "المجموعات المعروضة",
-      "description": "اختر المجموعات التي تريد عرضها في هذا القسم"
+      "label": "المجموعات المعروضة"
     },
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "الاقسام",
-      "description": "العنوان الرئيسي للقسم"
-    },
-    "view_all_text": {
-      "type": "string",
-      "label": "نص عرض الكل",
-      "default": "عرض الكل",
-      "description": "النص الذي يظهر على رابط عرض الكل"
+      "default": "المجموعات"
     },
     "view_all_link": {
       "type": "string",
       "label": "رابط عرض الكل",
-      "default": "/Category.html",
-      "description": "الرابط الذي ينتقل إليه عند الضغط على عرض الكل"
-    },
-    "show_view_all": {
-      "type": "checkbox",
-      "label": "إظهار رابط عرض الكل",
-      "default": true,
-      "description": "إظهار أو إخفاء رابط عرض الكل"
-    },
-    "title_color": {
-      "type": "color",
-      "label": "لون العنوان",
-      "default": "#333333",
-      "description": "لون العنوان الرئيسي"
-    },
-    "link_color": {
-      "type": "color",
-      "label": "لون رابط عرض الكل",
-      "default": "#6b7280",
-      "description": "لون رابط عرض الكل"
-    },
-    "card_border_color": {
-      "type": "color",
-      "label": "لون حدود البطاقات",
-      "default": "#e5e7eb",
-      "description": "لون حدود بطاقات الأقسام"
-    },
-    "card_hover_color": {
-      "type": "color",
-      "label": "لون التمرير على البطاقات",
-      "default": "#000000",
-      "description": "اللون الذي يظهر عند التمرير على البطاقات"
-    },
-    "show_navigation": {
-      "type": "checkbox",
-      "label": "إظهار أزرار التنقل",
-      "default": true,
-      "description": "إظهار أو إخفاء أزرار التنقل"
-    },
-    "autoplay": {
-      "type": "checkbox",
-      "label": "التشغيل التلقائي",
-      "default": true,
-      "description": "تشغيل Swiper تلقائياً"
-    },
-    "autoplay_delay": {
-      "type": "number",
-      "label": "مدة الانتظار (ملي ثانية)",
-      "default": 3000,
-      "min": 1000,
-      "max": 10000,
-      "description": "مدة الانتظار بين الشرائح"
+      "default": "#"
     }
-  },
-  "blocks": {
-    "categoryItem": {
-      "name": "قسم",
-      "settings": {
-        "name": {
-          "type": "string",
-          "label": "اسم القسم",
-          "default": "نسائي",
-          "description": "اسم القسم"
-        },
-        "image": {
-          "type": "image_picker",
-          "label": "صورة القسم",
-          "description": "صورة تمثل القسم"
-        },
-        "link": {
-          "type": "string",
-          "label": "رابط القسم",
-          "default": "#",
-          "description": "الرابط الذي ينتقل إليه عند الضغط على القسم"
-        },
-        "alt_text": {
-          "type": "string",
-          "label": "النص البديل",
-          "default": "صورة القسم",
-          "description": "النص البديل للصورة"
-        }
-      }
-    }
-  },
+  }
+  ,
   "presets": [
     {
       "category": "الصفحة الرئيسية",
-      "name": "📂 قسم الأقسام",
-      "blocks": [
-        {
-          "block": "categoryItem",
-          "name": "نسائي",
-          "settings": {
-            "name": "نسائي",
-            "image": "Category/pic1.png",
-            "link": "/women",
-            "alt_text": "قسم النساء"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "رجالي",
-          "settings": {
-            "name": "رجالي",
-            "image": "Category/pic2.png",
-            "link": "/men",
-            "alt_text": "قسم الرجال"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "أطفال",
-          "settings": {
-            "name": "أطفال",
-            "image": "Category/pic3.png",
-            "link": "/kids",
-            "alt_text": "قسم الأطفال"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "أحذية",
-          "settings": {
-            "name": "أحذية",
-            "image": "Category/pic4.png",
-            "link": "/shoes",
-            "alt_text": "قسم الأحذية"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "رياضي",
-          "settings": {
-            "name": "رياضي",
-            "image": "Category/pic5.png",
-            "link": "/sports",
-            "alt_text": "القسم الرياضي"
-          }
-        },
-        {
-          "block": "categoryItem",
-          "name": "موسمي",
-          "settings": {
-            "name": "موسمي",
-            "image": "Category/pic6.png",
-            "link": "/seasonal",
-            "alt_text": "القسم الموسمي"
-          }
-        }
-      ]
+      "name": "🧩 قسم التصنيفات"
     }
   ]
 }
