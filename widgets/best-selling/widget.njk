@@ -1,0 +1,279 @@
+<section class="py-6 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
+      <!-- Breadcrumb -->
+      <section class="bg-white py-2">
+        <div class="container mx-auto">
+          <div class="px-2 md:px-4 py-1">
+            <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
+              <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+              <span>/</span>
+              <a href="#" class="hover:text-mainColor transition">الاطفال</a>
+              <span>/</span>
+              <span class="text-mainColor font-semibold">{{ widget.data.title | default('افضل المبيعات') }}</span>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filters Row (similar to Category page) -->
+      <section class="bg-white py-2 border-t border-gray-100">
+        <div class="container mx-auto">
+          <div class="my-2 px-2 md:px-4">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div class="flex flex-wrap items-center gap-3 md:gap-5">
+                <button onclick="toggleFilterColumn()" class="text-sm md:text-lg font-semibold px-4 py-1 flex items-center justify-center gap-4 border border-gray-300 rounded hover:bg-gray-50 transition-colors">
+                  فلتر <i class="ph-thin ph-caret-left"></i>
+                </button>
+                <span class="text-black font-bold text-sm md:text-base">الصفحات</span>
+                <div class="flex items-center gap-1">
+                  <input type="number" value="1" min="1" class="w-12 md:w-16 px-2 md:px-3 bg-white py-1 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-mainColor text-sm" />
+                  <span class="text-sm md:text-base">إلى 10</span>
+                </div>
+              </div>
+              <div class="w-full md:w-auto">
+                <select class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor text-sm md:text-base">
+                  <option>الترتيب</option>
+                  <option>السعر: من الأقل للأعلى</option>
+                  <option>السعر: من الأعلى للأقل</option>
+                  <option>التقييم</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Header aligned to the side -->
+      <div class="flex items-center px-2 md:px-4 justify-between mb-2 md:mb-3">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">{{ widget.data.title | default('افضل المبيعات') }}</h2>
+        {% if widget.data.subtitle %}
+        <p class="hidden md:block text-base md:text-lg text-gray-600">{{ widget.data.subtitle }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Main Content Area -->
+      <div id="mainContent" class="flex gap-6 transition-all duration-300">
+        <!-- Filter Column -->
+        <div id="filterColumn" class="w-0 overflow-hidden transition-all duration-300 bg-gray-50 rounded-lg">
+          <div class="p-6">
+            <!-- Close Button -->
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900">الفلاتر</h3>
+              <button onclick="toggleFilterColumn()" class="text-gray-600 hover:text-gray-800">
+                <i class="ph ph-x text-2xl"></i>
+              </button>
+            </div>
+
+            <!-- Price Range -->
+            <div class="mb-6">
+              <h4 class="text-lg font-semibold mb-3 text-gray-900">السعر</h4>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-sm text-gray-600 mb-1">من</label>
+                  <input type="number" placeholder="0.00 $" class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-600 mb-1">إلى</label>
+                  <input type="number" placeholder="0.00 $" class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Colors -->
+            <div class="mb-6">
+              <h4 class="text-lg font-semibold mb-3 text-gray-900">الالوان</h4>
+              <div class="space-y-2">
+                <label class="flex items-center cursor-pointer">
+                  <div class="w-4 h-4 bg-black rounded mr-3"></div>
+                  <span class="text-sm text-gray-700">اسود</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <div class="w-4 h-4 bg-blue-500 rounded mr-3"></div>
+                  <span class="text-sm text-gray-700">أزرق</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <div class="w-4 h-4 bg-gray-500 rounded mr-3"></div>
+                  <span class="text-sm text-gray-700">رمادي</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <div class="w-4 h-4 bg-yellow-600 rounded mr-3"></div>
+                  <span class="text-sm text-gray-700">بني</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="mb-6">
+              <h4 class="text-lg font-semibold mb-3 text-gray-900">توفر</h4>
+              <div class="space-y-2">
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">الأحدث</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">الافضل مبيعا</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Sizes -->
+            <div class="mb-6">
+              <h4 class="text-lg font-semibold mb-3 text-gray-900">المقاسات</h4>
+              <div class="space-y-2">
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">S</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">M</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">L</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">XL</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                  <span class="mr-2 text-sm text-gray-700">XXL</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Brand -->
+            <div class="mb-6">
+              <h4 class="text-lg font-semibold mb-3 text-gray-900">البراند</h4>
+              <div class="space-y-2">
+                <label class="flex items-center cursor-pointer">
+                  <div class="w-4 h-4 bg-black rounded mr-3"></div>
+                  <span class="text-sm text-gray-700">Nike</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <span class="mr-2 text-sm text-gray-700">Zara</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <span class="mr-2 text-sm text-gray-700">Shein</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                  <span class="mr-2 text-sm text-gray-700">Puma</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="productsSection" class="flex-1 transition-all duration-300">
+          {% set products = widget.data.products or [] %}
+          {% if products | length == 0 and widget.data.collection and widget.data.collection.products %}
+            {% set products = widget.data.collection.products %}
+          {% endif %}
+          {# ثابت: إذا لم توجد بيانات، استخدم عناصر افتراضية للحفاظ على التصميم #}
+          {% if products | length == 0 %}
+            {% set products = [
+              { 'slug': 'placeholder-1', 'title': 'منتج تجريبي 1', 'images': [{'fileUrl': 'https://placehold.co/320x420/eeeeee/666?text=Image'}], 'pricing': { 'price': 199.99 } },
+              { 'slug': 'placeholder-2', 'title': 'منتج تجريبي 2', 'images': [{'fileUrl': 'https://placehold.co/320x420/eeeeee/666?text=Image'}], 'pricing': { 'price': 249.00, 'compareAtPrice': 299.00 } },
+              { 'slug': 'placeholder-3', 'title': 'منتج تجريبي 3', 'images': [{'fileUrl': 'https://placehold.co/320x420/eeeeee/666?text=Image'}], 'pricing': { 'price': 149.50 } },
+              { 'slug': 'placeholder-4', 'title': 'منتج تجريبي 4', 'images': [{'fileUrl': 'https://placehold.co/320x420/eeeeee/666?text=Image'}], 'pricing': { 'price': 89.00 } },
+              { 'slug': 'placeholder-5', 'title': 'منتج تجريبي 5', 'images': [{'fileUrl': 'https://placehold.co/320x420/eeeeee/666?text=Image'}], 'pricing': { 'price': 120.00 } }
+            ] %}
+          {% endif %}
+
+          <!-- Mobile horizontal list -->
+          <div class="md:hidden -mx-4 px-4">
+            <div class="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-1">
+              {% for product in products %}
+              <div class="min-w-[302px] snap-start flex justify-center">
+                {%ui "product-card.njk" ,product=product %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Grid Desktop/Tablets -->
+          <div class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for product in products %}
+              <div class="flex justify-center">
+                {%ui "product-card.njk" ,product=product %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      {% set current = (context.pagination and context.pagination.currentPage) or 1 %}
+      {% set total = (context.pagination and context.pagination.totalPages) or 10 %}
+      <div class="flex items-center justify-center mt-6">
+        <nav class="flex items-center gap-3">
+          {# Prev #}
+          {% if current > 1 %}
+          <a href="?page={{ current - 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
+            <span class="text-gray-700">‹</span>
+          </a>
+          {% else %}
+          <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">‹</span>
+          {% endif %}
+
+          {# Page 1..3 #}
+          {% for p in [1,2,3] %}
+            {% if p <= total %}
+              {% if p == current %}
+              <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white">{{ p }}</span>
+              {% else %}
+              <a href="?page={{ p }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ p }}</a>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {# Ellipsis and last page #}
+          {% if total > 4 %}
+            <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-500">…</span>
+            <a href="?page={{ total }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ total }}</a>
+          {% elseif total == 4 %}
+            {% if 4 == current %}
+            <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white">4</span>
+            {% else %}
+            <a href="?page=4" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">4</a>
+            {% endif %}
+          {% endif %}
+
+          {# Next #}
+          {% if current < total %}
+          <a href="?page={{ current + 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
+            <span class="text-gray-700">›</span>
+          </a>
+          {% else %}
+          <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">›</span>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleFilterColumn() {
+  const filterColumn = document.getElementById('filterColumn');
+  const productsSection = document.getElementById('productsSection');
+  
+  if (filterColumn.classList.contains('w-0')) {
+    // Open filter column
+    filterColumn.classList.remove('w-0');
+    filterColumn.classList.add('w-80');
+    productsSection.classList.add('lg:w-2/3');
+  } else {
+    // Close filter column
+    filterColumn.classList.add('w-0');
+    filterColumn.classList.remove('w-80');
+    productsSection.classList.remove('lg:w-2/3');
+  }
+}
+</script>
+
+

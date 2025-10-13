@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme1</title>
+
+    <style>
+      :root {
+        --mainColor: #000000;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .product-card {
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .product-card img {
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .product-card:hover img {
+        transform: scale(1.05);
+      }
+
+      header {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+      }
+
+      main {
+        padding-top: 88px;
+      }
+
+      input {
+        background-color: #f7f7f7;
+      }
+
+      input::placeholder {
+        color: rgb(0, 0, 0) !important;
+        opacity: 0.8;
+      }
+
+      input:focus::placeholder {
+        opacity: 0.6;
+      }
+
+      .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      @keyframes modal {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .animate-modal {
+        animation: modal 0.3s ease-out;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      @media (max-width: 1024px) {
+        main {
+          padding-top: 76px;
+        }
+        .product-card img {
+          max-height: 260px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding-top: 140px;
+        }
+
+        .product-card img {
+          max-height: 200px;
+        }
+
+        .mobile-filters {
+          flex-direction: column;
+          gap: 0.75rem;
+          width: 100%;
+        }
+
+        .mobile-filters > div {
+          width: 100%;
+        }
+
+        .mobile-filters select,
+        .mobile-filters input {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              Tajawal: ["Tajawal"],
+            },
+            colors: {
+              mainColor: {
+                DEFAULT: "#000000",
+              },
+              dark: {
+                DEFAULT: "#333333",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="font-Tajawal">
+    <div id="app">
+      <div>
+        <!-- ==================== HEADER ==================== -->
+        <header class="">
+          <!-- Top Bar - Hidden on mobile -->
+          <div class="bg-black bg-opacity-80 text-white py-2 hidden md:block">
+            <div
+              class="container mx-auto px-4 flex items-center justify-between text-sm"
+            >
+              <div
+                class="flex items-center gap-2 cursor-pointer hover:text-mainColor transition"
+              >
+                <i class="ph ph-caret-down"></i>
+                <span class="text-xl">Cairo</span>
+              </div>
+
+              <div class="flex items-center gap-10">
+                <button class="hover:text-mainColor transition">
+                  <i class="ph ph-caret-right px-6"></i>
+                </button>
+                <span class="text-xl" style="direction: ltr"
+                  >1,800+ brands</span
+                >
+                <button class="hover:text-mainColor transition">
+                  <i class="ph ph-caret-left px-6"></i>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span
+                  class="cursor-pointer hover:text-mainColor text-xl transition"
+                  >English</span
+                >
+                <span>|</span>
+                <span
+                  class="cursor-pointer hover:text-mainColor text-xl transition"
+                  >العربية</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN HEADER -->
+          <div class="bg-transparent">
+            <div
+              class="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between"
+            >
+              <!-- Logo -->
+              <div class="flex items-center gap-2">
+                <img
+                  :src="header.logo"
+                  alt="Logo"
+                  class="h-12 md:h-20 w-auto"
+                />
+              </div>
+
+              <!-- Desktop Search & Icons -->
+              <div
+                class="hidden lg:flex items-center gap-6 flex-1 max-w-5xl px-8"
+              >
+                <div class="relative flex-1">
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="ابحث عن المنتج..."
+                    class="text-mainColor w-full py-3 px-6 pr-12 rounded-full bg-gray focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
+                  />
+                  <button
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-mainColor"
+                  >
+                    <i class="ph ph-magnifying-glass text-xl"></i>
+                  </button>
+                </div>
+
+                <button class="text-mainColor transition" title="المفضلة">
+                  <i class="ph ph-heart text-2xl"></i>
+                </button>
+
+                <a
+                  href="/cart"
+                  class="relative text-mainColor transition"
+                  title="السلة"
+                >
+                  <i class="ph-light ph-shopping-cart text-2xl"></i>
+                </a>
+
+                <button class="text-mainColor transition" title="الحساب">
+                  <i class="ph ph-user text-2xl"></i>
+                </button>
+              </div>
+
+              <!-- Mobile: show small inline search input  -->
+              <div class="flex lg:hidden items-center gap-3">
+                <div class="flex-1">
+                  <input
+                    type="text"
+                    name="mobile-search"
+                    placeholder="ابحث..."
+                    class="w-full py-2 px-3 rounded-full border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-mainColor"
+                  />
+                </div>
+
+                <a href="/cart" class="relative text-mainColor transition">
+                  <i class="ph ph-shopping-bag text-xl"></i>
+                </a>
+
+                <button
+                  @click="toggleMobileMenu"
+                  class="text-mainColor transition"
+                >
+                  <i class="ph ph-list text-xl"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Mobile Menu Overlay -->
+            <div
+              v-if="showMobileMenu"
+              @click="toggleMobileMenu"
+              class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            ></div>
+
+            <!-- Mobile Menu -->
+            <div
+              class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 lg:hidden"
+              :class="{ 'active': showMobileMenu }"
+            >
+              <div class="p-4">
+                <button @click="toggleMobileMenu" class="mb-6 text-gray-600">
+                  <i class="ph ph-x text-2xl"></i>
+                </button>
+
+                <nav class="space-y-4">
+                  <a
+                    v-for="(category, index) in navigator.categories"
+                    :key="index"
+                    href="#"
+                    @click.prevent="setActiveCategory(category); toggleMobileMenu()"
+                    class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition"
+                    :class="{'text-mainColor font-bold': navigator.activeCategory === category}"
+                  >
+                    <span>{{ category }}</span>
+                  </a>
+                  <div class="pt-4 border-t">
+                    <a
+                      href="#"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition"
+                    >
+                      <i class="ph ph-user"></i>
+                      <span>الحساب</span>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4"
+                    >
+                      <i class="ph ph-heart"></i>
+                      <span>المفضلة</span>
+                    </a>
+                    <a
+                      href="/cart"
+                      class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4"
+                    >
+                      <i class="ph ph-shopping-cart"></i>
+                      <span>السلة</span>
+                    </a>
+                  </div>
+                  <div class="pt-4 border-t">
+                    <button
+                      class="w-full text-right text-gray-700 hover:text-mainColor transition"
+                    >
+                      English
+                    </button>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navbar -->
+          <nav
+            class="bg-white shadow-md hidden lg:flex justify-center items-center mb-5 px-6 py-3"
+          >
+            <ul class="hidden lg:flex items-center gap-8 text-mainColor">
+              <li
+                v-for="(category, index) in navigator.categories"
+                :key="index"
+                class="relative group"
+              >
+                <a
+                  href="#"
+                  :class="{'active-link -translate-y-1': navigator.activeCategory === category}"
+                  @click.prevent="setActiveCategory(category)"
+                  class="flex items-center gap-2 py-3 transition-all duration-300 group-hover:-translate-y-1"
+                >
+                  <span
+                    class="font-bold text-xl transition-colors duration-300 group-hover:text-black"
+                    :class="{'text-black': navigator.activeCategory === category}"
+                  >
+                    {{ category }}
+                  </span>
+                </a>
+                <div
+                  class="absolute bottom-0 left-0 h-0.5 bg-mainColor transition-all duration-300"
+                  :class="navigator.activeCategory === category ? 'w-full' : 'w-0 group-hover:w-full'"
+                ></div>
+              </li>
+            </ul>
+          </nav>
+        </header>
+
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <main class="min-h-screen px-6 md:px-8">
+          <!-- Cart Section -->
+          <section class="my-6 md:my-10 px-4 container mx-auto">
+            <h1 class="text-3xl md:text-5xl font-bold text-black mb-10">
+                  عربتك
+                </h1>
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+              <!-- Right Side: Cart Items -->
+              <div class="w-full lg:w-2/3">
+                
+
+                <!-- Cart Items Table -->
+                <div class="overflow-x-auto">
+                  <table class="w-full rounded-lg overflow-hidden min-w-[600px]">
+                    <thead>
+                      <tr class="border-b border-gray-300">
+                        <th class="text-right py-3 px-4 text-lg text-black">المنتج</th>
+                        <th class="text-center py-3 px-4 text-lg text-black">السعر</th>
+                        <th class="text-center py-3 px-4 text-lg text-black">الكمية</th>
+                        <th class="text-center py-3 px-4 text-lg text-black">المجموع الكلي</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in cartItems" :key="item.id" class="">
+                        <td class="py-4 px-4 text-right ">
+                          <div class="flex items-center gap-3">
+                            <img :src="item.image" :alt="item.title" class="w-16 h-16 object-cover rounded-lg" />
+                            <div>
+                              <p class="text-xl font-medium w-4/5 text-black">{{ item.title }}</p>
+                              <p class="text-xl pt-4 text-gray-500">{{ item.size }}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="py-4 px-4 text-center ">
+                          <span class="text-xl font-bold text-black">€{{ item.price }}</span>
+                        </td>
+                        <td class="py-4 px-4 text-center ">
+                          <input
+                            type="number"
+                            v-model.number="item.quantity"
+                            min="1"
+                            class="w-[5rem] h-[2.5rem] bg-white text-center border border-black rounded-full focus:outline-none focus:ring-2 focus:ring-mainColor"
+                          />
+                        </td>
+                        <td class="py-4 px-4 text-center ">
+                          <span class="text-xl font-bold  text-black">€{{ (item.price * item.quantity).toFixed(2) }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Left Side: Order Summary -->
+              <div class="w-full lg:w-1/3 ">
+                <div class=" bg-[#F7F7F7] rounded-2xl  p-6 sticky top-6">
+                  <!-- Shipping Note -->
+                  <div class=" flex items-center py-5 gap-2 text-md text-gray-500">
+                    <i class="ph ph-package text-gray-600 flex-shrink-0"></i>
+                    <p>انفق 345.10 يورو إضافية للحصول على شحن مجاني</p>
+                  </div>
+
+
+
+                  <!-- Total Price -->
+                  <div class="flex items-center justify-between ">
+                    <span class="text-xl font-bold text-black">المجموع الفرعي</span>
+                    <span class="text-2xl font-bold text-black">€{{ totalPrice.toFixed(2) }}</span>
+                  </div>
+                  <!-- Price Details -->
+                  <div class="space-y-4 py-[20px]">
+                    <div class="flex items-center justify-between text-md ">
+                      <span class="text-gray-600">شامل الضرائب. الشحن يحتسب عند الدفع.</span>
+                    </div>
+                  </div>
+
+                  <!-- Notes Section -->
+                  <div class="mb-6">
+                    <label for="orderNotes" class="block text-sm font-medium text-gray-700 mb-2">ملاحظات</label>
+                    <textarea
+                      id="orderNotes"
+                      v-model="orderNotes"
+                      rows="4"
+                      placeholder="أضف ملاحظة للطلب..."
+                      class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor focus:border-transparent resize-none text-sm"
+                    ></textarea>
+                  </div>
+
+                  <!-- Shipping Agreement -->
+                  <div class="flex items-start gap-2 mb-6">
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      v-model="agreeToTerms"
+                      class="mt-1 w-4 h-4 text-mainColor border-gray-300 rounded focus:ring-mainColor"
+                    />
+                    <label for="terms" class="text-lg  text-black leading-relaxed">
+                      الموافقة على شروط البيع ووفقاً لشروط خدمة التجار
+                    </label>
+                  </div>
+
+                  <!-- Checkout Button -->
+                  <button
+                    @click="checkout"
+                    :disabled="!agreeToTerms || cartItems.length === 0"
+                    class="w-full bg-black text-white font-bold py-4 rounded-full transition "
+                  >
+                    الدفع الان
+                  </button>
+
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Related Products -->
+          <section class="container mx-auto px-8 py-8 md:py-12">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl md:text-3xl font-bold">العروض</h2>
+              <a href="#" class="text-mainColor underline hover:no-underline"
+                >عرض الكل</a
+              >
+            </div>
+
+            <div class="grid gap-4 md:gap-6">
+              <section class="my-6 md:my-10 px-2 md:px-4 container mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div
+                    v-for="product in products"
+                    :key="product.id"
+                    class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
+                  >
+                    <!-- Image Section -->
+                    <div class="relative overflow-hidden bg-gray-100">
+                      <img
+                        :src="product.image"
+                        :alt="product.title"
+                        class="w-full h-80 object-contain"
+                      />
+
+                      <!-- Rating Badge -->
+                      <div
+                        v-if="product.rate"
+                        class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold"
+                      >
+                        {{ product.rate }}
+                        <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+                      </div>
+
+                      <!-- Favorite Button -->
+                      <button
+                        class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition"
+                      >
+                        <i class="ph ph-heart text-xl"></i>
+                      </button>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="p-3 md:p-4">
+                      <h3 class="text-base md:text-lg font-bold text-dark mb-2">
+                        {{ product.title }}
+                      </h3>
+                      <p
+                        class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2"
+                      >
+                        {{ product.description }}
+                      </p>
+
+                      <!-- Price Section -->
+                      <div
+                        class="flex items-center gap-2 mb-3 md:mb-4 justify-between"
+                      >
+                        <div class="flex items-center gap-2 flex-wrap">
+                          <span
+                            class="text-xl md:text-2xl font-bold text-mainColor"
+                            >{{ product.price }}</span
+                          >
+                          <span
+                            v-if="product.oldPrice"
+                            class="text-xs md:text-sm text-gray-400 line-through"
+                            >{{ product.oldPrice }}</span
+                          >
+                          <span class="text-xs text-red-500"
+                            >{{ product.discount }}</span
+                          >
+                        </div>
+                        <button
+                          class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0"
+                        >
+                          <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </section>
+        </main>
+
+        <!-- ==================== FOOTER ==================== -->
+      <footer class="bg-black text-white py-12 md:py-16 px-4 md:px-6">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-10 mb-8">
+            <div class="col-span-2 md:col-span-1">
+              <div class="flex items-center gap-2 mb-4">
+                <img :src="footer.logo" alt="Logo" class="h-12 md:h-16 w-auto" />
+              </div>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">
+                {{ footer.description }}
+              </p>
+              <div class="flex gap-4 mt-6">
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-snapchat-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-instagram-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-twitter-logo text-xl md:text-2xl"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-400 transition">
+                  <i class="ph ph-facebook-logo text-xl md:text-2xl"></i>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">نسائي</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">رجالي</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">أطفال</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-base md:text-lg mb-4">صفحات أخري</h3>
+              <ul class="space-y-2 text-sm md:text-base">
+                <li><a href="#" class="text-gray-400 hover:text-white transition">الرئيسية</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">المدونة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">تواصل معانا</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">السلة</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-white transition">المفضلة</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pt-6 text-center md:text-right text-gray-400 flex flex-col md:flex-row justify-between items-center gap-4 w-full text-xs md:text-sm">
+            <span class="font-bold text-base md:text-lg text-white">
+              &copy; {{ footer.name }} . جميع الحقوق محفوظة.
+            </span>
+            <img :src="footer.paymentMethods" alt="Payment Methods" class="h-8 md:h-10 w-auto" />
+          </div>
+        </div>
+      </footer>
+      </div>
+    </div>
+
+    <!-- ==================== VUE.JS SCRIPT ==================== -->
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            showMobileMenu: false,
+            isLoading: false,
+            openItems: [0],
+            showSizeGuide: false,
+            orderNotes: "",
+            agreeToTerms: false,
+
+            header: {
+              logo: "/assets/darklogo.png",
+              cartCount: 0,
+            },
+
+            navigator: {
+              categories: [
+                "الرئيسية",
+                "نسائي",
+                "رجالي",
+                "أطفال",
+                "موسمي",
+                "أحدث العروض",
+                "افضل مبيعآ",
+                "شوهد مؤخرأ",
+              ],
+              activeCategory: "الرئيسية",
+            },
+            cartItems: [
+              {
+                id: 1,
+                title: "سترة اكوا شيلد المبطنة المقاومة للرياح",
+                size: "XXL",
+                price: 154.9,
+                quantity: 1,
+                image: "/assets/Cards/card1.png",
+              },
+              {
+                id: 2,
+                title: "سترة اكوا شيلد المبطنة المقاومة للرياح",
+                size: "XXL",
+                price: 154.9,
+                quantity: 1,
+                image: "/assets/Cards/card1.png",
+              },
+              {
+                id: 3,
+                title: "سترة اكوا شيلد المبطنة المقاومة للرياح",
+                size: "XXL",
+                price: 154.9,
+                quantity: 1,
+                image: "/assets/Cards/card1.png",
+              },
+            ],
+            products: [
+              {
+                id: 1,
+                title: "ملابس اطفال",
+                description:
+                  "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+                image: "/assets/Cards/card1.png",
+                rate: "5.0",
+                price: "570 $",
+                oldPrice: "950 $",
+                discount: "40%-",
+              },
+              {
+                id: 2,
+                title: "ملابس اطفال",
+                description:
+                  "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+                image: "/assets/Cards/card1.png",
+                rate: "5.0",
+                price: "570 $",
+                oldPrice: "950 $",
+                discount: "40%-",
+              },
+              {
+                id: 3,
+                title: "ملابس اطفال",
+                description:
+                  "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+                image: "/assets/Cards/card1.png",
+                rate: "5.0",
+                price: "570 $",
+                oldPrice: "950 $",
+                discount: "40%-",
+              },
+              {
+                id: 4,
+                title: "ملابس اطفال",
+                description:
+                  "ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان",
+                image: "/assets/Cards/card1.png",
+                rate: "5.0",
+                price: "570 $",
+                oldPrice: "950 $",
+                discount: "40%-",
+              },
+            ],
+            footer: {
+              logo: "/assets/logo.png",
+              name: "قمرة",
+              description:
+                "نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.",
+              paymentMethods: "/assets/payment-methods.jpg",
+            },
+          };
+        },
+
+        computed: {
+          totalPrice() {
+            return this.cartItems.reduce(
+              (sum, item) => sum + item.price * item.quantity,
+              0
+            );
+          },
+        },
+
+        methods: {
+          setActiveCategory(category) {
+            this.navigator.activeCategory = category;
+          },
+
+          toggleItem(index) {
+            const position = this.openItems.indexOf(index);
+            if (position > -1) {
+              this.openItems.splice(position, 1);
+            } else {
+              this.openItems.push(index);
+            }
+          },
+
+          toggleMobileMenu() {
+            this.showMobileMenu = !this.showMobileMenu;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

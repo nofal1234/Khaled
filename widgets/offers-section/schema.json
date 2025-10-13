@@ -10,7 +10,7 @@
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "القادمون الجدد"
+      "default": "العروض"
     },
     "view_all_link": {
       "type": "string",
@@ -21,7 +21,7 @@
   "presets": [
     {
       "category": "الصفحة الرئيسية",
-      "name": "سلايدر منتجات"
+      "name": "العروض"
     }
   ]
 }

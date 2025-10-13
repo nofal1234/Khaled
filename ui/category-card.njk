@@ -1,0 +1,25 @@
+<div class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden">
+  <div class="relative overflow-hidden bg-gray-100">
+    <img src="{{ (product.image) or (product.featured_image) or (product.images and product.images[0]) or ('card1.png' | assets) }}" alt="{{ product.title or 'منتج' }}" class="w-full h-80 object-contain" />
+
+    {% if product.rate %}
+    <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
+      {{ product.rate }}
+      <i class="ph-fill ph-star" style="color: #ebb11f"></i>
+    </div>
+    {% endif %}
+
+    <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+      <i class="ph ph-heart text-xl"></i>
+    </button>
+  </div>
+
+  <div class="p-3 md:p-4 flex flex-col justify-center items-center gap-2 ">
+    <h3 class="text-base md:text-lg font-bold text-dark mb-2">{{ product.title or 'عنوان المنتج' }}</h3>
+    <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 text-center line-clamp-2">{{ product.description or '' }}</p>
+    <button class="w-full h-[40px] bg-mainColor text-white rounded-[10px] font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+      {{ product.buttontext or 'تصفح الان' }}
+    </button>
+  </div>  
+</div>
+

@@ -1,0 +1,112 @@
+<section class="my-6 md:my-10 px-2 md:px-4 container mx-auto pt-36 md:pt-28 lg:pt-24">
+  <!-- Breadcrumb & Filters (from Category.html simplified) -->
+  <section class="bg-white py-2">
+    <div class="container mx-auto">
+      <div class="px-2 md:px-4 py-1">
+        <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
+          <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+          <span>/</span>
+          <span class="text-mainColor font-semibold">{{ widget.data.section_title | default('عرض الأقسام') }}</span>
+        </nav>
+      </div>
+      <div class="my-2 px-2 md:px-4">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-3 md:gap-5">
+            <span class="text-sm md:text-lg font-semibold px-4 py-1 flex items-center justify-center gap-4 border border-gray-300 rounded">
+              فلتر <i class="ph-thin ph-caret-left"></i>
+            </span>
+            <span class="text-black font-bold text-sm md:text-base">الصفحات</span>
+            <div class="flex items-center gap-1">
+              <input type="number" value="1" min="1" class="w-12 md:w-16 px-2 md:px-3 bg-white py-1 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-mainColor text-sm" />
+              <span class="text-sm md:text-base">إلى 10</span>
+            </div>
+          </div>
+          <div class="w-full md:w-auto">
+            <select class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor text-sm md:text-base">
+              <option>الترتيب</option>
+              <option>السعر: من الأقل للأعلى</option>
+              <option>السعر: من الأعلى للأقل</option>
+              <option>التقييم</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Title -->
+  <div class="px-2 md:px-10 mb-4 md:mb-6 mt-2 md:mt-3">
+    <h1 class="text-2xl md:text-3xl font-bold mb-1">{{ widget.data.section_title | default('عرض الأقسام') }}</h1>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+    {% set collection = widget.data.products_collection %}
+    {% set collectionsList = widget.data.collections %}
+    {% if collectionsList and collectionsList | length > 0 %}
+      {% set items = collectionsList %}
+    {% else %}
+      {% set items = (collection and collection.products) or widget.data.items or [] %}
+    {% endif %}
+    {% if not items or items | length == 0 %}
+      {% set items = [
+        { 'title': 'قسم 1', 'description': 'وصف مختصر', 'image': 'card1.png' | assets, 'buttontext': 'تصفح الان' },
+        { 'title': 'قسم 2', 'description': 'وصف مختصر', 'image': 'card2.png' | assets, 'buttontext': 'تصفح الان' },
+        { 'title': 'قسم 3', 'description': 'وصف مختصر', 'image': 'card3.png' | assets, 'buttontext': 'تصفح الان' },
+        { 'title': 'قسم 4', 'description': 'وصف مختصر', 'image': 'card1.png' | assets, 'buttontext': 'تصفح الان' }
+      ] %}
+    {% endif %}
+    {% for product in items %}
+      {%ui "category-card.njk", product=product %}
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% set current = (context.pagination and context.pagination.currentPage) or 1 %}
+  {% set total = (context.pagination and context.pagination.totalPages) or 10 %}
+  <div class="flex items-center justify-center mt-6">
+    <nav class="flex items-center gap-3">
+      {# Prev #}
+      {% if current > 1 %}
+      <a href="?page={{ current - 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
+        <span class="text-gray-700">‹</span>
+      </a>
+      {% else %}
+      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">‹</span>
+      {% endif %}
+
+      {# Page 1..3 #}
+      {% for p in [1,2,3] %}
+        {% if p <= total %}
+          {% if p == current %}
+          <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white">{{ p }}</span>
+          {% else %}
+          <a href="?page={{ p }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ p }}</a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {# Ellipsis and last page #}
+      {% if total > 4 %}
+        <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-500">…</span>
+        <a href="?page={{ total }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ total }}</a>
+      {% elseif total == 4 %}
+        {% if 4 == current %}
+        <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white">4</span>
+        {% else %}
+        <a href="?page=4" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">4</a>
+        {% endif %}
+      {% endif %}
+
+      {# Next #}
+      {% if current < total %}
+      <a href="?page={{ current + 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
+        <span class="text-gray-700">›</span>
+      </a>
+      {% else %}
+      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">›</span>
+      {% endif %}
+    </nav>
+  </div>
+</section>
+

@@ -1,11 +1,14 @@
 {
   "layout": "layout",
-  "title": "الصفحة الرئيسية",
+  "title": "المجموعات",
   "widgets": [
     {
-      "name": "products",
-      "widget": "products",
-      "settings": {}
+      "name": "collections-page",
+      "widget": "collections-page",
+      "settings": {
+        "section_title": "عرض الأقسام",
+        "items": []
+      }
     }
   ]
 }

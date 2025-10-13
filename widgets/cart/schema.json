@@ -1,6 +1,26 @@
 {
-  "name": "Cart",
-  "description": "قسم السلة",
-  "settings": {}
+  "name": "السلة",
+  "description": "عرض محتويات سلة المشتريات مع ملخص الطلب",
+  "settings": {
+    "cart_items": {
+      "type": "list",
+      "label": "عناصر السلة",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "label": "المعرف" },
+          "title": { "type": "string", "label": "اسم المنتج" },
+          "size": { "type": "string", "label": "المقاس" },
+          "price": { "type": "number", "label": "السعر" },
+          "quantity": { "type": "number", "label": "الكمية" },
+          "image": { "type": "image", "label": "صورة المنتج" }
+        }
+      },
+      "default": []
+    }
+  },
+  "presets": [
+    { "category": "الصفحات", "name": "السلة" }
+  ]
 }
 

@@ -1,0 +1,43 @@
+{
+  "name": "المجموعات",
+  "description": "شبكة المجموعات",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": "المجموعات المعروضة"
+    },
+    "products_collection": {
+      "type": "collection",
+      "label": "المجموعة",
+      "default": "home-page"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان الصفحة",
+      "default": "عرض الأقسام"
+    },
+    "section_subtitle": {
+      "type": "string",
+      "label": "العنوان الفرعي",
+      "default": ""
+    },
+    "items": {
+      "type": "list",
+      "label": "العناصر",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "label": "العنوان" },
+          "description": { "type": "string", "label": "الوصف" },
+          "image": { "type": "image", "label": "الصورة" },
+          "buttontext": { "type": "string", "label": "نص الزر", "default": "تصفح الان" }
+        }
+      },
+      "default": []
+    }
+  },
+  "presets": [
+    { "category": "الصفحات", "name": "المجموعات" }
+  ]
+}
+
