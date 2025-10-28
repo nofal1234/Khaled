@@ -1,12 +1,10 @@
 <!-- Banner Section (same visual design; schema-bound content only) -->
-<section
-  class="my-6 md:my-10 px-4 md:px-6 mx-4 md:mx-20 rounded-xl"
->
-  <div class="relative w-full inline-block" style="aspect-ratio: 1278 / 362; width: 100%;">
+<section class="my-12 md:my-16 px-0 md:px-6 mx-0 md:mx-20 rounded-xl">
+  <div class="relative w-full rounded-none md:rounded-xl" style="height: 362px; width: 100%;">
     {% if widget.data.image and widget.data.image.fileUrl %}
-      <img src="{{ widget.data.image.fileUrl }}" alt="{{ widget.data.alt | default('صورة البانر') }}" class="w-full h-full rounded-xl" style="object-fit: cover; object-position: 50% -80px;" />
+      <img src="{{ widget.data.image.fileUrl }}" alt="{{ widget.data.alt | default('صورة البانر') }}" class="w-full h-full rounded-none md:rounded-xl" style="object-fit: cover; object-position: center top;" />
     {% else %}
-      <img src="{{ 'banner.png' | assets }}" alt="صورة افتراضية" class="w-full h-full rounded-xl" style="object-fit: cover; " />
+      <img src="{{ 'banner.png' | assets }}" alt="صورة افتراضية" class="w-full h-full rounded-none md:rounded-xl" style="object-fit: cover; object-position: center top;" />
     {% endif %}
     <div class="absolute inset-0 flex items-center">
       <div

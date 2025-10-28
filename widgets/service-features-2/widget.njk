@@ -1,23 +1,49 @@
 <!-- Service Features 2 Section -->
 {% set title = widget.data.section_title or 'مزايا الخدمة' %}
-<section class="my-12 md:my-16 px-4 container mx-auto">
-    <div class="py-8 md:py-12">
-        <h1 class="text-2xl md:text-3xl font-bold text-black text-center mb-10 md:mb-12">{{ title }}</h1>
+<section id="serviceFeaturesSection" class="my-12 md:my-16 px-2 mx-2.5 md:mx-20 service-features-section">
+    <!-- Iconify Script -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-black mb-10 md:mb-12 text-center">{{ title }}</h1>
         {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
+        {% set blocksOrdered = (widget.data.reverse_order) and (widget.blocks | reverse) or widget.blocks %}
         {% if hasBlocks %}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-10 w-full md:w-4/5 mx-auto">
-            {% for block in widget.blocks %}
+        
+        <!-- Desktop Layout -->
+        <div class="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-10">
+            {% for block in blocksOrdered %}
             <div class="text-center flex flex-col items-center p-6 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                 <div class="mb-2">
                     {% set imgUrl = block.data and block.data.icon and block.data.icon.fileUrl %}
                     {% if imgUrl %}
                     <img src="{{ imgUrl }}" alt="{{ (block.data and block.data.alt) or (block.data and block.data.title) or (block.settings and block.settings.title) or 'icon' }}" class="w-16 h-16 mx-auto object-contain" />
                     {% else %}
+                    {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
+                    {% if cardTitle == 'خدمة مخصصة' %}
+                    <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                        <iconify-icon icon="hugeicons:security" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                    </div>
+                    {% elif cardTitle == 'العمل على مدار الساعة' %}
+                    <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                        <iconify-icon icon="iconamoon:clock-thin" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                    </div>
+                    {% elif cardTitle == 'أسعار مناسبة' %}
+                    <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                        <iconify-icon icon="lsicon:setting-outline" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                    </div>
+                    {% elif cardTitle == 'دقة مواعيد' %}
+                    <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                        <iconify-icon icon="solar:star-outline" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                    </div>
+                    {% else %}
                     <div class="w-16 h-16 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
                         <i class="{{ (block.settings and block.settings.icon_class) or 'ph-thin ph-star' }} text-4xl text-gray-400"></i>
                     </div>
                     {% endif %}
+                    {% endif %}
                 </div>
+
                 {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
                 {% if cardTitle %}
                 <h3 class="text-xl font-bold text-dark mt-5 mb-3 text-center">{{ cardTitle }}</h3>
@@ -29,8 +55,141 @@
             </div>
             {% endfor %}
         </div>
+        
+        <!-- Mobile Layout: Swiper -->
+        <div class="sm:hidden relative">
+            <div class="swiper serviceFeaturesSwiper">
+                <div class="swiper-wrapper">
+                    {% for block in blocksOrdered %}
+                    <div class="swiper-slide">
+                        <div class="text-center flex flex-col items-center p-6 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="mb-2">
+                                {% set imgUrl = block.data and block.data.icon and block.data.icon.fileUrl %}
+                                {% if imgUrl %}
+                                <img src="{{ imgUrl }}" alt="{{ (block.data and block.data.alt) or (block.data and block.data.title) or (block.settings and block.settings.title) or 'icon' }}" class="w-16 h-16 mx-auto object-contain" />
+                                {% else %}
+                                {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
+                                {% if cardTitle == 'خدمة مخصصة' %}
+                                <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                                    <iconify-icon icon="hugeicons:security" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                                </div>
+                                {% elif cardTitle == 'العمل على مدار الساعة' %}
+                                <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                                    <iconify-icon icon="iconamoon:clock-thin" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                                </div>
+                                {% elif cardTitle == 'أسعار مناسبة' %}
+                                <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                                    <iconify-icon icon="lsicon:setting-outline" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                                </div>
+                                {% elif cardTitle == 'دقة مواعيد' %}
+                                <div class="w-16 h-16 mx-auto flex items-center justify-center">
+                                    <iconify-icon icon="solar--star-line-duotone" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                                </div>
+                                {% else %}
+                                <div class="w-16 h-16 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
+                                    <i class="{{ (block.settings and block.settings.icon_class) or 'ph-thin ph-star' }} text-4xl text-gray-400"></i>
+                                </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
+                            {% if cardTitle %}
+                            <h3 class="text-xl font-bold text-dark mt-5 mb-3 text-center">{{ cardTitle }}</h3>
+                            {% endif %}
+                            {% set cardDesc = (block.data and block.data.description) or (block.settings and block.settings.description) %}
+                            {% if cardDesc %}
+                            <p class="text-m text-gray-600 leading-relaxed text-center max-w-xs mx-auto">{{ cardDesc }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         {% endif %}
     </div>
 </section>
 
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const serviceFeaturesSwiperElement = document.querySelector('.serviceFeaturesSwiper');
+    if (serviceFeaturesSwiperElement) {
+        const serviceFeaturesSwiper = new Swiper('.serviceFeaturesSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: true,
+            autoplay: { 
+                delay: 3500, 
+                disableOnInteraction: false 
+            },
+            breakpoints: {
+                320: { slidesPerView: 1, spaceBetween: 8, centeredSlides: true },
+                480: { slidesPerView: 1, spaceBetween: 12, centeredSlides: true },
+                640: { slidesPerView: 1, spaceBetween: 16, centeredSlides: true },
+            }
+        });
+    }
+});
+</script>
+
+<style>
+/* General thin icons */
+.service-features-section iconify-icon,
+.service-features-section .icon-thin {
+    stroke-width: 0.2 !important;
+    opacity: 0.9;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+}
+
+/* Extra-thin style for selected icons only */
+.service-features-section .custom-thin {
+    stroke-width: 0.2 !important;
+    opacity: 0.8;
+    filter: contrast(1.1) brightness(1.05);
+    transition: all 0.3s ease;
+}
+
+.service-features-section .custom-thin:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Mobile Swiper Styling */
+@media (max-width: 640px) {
+    .serviceFeaturesSwiper {
+        overflow: hidden;
+    }
+    
+    .serviceFeaturesSwiper .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100% !important;
+    }
+    
+    .serviceFeaturesSwiper .swiper-slide > div {
+        max-width: 300px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .serviceFeaturesSwiper .swiper-slide:not(.swiper-slide-active) {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    
+    .serviceFeaturesSwiper .swiper-slide-active {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+</style>

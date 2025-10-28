@@ -3,28 +3,6 @@
   "title": "الصفحة الرئيسية",
   "widgets": [
     {
-      "name": "Hero Section",
-      "widget": "hero",
-      "settings": {
-        "show_button": true,
-        "button_text": "اطلب الآن"
-      },
-      "blocks": [
-        {
-          "block": "slideItem",
-          "name": "الهيرو الرئيسي",
-          "settings": {
-            "image": {
-              "fileUrl": "Hero.png"
-            },
-            "title": "تحويل الأحلام إلى واقع",
-            "subtitle": "نجمع بين الإبداع والحرفية، لنوفر لكم قطع ملابس مصممة بدقة متناهية",
-            "link": "/collections"
-          }
-        }
-      ]
-    },
-    {
       "name": "Features Bar",
       "widget": "features-bar",
       "settings": {
@@ -168,12 +146,61 @@
         }
       ]
     },
+    {
+      "name": "Service Features 2 Section",
+      "widget": "service-features-2",
+      "settings": {
+        "section_title": "مزايا الخدمة"
+      },
+      "blocks": [
+        {
+          "block": "featureItem",
+          "name": "دقة مواعيد",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-star",
+            "title": "دقة مواعيد",
+            "description": "التزام كامل بالمواعيد وخطوط السير."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "أسعار مناسبة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-gear-six",
+            "title": "أسعار مناسبة",
+            "description": "أسعار تنافسية وخطط تناسب جميع الشركات."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "العمل على مدار الساعة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-clock",
+            "title": "العمل على مدار الساعة",
+            "description": "خدمة عملاء وغرفة عمليات تعمل على مدار الساعة."
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "خدمة مخصصة",
+          "settings": {
+            "icon": "",
+            "icon_class": "ph-thin ph-shield-check",
+            "title": "خدمة مخصصة",
+            "description": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع)."
+          }
+        }
+      ]
+    },
 
     {
       "name": "Customer Reviews Section",
       "widget": "reviews-section",
       "settings": {
-        "section_title": "آراء عملائنا"
+        "title": "آراء عملائنا"
       },
       "blocks": [
         {
@@ -224,116 +251,11 @@
         "card_background": "#ffffff",
         "show_hover_effect": true,
         "columns_mobile": "1",
-        "columns_desktop": "3"
+        "columns_desktop": "3",
+        "default_image_1": "assets/blog1.png",
+        "default_image_2": "assets/blog2.png",
+        "default_image_3": "assets/blog3.png"
       }
-    },
-    {
-      "name": "Featured Products Section",
-      "widget": "new-arrivals",
-      "settings": {
-        "section_title": "منتجات مميزة ⭐",
-        "view_all_link": "#",
-        "products": [
-          {
-            "image": "shop/files/1_0b1231d6-587d-4e1c-a19b-aba92da5b7bb_v=1731844752&width=600.png",
-            "name": "باور بانك Majentik MJ-32/ 10000 مللي أمبير",
-            "price": 899.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_e8167770-3061-4ce7-9013-710d7870a534_v=1720432304&width=600.png",
-            "name": "Majentik Power Bank MJ-11/ 20000 mah",
-            "price": 1100.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_97391f5e-53dd-4a79-b7be-fa873db02f01_v=1737188030&width=600.png",
-            "name": "Vacuum Magnetic Mobile Holder",
-            "price": 289.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/18mm-metal-watch-strap-milanese-loop-for-fossil-venture-hr-smart-original-imah4f62htcbcem5_34883f3a-457d-49be-98cc-ce1accf7dd99_v=1751885621&width=600.webp",
-            "name": "حزام معدني من الفولاذ المقاوم للصدأ",
-            "price": 149.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/Android_Covers_Collection_Cover_v=1689107625&width=300.png",
-            "name": "For Samsung Galaxy Fit 3 Sport Band",
-            "price": 199.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/chargers-336078_v=1730466259&width=600.png",
-            "name": "محول طاقة USB-C بقوة 20 واط",
-            "price": 999.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/collections/headset-879122_v=1730466296&width=600.png",
-            "name": "محول مقبس سماعة رأس بلوتوث",
-            "price": 134.00,
-            "old_price": 0,
-            "link": "#"
-          },
-          {
-            "image": "shop/files/1_8d65c5cc-f5e2-4269-a8d0-b5334860162e_v=1720431023&width=600.png",
-            "name": "تغيير إلى Ultra لساعات Apple",
-            "price": 269.00,
-            "old_price": 0,
-            "link": "#"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Customer Reviews Section",
-      "widget": "reviews-section",
-      "settings": {
-        "section_title": "آراء عملائنا"
-      },
-      "blocks": [
-        {
-          "block": "reviewItem",
-          "name": "الرأي الأول",
-          "settings": {
-            "name": "أحمد كرم",
-            "text": "تجربة ممتازة وخدمة عملاء محترمة.",
-            "image": "",
-            "stars": 5,
-            "alt": "صورة العميل"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "الرأي الثاني",
-          "settings": {
-            "name": "سارة محمد",
-            "text": "الشحن سريع والجودة عالية.",
-            "image": "",
-            "stars": 4,
-            "alt": "صورة العميل"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "الرأي الثالث",
-          "settings": {
-            "name": "خالد عبدالله",
-            "text": "أسعار مناسبة وعروض مميزة.",
-          "image": "",
-            "stars": 5,
-            "alt": "صورة العميل"
-          }
-        }
-      ]
     }
       ]
     }  

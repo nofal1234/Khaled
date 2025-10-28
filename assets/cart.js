@@ -110,6 +110,15 @@ function xDataCart() {
       debounceUpdateCartItem(id);
     },
 
+    updateQuantityFromInput(id, event) {
+      const newQuantity = parseInt(event.target.value) || 1;
+      if (newQuantity > 0) {
+        localQuantities[id] = newQuantity;
+        updateFrontendQuantity(id, localQuantities[id]);
+        debounceUpdateCartItem(id);
+      }
+    },
+
     checkout() {
       updateLoading('checkout', true);
       window.qumra.checkout().finally(() => updateLoading('checkout', false));

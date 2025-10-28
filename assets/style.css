@@ -27,6 +27,26 @@ body, html, * {
     color: var(--mainColor);
 }
 
+/* Custom Category Navigation Buttons */
+.swiper-button-next-category,
+.swiper-button-prev-category {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-next-category:hover,
+.swiper-button-prev-category:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
@@ -150,6 +170,12 @@ input:focus::placeholder {
     .swiper-button-prev:after {
         font-size: 14px;
     }
+
+    .swiper-button-next-category,
+    .swiper-button-prev-category {
+        width: 28px;
+        height: 28px;
+    }
 }
 
 /* Mobile tuning removed in favor of Tailwind utilities */
@@ -188,3 +214,15 @@ input:focus::placeholder {
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
 }
+
+/* Hide number input spinners for cart quantity inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+

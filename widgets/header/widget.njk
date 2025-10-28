@@ -1,6 +1,8 @@
  <!-- MAIN HEADER -->
  <div class="bg-transparent absolute top-12 left-0 w-full z-50 md:top-12">
-    <div class="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+    <!-- Iconify Script -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 py-3 md:py-4 flex items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center gap-2">
               <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-12 md:h-20 w-auto" />
@@ -24,33 +26,51 @@
           <i class="ph ph-heart text-2xl"></i>
         </button>
 
-        <a href="/cart" class="relative text-white transition" title="السلة">
-          <i class="ph-light ph-shopping-cart text-2xl"></i>
-        </a>
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative text-white transition" title="السلة">
+          <iconify-icon icon="proicons:cart" width="24" height="24" style="transform: scaleX(-1);"></iconify-icon>
+        </button>
 
         <button class="text-white transition" title="الحساب">
           <i class="ph ph-user text-2xl"></i>
         </button>
       </div>
 
-      <!-- Mobile: show small inline search input  -->
+      <!-- Mobile toolbar -->
       <div class="flex lg:hidden items-center gap-3">
-        <div class="flex-1">
-          <input
-            type="text"
-            name="mobile-search"
-            placeholder="ابحث..."
-            class="w-full py-2 px-3 rounded-full border border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-mainColor"
-          />
-        </div>
+        <!-- Search icon button (opens overlay) -->
+        <button id="mobileSearchBtn" class="text-white transition" title="بحث">
+          <i class="ph ph-magnifying-glass text-xl" style="transform: scaleX(-1);"></i>
+        </button>
 
-        <a href="/cart" class="relative text-white transition">
-          <i class="ph ph-shopping-bag text-xl"></i>
-        </a>
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative text-white transition" title="السلة">
+          <iconify-icon icon="proicons:cart" width="20" height="20" style="transform: scaleX(-1);"></iconify-icon>
+        </button>
+
+        <button class="text-white transition" title="الحساب">
+          <i class="ph ph-user text-xl"></i>
+        </button>
 
         <button @click="toggleMobileMenu" class="text-white transition">
           <i class="ph ph-list text-xl"></i>
         </button>
+      </div>
+
+      <!-- Mobile Search Overlay -->
+      <div id="mobileSearchOverlay" class="fixed inset-0 z-[60] hidden">
+        <!-- backdrop -->
+        <div id="mobileSearchBackdrop" class="absolute inset-0 bg-black/60"></div>
+        <!-- top search box -->
+        <div class="relative z-[61] px-4 pt-6">
+          <div class="bg-white rounded-2xl shadow-xl p-3">
+            <div class="flex items-center gap-2">
+              <i class="ph ph-magnifying-glass text-gray-500 text-lg" style="transform: scaleX(-1);"></i>
+              <input type="text" placeholder="ابحث الان" class="w-full py-2 px-2 rounded-full bg-transparent outline-none text-gray-800 placeholder:text-gray-500" />
+              <button id="mobileSearchClose" class="text-gray-500 hover:text-gray-700">
+                <i class="ph ph-x text-lg"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -81,10 +101,10 @@
               <i class="ph ph-heart"></i>
               <span>المفضلة</span>
             </a>
-            <a href="/cart" class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4">
-              <i class="ph ph-shopping-cart"></i>
+            <button onclick="window.dispatchEvent(new CustomEvent('open-cart'));" @click="toggleMobileMenu();" class="flex items-center gap-3 text-gray-700 hover:text-mainColor transition mt-4">
+              <iconify-icon icon="proicons:cart" style="transform: scaleX(-1);"></iconify-icon>
               <span>السلة</span>
-            </a>
+            </button>
           </div>
           <div class="pt-4 border-t">
             <button class="w-full text-right text-gray-700 hover:text-mainColor transition">
@@ -95,4 +115,57 @@
       </div>
     </div>
   </div>
+
+<!-- Hero Section -->
+<section class="relative h-96 md:h-[600px] lg:min-h-screen flex items-center justify-center">
+    <!-- Background Image -->
+    {% if widget.data.heroImage and widget.data.heroImage.fileUrl %}
+        <img src="{{ widget.data.heroImage.fileUrl }}" alt="صورة الهيرو" class="absolute inset-0 w-full h-full object-cover">
+    {% else %}
+        <img src="{{ 'Hero.png' | assets }}" alt="صورة الهيرو" class="absolute inset-0 w-full h-full object-cover">
+    {% endif %}
+    
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+    
+    <!-- Content positioned below header -->
+    <div class="relative w-full md:w-1/2 z-10 text-center px-4 mt-16 md:mt-40">
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
+            {{ widget.data.mainTitle | default('أهلاً بك في متجرنا') }}
+        </h1>
+        <div class="text-lg md:text-2xl lg:text-3xl text-white mb-6 md:mb-8 drop-shadow-md max-w-2xl mx-auto">
+            {{ widget.data.subtitle | default('اكتشف منتجاتنا المميزة') }}
+        </div>
+        <a href="{{ widget.data.buttonLink | default('/collections') }}" class="bg-transparent border-2 border-white text-white font-bold py-2 md:py-3 px-6 md:px-8 rounded-full transition transform hover:bg-gray-100/20 hover:text-mainColor shadow-lg inline-block">
+            {{ widget.data.buttonText | default('تسوق الآن') }}
+        </a>
+    </div>
+</section>
+
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const btn = document.getElementById('mobileSearchBtn');
+  const overlay = document.getElementById('mobileSearchOverlay');
+  const closeBtn = document.getElementById('mobileSearchClose');
+  const backdrop = document.getElementById('mobileSearchBackdrop');
+  const html = document.documentElement;
+
+  const open = () => {
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    html.style.overflow = 'hidden';
+    const input = overlay.querySelector('input');
+    setTimeout(()=> input && input.focus(), 0);
+  };
+  const close = () => {
+    if (!overlay) return;
+    overlay.classList.add('hidden');
+    html.style.overflow = '';
+  };
+  btn && btn.addEventListener('click', open);
+  closeBtn && closeBtn.addEventListener('click', close);
+  backdrop && backdrop.addEventListener('click', close);
+});
+</script>

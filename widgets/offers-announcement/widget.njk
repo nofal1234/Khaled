@@ -1,26 +1,29 @@
 {% if widget.data.show_top_bar | default(true) %}
-<!-- Top Bar - Hidden on mobile -->
-<div class="bg-black bg-opacity-80 text-white py-2 hidden md:block absolute top-0 left-0 w-full z-40">
-  <div class="container mx-auto px-4 flex items-center justify-between text-sm">
-    <div class="flex items-center gap-2 cursor-pointer hover:text-mainColor transition">
-      <i class="ph ph-caret-down"></i>
-      <span class="text-xl">{{ widget.data.location | default('Cairo') }}</span>
+<!-- Top Bar -->
+<div class="bg-black text-white py-2 md:py-2.5 w-full z-40">
+  <div class="px-2.5 md:px-12 mx-2.5 md:mx-20 flex items-center justify-between">
+    <!-- Left: Cairo - Hidden on mobile -->
+    <div class="hidden md:flex items-center gap-2 cursor-pointer hover:text-mainColor transition -ml-2">
+      <i class="ph ph-caret-down text-lg"></i>
+      <span class="text-lg">{{ widget.data.location | default('Cairo') }}</span>
     </div>
 
-    <div class="flex items-center gap-10">
+    <!-- Center: Brands - Always visible -->
+    <div class="flex items-center gap-4 md:gap-10 mx-auto md:mx-0">
       <button class="hover:text-mainColor transition" onclick="previousBrand()">
-        <i class="ph ph-caret-right px-6"></i>
+        <i class="ph ph-caret-right text-sm md:text-base px-2 md:px-6"></i>
       </button>
-      <span class="text-xl" style="direction: ltr">{{ widget.data.brands_text | default('1,800+ brands') }}</span>
+      <span class="text-sm md:text-xl" style="direction: ltr">{{ widget.data.brands_text | default('1,800+ brands') }}</span>
       <button class="hover:text-mainColor transition" onclick="nextBrand()">
-        <i class="ph ph-caret-left px-6"></i>
+        <i class="ph ph-caret-left text-sm md:text-base px-2 md:px-6"></i>
       </button>
     </div>
 
-    <div class="flex items-center gap-2">
-      <span class="cursor-pointer hover:text-mainColor text-xl transition" onclick="changeLanguage('en')">{{ widget.data.english_text | default('English') }}</span>
-      <span>|</span>
-      <span class="cursor-pointer hover:text-mainColor text-xl transition" onclick="changeLanguage('ar')">{{ widget.data.arabic_text | default('العربية') }}</span>
+    <!-- Right: Languages - Hidden on mobile -->
+    <div class="hidden md:flex items-center gap-2 mr-8">
+      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('en')">{{ widget.data.english_text | default('English') }}</span>
+      <span class="text-lg">|</span>
+      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('ar')">{{ widget.data.arabic_text | default('العربية') }}</span>
     </div>
   </div>
 </div>

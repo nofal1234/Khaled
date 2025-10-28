@@ -63,14 +63,13 @@
   <body >
     <div x-data="GlobalState" x-init="init()">
       {%ui "loading-screen.njk" %}
-      {# {% header %} #}
       {% template "header" %}
       
       <main>
         {% content %}
       </main>
     {% template "footer" %}
-      {# {% footer %} #}
+    {%ui "cart.njk" %}
     </div>
     {% qumra_scripts %}
     <script>

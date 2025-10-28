@@ -1,11 +1,19 @@
 <!-- Features Section -->
 {% set isLoading = widget.data.isLoading %}
 {% set features = widget.data.features or [] %}
-<section class="my-6 md:my-10 px-4 container mx-auto">
-    <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+<section class="my-6 md:my-10 px-2 mx-2.5 md:mx-20">
+    <div class="py-4 md:py-8 px-2 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
             <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('تشكيلاتنا الخاصة') }}</h1>
-            <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">عرض الكل</a>
+            <div class="flex items-center gap-2">
+                <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition py-2 px-1">عرض الكل</a>
+                <div class="swiper-button-prev-custom cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
+                    <i class="ph ph-caret-right text-black text-lg"></i>
+                </div>
+                <div class="swiper-button-next-custom cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
+                    <i class="ph ph-caret-left text-black text-lg"></i>
+                </div>
+            </div>
         </div>
 
         <!-- Loading Skeleton -->
@@ -29,41 +37,109 @@
         <!-- Desktop Layout: Side by Side -->
         <div class="hidden sm:flex flex-row gap-2 sm:gap-3 md:gap-4 w-full">
             {% for block in widget.blocks %}
-            {% if block.data and block.data.image and block.data.image.fileUrl %}
             {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
             {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
             <a href="{{ block.data.link | default('#') }}" class="block flex-1">
                 <div class="w-full mb-3" style="aspect-ratio: 451 / 418;">
+                    {% if block.data and block.data.image and block.data.image.fileUrl %}
                     <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    {% elif block.settings and block.settings.image and block.settings.image.fileUrl %}
+                    <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    {% elif widget.data.show_default_image | default(true) %}
+                    <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    {% endif %}
                 </div>
                 <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
                 {% if block.settings and block.settings.description %}
                 <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
                 {% endif %}
             </a>
-            {% endif %}
             {% endfor %}
         </div>
 
-        <!-- Mobile Layout: Stacked -->
-        <div class="flex sm:hidden flex-col gap-3 w-full">
-            {% for block in widget.blocks %}
-            {% if block.data and block.data.image and block.data.image.fileUrl %}
-            {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
-            {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
-            <a href="{{ block.data.link | default('#') }}" class="block w-full">
-                <div class="w-full mb-3" style="aspect-ratio: 451 / 418;">
-                    <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+        <!-- Mobile Layout: Swiper -->
+        <div class="sm:hidden relative">
+            <div class="swiper featuresSwiper">
+                <div class="swiper-wrapper">
+                    {% for block in widget.blocks %}
+                    {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
+                    {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
+                    <div class="swiper-slide">
+                        <a href="{{ block.data.link | default('#') }}" class="block w-full">
+                            <div class="features-mobile-image mb-3">
+                                {% if block.data and block.data.image and block.data.image.fileUrl %}
+                                <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                {% elif block.settings and block.settings.image and block.settings.image.fileUrl %}
+                                <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                {% elif widget.data.show_default_image | default(true) %}
+                                <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                {% endif %}
+                            </div>
+                            <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
+                            {% if block.settings and block.settings.description %}
+                            <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
-                <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
-                {% if block.settings and block.settings.description %}
-                <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
-                {% endif %}
-            </a>
-            {% endif %}
-            {% endfor %}
+            </div>
         </div>
         {% endif %}
     </div>
     
 </section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const featuresSwiperElement = document.querySelector('.featuresSwiper');
+    if (featuresSwiperElement) {
+        const featuresSwiper = new Swiper('.featuresSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            navigation: { 
+                nextEl: '.swiper-button-next-custom', 
+                prevEl: '.swiper-button-prev-custom' 
+            },
+            autoplay: { 
+                delay: 3000, 
+                disableOnInteraction: false 
+            },
+            breakpoints: {
+                320: { slidesPerView: 1.5, spaceBetween: 12.52, centeredSlides: false },
+                480: { slidesPerView: 1.5, spaceBetween: 12.52, centeredSlides: false },
+                640: { slidesPerView: 2, spaceBetween: 12.52, centeredSlides: false },
+                768: { slidesPerView: 2.5, spaceBetween: 12.52, centeredSlides: false },
+            }
+        });
+    }
+});
+</script>
+
+<style>
+/* Remove any white background from navigation arrows */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Mobile Features Images Styling */
+@media (max-width: 640px) {
+    .features-mobile-image {
+        width: 218.10987854003906px;
+        height: 235.32907104492188px;
+        border-radius: 4.17px;
+        overflow: hidden;
+    }
+}
+</style>

@@ -26,6 +26,18 @@
       "type": "string",
       "label": "العنوان الافتراضي 3",
       "default": "الاكسسوارات"
+    },
+    "default_image": {
+      "type": "string",
+      "label": "الصورة الافتراضية",
+      "default": "assets/Frame 427322188.png",
+      "description": "الصورة التي تظهر عند عدم وجود صور للمجموعات"
+    },
+    "show_default_image": {
+      "type": "boolean",
+      "label": "إظهار الصورة الافتراضية",
+      "default": true,
+      "description": "عرض الصورة الافتراضية للمجموعات التي لا تحتوي على صور"
     }
   },
   "blocks": {

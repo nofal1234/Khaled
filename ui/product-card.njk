@@ -1,4 +1,20 @@
-<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block">
+<style>
+@media (max-width: 640px){
+  .product-card{width:187.99998474121094px;height:330.1707763671875px;opacity:1}
+  .product-card .product-card__image{height:200px}
+  .product-card .product-card__image img{width:100%;height:100%;object-fit:cover}
+}
+</style>
+<style>
+@media (min-width: 768px){
+  .product-card{width:320px;height:500px}
+  .product-card .product-card__image{height:320px}
+  .product-card .product-card__image img{width:100%;height:100%;object-fit:cover}
+  .product-card .product-card__content{display:flex;flex-direction:column}
+  .product-card .product-card__price-row{margin-top:auto}
+}
+</style>
+<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block md:w-auto md:h-auto flex flex-col">
     <!-- Image Section -->
     <div class="relative overflow-hidden bg-gray-100 product-card__image">
         <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ data.product.title }}">
@@ -11,18 +27,20 @@
     </div>
 
     <!-- Content Section -->
-    <div class="p-4 product-card__content">
+    <div class="p-4 product-card__content flex flex-col flex-1">
         <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ data.product.title }}</h3>
         <!-- Price Section -->
-        <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between product-card__price-row">
-            <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-xl md:text-2xl font-bold text-mainColor">{{ data.product.pricing.price | money }}</span>
+        <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
+            <div class="flex flex-col flex-1 gap-1">
                 {% if data.product.pricing.compareAtPrice %}
-                <span class="text-xs md:text-sm text-gray-400 line-through">{{ data.product.pricing.compareAtPrice | money }}</span>
-                <span class="text-xs text-red-500">{{ ((1 - (data.product.pricing.price / data.product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%-</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-sm md:text-base text-gray-600 line-through">{{ data.product.pricing.compareAtPrice | money }}</span>
+                    <span class="text-xs font-bold text-red-600">-{{ ((1 - (data.product.pricing.price / data.product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%</span>
+                </div>
                 {% endif %}
+                <span class="text-xl md:text-2xl font-bold text-black">{{ data.product.pricing.price | money }}</span>
             </div>
-            <button @click.stop="addProductToCart('{{ data.product._id }}', 1, [])" class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
+            <button @click.stop="addProductToCart('{{ data.product._id }}', 1, [])" class="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0 shadow-lg hover:shadow-xl">
                 <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
             </button>
         </div>

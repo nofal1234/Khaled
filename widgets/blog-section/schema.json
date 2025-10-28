@@ -46,19 +46,19 @@
       "default": "عرض المزيد",
       "description": "النص المستخدم في الحالة الافتراضية عند عدم وجود بلوكات"
     },
-    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام" },
+    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "نصائح لاختيار الملابس المناسبة لكل مناسبة" },
     "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية" },
-    "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "" },
+    "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "qumra://blog1.png" },
     "default_link_1": { "type": "string", "label": "رابط افتراضي 1", "default": "/blog" },
     "default_title_2": { "type": "string", "label": "عنوان افتراضي 2", "default": "نصائح لاختيار الملابس المناسبة لكل مناسبة" },
     "default_description_2": { "type": "textarea", "label": "وصف افتراضي 2", "default": "دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات" },
-    "default_image_2": { "type": "media", "label": "صورة افتراضية 2", "default": "" },
+    "default_image_2": { "type": "media", "label": "صورة افتراضية 2", "default": "assets/blog2.png" },
     "default_link_2": { "type": "string", "label": "رابط افتراضي 2", "default": "/blog" },
     "default_title_3": { "type": "string", "label": "عنوان افتراضي 3", "default": "كيفية العناية بالملابس وإطالة عمرها" },
     "default_description_3": { "type": "textarea", "label": "وصف افتراضي 3", "default": "تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة" },
-    "default_image_3": { "type": "media", "label": "صورة افتراضية 3", "default": "" },
-    "default_link_3": { "type": "string", "label": "رابط افتراضي 3", "default": "/blog" }
-  },
+    "default_image_3": { "type": "media", "label": "صورة افتراضية 3", "default": "assets/blog3.png" },
+ "default_link_3": { "type": "string", "label": "رابط افتراضي 3", "default": "/blog" }
+  },   
   "blocks": {
     "blogPost": {
       "name": "منشور المدونة",
@@ -78,7 +78,8 @@
         "image": {
           "type": "media",
           "label": "صورة المنشور",
-          "description": "قم برفع/اختيار صورة المنشور من البيلدر"
+          "description": "قم برفع/اختيار صورة المنشور من البيلدر",
+          "default": "assets/blog1.png" 
         },
         "button_text": {
           "type": "string",
@@ -111,7 +112,7 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": { "fileUrl": "blog1.png" },
+            "image": "qumra://blog1.png",
             "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"
@@ -122,7 +123,7 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": { "fileUrl": "blog2.png" },
+            "image": { "fileUrl": "assets/blog2.png" },
             "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"
@@ -133,7 +134,7 @@
           "settings": {
             "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
             "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": { "fileUrl": "blog3.png" },
+            "image": { "fileUrl": "assets/blog3.png" },
             "button_text": "عرض المزيد",
             "link": "#",
             "alt_text": "أزياء المستقبل"

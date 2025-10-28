@@ -1,49 +1,62 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
-	(document?.getElementById('spinner-container')).style.display = 'none';
+  const spinner = document.getElementById('spinner-container');
+  if (spinner) spinner.style.display = 'none';
 
-  // الحصول على عناصر الصفحة التي نحتاجها
+  // الحصول على عناصر الصفحة التي نحتاجها (قد لا تكون موجودة على كل الصفحات)
   const userActionLinks = document.querySelectorAll('.user-actions a');
   const modal = document.getElementById('supplier-modal');
   const closeButton = document.querySelector('.close-button');
+
   // وظيفة لإظهار النافذة المنبثقة
   const showModal = (event) => {
-      // منع الرابط من الانتقال إلى صفحة أخرى
-      event.preventDefault(); 
-      // إضافة الكلاس 'show' لإظهار النافذة المنبثقة
-      modal.classList.add('show');
+    if (!modal) return;
+    // منع الرابط من الانتقال إلى صفحة أخرى
+    event.preventDefault(); 
+    // إضافة الكلاس 'show' لإظهار النافذة المنبثقة
+    modal.classList.add('show');
   };
 
   // وظيفة لإخفاء النافذة المنبثقة
   const hideModal = () => {
-      // إزالة الكلاس 'show' لإخفاء النافذة المنبثقة
-      modal.classList.remove('show');
+    if (!modal) return;
+    // إزالة الكلاس 'show' لإخفاء النافذة المنبثقة
+    modal.classList.remove('show');
   };
 
-  // إضافة مستمعي الأحداث لجميع الروابط المحددة
-  userActionLinks.forEach(link => {
+  if (userActionLinks && userActionLinks.length) {
+    userActionLinks.forEach((link) => {
       // إضافة مستمع حدث 'click' لكل رابط
       link.addEventListener('click', showModal);
-  });
+    });
+  }
 
-  // عند النقر على زر الإغلاق (X)، قم بإخفاء النافذة
-  closeButton.addEventListener('click', hideModal);
+  if (closeButton) {
+    // عند النقر على زر الإغلاق (X)، قم بإخفاء النافذة
+    closeButton.addEventListener('click', hideModal);
+  }
 
-  // عند النقر خارج النافذة المنبثقة، قم بإخفائها
-  window.addEventListener('click', (event) => {
+  if (modal) {
+    // عند النقر خارج النافذة المنبثقة، قم بإخفائها
+    window.addEventListener('click', (event) => {
       if (event.target === modal) {
-          hideModal();
+        hideModal();
       }
-  });
-
+    });
+  }
 });
 
 function GlobalState() {
-	const config = window.qumra || {};
+  const config = window.qumra || {};
 
-	return {
-		...__qumra__,
+  return {
+    ...__qumra__,
+    globalLoading: {
+      page: false,
+      cart: false,
+      checkout: false,
+      addToCart: false,
+      buyNow: false,
+    },
 		globalLoading: {
 			page: false,
 			cart: false,

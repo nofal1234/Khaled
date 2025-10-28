@@ -1,23 +1,29 @@
 {
   "name": "شريط المميزات",
-  "description": "شريط المميزات الذي يظهر أسفل الهيدر مباشرة",
+  "description": "شريط المميزات الذي يضهر أسفل الهيدر مباشرة",
   "settings": {
+    "use_container": {
+      "type": "checkbox",
+      "label": "استخدام الحاوية (Container)",
+      "default": true,
+      "description": "جعل محتوى الشريط محصورًا في حاوية بعرض محدد"
+    },
     "background_color": {
       "type": "color",
       "label": "لون الخلفية",
-      "default": "#000000",
+      "default": "#f3f4f6",
       "description": "لون خلفية الشريط"
     },
     "text_color": {
       "type": "color",
       "label": "لون النص",
-      "default": "#ffffff",
+      "default": "#1f2937",
       "description": "لون النص والأيقونات"
     },
     "border_color": {
       "type": "color",
       "label": "لون الحدود",
-      "default": "#374151",
+      "default": "#e5e7eb",
       "description": "لون الحدود السفلية"
     },
     "show_border": {
@@ -110,6 +116,41 @@
           "label": "عنوان الميزة",
           "default": "شحن مجاني عند الشراء بقيمة 175",
           "description": "نص الميزة"
+        }
+      }
+    },
+    "announcementItem": {
+      "name": "إعلان",
+      "settings": {
+        "icon": {
+          "type": "text",
+          "label": "أيقونة الإعلان",
+          "default": "<i class='ph-light ph-package'></i>",
+          "description": "أيقونة الإعلان (HTML)"
+        },
+        "announcement_text": {
+          "type": "string",
+          "label": "نص الإعلان",
+          "default": "شحن مجاني عند الشراء بقيمة 175",
+          "description": "النص الذي سيظهر في الإعلان"
+        },
+        "announcement_link": {
+          "type": "string",
+          "label": "رابط الإعلان",
+          "default": "#",
+          "description": "الرابط عند الضغط على الإعلان"
+        },
+        "text_color": {
+          "type": "color",
+          "label": "لون النص",
+          "default": "#ffffff",
+          "description": "لون نص هذا الإعلان"
+        },
+        "background_color": {
+          "type": "color",
+          "label": "لون الخلفية",
+          "default": "",
+          "description": "لون خلفية هذا الإعلان (اختياري)"
         }
       }
     }

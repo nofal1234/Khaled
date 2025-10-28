@@ -6,6 +6,12 @@
       "type": "string",
       "label": "عنوان القسم",
       "default": "مزايا الخدمة"
+    },
+    "reverse_order": {
+      "type": "checkbox",
+      "label": "عكس ترتيب المزايا (يمين ⇄ يسار)",
+      "default": false,
+      "description": "تبديل ترتيب عرض عناصر المزايا بين اليمين واليسار"
     }
   },
   "blocks": {
@@ -46,7 +52,7 @@
           "name": "دقة مواعيد",
           "settings": {
             "icon": "",
-            "icon_class": "ph-thin ph-star",
+            "icon_class": "",
             "title": "دقة مواعيد",
             "description": "التزام كامل بالمواعيد وخطوط السير."
           }
@@ -56,7 +62,7 @@
           "name": "أسعار مناسبة",
           "settings": {
             "icon": "",
-            "icon_class": "ph-thin ph-gear-six",
+            "icon_class": "",
             "title": "أسعار مناسبة",
             "description": "أسعار تنافسية وخطط تناسب جميع الشركات."
           }
@@ -66,7 +72,7 @@
           "name": "العمل على مدار الساعة",
           "settings": {
             "icon": "",
-            "icon_class": "ph-thin ph-clock",
+            "icon_class": "",
             "title": "العمل على مدار الساعة",
             "description": "خدمة عملاء وغرفة عمليات تعمل على مدار الساعة."
           }
@@ -76,7 +82,7 @@
           "name": "خدمة مخصصة",
           "settings": {
             "icon": "",
-            "icon_class": "ph-thin ph-shield-check",
+            "icon_class": "",
             "title": "خدمة مخصصة",
             "description": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع)."
           }

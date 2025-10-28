@@ -1,78 +1,249 @@
 <!-- Blog Section -->
-<section class="my-6 md:my-10 px-4 container mx-auto">
-    <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
+<section class="my-12 md:my-16 px-2 mx-2.5 md:mx-20">
+    <div class="rounded-2xl px-2">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('منشورات المدونة') }}</h1>
-            {% set viewAllHref = widget.data.view_all_link | default('/blog') %}
-            <a href="{{ viewAllHref }}" class="underline text-xs md:text-sm text-gray-500 cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+            <h1 class="text-lg md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('منشورات المدونة') }}</h1>
+            <div class="flex items-center gap-2">
+                {% set viewAllHref = widget.data.view_all_link | default('/blog') %}
+                <a href="{{ viewAllHref }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+                <div class="swiper-button-prev-blog cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-right text-black text-lg"></i>
+                </div>
+                <div class="swiper-button-next-blog cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-left text-black text-lg"></i>
+                </div>
+            </div>
         </div>
         {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Tajawal font for mobile text -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+        @media (max-width: 640px){
+          .blog-mobile-title{font-family:'Tajawal',sans-serif;font-weight:700;font-size:14px;line-height:150%;letter-spacing:0;text-align:right}
+          .blog-mobile-desc{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;text-align:right;color:#666666}
+        }
+        .blog-readmore{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;text-align:right;text-decoration:underline;text-decoration-style:solid}
+        </style>
+        
+        <!-- Desktop Layout -->
+        <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
             {% if hasBlocks %}
                 {% for block in widget.blocks %}
                 {% if loop.index0 < 3 and block.type == 'blogPost' %}
-                {% set img = (block.settings and block.settings.image and block.settings.image.fileUrl) or block.settings.image %}
+                {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else '') %}
                 {% set alt = (block.settings and block.settings.alt_text) or 'صورة المنشور' %}
                 {% set title = (block.settings and block.settings.title) or 'عنوان المنشور' %}
                 {% set desc = (block.settings and block.settings.description) or '' %}
                 {% set link = (block.settings and block.settings.link) or '#' %}
-                {% set btn = (block.settings and block.settings.button_text) or 'عرض المزيد' %}
-                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    {% if img %}
-                    <img src="{{ img }}" alt="{{ alt }}" class="w-full h-[30rem] object-cover">
-                    {% endif %}
-                    <div class="p-4">
+                {% set btn = (block.settings and block.settings.button_text) or 'اقرأ المزيد' %}
+                <div class="text-right">
+                    <img src="{{ img }}" alt="{{ alt }}" class="w-full h-[30rem] object-cover rounded-lg">
+                    <div class="mt-4">
                         <h3 class="text-lg font-bold text-dark mb-2">{{ title }}</h3>
                         {% if desc %}
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ desc }}</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ desc }}</p>
                         {% endif %}
-                        <a href="{{ link }}" class="text-mainColor underline">{{ btn }}</a>
+                        <a href="{{ link }}" class="text-mainColor blog-readmore">{{ btn }}</a>
                     </div>
                 </div>
                 {% endif %}
                 {% endfor %}
             {% else %}
-                {% set dBtn = widget.data.default_button_text | default('عرض المزيد') %}
+                {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
                 {# Card 1 #}
-                {% set dImg1 = (widget.data.default_image_1 and widget.data.default_image_1.fileUrl) or widget.data.default_image_1 or 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=480&fit=crop' %}
+                {% if widget.data.default_image_1.fileUrl %}
+                    {% set dImg1 = widget.data.default_image_1.fileUrl %}
+                {% elif widget.data.default_image_1 %}
+                    {% set dImg1 = widget.data.default_image_1 | assets %}
+                {% else %}
+                    {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
+                {% endif %}
                 {% set dTitle1 = widget.data.default_title_1 | default('أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام') %}
                 {% set dDesc1 = widget.data.default_description_1 | default('استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية') %}
                 {% set dLink1 = widget.data.default_link_1 | default('#') %}
-                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="w-full h-[30rem] object-cover">
-                    <div class="p-4">
+                <div class="text-right">
+                    <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                    <div class="mt-4">
                         <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle1 }}</h3>
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc1 }}</p>
-                        <a href="{{ dLink1 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                        <p class="text-sm text-[#666666] mb-4">{{ dDesc1 }}</p>
+                        <a href="{{ dLink1 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
                 {# Card 2 #}
-                {% set dImg2 = (widget.data.default_image_2 and widget.data.default_image_2.fileUrl) or widget.data.default_image_2 or 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=480&fit=crop' %}
+                {% if widget.data.default_image_2.fileUrl %}
+                    {% set dImg2 = widget.data.default_image_2.fileUrl %}
+                {% elif widget.data.default_image_2 %}
+                    {% set dImg2 = widget.data.default_image_2 | assets %}
+                {% else %}
+                    {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
+                {% endif %}
                 {% set dTitle2 = widget.data.default_title_2 | default('نصائح لاختيار الملابس المناسبة لكل مناسبة') %}
                 {% set dDesc2 = widget.data.default_description_2 | default('دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات') %}
                 {% set dLink2 = widget.data.default_link_2 | default('#') %}
-                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="w-full h-[30rem] object-cover">
-                    <div class="p-4">
+                <div class="text-right">
+                    <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                    <div class="mt-4">
                         <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle2 }}</h3>
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc2 }}</p>
-                        <a href="{{ dLink2 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                        <p class="text-sm text-[#666666] mb-4">{{ dDesc2 }}</p>
+                        <a href="{{ dLink2 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
                 {# Card 3 #}
-                {% set dImg3 = (widget.data.default_image_3 and widget.data.default_image_3.fileUrl) or widget.data.default_image_3 or 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=480&fit=crop' %}
+                {% if widget.data.default_image_3.fileUrl %}
+                    {% set dImg3 = widget.data.default_image_3.fileUrl %}
+                {% elif widget.data.default_image_3 %}
+                    {% set dImg3 = widget.data.default_image_3 | assets %}
+                {% else %}
+                    {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
+                {% endif %}
                 {% set dTitle3 = widget.data.default_title_3 | default('كيفية العناية بالملابس وإطالة عمرها') %}
                 {% set dDesc3 = widget.data.default_description_3 | default('تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة') %}
                 {% set dLink3 = widget.data.default_link_3 | default('#') %}
-                <div class="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="w-full h-[30rem] object-cover">
-                    <div class="p-4">
+                <div class="text-right">
+                    <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                    <div class="mt-4">
                         <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle3 }}</h3>
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ dDesc3 }}</p>
-                        <a href="{{ dLink3 }}" class="text-mainColor underline">{{ dBtn }}</a>
+                        <p class="text-sm text-[#666666] mb-4">{{ dDesc3 }}</p>
+                        <a href="{{ dLink3 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
             {% endif %}
         </div>
+        
+        <!-- Mobile Layout: Swiper -->
+        <div class="md:hidden relative">
+            <div class="swiper blogSwiper">
+                <div class="swiper-wrapper">
+                    {% if hasBlocks %}
+                        {% for block in widget.blocks %}
+                        {% if loop.index0 < 3 and block.type == 'blogPost' %}
+                        {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else '') %}
+                        {% set alt = (block.settings and block.settings.alt_text) or 'صورة المنشور' %}
+                        {% set title = (block.settings and block.settings.title) or 'عنوان المنشور' %}
+                        {% set desc = (block.settings and block.settings.description) or '' %}
+                        {% set link = (block.settings and block.settings.link) or '#' %}
+                        {% set btn = (block.settings and block.settings.button_text) or 'اقرأ المزيد' %}
+                        <div class="swiper-slide px-0">
+                            <div class="text-right">
+                                <img src="{{ img }}" alt="{{ alt }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                                <div class="mt-3 md:mt-4 w-[260px] mx-auto">
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ title }}</h3>
+                                    {% if desc %}
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ desc }}</p>
+                                    {% endif %}
+                                    <a href="{{ link }}" class="blog-readmore text-mainColor">{{ btn }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <!-- Default blog posts for mobile -->
+                        {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
+                        {# Card 1 #}
+                        {% if widget.data.default_image_1.fileUrl %}
+                            {% set dImg1 = widget.data.default_image_1.fileUrl %}
+                        {% elif widget.data.default_image_1 %}
+                            {% set dImg1 = widget.data.default_image_1 | assets %}
+                        {% else %}
+                            {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
+                        {% endif %}
+                        {% set dTitle1 = widget.data.default_title_1 | default('أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام') %}
+                        {% set dDesc1 = widget.data.default_description_1 | default('استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية') %}
+                        {% set dLink1 = widget.data.default_link_1 | default('#') %}
+                        <div class="swiper-slide px-0">
+                            <div class="text-right">
+                                <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                                <div class="mt-3 md:mt-4 w-[260px] mx-auto">
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle1 }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc1 }}</p>
+                                    <a href="{{ dLink1 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {# Card 2 #}
+                        {% if widget.data.default_image_2.fileUrl %}
+                            {% set dImg2 = widget.data.default_image_2.fileUrl %}
+                        {% elif widget.data.default_image_2 %}
+                            {% set dImg2 = widget.data.default_image_2 | assets %}
+                        {% else %}
+                            {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
+                        {% endif %}
+                        {% set dTitle2 = widget.data.default_title_2 | default('نصائح لاختيار الملابس المناسبة لكل مناسبة') %}
+                        {% set dDesc2 = widget.data.default_description_2 | default('دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات') %}
+                        {% set dLink2 = widget.data.default_link_2 | default('#') %}
+                        <div class="swiper-slide px-0">
+                            <div class="text-right">
+                                <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                                <div class="mt-3 md:mt-4 w-[260px] mx-auto">
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle2 }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc2 }}</p>
+                                    <a href="{{ dLink2 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {# Card 3 #}
+                        {% if widget.data.default_image_3.fileUrl %}
+                            {% set dImg3 = widget.data.default_image_3.fileUrl %}
+                        {% elif widget.data.default_image_3 %}
+                            {% set dImg3 = widget.data.default_image_3 | assets %}
+                        {% else %}
+                            {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
+                        {% endif %}
+                        {% set dTitle3 = widget.data.default_title_3 | default('كيفية العناية بالملابس وإطالة عمرها') %}
+                        {% set dDesc3 = widget.data.default_description_3 | default('تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة') %}
+                        {% set dLink3 = widget.data.default_link_3 | default('#') %}
+                        <div class="swiper-slide px-0">
+                            <div class="text-right">
+                                <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                                <div class="mt-3 md:mt-4 w-[260px] mx-auto">
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle3 }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc3 }}</p>
+                                    <a href="{{ dLink3 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const blogSwiperElement = document.querySelector('.blogSwiper');
+    if (blogSwiperElement) {
+        const blogSwiper = new Swiper('.blogSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            slideToClickedSlide: true,
+            navigation: { 
+                nextEl: '.swiper-button-next-blog', 
+                prevEl: '.swiper-button-prev-blog' 
+            },
+            autoplay: { 
+                delay: 5000, 
+                disableOnInteraction: false 
+            },
+            breakpoints: {
+                320: { slidesPerView: 1.1, spaceBetween: 10, centeredSlides: false },
+                480: { slidesPerView: 1.1, spaceBetween: 10, centeredSlides: false },
+                640: { slidesPerView: 1, spaceBetween: 16, centeredSlides: false },
+                768: { slidesPerView: 2, spaceBetween: 16, centeredSlides: false },
+            }
+        });
+    }
+});
+</script>
