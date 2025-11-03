@@ -1,64 +1,93 @@
-<section class="my-6 md:my-10 px-2.5 md:px-4 container mx-auto pt-36 md:pt-28 lg:pt-24">
+<section class="product-listing bg-white">
+  <div class="px-4 md:px-8 mx-2.5 md:mx-20 pt-6 md:pt-8 pb-10">
   <!-- Breadcrumb & Filters (from Category.html simplified) -->
-  <section class="bg-white py-2">
-    <div class="container mx-auto">
-      <div class="px-2.5 md:px-4 py-1">
+  <section class="bg-white py-0 md:py-1">
+    <div class="md:block">
+      <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
         <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
-          <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+          <a href="/" class="hover:text-mainColor transition">الرئيسية</a>
           <span>/</span>
           <span class="text-mainColor font-semibold">{{ widget.data.section_title | default('عرض الأقسام') }}</span>
         </nav>
       </div>
-      <div class="my-2 px-2.5 md:px-4">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div class="flex flex-wrap items-center gap-3 md:gap-5">
-            <span class="text-sm md:text-lg font-semibold px-4 py-1 flex items-center justify-center gap-4 border border-gray-300 rounded">
-              فلتر <i class="ph-thin ph-caret-left"></i>
-            </span>
-            <span class="text-black font-bold text-sm md:text-base">الصفحات</span>
-            <div class="flex items-center gap-1">
-              <input type="number" value="1" min="1" class="w-12 md:w-16 px-2 md:px-3 bg-white py-1 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-mainColor text-sm" />
-              <span class="text-sm md:text-base">إلى 10</span>
-            </div>
-          </div>
-          <div class="w-full md:w-auto">
-            <select class="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor text-sm md:text-base">
-              <option>الترتيب</option>
-              <option>السعر: من الأقل للأعلى</option>
-              <option>السعر: من الأعلى للأقل</option>
-              <option>التقييم</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </section>
 
   <!-- Title -->
-  <div class="px-2.5 md:px-10 mb-4 md:mb-6 mt-2 md:mt-3">
-    <h1 class="text-2xl md:text-3xl font-bold mb-1">{{ widget.data.section_title | default('عرض الأقسام') }}</h1>
+  {% set items = (context.collections and context.collections) or (widget.data.collections and widget.data.collections) or [] %}
+  {% set hasItems = (widget.blocks and (widget.blocks | length) > 0) or (items | length > 0) %}
+  <div class="px-2 md:px-0 mb-6 md:mb-8 mt-2 md:mt-3 flex items-center {% if hasItems %}justify-between{% else %}justify-start{% endif %} gap-3">
+    <h1 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">{{ widget.data.section_title | default('عرض الأقسام') }}</h1>
+    {% if hasItems %}
+    <div class="w-auto ml-3 md:ml-6">
+      <div class="relative w-[140px] h-[36px] md:w-[176px] md:h-[42px]">
+        <select class="w-full h-full appearance-none border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-mainColor text-right text-xs md:text-base pr-3 pl-9 md:pr-4 md:pl-10">
+          <option>الترتيب</option>
+          <option>السعر: من الأقل للأعلى</option>
+          <option>السعر: من الأعلى للأقل</option>
+          <option>التقييم</option>
+        </select>
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-    {% set collection = widget.data.products_collection %}
-    {% set collectionsList = widget.data.collections %}
-    {% if collectionsList and collectionsList | length > 0 %}
-      {% set items = collectionsList %}
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+    {% if widget.blocks and (widget.blocks | length) > 0 %}
+      {% for block in widget.blocks %}
+        <div class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden">
+          <div class="relative overflow-hidden bg-gray-100">
+            {% if block.settings.image %}
+              {% if block.settings.image.fileUrl %}
+                <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt_text | default(block.settings.name) }}" class="w-full object-contain" />
+              {% else %}
+                <img src="{{ block.settings.image | assets }}" alt="{{ block.settings.alt_text | default(block.settings.name) }}" class="w-full object-contain" />
+              {% endif %}
+            {% else %}
+              <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-32 flex items-center justify-center md:h-40">
+                <span class="text-gray-500 text-sm">لا توجد صورة</span>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="p-3 md:p-4 flex flex-col justify-center items-center gap-2">
+            <h3 class="text-base md:text-lg font-bold text-dark mb-2 text-center">{{ block.settings.name | default('Collection Name') }}</h3>
+            <a href="{{ block.settings.link | default('#') }}" class="category-cta relative z-10 opacity-100 w-full h-[40px] bg-black text-white rounded-[10px] font-bold hover:bg-gray-800 transition flex items-center justify-center">
+              تصفح الان
+            </a>
+          </div>  
+        </div>
+      {% endfor %}
     {% else %}
-      {% set items = (collection and collection.products) or widget.data.items or [] %}
+      {% for c in items %}
+        <div class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden">
+          <div class="relative overflow-hidden bg-gray-100">
+            {% if c.image and c.image.fileUrl %}
+            <img src="{{ c.image.fileUrl }}" alt="{{ c.title }}" class="w-full object-contain" />
+            {% else %}
+            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-32 flex items-center justify-center md:h-40">
+              <span class="text-gray-500 text-sm">لا توجد صورة</span>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="p-3 md:p-4 flex flex-col justify-center items-center gap-2">
+            <h3 class="text-base md:text-lg font-bold text-dark mb-2 text-center">{{ c.title }}</h3>
+            <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 text-center line-clamp-2">{{ c.description or '' }}</p>
+            <a href="/collection/{{ c.slug }}" class="category-cta relative z-10 opacity-100 w-full h-[40px] bg-black text-white rounded-[10px] font-bold hover:bg-gray-800 transition flex items-center justify-center">
+              تصفح الان
+            </a>
+          </div>  
+        </div>
+      {% endfor %}
     {% endif %}
-    {% if not items or items | length == 0 %}
-      {% set items = [
-        { 'title': 'قسم 1', 'description': 'وصف مختصر', 'image': 'card1.png' | assets, 'buttontext': 'تصفح الان' },
-        { 'title': 'قسم 2', 'description': 'وصف مختصر', 'image': 'card2.png' | assets, 'buttontext': 'تصفح الان' },
-        { 'title': 'قسم 3', 'description': 'وصف مختصر', 'image': 'card3.png' | assets, 'buttontext': 'تصفح الان' },
-        { 'title': 'قسم 4', 'description': 'وصف مختصر', 'image': 'card1.png' | assets, 'buttontext': 'تصفح الان' }
-      ] %}
-    {% endif %}
-    {% for product in items %}
-      {%ui "category-card.njk", product=product %}
-    {% endfor %}
   </div>
 
   <!-- Pagination -->
@@ -109,4 +138,3 @@
     </nav>
   </div>
 </section>
-

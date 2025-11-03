@@ -22,7 +22,7 @@
                     {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
                     {% if cardTitle == 'خدمة مخصصة' %}
                     <div class="w-16 h-16 mx-auto flex items-center justify-center">
-                        <iconify-icon icon="hugeicons:security" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                        <img src="{{ 'hugeicons_security.svg' | assets }}" alt="خدمة مخصصة" class="w-16 h-16 object-contain" />
                     </div>
                     {% elif cardTitle == 'العمل على مدار الساعة' %}
                     <div class="w-16 h-16 mx-auto flex items-center justify-center">
@@ -34,7 +34,7 @@
                     </div>
                     {% elif cardTitle == 'دقة مواعيد' %}
                     <div class="w-16 h-16 mx-auto flex items-center justify-center">
-                        <iconify-icon icon="solar:star-outline" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                        <img src="{{ 'solar_star-line-duotone.svg' | assets }}" alt="دقة مواعيد" class="w-16 h-16 object-contain" />
                     </div>
                     {% else %}
                     <div class="w-16 h-16 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
@@ -71,7 +71,7 @@
                                 {% set cardTitle = (block.data and block.data.title) or (block.settings and block.settings.title) %}
                                 {% if cardTitle == 'خدمة مخصصة' %}
                                 <div class="w-16 h-16 mx-auto flex items-center justify-center">
-                                    <iconify-icon icon="hugeicons:security" width="67" height="67" class="text-black icon-thin custom-thin"></iconify-icon>
+                                    <img src="assets/hugeicons_security.svg" alt="خدمة مخصصة" class="w-16 h-16 object-contain" />
                                 </div>
                                 {% elif cardTitle == 'العمل على مدار الساعة' %}
                                 <div class="w-16 h-16 mx-auto flex items-center justify-center">
@@ -83,7 +83,7 @@
                                 </div>
                                 {% elif cardTitle == 'دقة مواعيد' %}
                                 <div class="w-16 h-16 mx-auto flex items-center justify-center">
-                                    <iconify-icon icon="solar--star-line-duotone" width="67" height="67" class="text-black icon-thin"></iconify-icon>
+                                    <img src="assets/solar_star-line-duotone.svg" alt="دقة مواعيد" class="w-16 h-16 object-contain" />
                                 </div>
                                 {% else %}
                                 <div class="w-16 h-16 mx-auto bg-gray-200 rounded-full flex items-center justify-center">

@@ -1,0 +1,122 @@
+<!-- Reviews Section -->
+<section class="py-6 bg-white">
+  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 py-6 bg-white rounded-2xl">
+    <h1 class="text-2xl md:text-3xl font-bold text-black mb-6">
+      {{ widget.data.title | default('التقييم و المراجعات') | striptags }}
+    </h1>
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+      <!-- Left Side - Rating Summary -->
+      <div class="w-full lg:w-1/2">
+        <div class="flex gap-6 items-center">
+          <div class="text-center">
+            <div class="flex items-center justify-center gap-2">
+              <p class="text-gray-500 text-xl">5/</p>
+              <h2 class="text-[6rem] md:text-[8rem] font-semibold text-black leading-none">
+                {{ widget.data.rating | default(4.5) }}
+              </h2>
+            </div>
+            <p class="text-gray-600 text-xs md:text-sm mt-1">
+              ( {{ widget.data.totalReviews | default(30) }} تقييم جديد )
+            </p>
+          </div>
+
+          <!-- Rating Bars -->
+          <div class="space-y-1.5 md:space-y-2 flex-1">
+            <div class="flex items-center gap-2">
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 rounded-full" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 rounded-full" style="width: 70%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 rounded-full" style="width: 20%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Reviews List -->
+      <div class="w-full lg:w-1/2 border border-gray-200 p-3 md:p-4 rounded-xl flex flex-col gap-3">
+        {% if widget.blocks and (widget.blocks | length) > 0 %}
+          {% for block in widget.blocks %}
+            <div>
+              <h2 class="text-base md:text-lg font-bold text-dark mb-2">
+                {{ (block.data.name | default(block.settings.name)) | striptags }}
+              </h2>
+              <div class="flex items-center gap-1 mb-1">
+                {% set stars = block.data.stars | default(block.settings.stars) | default(5) %}
+                {% for i in range(1, 6) %}
+                  {% if i <= stars %}
+                    <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+                  {% else %}
+                    <i class="ph-fill ph-star text-yellow-300 text-xs md:text-sm"></i>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Review Images -->
+            <div class="flex gap-1.5 overflow-x-auto pb-1">
+              {% if block.data.images %}
+                {% for image in block.data.images %}
+                  <img src="{{ image.fileUrl }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image">
+                {% endfor %}
+              {% else %}
+                <img src="{{ 'card6.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+                <img src="{{ 'card7.jpg' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+                <img src="{{ 'card5.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+              {% endif %}
+            </div>
+
+            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+              {{ (block.data.review | default(block.settings.review)) | striptags }}
+            </p>
+          {% endfor %}
+        {% else %}
+          <!-- Default Review -->
+          <div>
+            <h2 class="text-base md:text-lg font-bold text-dark mb-2">احمد محمد</h2>
+            <div class="flex items-center gap-1 mb-1">
+              <i class="ph-fill ph-star text-yellow-300 text-xs md:text-sm"></i>
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+            </div>
+          </div>
+
+          <div class="flex gap-1.5 overflow-x-auto pb-1">
+            <img src="{{ 'card6.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+            <img src="{{ 'card7.jpg' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+            <img src="{{ 'card5.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
+          </div>
+
+          <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+            أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

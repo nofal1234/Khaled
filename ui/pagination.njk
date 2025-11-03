@@ -2,42 +2,66 @@
 {% set total = context.pagination.totalPages|default(1) %}
 
 <div dir="rtl" class="py-8 flex justify-center">
-  <nav class="inline-flex items-center gap-6 md:gap-8 
-              rounded-full border-2 border-gray-200 bg-white shadow-sm">
-
-    {# السابق #}
+  <nav class="inline-flex items-center gap-2 md:gap-3">
+    {# Previous Page #}
     {% if current > 1 %}
-    <a href="?page={{ current - 1 }}" rel="prev" aria-label="الصفحة السابقة" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
-                transition transform hover:scale-105">
-      <i class="fi fi-ts-angle-right  text-gray-700 text-xl md:text-2xl"></i>
+    <a href="?page={{ current - 1 }}" rel="prev" aria-label="الصفحة السابقة" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 transition">
+      <span class="text-gray-700">‹</span>
     </a>
     {% else %}
-    <span aria-disabled="true" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
-           cursor-not-allowed">
-      <i class="fi fi-ts-angle-double-right text-gray-700  text-xl md:text-2xl"></i>
-
+    <span aria-disabled="true" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">
+      <span>‹</span>
     </span>
     {% endif %}
 
-    {# الوسط: current / total #}
-    <span class="select-none text-xl md:text-2xl font-medium tracking-wide">
-      <span class="tabular-nums">{{ current }}</span>
-      <span class="mx-2 text-gray-400">/</span>
-      <span class="tabular-nums">{{ total }}</span>
-    </span>
-
-    {# التالي #}
-    {% if current < total %} <a href="?page={{ current + 1 }}" rel="next" aria-label="الصفحة التالية" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
-                
-                transition transform hover:scale-105  ">
-      <i class="fi fi-ts-angle-left  text-gray-700 text-xl md:text-2xl"></i>
-      </a>
+    {# Page Numbers #}
+    {% set start = 1 %}
+    {% set end = total %}
+    
+    {% if total > 5 %}
+      {% if current <= 3 %} {% set start=1 %} {% set end=5 %} {% elif current >= total - 2 %}
+        {% set start = total - 4 %}
+        {% set end = total %}
       {% else %}
-      <span aria-disabled="true" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center  cursor-not-allowed">
-        <i class="fi fi-ts-angle-double-left text-gray-700  text-xl md:text-2xl"></i>
+        {% set start = current - 2 %}
+        {% set end = current + 2 %}
+      {% endif %}
+    {% endif %}
 
+    {% if start > 1 %}
+    <a href="?page=1" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
+      1
+    </a>
+    <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center text-gray-500">…</span>
+    {% endif %}
+
+    {% for p in range(start, end + 1) %}
+      {% if p == current %}
+      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white text-sm md:text-base">
+        {{ p }}
       </span>
+      {% else %}
+      <a href="?page={{ p }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
+        {{ p }}
+      </a>
+      {% endif %}
+    {% endfor %}
+
+    {% if end < total %} <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center text-gray-500">…</span>
+      <a href="?page={{ total }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
+        {{ total }}
+      </a>
       {% endif %}
 
+      {# Next Page #}
+      {% if current < total %}
+      <a href="?page={{ current + 1 }}" rel="next" aria-label="الصفحة التالية" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 transition">
+        <span class="text-gray-700">›</span>
+      </a>
+      {% else %}
+      <span aria-disabled="true" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">
+        <span>›</span>
+      </span>
+      {% endif %}
   </nav>
 </div>

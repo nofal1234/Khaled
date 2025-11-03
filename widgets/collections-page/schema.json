@@ -1,43 +1,55 @@
 {
-  "name": "المجموعات",
-  "description": "شبكة المجموعات",
+  "name": "عرض الاقسام ",
+  "description": "Page displaying collections with browse button",
   "settings": {
     "collections": {
       "type": "collections",
-      "label": "المجموعات المعروضة"
-    },
-    "products_collection": {
-      "type": "collection",
-      "label": "المجموعة",
-      "default": "home-page"
+      "label": "Featured Collections"
     },
     "section_title": {
       "type": "string",
-      "label": "عنوان الصفحة",
-      "default": "عرض الأقسام"
+      "label": "Section Title",
+      "default": "عرض الاقسام"
     },
-    "section_subtitle": {
+    "view_all_link": {
       "type": "string",
-      "label": "العنوان الفرعي",
-      "default": ""
-    },
-    "items": {
-      "type": "list",
-      "label": "العناصر",
-      "schema": {
-        "type": "object",
-        "properties": {
-          "title": { "type": "string", "label": "العنوان" },
-          "description": { "type": "string", "label": "الوصف" },
-          "image": { "type": "image", "label": "الصورة" },
-          "buttontext": { "type": "string", "label": "نص الزر", "default": "تصفح الان" }
+      "label": "View All Link",
+      "default": "#"
+    }
+  },
+  "blocks": {
+    "collectionItem": {
+      "name": "الاقسام",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Collection Image"
+        },
+        {
+          "id": "name",
+          "type": "text",
+          "label": "Collection Name",
+          "default": "Collection Name"
+        },
+        {
+          "id": "alt_text",
+          "type": "text",
+          "label": "Image Alt Text"
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Collection Link",
+          "default": "#"
         }
-      },
-      "default": []
+      ]
     }
   },
   "presets": [
-    { "category": "الصفحات", "name": "المجموعات" }
+    {
+      "category": "Pages",
+      "name": "🧩 Collections Page"
+    }
   ]
 }
-

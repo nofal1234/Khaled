@@ -1,36 +1,6 @@
 {
   "name": "رأس الصفحة",
   "settings": {
-    "heroImage": {
-      "type": "media",
-      "label": "صورة الهيرو",
-      "description": "قم بتعيين صورة الهيرو الرئيسية المعروضة في الهيدر",
-      "default": "/media/hero-image.jpg"
-    },
-    "mainTitle": {
-      "type": "string",
-      "label": "العنوان الرئيسي",
-      "default": "أهلاً بك في متجرنا",
-      "description": "العنوان الأساسي المعروض بشكل بارز في قسم الهيرو"
-    },
-    "subtitle": {
-      "type": "string",
-      "label": "العنوان الفرعي",
-      "default": "اكتشف منتجاتنا المميزة",
-      "description": "وصف قصير أو عنوان فرعي يظهر أسفل العنوان الرئيسي"
-    },
-    "buttonText": {
-      "type": "string",
-      "label": "نص الزر",
-      "default": "تسوق الآن",
-      "description": "نص تسمية زر الدعوة إلى الإجراء"
-    },
-    "buttonLink": {
-      "type": "path",
-      "label": "رابط الزر",
-      "default": "/collections",
-      "description": "مسار التنقل أو رابط URL الذي ينتقل إليه الزر"
-    },
     "logo": {
       "type": "image_picker",
       "label": "الشعار",

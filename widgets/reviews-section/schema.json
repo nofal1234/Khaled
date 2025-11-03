@@ -6,6 +6,12 @@
       "type": "string", 
       "label": "العنوان", 
       "default": "آراء عملائنا" 
+    },
+    "heroImage": {
+      "type": "media",
+      "label": "صورة الهيرو",
+      "description": "قم بتعيين صورة الخلفية لقسم الهيرو",
+      "default": ""
     }
   },
   "blocks": {

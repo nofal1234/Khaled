@@ -1,7 +1,7 @@
-<section id="product-details" class="min-h-screen bg-white pt-28 md:pt-32 lg:pt-28">
-    <div class="container mx-auto px-2.5 md:px-6">
+<section id="product-details" class="bg-white">
+    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pt-6">
         <!-- Breadcrumb -->
-        <div class="py-4 mt-6 md:mt-16">
+        <div class="py-4 mt-2 md:mt-4">
             <nav class="flex items-center gap-2 text-sm text-gray-600">
                 <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
                 <span>/</span>
@@ -11,7 +11,7 @@
             </nav>
         </div>
         <!-- Product Details Section -->
-        <section class="container mx-auto py-6">
+        <section class="py-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                 <!-- Product Images -->
                 <div class="flex flex-col gap-4">
@@ -35,35 +35,50 @@
                 </div>
 
                 <!-- Product Info -->
-                <div class="flex w-4/5 md-w-full flex-col gap-6">
+                <div class="flex flex-col gap-6">
                     <!-- Title -->
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">عنوان المنتج</h1>
+                        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">{{ widget.data.title | default('عنوان المنتج') | striptags }}</h1>
                     </div>
 
                     <!-- Description -->
                     <div>
                         <p class="text-gray-600 leading-relaxed">
-                            وصف مختصر للمنتج. <button class="text-mainColor underline ml-2">اقرأ المزيد</button>
+                            {{ widget.data.description | default('وصف مختصر للمنتج.') | striptags }} <button class="text-mainColor underline ml-2">اقرأ المزيد</button>
                         </p>
                     </div>
 
                     <!-- Price -->
                     <div class="flex gap-4 flex-col">
                         <h1 class="text-2xl text-mainColor">السعر</h1>
-                        <span class="text-4xl font-bold text-mainColor">69.95 $ <span class="text-sm font-light text-gray-500"> الضرائب متضمنة. </span></span>
+                        <span class="text-4xl font-bold text-mainColor">{{ widget.data.price | default(69.95) }} {{ widget.data.currency | default('$') }} <span class="text-sm font-light text-gray-500"> الضرائب متضمنة. </span></span>
                     </div>
 
                     <!-- Color Selection -->
                     <div>
                         <h3 class="text-xl font-bold mb-3">اللون</h3>
                         <div class="flex items-center gap-3">
-                            <button class="relative group">
-                                <img src="{{ 'card4.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                            </button>
-                            <button class="relative group">
-                                <img src="{{ 'card5.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                            </button>
+                            {% if widget.blocks %}
+                                {% for block in widget.blocks %}
+                                    {% if block.type == 'colorOption' %}
+                                    <button class="relative group">
+                                        {% if block.data.image %}
+                                            <img src="{{ block.data.image.fileUrl }}" alt="{{ (block.data.name | default(block.settings.name)) | striptags }}" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                                        {% else %}
+                                            <img src="{{ 'card4.png' | assets }}" alt="{{ (block.data.name | default(block.settings.name)) | striptags }}" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                                        {% endif %}
+                                    </button>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default color options when no blocks are defined -->
+                                <button class="relative group">
+                                    <img src="{{ 'card4.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                                </button>
+                                <button class="relative group">
+                                    <img src="{{ 'card5.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -71,28 +86,47 @@
                     <div>
                         <h3 class="text-2xl text-mainColor mb-3">المقاسات</h3>
                         <div class="flex items-center gap-3 flex-wrap">
-                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">S</button>
-                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">M</button>
-                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">L</button>
-                            <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">XL</button>
+                            {% if widget.blocks %}
+                                {% for block in widget.blocks %}
+                                    {% if block.type == 'sizeOption' %}
+                                    <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">{{ block.data.size | default(block.settings.size) | striptags }}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default size options when no blocks are defined -->
+                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">S</button>
+                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">M</button>
+                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">L</button>
+                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">XL</button>
+                            {% endif %}
                         </div>
-                        <button id="open-size-guide" class="flex items-center gap-2 text-mainColor px-4 py-2 pt-5 rounded-lg underline transition">
-                            <i class="ph ph-ruler"></i>
-                            <span>دليل المقاسات والأوزان</span>
-                        </button>
                     </div>
 
                     <!-- Quantity and Add to Cart -->
                     <div class="flex gap-4 flex-col md:flex-row">
                         <div class="flex items-center gap-3">
-                            <input type="number" min="1" value="1" class="w-20 h-12 text-center border-2 border-black rounded-full bg-white font-bold text-lg" />
+                            <div class="flex items-center border border-gray-300" style="width: 124px; height: 57px; border-radius: 33px; border-width: 1px; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; gap: 32px;">
+                                <input type="number" min="1" value="1" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" />
+                                <div class="flex flex-col items-center" style="gap: 2px;">
+                                    <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                                        </svg>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button class="flex-1 bg-mainColor text-white py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition flex items-center justify-center gap-2">إضافة الي العربة</button>
+                        <button class="flex-1 bg-black text-white py-4 rounded-full font-bold text-lg items-center justify-center gap-2 hover:scale-105 transition-transform duration-300">إضافة الي العربة</button>
                     </div>
 
                     <!-- Buy Now -->
                     <div class="w-full">
-                        <button class="w-full px-6 py-4 border-2 border-mainColor rounded-full font-bold text-lg hover:bg-mainColor hover:text-white transition flex items-center justify-center">شراء الان</button>
+                        <button class="w-full px-6 py-4 border-2 border-black rounded-full font-bold text-lg items-center justify-center hover:scale-105 transition-transform duration-300">شراء الان</button>
                     </div>
 
                     <!-- Additional Info -->
@@ -100,7 +134,7 @@
                         <div class="flex items-center gap-3">
                             <i class="ph-light ph-alarm text-2xl text-mainColor"></i>
                             <div>
-                                <p class="font-bold">متبقي ١٠ قطع فقط في المخزون. اطلبها قريبًا.</p>
+                                <p class="font-bold">متبقي ٢٠ قطع فقط في المخزون. اطلبها قريبًا.</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
@@ -118,7 +152,7 @@
                     </div>
 
                     <!-- Features 2 Section -->
-                    <section class="container">
+                    <section>
                         <div>
                             <div class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
                                 <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
@@ -151,284 +185,5 @@
                 </div>
             </div>
         </section>
-
-        <!-- Size Guide Modal -->
-        <div id="size-guide-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-            <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto relative">
-                <div class="p-6 flex items-center justify-center">
-                    <h2 class="text-xl md:text-2xl font-bold text-center text-black">دليل المقاسات والأوزان</h2>
-                    <button id="close-size-guide" class="absolute top-4 left-4 text-gray-600 hover:text-black transition">
-                        <i class="ph ph-x text-2xl"></i>
-                    </button>
-                </div>
-                <div class="p-6">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-center border-collapse">
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Japan</th>
-                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">EU</th>
-                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">UK</th>
-                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">US</th>
-                                    <th class="py-3 px-4 border border-gray-300 text-sm md:text-base font-bold">Size</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">5</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">32-34</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">4-6</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">0-2</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">XS</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">7</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">36-38</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">8-10</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">4-6</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">S</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">9</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">40-42</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">12-14</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">8-10</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">M</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">11</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">44-46</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">16-18</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">12-14</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">L</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">13</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">48-50</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">20-22</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base">16-18</td>
-                                    <td class="py-3 px-4 border border-gray-300 text-sm md:text-base font-medium">XL</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var openBtn = document.getElementById('open-size-guide');
-            var modal = document.getElementById('size-guide-modal');
-            var closeBtn = document.getElementById('close-size-guide');
-            if (!openBtn || !modal) return;
-            function openModal(e){
-                if (e) e.preventDefault();
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                document.body.classList.add('overflow-hidden');
-            }
-            function closeModal(){
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.classList.remove('overflow-hidden');
-            }
-            openBtn.addEventListener('click', openModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
-        });
-        </script>
-
-        <!-- FAQ Section -->
-        <section class="lg:flex md:flex px-4 container gap-6">
-            <div id="faq-app" class="w-full lg:w-1/2 p-6">
-                <h2 class="text-2xl md:text-3xl font-bold pb-10"> مزيد من المعلومات</h2>
-                <div class="space-y-4">
-                    <div class="border-b border-gray-200">
-                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="true">
-                            <h3 class="text-lg font-semibold text-gray-900">الوصف</h3>
-                            <span class="faq-sign text-2xl text-gray-500 mr-4">−</span>
-                        </button>
-                        <div class="faq-content pb-4 text-right">
-                            <p class="text-gray-700 leading-relaxed">
-                                سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي.
-                            </p>
-                            <p class="text-gray-700 leading-relaxed mt-3">
-                                تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرانت الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="border-b border-gray-200">
-                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
-                            <h3 class="text-lg font-semibold text-gray-900">التسليم والارجاع</h3>
-                            <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
-                        </button>
-                        <div class="faq-content pb-4 text-right hidden">
-                            <p class="text-gray-700 leading-relaxed">معلومات التسليم والإرجاع هنا...</p>
-                        </div>
-                    </div>
-                    <div class="border-b border-gray-200">
-                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
-                            <h3 class="text-lg font-semibold text-gray-900">تواصل معانا</h3>
-                            <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
-                        </button>
-                        <div class="faq-content pb-4 text-right hidden">
-                            <p class="text-gray-700 leading-relaxed">معلومات التواصل هنا...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- You May Like Section -->
-            <div class="w-full lg:w-1/2 pt-6">
-                <h2 class="text-2xl md:text-3xl font-bold pb-4"> عناصر يمكن ان تعجبك </h2>
-                <section class="my-6 md:my-10 px-2 md:px-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
-                        <div
-                          class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
-                        >
-                          <div class="relative overflow-hidden bg-gray-100">
-                            <img src="{{ 'card1.png' | assets }}" alt="منتج" class="w-full h-80 object-contain" />
-                            <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                              5.0
-                              <i class="ph-fill ph-star" style="color: #ebb11f"></i>
-                            </div>
-                            <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                              <i class="ph ph-heart text-xl"></i>
-                            </button>
-                          </div>
-                          <div class="p-3 md:p-4">
-                            <h3 class="text-base md:text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                            <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-                            <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                              <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                <span class="text-xs text-red-500">40%-</span>
-                              </div>
-                              <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                              </button>
-                            </div>  
-                          </div>
-                        </div>
-                        <div
-                          class="product-card bg-white rounded-2xl border-2 border-gray overflow-hidden"
-                        >
-                          <div class="relative overflow-hidden bg-gray-100">
-                            <img src="{{ 'card1.png' | assets }}" alt="منتج" class="w-full h-80 object-contain" />
-                            <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-                              5.0
-                              <i class="ph-fill ph-star" style="color: #ebb11f"></i>
-                            </div>
-                            <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
-                              <i class="ph ph-heart text-xl"></i>
-                            </button>
-                          </div>
-                          <div class="p-3 md:p-4">
-                            <h3 class="text-base md:text-lg font-bold text-dark mb-2">ملابس اطفال</h3>
-                            <p class="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">ملابس مريحة جدا تناسب جميع المقاسات والاحجام ويوجد جميع الالوان</p>
-                            <div class="flex items-center gap-2 mb-3 md:mb-4 justify-between">
-                              <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-xl md:text-2xl font-bold text-mainColor">570 $</span>
-                                <span class="text-xs md:text-sm text-gray-400 line-through">950 $</span>
-                                <span class="text-xs text-red-500">40%-</span>
-                              </div>
-                              <button class="w-10 h-10 md:w-12 md:h-12 bg-mainColor text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0">
-                                <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
-                              </button>
-                            </div>  
-                          </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-        
-        <!-- Reviews Section -->
-        <section class="my-6 md:my-10 px-4 container mx-auto">
-            <div class="py-6 md:py-8 px-4 md:px-6 rounded-2xl">
-                <div class="flex flex-col justify-around lg:flex-row gap-6 lg:gap-8 items-center">
-                    <div class="w-full lg:w-1/2 flex gap-6 items-center justify-center p-6 md:p-8">
-                        <div class="text-center mb-6">
-                            <h1 class="text-2xl md:text-3xl font-bold text-black">التقييم و المراجعات</h1>
-                            <div class="flex items-center justify-center gap-2">
-                                <p class="text-gray-500 text-2xl pt-[4rem]">5/</p>
-                                <h2 class="text-[8rem] md:text-[10rem] font-500 text-black mb-2">4.5</h2>
-                            </div>
-                            <p class="text-gray-600 flex text-xs md:text-sm mt-2">( 30 تقييم جديد )</p>
-                        </div>
-                        <div class="w-1/2 space-y-2 md:space-y-3">
-                            <div class="flex items-center gap-3">
-                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 90%"></div></div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div></div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 70%"></div></div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div></div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-yellow-500 rounded-full" style="width: 20%"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Right Side: Reviews List (with images) -->
-            <div class="lg:w-[30%] md:w-[100%] sm:w-[100%] border-2 border-gray p-4 rounded-lg flex flex-col gap-4">
-                <div>
-                    <h2 class="text-lg md:text-xl font-bold text-dark mb-4">احمد محمد</h2>
-                    <div class="flex items-center gap-2 mb-2">
-                        <i class="ph-fill ph-star text-yellow-300 text-sm md:text-base"></i>
-                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                        <i class="ph-fill ph-star text-yellow-500 text-sm md:text-base"></i>
-                    </div>
-                </div>
-                        <!-- Review Images -->
-                        <div class="flex gap-2 overflow-x-auto">
-                            <img src="{{ 'card6.png' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 1">
-                            <img src="{{ 'card7.jpg' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 2">
-                            <img src="{{ 'card5.png' | assets }}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image 3">
-            </div>
-                        <!-- Review Description -->
-                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <script>
-        (function(){
-            var toggles = document.querySelectorAll('.faq-toggle');
-            if(!toggles || !toggles.length) return;
-            toggles.forEach(function(btn){
-                btn.addEventListener('click', function(){
-                    var expanded = btn.getAttribute('aria-expanded') === 'true';
-                    var content = btn.parentElement.querySelector('.faq-content');
-                    var sign = btn.querySelector('.faq-sign');
-                    if(!content || !sign) return;
-                    if(expanded){
-                        content.classList.add('hidden');
-                        btn.setAttribute('aria-expanded','false');
-                        sign.textContent = '+';
-                    } else {
-                        content.classList.remove('hidden');
-                        btn.setAttribute('aria-expanded','true');
-                        sign.textContent = '−';
-                    }
-                });
-            });
-        })();
-        </script>
-            </div>
-
+    </div>
 </section>

@@ -1,4 +1,51 @@
 {
   "name": "Hero Section",
-  "description": "Hero section with background image and call to action"
+  "description": "Hero section with background image and call to action",
+  "category": "hero",
+  "icon": "image",
+  "settings": {
+    "heroImage": {
+      "type": "media",
+      "label": "صورة الهيرو",
+      "description": "قم بتعيين صورة الخلفية لقسم الهيرو",
+      "default": ""
+    },
+    "mainTitle": {
+      "type": "string",
+      "label": "العنوان الرئيسي",
+      "default": "أهلاً بك في متجرنا",
+      "description": "العنوان الأساسي المعروض في قسم الهيرو"
+    },
+    "subtitle": {
+      "type": "string",
+      "label": "العنوان الفرعي",
+      "default": "اكتشف منتجاتنا المميزة",
+      "description": "وصف قصير أسفل العنوان الرئيسي"
+    },
+    "buttonText": {
+      "type": "string",
+      "label": "نص الزر",
+      "default": "تسوق الآن",
+      "description": "نص زر الدعوة إلى الإجراء"
+    },
+    "buttonLink": {
+      "type": "string",
+      "label": "رابط الزر",
+      "default": "/collections",
+      "description": "المسار الذي ينتقل إليه الزر"
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "⭐ قسم الهيرو",
+      "settings": {
+        "mainTitle": "أهلاً بك في متجرنا",
+        "subtitle": "اكتشف منتجاتنا المميزة",
+        "buttonText": "تسوق الآن",
+        "buttonLink": "/collections",
+        "heroImage": ""
+      }
+    }
+  ]
 }

@@ -1,7 +1,20 @@
 {
-  "name": "collections",
-  "description": "مجموعة من الاقسام",
-  "settings": {},
+  "name": "الأقسام",
+  "description": "شبكة أقسام المتجر مع الصورة والاسم",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": "المجموعات المعروضة"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "اقسام المتجر"
+    }
+  },
+  "presets": [
+    { "category": "الصفحات", "name": "شبكة الأقسام" }
+  ],
   "blocks": {
     "products": {
       "name": "products",

@@ -1,0 +1,80 @@
+<section class="py-6 bg-white">
+    <div id="faq-app" class="px-2.5 md:px-6 mx-2.5 md:mx-20 py-6 bg-white">
+        <h2 class="text-2xl md:text-3xl font-bold pb-10">{{ widget.data.title | default('مزيد من المعلومات') | striptags }}</h2>
+        <div class="space-y-4">
+            {% if widget.blocks and (widget.blocks | length) > 0 %}
+                {% for block in widget.blocks %}
+                    <div class="border-b border-gray-200">
+                        <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ (block.data.question | default(block.settings.question)) | striptags }}</h3>
+                            <span class="faq-sign text-2xl text-gray-500 mr-4">{% if loop.index == 1 %}−{% else %}+{% endif %}</span>
+                        </button>
+                        <div class="faq-content pb-4 text-right {% if loop.index != 1 %}hidden{% endif %}">
+                            <p class="text-gray-700 leading-relaxed">
+                                {{ (block.data.answer | default(block.settings.answer)) | striptags }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default FAQ items when no blocks are defined -->
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="true">
+                        <h3 class="text-lg font-semibold text-gray-900">الوصف</h3>
+                        <span class="faq-sign text-2xl text-gray-500 mr-4">−</span>
+                    </button>
+                    <div class="faq-content pb-4 text-right">
+                        <p class="text-gray-700 leading-relaxed">
+                            سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mt-3">
+                            تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرarrant الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ.
+                        </p>
+                    </div>
+                </div>
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
+                        <h3 class="text-lg font-semibold text-gray-900">التسليم والارجاع</h3>
+                        <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
+                    </button>
+                    <div class="faq-content pb-4 text-right hidden">
+                        <p class="text-gray-700 leading-relaxed">معلومات التسليم والإرجاع هنا...</p>
+                    </div>
+                </div>
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors" aria-expanded="false">
+                        <h3 class="text-lg font-semibold text-gray-900">تواصل معانا</h3>
+                        <span class="faq-sign text-2xl text-gray-500 mr-4">+</span>
+                    </button>
+                    <div class="faq-content pb-4 text-right hidden">
+                        <p class="text-gray-700 leading-relaxed">معلومات التواصل هنا...</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script>
+(function(){
+    var toggles = document.querySelectorAll('.faq-toggle');
+    if(!toggles || !toggles.length) return;
+    toggles.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            var content = btn.parentElement.querySelector('.faq-content');
+            var sign = btn.querySelector('.faq-sign');
+            if(!content || !sign) return;
+            if(expanded){
+                content.classList.add('hidden');
+                btn.setAttribute('aria-expanded','false');
+                sign.textContent = '+';
+            } else {
+                content.classList.remove('hidden');
+                btn.setAttribute('aria-expanded','true');
+                sign.textContent = '−';
+            }
+        });
+    });
+})();
+</script>

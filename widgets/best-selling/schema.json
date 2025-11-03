@@ -4,7 +4,8 @@
   "settings": {
     "title": { "type": "string", "label": "العنوان", "default": "افضل المبيعات" },
     "subtitle": { "type": "string", "label": "الوصف المختصر", "default": "" },
-    "collection": { "type": "collection", "label": "مجموعة المنتجات" },
+    "products_collection": { "type": "collection", "label": "المجموعة المعروضة", "default": "best-selling" },
+    "collection": { "type": "collection", "label": "مجموعة المنتجات (قديم)" },
     "products": { "type": "products", "label": "منتجات محددة (اختياري)" },
     "show_pagination": { "type": "boolean", "label": "إظهار الترقيم", "default": false }
   },

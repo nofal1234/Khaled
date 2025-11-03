@@ -16,8 +16,32 @@
       "label": "رابط عرض الكل",
       "default": "#"
     }
-  }
-  ,
+  },
+  "blocks": {
+    "categoryItem": {
+      "name": "التصنيف",
+      "settings": {
+        "image": {
+          "type": "media",
+          "label": "صورة التصنيف"
+        },
+        "name": {
+          "type": "text",
+          "label": "اسم التصنيف",
+          "default": "اسم التصنيف"
+        },
+        "alt_text": {
+          "type": "text",
+          "label": "النص البديل للصورة"
+        },
+        "link": {
+          "type": "url",
+          "label": "رابط التصنيف",
+          "default": "#"
+        }
+      }
+    }
+  },
   "presets": [
     {
       "category": "الصفحة الرئيسية",

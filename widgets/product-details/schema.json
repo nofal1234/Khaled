@@ -1,0 +1,119 @@
+{
+  "title": "Product Details",
+  "name": "product-details",
+  "icon": "box",
+  "fields": [
+    {
+      "type": "text",
+      "name": "title",
+      "label": "Product Title",
+      "default": "عنوان المنتج"
+    },
+    {
+      "type": "textarea",
+      "name": "description",
+      "label": "Product Description",
+      "default": "وصف مختصر للمنتج."
+    },
+    {
+      "type": "number",
+      "name": "price",
+      "label": "Product Price",
+      "default": 69.95
+    },
+    {
+      "type": "text",
+      "name": "currency",
+      "label": "Currency",
+      "default": "$"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "colorOption",
+      "title": "Color Option",
+      "icon": "palette",
+      "fields": [
+        {
+          "type": "text",
+          "name": "name",
+          "label": "Color Name"
+        },
+        {
+          "type": "media",
+          "name": "image",
+          "label": "Color Image"
+        }
+      ]
+    },
+    {
+      "type": "sizeOption",
+      "title": "Size Option",
+      "icon": "ruler",
+      "fields": [
+        {
+          "type": "text",
+          "name": "size",
+          "label": "Size",
+          "default": "S"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product Page",
+      "name": "📦 Product Details",
+      "settings": {
+        "title": "عنوان المنتج",
+        "description": "وصف مختصر للمنتج.",
+        "price": 69.95,
+        "currency": "$"
+      },
+      "blocks": [
+        {
+          "block": "colorOption",
+          "name": "Black",
+          "settings": {
+            "name": "أسود"
+          }
+        },
+        {
+          "block": "colorOption",
+          "name": "White",
+          "settings": {
+            "name": "أبيض"
+          }
+        },
+        {
+          "block": "sizeOption",
+          "name": "Small",
+          "settings": {
+            "size": "S"
+          }
+        },
+        {
+          "block": "sizeOption",
+          "name": "Medium",
+          "settings": {
+            "size": "M"
+          }
+        },
+        {
+          "block": "sizeOption",
+          "name": "Large",
+          "settings": {
+            "size": "L"
+          }
+        },
+        {
+          "block": "sizeOption",
+          "name": "Extra Large",
+          "settings": {
+            "size": "XL"
+          }
+        }
+      ]
+    }
+  ]
+}

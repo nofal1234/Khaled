@@ -50,6 +50,17 @@
       ]
     },
     {
+      "name": "Hero Section",
+      "widget": "hero-section",
+      "settings": {
+        "mainTitle": "أهلاً بك في متجرنا",
+        "subtitle": "اكتشف منتجاتنا المميزة",
+        "buttonText": "تسوق الآن",
+        "buttonLink": "/collections",
+        "heroImage": ""
+      }
+    },
+    {
       "name": "Categories Section",
       "widget": "category-section",
       "settings": {
@@ -195,7 +206,6 @@
         }
       ]
     },
-
     {
       "name": "Customer Reviews Section",
       "widget": "reviews-section",
@@ -257,5 +267,5 @@
         "default_image_3": "assets/blog3.png"
       }
     }
-      ]
-    }  
+  ]
+}

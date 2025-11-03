@@ -1,0 +1,110 @@
+{
+  "name": "Product Reviews",
+  "description": "Product reviews section with star ratings and customer feedback",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": "Section Title",
+      "default": "التقييم و المراجعات"
+    },
+    "rating": {
+      "type": "number",
+      "label": "Average Rating",
+      "default": 4.5
+    },
+    "totalReviews": {
+      "type": "number",
+      "label": "Total Reviews",
+      "default": 30
+    },
+    "image1": {
+      "type": "media",
+      "label": "الصورة الأولى",
+      "default": ""
+    },
+    "image2": {
+      "type": "media",
+      "label": "الصورة الثانية",
+      "default": ""
+    },
+    "image3": {
+      "type": "media",
+      "label": "الصورة الثالثة",
+      "default": ""
+    },
+    "defaultImage1": {
+      "type": "media",
+      "label": "Default Image 1",
+      "default": "card6.png"
+    },
+    "defaultImage2": {
+      "type": "media",
+      "label": "Default Image 2",
+      "default": "card7.jpg"
+    },
+    "defaultImage3": {
+      "type": "media",
+      "label": "Default Image 3",
+      "default": "card5.png"
+    }
+  },
+  "blocks": [
+    {
+      "type": "reviewItem",
+      "name": "Review Item",
+      "icon": "comment",
+      "settings": {
+        "name": {
+          "type": "text",
+          "label": "Customer Name",
+          "default": "احمد محمد"
+        },
+        "stars": {
+          "type": "number",
+          "label": "Stars",
+          "default": 5,
+          "min": 1,
+          "max": 5
+        },
+        "review": {
+          "type": "textarea",
+          "label": "Review Text",
+          "default": "أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة."
+        },
+        "images": {
+          "type": "media",
+          "label": "Review Images",
+          "multiple": true
+        }
+      }
+    }
+  ],
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "⭐ Product Reviews",
+      "settings": {
+        "title": "التقييم و المراجعات",
+        "rating": 4.5,
+        "totalReviews": 30,
+        "image1": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+        "image2": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=600&h=400&fit=crop&crop=face",
+        "image3": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=400&fit=crop&crop=face",
+        "defaultImage1": "card6.png",
+        "defaultImage2": "card7.jpg",
+        "defaultImage3": "card5.png"
+      },
+      "blocks": [
+        {
+          "block": "reviewItem",
+          "name": "First Review",
+          "settings": {
+            "name": "احمد محمد",
+            "stars": 5,
+            "review": "أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة."
+          }
+        }
+      ]
+    }
+  ]
+}

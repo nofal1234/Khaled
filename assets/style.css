@@ -92,12 +92,48 @@ body, html, * {
     transform: scale(1.05);
 }
 
-/* Uniform product card sizing for sliders (offers section, etc.) */
+/* Uniform product card sizing */
 .product-card--uniform {
     display: flex;
     flex-direction: column;
+}
+
+/* Default: In grid, cards take full width and have fixed height */
+.product-listing .grid .product-card--uniform,
+.grid .product-card--uniform {
+    width: 100%;
+    height: 467px;
+}
+
+/* In sliders/swipers, use fixed width */
+.swiper-slide .product-card--uniform,
+.swiper .product-card--uniform {
     width: 302px;
     height: 467px;
+    flex-shrink: 0;
+}
+
+/* Mobile: responsive in grid */
+@media (max-width: 640px) {
+    .product-listing .grid .product-card--uniform,
+    .grid .product-card--uniform {
+        height: auto;
+        min-height: 320px;
+    }
+    
+    .swiper-slide .product-card--uniform,
+    .swiper .product-card--uniform {
+        width: 160px;
+        height: auto;
+    }
+}
+
+/* Tablet and up: adjust height in grid */
+@media (min-width: 768px) {
+    .product-listing .grid .product-card--uniform,
+    .grid .product-card--uniform {
+        height: 500px;
+    }
 }
 
 .product-card--uniform .product-card__image {
@@ -107,6 +143,26 @@ body, html, * {
     align-items: center;
     justify-content: center;
     background-color: #f3f4f6; /* gray-100 */
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .product-listing .grid .product-card--uniform .product-card__image,
+    .grid .product-card--uniform .product-card__image {
+        height: 160px;
+    }
+    
+    .swiper-slide .product-card--uniform .product-card__image,
+    .swiper .product-card--uniform .product-card__image {
+        height: 160px;
+    }
+}
+
+@media (min-width: 768px) {
+    .product-listing .grid .product-card--uniform .product-card__image,
+    .grid .product-card--uniform .product-card__image {
+        height: 320px;
+    }
 }
 
 .product-card--uniform .product-card__image img {
@@ -120,6 +176,7 @@ body, html, * {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    min-height: 0;
 }
 
 .product-card--uniform .product-card__price-row {
@@ -224,5 +281,47 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+/* Ensure category CTA button is always visible */
+.category-cta {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+}
+.product-card .category-cta,
+.category-card .category-cta,
+.product-card:hover .category-cta,
+[class*="group"]:hover .category-cta {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Hard override: ensure any buttons inside category-card are visible */
+.category-card button {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+.category-card:hover button {
+    opacity: 1 !important;
+}
+
+/* Ensure category card content is never hidden */
+.category-card .p-3,
+.category-card .p-4 {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Force visibility for product-card content and buttons */
+.product-card button {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+.product-card .p-3,
+.product-card .p-4 {
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 

@@ -1,39 +1,34 @@
 {
-  "layout": "layout",
-  "title": "الصفحة الرئيسية",
-  "widgets": [
-    {
-      "name": "product-details",
-      "widget": "product-details",
-      "settings": {}
-    },
-    {
-      "name": "product-reviews",
-      "widget": "product-reviews",
+  "name": "FAQ Section",
+  "description": "Section for frequently asked questions with expandable answers",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": "Section Title",
+      "default": "مزيد من المعلومات"
+    }
+  },
+  "blocks": {
+    "faqItem": {
+      "name": "FAQ Item",
       "settings": {
-        "title": "التقييم و المراجعات",
-        "rating": 4.5,
-        "totalReviews": 30,
-        "image1": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
-        "image2": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=600&h=400&fit=crop&crop=face",
-        "image3": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=400&fit=crop&crop=face"
-      },
-      "blocks": [
-        {
-          "block": "reviewItem",
-          "name": "First Review",
-          "settings": {
-            "name": "احمد محمد",
-            "stars": 5,
-            "review": "أنا سعيدة جدًا بقمصاني! طلبت مقاس 8XL على أمل أن تناسبني، وهي واسعة جدًا! تصاميمها رائعة! جودة ممتازة، قطن سميك. أنصح بها بشدة.",
-            "images": []
-          }
+        "question": {
+          "type": "text",
+          "label": "Question",
+          "default": "الوصف"
+        },
+        "answer": {
+          "type": "textarea",
+          "label": "Answer",
+          "default": "سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي. تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرarrant الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ."
         }
-      ]
-    },
+      }
+    }
+  },
+  "presets": [
     {
-      "name": "faq-section",
-      "widget": "faq-section",
+      "category": "الصفحة الرئيسية",
+      "name": "❓ FAQ Section",
       "settings": {
         "title": "مزيد من المعلومات"
       },

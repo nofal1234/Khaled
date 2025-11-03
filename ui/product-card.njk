@@ -1,20 +1,4 @@
-<style>
-@media (max-width: 640px){
-  .product-card{width:187.99998474121094px;height:330.1707763671875px;opacity:1}
-  .product-card .product-card__image{height:200px}
-  .product-card .product-card__image img{width:100%;height:100%;object-fit:cover}
-}
-</style>
-<style>
-@media (min-width: 768px){
-  .product-card{width:320px;height:500px}
-  .product-card .product-card__image{height:320px}
-  .product-card .product-card__image img{width:100%;height:100%;object-fit:cover}
-  .product-card .product-card__content{display:flex;flex-direction:column}
-  .product-card .product-card__price-row{margin-top:auto}
-}
-</style>
-<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block md:w-auto md:h-auto flex flex-col">
+<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col">
     <!-- Image Section -->
     <div class="relative overflow-hidden bg-gray-100 product-card__image">
         <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ data.product.title }}">
