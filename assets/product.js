@@ -288,6 +288,8 @@ function xDataproduct({ product }) {
               res?.addToCart?.message || "تمت إضافة المنتج للسلة بنجاح",
               "success"
             );
+            // افتح درج السلة بعد الإضافة الناجحة مثل الثيم القديم
+            try { window.dispatchEvent(new CustomEvent("open-cart")); } catch (_) {}
           } else {
             showToast(
               res?.addToCart?.message || "فشل إضافة المنتج للسلة",

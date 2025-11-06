@@ -1,7 +1,8 @@
-<a href="/product/{{ data.product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col">
+{% set product = data.product or product %}
+<a href="/product/{{ product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col">
     <!-- Image Section -->
     <div class="relative overflow-hidden bg-gray-100 product-card__image">
-        <img src="{{ data.product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ data.product.title }}">
+        <img src="{{ product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ product.title }}">
         <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
             <i class="ph ph-heart text-xl"></i>
         </button>
@@ -12,19 +13,19 @@
 
     <!-- Content Section -->
     <div class="p-4 product-card__content flex flex-col flex-1">
-        <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ data.product.title }}</h3>
+        <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ product.title }}</h3>
         <!-- Price Section -->
         <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
             <div class="flex flex-col flex-1 gap-1">
-                {% if data.product.pricing.compareAtPrice %}
+                {% if product.pricing.compareAtPrice %}
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-sm md:text-base text-gray-600 line-through">{{ data.product.pricing.compareAtPrice | money }}</span>
-                    <span class="text-xs font-bold text-red-600">-{{ ((1 - (data.product.pricing.price / data.product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%</span>
+                    <span class="text-sm md:text-base text-gray-600 line-through">{{ product.pricing.compareAtPrice | money }}</span>
+                    <span class="text-xs font-bold text-red-600">-{{ ((1 - (product.pricing.price / product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%</span>
                 </div>
                 {% endif %}
-                <span class="text-xl md:text-2xl font-bold text-black">{{ data.product.pricing.price | money }}</span>
+                <span class="text-xl md:text-2xl font-bold text-black">{{ product.pricing.price | money }}</span>
             </div>
-            <button @click.stop="addProductToCart('{{ data.product._id }}', 1, [])" class="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0 shadow-lg hover:shadow-xl">
+            <button onclick="if(typeof window.addProductToCart === 'function') { window.addProductToCart('{{ product._id }}', 1, []); event.stopPropagation(); event.preventDefault(); }" class="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0 shadow-lg hover:shadow-xl" title="إضافة للسلة">
                 <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
             </button>
         </div>

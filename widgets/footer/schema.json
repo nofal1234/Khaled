@@ -1,6 +1,16 @@
 {
     "name": "Footer",
     "settings": {
+        "logo": {
+          "type": "image_picker",
+          "label": "الشعار",
+          "description": "قم بتحميل شعار الموقع"
+        },
+        "header_menu": {
+          "type": "menu",
+          "label": "القائمة",
+          "default": "header"
+        },
         "company_description": {
           "type": "textarea",
           "label": "وصف الشركة",

@@ -119,6 +119,11 @@
       ],
       "default": "rounded-full",
       "description": "اختر نمط مربع البحث"
+    },
+    "header_menu": {
+      "type": "menu",
+      "label": "Menu Text",
+      "default": "header"
     }
   },
   "blocks": {

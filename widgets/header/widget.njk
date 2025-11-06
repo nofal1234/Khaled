@@ -29,7 +29,13 @@
       <!-- Logo -->
       <div class="flex items-center gap-2">
               <a href="/">
-                <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-12 md:h-20 w-auto cursor-pointer" />
+                {% if widget.data.logo and widget.data.logo.fileUrl %}
+                  <img src="{{ widget.data.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-12 md:h-20 w-auto cursor-pointer" />
+                {% elif globals.app.logo and globals.app.logo.fileUrl %}
+                  <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-12 md:h-20 w-auto cursor-pointer" />
+                {% else %}
+                  <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-12 md:h-20 w-auto cursor-pointer" />
+                {% endif %}
               </a>
       </div>
 
@@ -39,7 +45,7 @@
             <input id="desktopSearchInput"
               type="text"
               name="search"
-              placeholder="ابحث عن المنتج..."
+              placeholder="{{ widget.data.search_placeholder | default('ابحث عن المنتج...') }}"
               class="w-full py-3 px-6 pr-12 rounded-full border {{ borderColor }} {{ inputBg }} {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-900 placeholder:text-[#666666] placeholder:opacity-100 {% endif %} focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
             />
           <button class="absolute right-4 top-1/2 transform -translate-y-1/2 {% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} {{ textColor }} {% endif %}">
@@ -47,17 +53,23 @@
           </button>
         </div>
 
-        <button class="{{ textColor }} transition" title="المفضلة">
+        {% if widget.data.show_wishlist | default(true) %}
+        <button class="{{ textColor }} transition" title="{{ widget.data.wishlist_tooltip | default('المفضلة') }}">
           <i class="ph ph-heart text-2xl"></i>
         </button>
+        {% endif %}
 
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition flex items-center" title="السلة">
+        {% if widget.data.show_cart | default(true) %}
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition flex items-center" title="{{ widget.data.cart_tooltip | default('السلة') }}">
           <iconify-icon icon="proicons:cart" width="24" height="24" style="transform: scaleX(-1);" class="inline-block"></iconify-icon>
         </button>
+        {% endif %}
 
-        <button class="{{ textColor }} transition" title="الحساب">
+        {% if widget.data.show_user | default(true) %}
+        <button class="{{ textColor }} transition" title="{{ widget.data.user_tooltip | default('الحساب') }}">
           <i class="ph ph-user text-2xl"></i>
         </button>
+        {% endif %}
       </div>
 
       <!-- Mobile toolbar -->
@@ -67,13 +79,17 @@
           <i class="ph ph-magnifying-glass text-xl"></i>
         </button>
 
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition" title="السلة">
+        {% if widget.data.show_cart | default(true) %}
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition" title="{{ widget.data.cart_tooltip | default('السلة') }}">
           <iconify-icon icon="proicons:cart" width="20" height="20" style="transform: scaleX(-1);"></iconify-icon>
         </button>
+        {% endif %}
 
-        <button class="{{ textColor }} transition" title="الحساب">
+        {% if widget.data.show_user | default(true) %}
+        <button class="{{ textColor }} transition" title="{{ widget.data.user_tooltip | default('الحساب') }}">
           <i class="ph ph-user text-xl"></i>
         </button>
+        {% endif %}
 
         <button @click="toggleModal('sidebar', true)" class="{{ textColor }} transition">
           <i class="ph ph-list text-xl"></i>
@@ -91,7 +107,7 @@
               <button onclick="const input = this.parentElement.querySelector('input'); if(input.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }" class="{% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} text-gray-500 {% endif %} hover:text-gray-700">
                 <i class="ph ph-magnifying-glass text-lg"></i>
               </button>
-              <input id="mobileSearchInput" type="text" placeholder="ابحث عن المنتج..." class="w-full py-2 px-2 rounded-full bg-transparent outline-none {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-800 placeholder:text-[#666666] placeholder:opacity-100 {% endif %}" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" />
+              <input id="mobileSearchInput" type="text" placeholder="{{ widget.data.mobile_search_placeholder | default('ابحث عن المنتج...') }}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-800 placeholder:text-[#666666] placeholder:opacity-100 {% endif %}" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" />
               <button id="mobileSearchClose" class="text-gray-500 hover:text-gray-700">
                 <i class="ph ph-x text-lg"></i>
               </button>
@@ -104,13 +120,33 @@
     {% if context.page.title != 'الصفحة الرئيسية' %}
     <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pb-3">
       <nav class="hidden lg:flex items-center justify-center gap-8 {{ textColor }}">
-        <a href="/" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">الرئيسية</a>
-        <a href="/collections/women" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">نسائي</a>
-        <a href="/collections/men" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">رجالي</a>
-        <a href="/collections/kids" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">أطفال</a>
-        <a href="/collections/seasonal" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">موسمي</a>
-        <a href="/collections/best-selling" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">الأكثر مبيعًا</a>
-        <a href="/recently-viewed" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">شوهد مؤخرًا</a>
+        {% set items = widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else [] %}
+        {% if items | length > 0 %}
+          {% for item in items %}
+            {% if loop.index0 < 6 %}
+              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">
+                {{ item.title | default('عنوان') }}
+              </a>
+            {% endif %}
+          {% endfor %}
+          {% if items | length > 6 %}
+            <div class="relative group flex items-center">
+              <button class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal" aria-label="المزيد">
+                <span>المزيد</span>
+                <i class="ph ph-caret-down text-lg mr-1"></i>
+              </button>
+              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                {% for item in items %}
+                  {% if loop.index0 >= 6 %}
+                    <a href="{{ item.url }}" class="block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
+                      {{ item.title | default('عنوان') }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
       </nav>
     </div>
     {% endif %}
@@ -157,5 +193,12 @@
         });
       });
     </script>
+
+    {# Pass header menu to sidebar #}
+    {% if widget.data.header_menu is defined and widget.data.header_menu is iterable %}
+      {%ui "sidebar.njk", menu=widget.data.header_menu %}
+    {% else %}
+      {%ui "sidebar.njk", menu=[] %}
+    {% endif %}
 
   </div>

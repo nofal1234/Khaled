@@ -74,6 +74,47 @@ function GlobalState() {
 		},
 		updateCart(data) {
 			this.globals.cart = data;
+			// Ensure item and cart totals are populated even if backend omits them
+			try {
+				const cart = this.globals.cart || {};
+				const items = Array.isArray(cart.items) ? cart.items : [];
+				let totalPrice = 0, totalCompareAtPrice = 0, totalSavings = 0, totalQuantity = 0;
+				items.forEach((it) => {
+					const qty = Number(it.quantity) || 0;
+					const inferFromTotals = (t) => (qty > 0 ? Number(t) / qty : undefined);
+					const coalesce = (...vals) => vals.find(v => Number.isFinite(Number(v)) && Number(v) > 0);
+					const unitPrice = coalesce(
+						it.price,
+						it?.variantData?.price,
+						inferFromTotals(it?.totalPrice),
+						it?.productData?.pricing?.price,
+						it?.productData?.price,
+						0
+					) || 0;
+					const unitCompare = coalesce(
+						it.compareAtPrice,
+						it?.variantData?.compareAtPrice,
+						inferFromTotals(it?.totalCompareAtPrice),
+						it?.productData?.pricing?.compareAtPrice,
+						it?.productData?.compareAtPrice,
+						it?.productData?.pricing?.originalPrice,
+						it?.productData?.price,
+						unitPrice,
+						0
+					) || 0;
+					it.totalPrice = unitPrice * qty;
+					it.totalCompareAtPrice = unitCompare * qty;
+					it.totalSavings = Math.max(0, it.totalCompareAtPrice - it.totalPrice);
+					totalPrice += it.totalPrice;
+					totalCompareAtPrice += it.totalCompareAtPrice;
+					totalSavings += it.totalSavings;
+					totalQuantity += qty;
+				});
+				cart.totalPrice = totalPrice;
+				cart.totalCompareAtPrice = totalCompareAtPrice;
+				cart.totalSavings = totalSavings;
+				cart.totalQuantity = totalQuantity;
+			} catch (_) {}
 	   },
 	   showToast(message, type = "success") {
 		Toastify({
@@ -130,5 +171,47 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.qumra?.logout?.();
 	  });
 	});
+  
+  // Global quick Add-To-Cart (works from product lists/cards)
+  if (!window.addProductToCart) {
+    const Request = window.qumra?.storeGate;
+    const addToCartSchema = `mutation AddToCart($data: AddToCartInput!) {
+  addToCart(data: $data) {
+    data {
+      _id app
+      items {
+        productId _id variantId
+        productData { title slug app image { _id fileUrl } price }
+        variantData { compareAtPrice price options { _id label option { _id name } } }
+        quantity price compareAtPrice totalPrice totalCompareAtPrice totalSavings
+      }
+      deviceId sessionId status totalQuantity totalPrice totalCompareAtPrice totalSavings isFastOrder
+    }
+    success message
+  }
+}`;
+
+    window.addProductToCart = function(productId, quantity = 1, options = []) {
+      if (typeof Request !== "function") {
+        window.showToast?.("خطأ في الاتصال بالخادم", "error");
+        return;
+      }
+      const data = { productId, quantity, options };
+      window.updateLoading?.("addToCart", true);
+      Request(addToCartSchema, { data })
+        .then((res) => {
+          const ok = res?.addToCart?.success;
+          if (ok) {
+            window.updateCart?.(res.addToCart.data);
+            window.showToast?.(res?.addToCart?.message || "تمت إضافة المنتج للسلة بنجاح", "success");
+            window.dispatchEvent(new CustomEvent("open-cart"));
+          } else {
+            window.showToast?.(res?.addToCart?.message || "فشل إضافة المنتج للسلة", "error");
+          }
+        })
+        .catch(() => window.showToast?.("حدث خطأ أثناء الإضافة للسلة", "error"))
+        .finally(() => window.updateLoading?.("addToCart", false));
+    }
+  }
   });
   

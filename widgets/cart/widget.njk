@@ -1,35 +1,100 @@
 <section class="py-4 md:py-6 bg-white pt-6 md:pt-8">
   <div class="px-2.5 md:px-6 mx-2.5 md:mx-20">
-    <!-- Page Title -->
-    <div class="mb-4 md:mb-6">
-      <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-black text-right">
-        عربتك
-      </h1>
-    </div>
-    
-    <!-- Cart Section -->
-    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
-      <!-- Right Side: Cart Items -->
-      <div class="w-full lg:w-2/3">
-        <!-- Mobile-friendly cart items -->
-        <div class="space-y-4 md:space-y-0">
-          <!-- Desktop table headers -->
-          <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-300 pb-3">
-            <div class="col-span-6 text-right pr-6">
-              <h3 class="text-lg text-black font-bold">المنتج</h3>
+    <div x-data="xDataCart()">
+      <!-- Page Title -->
+      <div class="mb-4 md:mb-6">
+        <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-black text-right" x-show="globals?.cart?.items && globals?.cart?.items?.length > 0">
+          عربتك
+        </h1>
+      </div>
+      
+      <!-- Cart Section -->
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8" x-show="globals?.cart?.items && globals?.cart?.items?.length > 0">
+        <!-- Right Side: Cart Items -->
+        <div class="w-full lg:w-2/3">
+          <!-- Mobile-friendly cart items -->
+          <div class="space-y-4 md:space-y-0">
+            <!-- Desktop table headers -->
+            <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-300 pb-3">
+              <div class="col-span-6 text-right pr-6">
+                <h3 class="text-lg text-black font-bold">المنتج</h3>
+              </div>
+              <div class="col-span-2 text-center">
+                <h3 class="text-lg text-black font-bold">السعر</h3>
+              </div>
+              <div class="col-span-2 text-center">
+                <h3 class="text-lg text-black font-bold">الكمية</h3>
+              </div>
+              <div class="col-span-2 text-center">
+                <h3 class="text-lg text-black font-bold">المجموع الكلي</h3>
+              </div>
             </div>
-            <div class="col-span-2 text-center">
-              <h3 class="text-lg text-black font-bold">السعر</h3>
+            <div>
+          <template x-for="item in globals?.cart?.items || []" :key="item._id">
+            <div>
+              <div class="flex md:hidden justify-between items-start gap-3 pb-4 border-b border-gray-100">
+                <div class="flex items-start gap-3 flex-1">
+                  <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
+                  <div class="flex-grow text-right">
+                    <p class="font-semibold text-gray-800 text-sm" x-text="item?.productData?.title"></p>
+                    <p class="text-xs text-gray-500 mt-1" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
+                    <div class="flex items-center border border-gray-300 mt-3" style="width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
+                      <input type="number" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" :value="item.quantity" @input="updateQuantityFromInput(item._id, $event)" />
+                      <div class="flex flex-col items-center" style="gap: 2px;">
+                        <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية" @click="increaseCartItem(item._id, item.quantity)">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" /></svg>
+                        </button>
+                        <button class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية" @click="decreaseCartItem(item._id, item.quantity)">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 ه-3"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                  <button class="text-gray-400 hover:text-red-500 mb-2" aria-label="حذف المنتج" @click="clearCartItem(item._id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166م-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79م14.456 0a48.108 48.108 0 0 0-3.478-.397م-12.54 0c-.342.052-.682.107-1.022.166م11.518 0c-3.478-.397-7.04-.397-10.518 0م10.518 0a48.1 48.1 0 0 1 3.478.397" /></svg>
+                  </button>
+                  <div class="font-semibold text-gray-800 text-sm"><span x-text="item.totalPrice"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
+                  <div class="text-xs text-gray-500 mt-1"><span x-text="item?.price ?? item?.variantData?.price ?? item?.productData?.pricing?.price ?? item?.productData?.price"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
+                </div>
+              </div>
+              <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-100 pb-4 items-center">
+                <div class="col-span-6 flex items-center gap-4">
+                  <button class="text-gray-400 hover:text-red-500" aria-label="حذف المنتج" @click="clearCartItem(item._id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9م9.968-3.21c.342.052.682.107 1.022.166م-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79م14.456 0a48.108 48.108 0 0 0-3.478-.397م-12.54 0c-.342.052-.682.107-1.022.166م11.518 0c-3.478-.397-7.04-.397-10.518 0م10.518 0a48.1 48.1 0 0 1 3.478.397" /></svg>
+                  </button>
+                  <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
+                  <div>
+                    <p class="font-semibold text-gray-800" x-text="item?.productData?.title"></p>
+                    <p class="text-sm text-gray-500 mt-1" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
+                  </div>
+                </div>
+                <div class="col-span-2 text-center">
+                  <div class="font-semibold text-gray-800"><span x-text="item?.price ?? item?.variantData?.price ?? item?.productData?.pricing?.price ?? item?.productData?.price"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
+                </div>
+                <div class="col-span-2 flex justify-center">
+                  <div class="flex items-center border border-gray-300 rounded-full py-0.5 px-3 w-fit">
+                    <input type="number" :value="item.quantity" min="1" class="qty-input w-10 text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" @input="updateQuantityFromInput(item._id, $event)" />
+                    <div class="flex flex-col items-center ml-2">
+                      <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية" @click="increaseCartItem(item._id, item.quantity)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" /></svg>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-800 mt-1" aria-label="تقليل الكمية" @click="decreaseCartItem(item._id, item.quantity)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-span-2 text-center">
+                  <div class="font-semibold text-gray-800"><span x-text="item.totalPrice"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
+                </div>
+              </div>
             </div>
-            <div class="col-span-2 text-center">
-              <h3 class="text-lg text-black font-bold">الكمية</h3>
-            </div>
-            <div class="col-span-2 text-center">
-              <h3 class="text-lg text-black font-bold">المجموع الكلي</h3>
-            </div>
+          </template>
           </div>
           {% set cartItems = widget.data.cart_items or [] %}
-          {% if cartItems | length > 0 %}
+          {% if false %}
             <!-- Mobile headers -->
             <div class="flex md:hidden justify-between pb-3 border-b border-gray-300 mb-4">
               <div class="text-right">
@@ -121,14 +186,9 @@
             </div>
             {% endfor %}
           {% else %}
-            <!-- Default Sample Products -->
-            {% set sampleProducts = [
-              {"id": "1", "title": "سماعات بلوتوث", "size": "موديل X10", "price": 450, "quantity": 1, "image": "https://images.unsplash.com/photo-1606813902746-007d5c64e7e2?auto=format&fit=crop&w=300&q=80"},
-              {"id": "2", "title": "ساعة ذكية", "size": "Smart Pro 7", "price": 950, "quantity": 1, "image": "https://images.unsplash.com/photo-1592503250972-5c1db4b6b5ec?auto=format&fit=crop&w=300&q=80"},
-              {"id": "3", "title": "كيبورد ميكانيكي", "size": "RGB Edition", "price": 720, "quantity": 1, "image": "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=300&q=80"}
-            ] %}
+            {% set sampleProducts = [] %}
             
-            <!-- Mobile headers -->
+            {% if sampleProducts | length > 0 %}
             <div class="flex md:hidden justify-between pb-3 border-b border-gray-300 mb-4">
               <div class="text-right">
                 <h3 class="text-lg text-black font-bold">المنتج</h3>
@@ -219,77 +279,37 @@
               </div>
             </div>
             {% endfor %}
+            {% endif %}
           {% endif %}
         </div>
       </div>
 
       <!-- Left Side: Order Summary -->
-      <div class="w-full lg:w-1/3">
+      <div class="w-full lg:w-1/3" x-show="globals?.cart?.items && globals?.cart?.items?.length > 0">
         <div class="bg-[#F7F7F7] rounded-2xl p-6 sticky top-6">
           <div class="flex items-center py-5 gap-2 text-md text-gray-500">
             <i class="ph ph-package text-gray-600 flex-shrink-0"></i>
             <p>انفق 345.10 يورو إضافية للحصول على شحن مجاني</p>
           </div>
 
-          {% if cartItems | length > 0 %}
-          {% set totalPrice = cartItems | sum(attribute='price') * cartItems | sum(attribute='quantity') %}
-          {% set discount = 0 %}
-          {% set tax = 0 %}
-          {% set shipping = 0 %}
           <div class="space-y-3 py-4">
             <div class="flex items-center justify-between">
               <span class="text-gray-600">السعر</span>
-              <span class="text-gray-800">€{{ totalPrice | round(2) }}</span>
+              <span class="text-gray-800"><span x-text="globals?.cart?.totalPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-gray-600">الخصم</span>
-              <span class="text-red-600 font-bold">€{{ discount | round(2) }}</span>
+              <span class="text-red-600 font-bold"><span x-text="globals?.cart?.totalSavings || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-gray-600">الضريبه</span>
-              <span class="text-gray-800">€{{ tax | round(2) }}</span>
+              <span class="text-gray-800"><span x-text="globals?.cart?.shippingPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
             <div class="flex items-center justify-between pt-3">
               <span class="text-lg font-bold text-black">الاجمالي</span>
-              <span class="text-lg font-bold text-black">€{{ (totalPrice - discount + tax + shipping) | round(2) }}</span>
+              <span class="text-lg font-bold text-black"><span x-text="globals?.cart?.totalPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
           </div>
-          {% else %}
-          <!-- Calculate totals for sample products -->
-          {% set sampleProducts = [
-            {"id": "1", "title": "سماعات بلوتوث", "size": "موديل X10", "price": 450, "quantity": 1, "image": "https://images.unsplash.com/photo-1606813902746-007d5c64e7e2?auto=format&fit=crop&w=300&q=80"},
-            {"id": "2", "title": "ساعة ذكية", "size": "Smart Pro 7", "price": 950, "quantity": 1, "image": "https://images.unsplash.com/photo-1592503250972-5c1db4b6b5ec?auto=format&fit=crop&w=300&q=80"},
-            {"id": "3", "title": "كيبورد ميكانيكي", "size": "RGB Edition", "price": 720, "quantity": 1, "image": "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=300&q=80"}
-          ] %}
-          
-          {% set totalPrice = 0 %}
-          {% for item in sampleProducts %}
-            {% set totalPrice = totalPrice + (item.price * item.quantity) %}
-          {% endfor %}
-          
-          {% set discount = 0 %}
-          {% set tax = 0 %}
-          {% set shipping = 0 %}
-          
-          <div class="space-y-3 py-4">
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">السعر</span>
-              <span class="text-gray-800">€{{ totalPrice | round(2) }}</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">الخصم</span>
-              <span class="text-red-600 font-bold">€{{ discount | round(2) }}</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">الضريبه</span>
-              <span class="text-gray-800">€{{ tax | round(2) }}</span>
-            </div>
-            <div class="flex items-center justify-between pt-3">
-              <span class="text-lg font-bold text-black">الاجمالي</span>
-              <span class="text-lg font-bold text-black">€{{ (totalPrice - discount + tax + shipping) | round(2) }}</span>
-            </div>
-          </div>
-          {% endif %}
 
           <div class="mb-6">
             <label for="orderNotes" class="block text-sm font-medium text-gray-700 mb-2">ملاحظات</label>
@@ -313,12 +333,17 @@
           </div>
 
           <button
-            class="w-[176px] h-[42px] bg-black text-white font-bold py-3 rounded-[4px] border border-black transition hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
-            {% if cartItems | length == 0 %}disabled{% endif %}
+            class="w-[403px] h-[48px] bg-black text-white font-bold pt-[10px] pr-[10px] pl-[10px] rounded-[30px] border border-black transition flex items-center justify-center gap-[10px] opacity-100 max-w-full"
           >
-            الدفع الان
+            <span class="font-medium text-[18px] leading-[150%] tracking-normal text-center" style="font-family: 'Tajawal', sans-serif;">الدفع الان</span>
           </button>
         </div>
+      </div>
+
+      <!-- Empty Cart Message -->
+      <div x-show="!globals?.cart?.items || globals?.cart?.items?.length === 0" class="flex flex-col items-center justify-center py-20 px-4 min-h-[60vh]">
+        <iconify-icon icon="proicons:cart" width="80" height="80" style="transform: scaleX(-1);" class="text-gray-400 mb-6"></iconify-icon>
+        <p class="text-lg md:text-xl font-semibold text-gray-700">العربة فارغة!</p>
       </div>
     </div>
   </div>

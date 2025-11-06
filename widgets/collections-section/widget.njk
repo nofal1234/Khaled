@@ -4,7 +4,7 @@
 <!-- Collections Section -->
 <section class="py-4 sm:py-6 md:py-8 bg-white mx-2.5 md:mx-20">
       <div class="container mx-auto px-2.5">
-    <div class="flex items-center justify-between mb-4 md:mb-6">
+    <div class="flex items-center justify-between mb-6 md:mb-6">
       <h2 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('تشكيلاتنا الخاصة') }}</h2>
       <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
     </div>
@@ -24,7 +24,43 @@
       <div class="swiper collections-swiper px-4">
         <div class="swiper-wrapper">
           {% for block in widget.blocks %}
-          {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else block.settings.image) %}
+          {% set img = '' %}
+          {% if block.settings.image %}
+            {% if block.settings.image.fileUrl %}
+              {% set img = block.settings.image.fileUrl %}
+            {% elif block.settings.image is string %}
+              {% set img = block.settings.image | assets %}
+            {% endif %}
+          {% endif %}
+          {% if not img %}
+            {% if loop.index0 == 0 %}
+              {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
+                {% set img = widget.data.default_image_1.fileUrl %}
+              {% elif widget.data.default_image_1 and widget.data.default_image_1 is string %}
+                {% set img = widget.data.default_image_1 %}
+              {% else %}
+                {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
+              {% endif %}
+            {% elif loop.index0 == 1 %}
+              {% if widget.data.default_image_2 and widget.data.default_image_2.fileUrl %}
+                {% set img = widget.data.default_image_2.fileUrl %}
+              {% elif widget.data.default_image_2 and widget.data.default_image_2 is string %}
+                {% set img = widget.data.default_image_2 %}
+              {% else %}
+                {% set img = 'https://images.unsplash.com/photo-1519961655809-3d015120d4d7?w=800&h=600&fit=crop' %}
+              {% endif %}
+            {% elif loop.index0 == 2 %}
+              {% if widget.data.default_image_3 and widget.data.default_image_3.fileUrl %}
+                {% set img = widget.data.default_image_3.fileUrl %}
+              {% elif widget.data.default_image_3 and widget.data.default_image_3 is string %}
+                {% set img = widget.data.default_image_3 %}
+              {% else %}
+                {% set img = 'https://images.unsplash.com/photo-1505842381624-c2d677492d56?w=800&h=600&fit=crop' %}
+              {% endif %}
+            {% else %}
+              {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
+            {% endif %}
+          {% endif %}
           {% set alt = (block.settings and block.settings.alt) or 'صورة التشكيلة' %}
           {% set title = (block.settings and block.settings.title) or 'اسم التشكيلة' %}
           {% set subtitle = (block.settings and block.settings.subtitle) or 'وصف مختصر' %}
@@ -54,7 +90,43 @@
     <!-- Grid Layout for less than 4 collections -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
       {% for block in widget.blocks %}
-      {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else block.settings.image) %}
+      {% set img = '' %}
+      {% if block.settings.image %}
+        {% if block.settings.image.fileUrl %}
+          {% set img = block.settings.image.fileUrl %}
+        {% elif block.settings.image is string %}
+          {% set img = block.settings.image | assets %}
+        {% endif %}
+      {% endif %}
+      {% if not img %}
+        {% if loop.index0 == 0 %}
+          {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
+            {% set img = widget.data.default_image_1.fileUrl %}
+          {% elif widget.data.default_image_1 and widget.data.default_image_1 is string %}
+            {% set img = widget.data.default_image_1 %}
+          {% else %}
+            {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
+          {% endif %}
+        {% elif loop.index0 == 1 %}
+          {% if widget.data.default_image_2 and widget.data.default_image_2.fileUrl %}
+            {% set img = widget.data.default_image_2.fileUrl %}
+          {% elif widget.data.default_image_2 and widget.data.default_image_2 is string %}
+            {% set img = widget.data.default_image_2 %}
+          {% else %}
+            {% set img = 'https://images.unsplash.com/photo-1519961655809-3d015120d4d7?w=800&h=600&fit=crop' %}
+          {% endif %}
+        {% elif loop.index0 == 2 %}
+          {% if widget.data.default_image_3 and widget.data.default_image_3.fileUrl %}
+            {% set img = widget.data.default_image_3.fileUrl %}
+          {% elif widget.data.default_image_3 and widget.data.default_image_3 is string %}
+            {% set img = widget.data.default_image_3 %}
+          {% else %}
+            {% set img = 'https://images.unsplash.com/photo-1505842381624-c2d677492d56?w=800&h=600&fit=crop' %}
+          {% endif %}
+        {% else %}
+          {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
+        {% endif %}
+      {% endif %}
       {% set alt = (block.settings and block.settings.alt) or 'صورة التشكيلة' %}
       {% set title = (block.settings and block.settings.title) or 'اسم التشكيلة' %}
       {% set subtitle = (block.settings and block.settings.subtitle) or 'وصف مختصر' %}

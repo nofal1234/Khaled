@@ -1,5 +1,6 @@
 <!-- Navigation Drawer (from Right) -->
-<div x-data="xDataSidebar({ menu: {{ data.menu | dump }} })" x-cloak x-show="modal.open && modal.type === 'sidebar'" class="fixed inset-0 z-50">
+{% set headerMenu = data.menu if data.menu is defined and data.menu is iterable else [] %}
+<div x-data="xDataSidebar({ menu: {{ headerMenu | dump }} })" x-cloak x-show="modal.open && modal.type === 'sidebar'" class="fixed inset-0 z-50">
   <!-- Overlay -->
   <div @click="toggleModal('sidebar')" x-show="modal.open && modal.type === 'sidebar'"
        x-transition:enter="transition-opacity ease-out duration-300"
@@ -24,7 +25,11 @@
     <div class="flex items-center justify-between p-4 border-b">
       <div class="flex items-center">
         <a href="/">
-          <img src="{{ 'Rectangle 3.png' | assets }}" alt="Logo" class="h-8 w-auto cursor-pointer" />
+          {% if globals.app.logo and globals.app.logo.fileUrl %}
+            <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-8 w-auto cursor-pointer" />
+          {% else %}
+            <img src="{{ 'Rectangle 3.png' | assets }}" alt="Logo" class="h-8 w-auto cursor-pointer" />
+          {% endif %}
         </a>
       </div>
       <button @click="toggleModal('sidebar')" class="p-2 rounded-full hover:bg-gray-100">
@@ -36,48 +41,15 @@
 
     <!-- Menu Content -->
     <div class="flex-grow p-4 overflow-y-auto">
-      <!-- Home Button -->
-      <a href="/" @click="toggleModal('sidebar', false)" class="block bg-gray-100 text-black text-right mb-4 hover:bg-gray-200" style="width: 229px; height: 44px; border-radius: 18px; padding: 11px 8px; font-family: Tajawal; font-weight: 700; font-size: 14px; line-height: 150%; letter-spacing: 0%; display: flex; align-items: center;">
-        الرئيسية
-      </a>
-
       <!-- Menu Items -->
       <nav class="space-y-1">
-        <!-- Favorites with Badge -->
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">المفضلة</span>
-          <span class="bg-black text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full">13</span>
-        </a>
-        
-        <!-- Static Menu Items -->
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">نسائي</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">رجالي</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">أطفال</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">موسمي</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">احدث العروض</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">افضل مبيعاً</span>
-        </a>
-        <a href="#" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">شوهد مؤخراً</span>
-        </a>
-        
-        {% set items = data.menu or [] %}
-        {% for item in items %}
-        <a href="{{ item.url | default('#') }}" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">{{ item.title | default('بدون عنوان') }}</span>
-        </a>
-        {% endfor %}
+        {% if headerMenu | length > 0 %}
+          {% for item in headerMenu %}
+          <a href="{{ item.url | default('#') }}" @click="toggleModal('sidebar', false)" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+            <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">{{ item.title | default('بدون عنوان') }}</span>
+          </a>
+          {% endfor %}
+        {% endif %}
       </nav>
     </div>
 

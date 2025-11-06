@@ -1,7 +1,10 @@
 <!-- Blog Section -->
+{% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
+{% set showSection = hasBlocks or widget.data.default_image_1 or widget.data.default_image_2 or widget.data.default_image_3 %}
+{% if showSection %}
 <section class="my-12 md:my-16 px-2 mx-2.5 md:mx-20">
     <div class="rounded-2xl px-2">
-        <div class="flex items-center justify-between mb-4 md:mb-6">
+        <div class="flex items-center justify-between mb-6 md:mb-6">
             <h1 class="text-lg md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('منشورات المدونة') }}</h1>
             <div class="flex items-center gap-2">
                 {% set viewAllHref = widget.data.view_all_link | default('/blog') %}
@@ -14,7 +17,6 @@
                 </div>
             </div>
         </div>
-        {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
         <!-- Tajawal font for mobile text -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,10 +55,10 @@
             {% else %}
                 {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
                 {# Card 1 #}
-                {% if widget.data.default_image_1.fileUrl %}
+                {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
                     {% set dImg1 = widget.data.default_image_1.fileUrl %}
-                {% elif widget.data.default_image_1 %}
-                    {% set dImg1 = widget.data.default_image_1 | assets %}
+                {% elif widget.data.default_image_1 and widget.data.default_image_1 is string %}
+                    {% set dImg1 = widget.data.default_image_1 %}
                 {% else %}
                     {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
                 {% endif %}
@@ -72,10 +74,10 @@
                     </div>
                 </div>
                 {# Card 2 #}
-                {% if widget.data.default_image_2.fileUrl %}
+                {% if widget.data.default_image_2 and widget.data.default_image_2.fileUrl %}
                     {% set dImg2 = widget.data.default_image_2.fileUrl %}
-                {% elif widget.data.default_image_2 %}
-                    {% set dImg2 = widget.data.default_image_2 | assets %}
+                {% elif widget.data.default_image_2 and widget.data.default_image_2 is string %}
+                    {% set dImg2 = widget.data.default_image_2 %}
                 {% else %}
                     {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
                 {% endif %}
@@ -91,10 +93,10 @@
                     </div>
                 </div>
                 {# Card 3 #}
-                {% if widget.data.default_image_3.fileUrl %}
+                {% if widget.data.default_image_3 and widget.data.default_image_3.fileUrl %}
                     {% set dImg3 = widget.data.default_image_3.fileUrl %}
-                {% elif widget.data.default_image_3 %}
-                    {% set dImg3 = widget.data.default_image_3 | assets %}
+                {% elif widget.data.default_image_3 and widget.data.default_image_3 is string %}
+                    {% set dImg3 = widget.data.default_image_3 %}
                 {% else %}
                     {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
                 {% endif %}
@@ -143,10 +145,10 @@
                         <!-- Default blog posts for mobile -->
                         {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
                         {# Card 1 #}
-                        {% if widget.data.default_image_1.fileUrl %}
+                        {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
                             {% set dImg1 = widget.data.default_image_1.fileUrl %}
-                        {% elif widget.data.default_image_1 %}
-                            {% set dImg1 = widget.data.default_image_1 | assets %}
+                        {% elif widget.data.default_image_1 and widget.data.default_image_1 is string %}
+                            {% set dImg1 = widget.data.default_image_1 %}
                         {% else %}
                             {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
                         {% endif %}
@@ -164,10 +166,10 @@
                             </div>
                         </div>
                         {# Card 2 #}
-                        {% if widget.data.default_image_2.fileUrl %}
+                        {% if widget.data.default_image_2 and widget.data.default_image_2.fileUrl %}
                             {% set dImg2 = widget.data.default_image_2.fileUrl %}
-                        {% elif widget.data.default_image_2 %}
-                            {% set dImg2 = widget.data.default_image_2 | assets %}
+                        {% elif widget.data.default_image_2 and widget.data.default_image_2 is string %}
+                            {% set dImg2 = widget.data.default_image_2 %}
                         {% else %}
                             {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
                         {% endif %}
@@ -185,10 +187,10 @@
                             </div>
                         </div>
                         {# Card 3 #}
-                        {% if widget.data.default_image_3.fileUrl %}
+                        {% if widget.data.default_image_3 and widget.data.default_image_3.fileUrl %}
                             {% set dImg3 = widget.data.default_image_3.fileUrl %}
-                        {% elif widget.data.default_image_3 %}
-                            {% set dImg3 = widget.data.default_image_3 | assets %}
+                        {% elif widget.data.default_image_3 and widget.data.default_image_3 is string %}
+                            {% set dImg3 = widget.data.default_image_3 %}
                         {% else %}
                             {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
                         {% endif %}
@@ -247,3 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+    </div>
+</section>
+{% endif %}

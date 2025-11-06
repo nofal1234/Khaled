@@ -5,67 +5,88 @@
             <div class="md:col-span-1">
                 <div class="flex items-center gap-2 mb-4">
                     <a href="/">
-                        <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-16 w-45 cursor-pointer">
+                        {% if widget.data.logo and widget.data.logo.fileUrl %}
+                          <img src="{{ widget.data.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-16 w-auto cursor-pointer">
+                        {% elif globals.app.logo and globals.app.logo.fileUrl %}
+                          <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-16 w-auto cursor-pointer">
+                        {% else %}
+                          <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-16 w-45 cursor-pointer">
+                        {% endif %}
                     </a>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.
+                    {{ widget.data.company_description | default('نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.') }}
                 </p>
+                {% set facebook = widget.data.facebook_link %}
+                {% set instagram = widget.data.instagram_link %}
+                {% set twitter = widget.data.x_link %}
+                {% set snapchat = widget.data.p_link %}
+                {% if (facebook and facebook != '#') or (instagram and instagram != '#') or (twitter and twitter != '#') or (snapchat and snapchat != '#') %}
                 <div class="flex gap-4 mt-6">
-                    <a href="#" class="text-white hover:text-gray-400 transition">
+                    {% if snapchat and snapchat != '#' %}
+                    <a href="{{ snapchat }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
                         <i class="ph ph-snapchat-logo text-2xl"></i>
                     </a>
-                    <a href="#" class="text-white hover:text-gray-400 transition">
+                    {% endif %}
+                    {% if instagram and instagram != '#' %}
+                    <a href="{{ instagram }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
                         <i class="ph ph-instagram-logo text-2xl"></i>
                     </a>
-                    <a href="#" class="text-white hover:text-gray-400 transition">
+                    {% endif %}
+                    {% if twitter and twitter != '#' %}
+                    <a href="{{ twitter }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
                         <i class="ph ph-twitter-logo text-2xl"></i>
                     </a>
-                    <a href="#" class="text-white hover:text-gray-400 transition">
+                    {% endif %}
+                    {% if facebook and facebook != '#' %}
+                    <a href="{{ facebook }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
                         <i class="ph ph-facebook-logo text-2xl"></i>
                     </a>
+                    {% endif %}
                 </div>
+                {% endif %}
             </div>
-            <div>
-                <h3 class="font-bold text-lg mb-4">نسائي</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold text-lg mb-4">رجالي</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold text-lg mb-4">أطفال</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">ملابس</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">احذية</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">حقائب</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">رياضة</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">خصومات سريع</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold text-lg mb-4">صفحات أخري</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">الرئيسية</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">المدونة</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">تواصل معانا</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">السلة</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">المفضلة</a></li>
-                </ul>
-            </div>
+            {% set menuItems = widget.data.footer_menu if widget.data.footer_menu is defined and widget.data.footer_menu is iterable else (widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else []) %}
+            {% if menuItems | length > 0 %}
+              {% set firstThird = (menuItems | length / 3) | round(0, 'ceil') %}
+              {% set secondThird = firstThird * 2 %}
+              {% if firstThird > 0 %}
+              <div>
+                  <h3 class="font-bold text-lg mb-4">روابط سريعة</h3>
+                  <ul class="space-y-2">
+                      {% for item in menuItems %}
+                        {% if loop.index0 < firstThird %}
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
+              {% if secondThird > firstThird %}
+              <div>
+                  <h3 class="font-bold text-lg mb-4">الفئات</h3>
+                  <ul class="space-y-2">
+                      {% for item in menuItems %}
+                        {% if loop.index0 >= firstThird and loop.index0 < secondThird %}
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
+              {% if menuItems | length > secondThird %}
+              <div>
+                  <h3 class="font-bold text-lg mb-4">صفحات أخري</h3>
+                  <ul class="space-y-2">
+                      {% for item in menuItems %}
+                        {% if loop.index0 >= secondThird %}
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
+            {% endif %}
         </div>
     </div>
 </footer>
