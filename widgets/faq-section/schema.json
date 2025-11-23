@@ -5,7 +5,7 @@
     "title": {
       "type": "string",
       "label": "Section Title",
-      "default": "مزيد من المعلومات"
+      "default": "more_information"
     }
   },
   "blocks": {
@@ -13,14 +13,14 @@
       "name": "FAQ Item",
       "settings": {
         "question": {
-          "type": "text",
+          "type": "string",
           "label": "Question",
-          "default": "الوصف"
+          "default": "description"
         },
         "answer": {
-          "type": "textarea",
+          "type": "string",
           "label": "Answer",
-          "default": "سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي. تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرarrant الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ."
+          "default": "default_description_text_1"
         }
       }
     }
@@ -30,31 +30,31 @@
       "category": "الصفحة الرئيسية",
       "name": "❓ FAQ Section",
       "settings": {
-        "title": "مزيد من المعلومات"
+        "title": "more_information"
       },
       "blocks": [
         {
           "block": "faqItem",
           "name": "Description",
           "settings": {
-            "question": "الوصف",
-            "answer": "سوءكا كين تاجوينو في شوارغ المدينة او تنظيفين في مغامرات كاروكو، يضمن لنا هذا الكتاب المنفوذ الإرادة والجدية التما نحتاج. يناسب لوكة الأسبو محددت المستحقات مع أي أجاغ مهاراة ومعا يجعلة الخيار الأمثل للإفراد طاقمي. تاكيت مدينان، شديد مزود بمزايا عملية، بما في ذلك بدحان أشاس وجيوب مزاجة بشكلات، مما يوفر مسافة تخزيو مزءية للمستحرarrant الأساسية أثناء التنقل. أضوءاة وجاذبية القابلة للتعديل تبنكن أن ملادمة مثالية، مما يضمن أقصى درجات الراحة والتنوغ."
+            "question": "description",
+            "answer": "default_description_text_1"
           }
         },
         {
           "block": "faqItem",
           "name": "Shipping & Returns",
           "settings": {
-            "question": "التسليم والارجاع",
-            "answer": "معلومات التسليم والإرجاع هنا..."
+            "question": "delivery_and_returns",
+            "answer": "delivery_info"
           }
         },
         {
           "block": "faqItem",
           "name": "Contact Us",
           "settings": {
-            "question": "تواصل معانا",
-            "answer": "معلومات التواصل هنا..."
+            "question": "contact_us",
+            "answer": "contact_info"
           }
         }
       ]

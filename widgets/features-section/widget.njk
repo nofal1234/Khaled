@@ -4,15 +4,17 @@
 <section class="my-6 md:my-10 px-2 mx-2.5 md:mx-20">
     <div class="py-4 md:py-8 px-2 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('تشكيلاتنا الخاصة') }}</h1>
-            <div class="flex items-center gap-2">
-                <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition py-2 px-1">عرض الكل</a>
+            {% set rawSectionTitle = widget.data.section_title or 'features_section' %}
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ t(rawSectionTitle) }}</h1>
+            <div class="flex items-center gap-2" dir="ltr">
+                {% set rawViewAllText = widget.data.view_all_text or 'view_all' %}
                 <div class="swiper-button-prev-custom cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
-                    <i class="ph ph-caret-right text-black text-lg"></i>
-                </div>
-                <div class="swiper-button-next-custom cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
                     <i class="ph ph-caret-left text-black text-lg"></i>
                 </div>
+                <div class="swiper-button-next-custom cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
+                    <i class="ph ph-caret-right text-black text-lg"></i>
+                </div>
+                <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition py-2 px-1">{{ t(rawViewAllText) }}</a>
             </div>
         </div>
 
@@ -28,30 +30,40 @@
         </div>
         {% else %}
 
+        {% set defaultTitleKeys = ['upper_clothing','lower_clothing','accessories'] %}
         {% set defaultTitles = [
-            widget.data.default_title_1 or 'الملابس العلوية',
-            widget.data.default_title_2 or 'الملابس السفلية',
-            widget.data.default_title_3 or 'الاكسسوارات'
+            t('upper_clothing'),
+            t('lower_clothing'),
+            t('accessories')
         ] %}
 
         <!-- Desktop Layout: Side by Side -->
         <div class="hidden sm:flex flex-row gap-2 sm:gap-3 md:gap-4 w-full">
             {% for block in widget.blocks %}
-            {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
-            {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
+            {% set explicitTitle = (block.data and block.data.title) or (block.settings and block.settings.title) or '' %}
+            {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else t('display') %}
+            {% if explicitTitle %}
+                {% if explicitTitle in defaultTitleKeys %}
+                    {% set cardTitle = t(explicitTitle) %}
+                {% else %}
+                    {% set cardTitle = explicitTitle %}
+                {% endif %}
+            {% else %}
+                {% set cardTitle = fallbackTitle %}
+            {% endif %}
             <a href="{{ block.data.link | default('#') }}" class="block flex-1">
                 <div class="w-full mb-3" style="aspect-ratio: 451 / 418;">
                     {% if block.data and block.data.image and block.data.image.fileUrl %}
-                    <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt and t(block.data.alt) or (block.settings and block.settings.alt and t(block.settings.alt) or t('display')) }}" class="w-full h-full object-cover rounded-lg">
                     {% elif block.settings and block.settings.image and block.settings.image.fileUrl %}
-                    <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt and t(block.settings.alt) or t('display') }}" class="w-full h-full object-cover rounded-lg">
                     {% elif widget.data.show_default_image | default(true) %}
-                    <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover rounded-lg">
+                    <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings and block.settings.alt and t(block.settings.alt) or t('display') }}" class="w-full h-full object-cover rounded-lg">
                     {% endif %}
                 </div>
                 <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
                 {% if block.settings and block.settings.description %}
-                <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
+                <span class="text-sm text-gray-600 text-center block">{{ t(block.settings.description) }}</span>
                 {% endif %}
             </a>
             {% endfor %}
@@ -62,22 +74,31 @@
             <div class="swiper featuresSwiper">
                 <div class="swiper-wrapper">
                     {% for block in widget.blocks %}
-                    {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else 'عرض' %}
-                    {% set cardTitle = (block.settings and block.settings.title) or fallbackTitle %}
+                    {% set explicitTitle = (block.data and block.data.title) or (block.settings and block.settings.title) or '' %}
+                    {% set fallbackTitle = defaultTitles[loop.index0] if loop.index0 < defaultTitles|length else t('display') %}
+                    {% if explicitTitle %}
+                        {% if explicitTitle in defaultTitleKeys %}
+                            {% set cardTitle = t(explicitTitle) %}
+                        {% else %}
+                            {% set cardTitle = explicitTitle %}
+                        {% endif %}
+                    {% else %}
+                        {% set cardTitle = fallbackTitle %}
+                    {% endif %}
                     <div class="swiper-slide">
                         <a href="{{ block.data.link | default('#') }}" class="block w-full">
                             <div class="features-mobile-image mb-3">
                                 {% if block.data and block.data.image and block.data.image.fileUrl %}
-                                <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt and t(block.data.alt) or (block.settings and block.settings.alt and t(block.settings.alt) or t('display')) }}" class="w-full h-full object-cover">
                                 {% elif block.settings and block.settings.image and block.settings.image.fileUrl %}
-                                <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                <img src="{{ block.settings.image.fileUrl }}" alt="{{ block.settings.alt and t(block.settings.alt) or t('display') }}" class="w-full h-full object-cover">
                                 {% elif widget.data.show_default_image | default(true) %}
-                                <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings.alt | default('عرض') }}" class="w-full h-full object-cover">
+                                <img src="{{ widget.data.default_image | default('assets/Frame 427322188.png') }}" alt="{{ block.settings and block.settings.alt and t(block.settings.alt) or t('display') }}" class="w-full h-full object-cover">
                                 {% endif %}
                             </div>
                             <span class="text-2xl font-bold text-center block">{{ cardTitle }}</span>
                             {% if block.settings and block.settings.description %}
-                            <span class="text-sm text-gray-600 text-center block">{{ block.settings.description }}</span>
+                            <span class="text-sm text-gray-600 text-center block">{{ t(block.settings.description) }}</span>
                             {% endif %}
                         </a>
                     </div>
@@ -89,7 +110,6 @@
     </div>
     
 </section>
-
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 

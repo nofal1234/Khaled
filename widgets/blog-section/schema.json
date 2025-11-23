@@ -5,14 +5,14 @@
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "منشورات المدونة",
-      "description": "العنوان الرئيسي للقسم"
+      "default": "blog_posts",
+      "description": "العنوان الرئيسي الذي يظهر أعلى سكشن منشورات المدونة"
     },
     "view_all_text": {
       "type": "string",
       "label": "نص عرض الكل",
-      "default": "عرض الكل",
-      "description": "النص الذي يظهر على رابط عرض الكل"
+      "default": "view_all",
+      "description": "النص الذي يظهر على رابط عرض الكل بجانب الأسهم"
     },
     "view_all_link": {
       "type": "string",
@@ -43,19 +43,19 @@
     "default_button_text": {
       "type": "string",
       "label": "نص الرابط الافتراضي",
-      "default": "عرض المزيد",
-      "description": "النص المستخدم في الحالة الافتراضية عند عدم وجود بلوكات"
+      "default": "read_more",
+      "description": "النص المستخدم على زر القراءة في الكروت الافتراضية"
     },
-    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "نصائح لاختيار الملابس المناسبة لكل مناسبة" },
-    "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية" },
+    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "blog_default_title_1" },
+    "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "blog_default_desc_1" },
     "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "qumra://blog1.png" },
     "default_link_1": { "type": "string", "label": "رابط افتراضي 1", "default": "/blog" },
-    "default_title_2": { "type": "string", "label": "عنوان افتراضي 2", "default": "نصائح لاختيار الملابس المناسبة لكل مناسبة" },
-    "default_description_2": { "type": "textarea", "label": "وصف افتراضي 2", "default": "دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات" },
+    "default_title_2": { "type": "string", "label": "عنوان افتراضي 2", "default": "blog_default_title_2" },
+    "default_description_2": { "type": "textarea", "label": "وصف افتراضي 2", "default": "blog_default_desc_2" },
     "default_image_2": { "type": "media", "label": "صورة افتراضية 2", "default": "assets/blog2.png" },
     "default_link_2": { "type": "string", "label": "رابط افتراضي 2", "default": "/blog" },
-    "default_title_3": { "type": "string", "label": "عنوان افتراضي 3", "default": "كيفية العناية بالملابس وإطالة عمرها" },
-    "default_description_3": { "type": "textarea", "label": "وصف افتراضي 3", "default": "تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة" },
+    "default_title_3": { "type": "string", "label": "عنوان افتراضي 3", "default": "blog_default_title_3" },
+    "default_description_3": { "type": "textarea", "label": "وصف افتراضي 3", "default": "blog_default_desc_3" },
     "default_image_3": { "type": "media", "label": "صورة افتراضية 3", "default": "assets/blog3.png" },
  "default_link_3": { "type": "string", "label": "رابط افتراضي 3", "default": "/blog" }
   },   
@@ -66,14 +66,14 @@
         "title": {
           "type": "string",
           "label": "عنوان المنشور",
-          "default": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-          "description": "عنوان منشور المدونة"
+          "default": "blog_post_title",
+          "description": "العنوان الذي يظهر فوق نص منشور المدونة"
         },
         "description": {
           "type": "textarea",
           "label": "وصف المنشور",
-          "default": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-          "description": "وصف مختصر للمنشور"
+          "default": "blog_post_description",
+          "description": "وصف مختصر أسفل عنوان منشور المدونة"
         },
         "image": {
           "type": "media",
@@ -84,8 +84,8 @@
         "button_text": {
           "type": "string",
           "label": "نص الرابط",
-          "default": "عرض المزيد",
-          "description": "النص الذي يظهر على رابط القراءة"
+          "default": "read_more",
+          "description": "النص الذي يظهر على رابط أو زر قراءة المزيد"
         },
         "link": {
           "type": "string",
@@ -96,8 +96,8 @@
         "alt_text": {
           "type": "string",
           "label": "النص البديل للصورة",
-          "default": "صورة المنشور",
-          "description": "النص البديل للصورة"
+          "default": "blog_post_image_alt",
+          "description": "نص بديل يُستخدم لوصف صورة المنشور لمحركات البحث وذوي الاحتياجات الخاصة"
         }
       }
     }

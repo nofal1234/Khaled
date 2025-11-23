@@ -9,7 +9,7 @@
     "section_title": {
       "type": "string",
       "label": "Section Title",
-      "default": "عرض الاقسام"
+      "default": "view_sections"
     },
     "view_all_link": {
       "type": "string",
@@ -30,12 +30,13 @@
           "id": "name",
           "type": "text",
           "label": "Collection Name",
-          "default": "Collection Name"
+          "default": "collection_name"
         },
         {
           "id": "alt_text",
           "type": "text",
-          "label": "Image Alt Text"
+          "label": "Image Alt Text",
+          "default": "collection_image"
         },
         {
           "id": "link",

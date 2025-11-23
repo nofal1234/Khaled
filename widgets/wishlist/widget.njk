@@ -1,0 +1,210 @@
+<section class="py-6 md:py-10 bg-white">
+  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20">
+    <nav class="text-sm text-gray-500 mb-2" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1">
+        <li><a href="/" class="hover:underline">الرئيسية</a></li>
+        <li>/</li>
+        <li class="text-gray-800 font-medium">المفضلة</li>
+      </ol>
+    </nav>
+    <h1 class="text-2xl md:text-3xl font-bold mb-6 text-right">المفضلة</h1>
+    <div id="wishlistPage" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+    <p id="wishlistEmpty" class="text-center text-gray-600 mt-10 hidden">لا توجد منتجات في المفضلة حالياً.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('wishlistPage');
+      const emptyMsg = document.getElementById('wishlistEmpty');
+
+      if (!window.qumra || !window.qumra.storeGate) return;
+
+      const Request = window.qumra.storeGate;
+      const addToCartMutation = `mutation AddToCart($data: AddToCartInput!) {
+  addToCart(data: $data) {
+    data {
+      _id
+      items {
+        productId
+        _id
+        quantity
+        price
+        totalPrice
+      }
+      totalQuantity
+      totalPrice
+    }
+    success
+    message
+  }
+}`;
+
+      window.addWishlistToCart = function (productId, btn) {
+        if (!productId || typeof Request !== 'function') return;
+
+        const controls = btn.closest('.wishlist-card-controls');
+        const input = controls && controls.querySelector('input[type="number"]');
+        const quantity = Number(input && input.value) || 1;
+
+        const originalHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.classList.add('opacity-60', 'cursor-not-allowed');
+        btn.innerHTML = '<span>جارٍ الإضافة...</span>';
+
+        try {
+          if (typeof updateLoading === 'function') {
+            updateLoading('cart', true);
+          }
+        } catch (_) {}
+
+        Request(addToCartMutation, { data: { productId, quantity, options: [] } })
+          .then(function (res) {
+            try {
+              if (typeof updateCart === 'function' && res && res.addToCart && res.addToCart.data) {
+                updateCart(res.addToCart.data);
+              }
+              if (window.showToast) {
+                window.showToast('تم إضافة المنتج إلى السلة', 'success');
+              }
+            } catch (_) {}
+          })
+          .catch(function (err) {
+            console.error('addToCart from wishlist page error', err);
+            try {
+              if (window.showToast) {
+                window.showToast('حدث خطأ أثناء الإضافة للسلة', 'error');
+              }
+            } catch (_) {}
+          })
+          .finally(function () {
+            btn.disabled = false;
+            btn.classList.remove('opacity-60', 'cursor-not-allowed');
+            btn.innerHTML = originalHtml;
+            try {
+              if (typeof updateLoading === 'function') {
+                updateLoading('cart', false);
+              }
+            } catch (_) {}
+          });
+      };
+
+      const query = `query GetAllWishlists($sessionId: String, $accountId: String) {
+  getAllWishlists(sessionId: $sessionId, accountId: $accountId) {
+    success
+    message
+    data {
+      _id
+      accountId
+      sessionId
+      app
+      products {
+        _id
+        title
+        slug
+        images { _id fileUrl }
+        pricing { price compareAtPrice }
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}`;
+
+      const globals = window.globals || {};
+      const accountId = globals.customer && globals.customer._id || null;
+      const sessionId = (globals.cart && globals.cart.sessionId) || globals.sessionId || (window.__qumra__ && window.__qumra__.sessionId) || null;
+
+      Request(query, { sessionId, accountId })
+        .then(function (res) {
+          const list = res && res.getAllWishlists && res.getAllWishlists.data || [];
+          const first = Array.isArray(list) ? list[0] : null;
+          const products = first && first.products || [];
+
+          if (!products.length) {
+            emptyMsg.classList.remove('hidden');
+            return;
+          }
+
+          products.forEach(function (p) {
+            const card = document.createElement('a');
+            card.href = '/product/' + p.slug;
+            card.className = 'product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col';
+            const img = (p.images && p.images[0] && p.images[0].fileUrl) || 'https://placehold.co/320x420/eeeeee/666?text=No+Image';
+            const price = p.pricing && p.pricing.price != null ? p.pricing.price : '';
+
+            card.innerHTML = `
+              <div class="relative overflow-hidden bg-gray-100 product-card__image">
+                <img src="${img}" alt="${p.title}">
+                <button
+                  class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition wishlist-heart-btn"
+                  data-product-id="${p._id}"
+                  onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlist){ window.toggleWishlist('${p._id}'); }"
+                >
+                  <i class="ph ph-heart text-xl"></i>
+                </button>
+              </div>
+              <div class="p-4 product-card__content flex flex-col flex-1">
+                <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">${p.title}</h3>
+                <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
+                  <div class="flex flex-col flex-1 gap-1">
+                    <span class="text-xl md:text-2xl font-bold text-black">${price}</span>
+                  </div>
+                </div>
+
+                <div class="mt-3 flex items-center justify-between gap-2 wishlist-card-controls">
+                  <div class="flex items-center gap-1.5 bg-gray-100 rounded-full px-2 py-1">
+                    <span class="text-[11px] text-gray-500">الكمية</span>
+                    <input
+                      type="number"
+                      min="1"
+                      value="1"
+                      class="w-12 text-center text-[11px] border border-gray-200 rounded-full bg-white focus:outline-none focus:ring-1 focus:ring-mainColor/60 focus:border-mainColor/60"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onclick="event.stopPropagation(); event.preventDefault(); if(window.addWishlistToCart){ window.addWishlistToCart('${p._id}', this); }"
+                    class="px-3 py-1.5 rounded-full text-[11px] font-medium flex items-center gap-1.5 bg-mainColor text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <span>إضافة للسلة</span>
+                  </button>
+                </div>
+              </div>
+            `;
+
+            container.appendChild(card);
+          });
+
+          if (window.toggleWishlist && typeof window.toggleWishlist === 'function') {
+            setTimeout(function () {
+              if (window.isInWishlist) {
+                const ids = (function () {
+                  try { return JSON.parse(localStorage.getItem('wishlist_ids') || '[]'); } catch { return []; }
+                })();
+                (function syncHeartIcons(ids) {
+                  const set = new Set(ids);
+                  const buttons = document.querySelectorAll('.wishlist-heart-btn[data-product-id]');
+                  buttons.forEach(function (btn) {
+                    const pid = btn.getAttribute('data-product-id');
+                    const icon = btn.querySelector('i');
+                    if (!icon) return;
+                    if (set.has(pid)) {
+                      icon.classList.remove('ph-heart');
+                      icon.classList.add('ph-fill', 'ph-heart', 'text-red-500');
+                    } else {
+                      icon.classList.remove('ph-fill', 'text-red-500');
+                      icon.classList.add('ph-heart');
+                    }
+                  });
+                })(ids);
+              }
+            }, 0);
+          }
+        })
+        .catch(function () {
+          emptyMsg.classList.remove('hidden');
+        });
+    });
+  </script>
+</section>

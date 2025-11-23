@@ -1,6 +1,6 @@
 {
   "layout": "layout",
-  "title": "الصفحة الرئيسية",
+  "title": "البحث",
   "widgets": [
     {
       "name": "products",

@@ -1,26 +1,76 @@
 {
-  "name": "السلة",
-  "description": "عرض محتويات سلة المشتريات مع ملخص الطلب",
+  "name": "Cart",
+  "description": "Display cart contents with order summary",
   "settings": {
+    "cart_title": {
+      "type": "string",
+      "label": "Cart Title",
+      "default": "cart_title"
+    },
+    "cart_product": {
+      "type": "string",
+      "label": "Product Column Header",
+      "default": "cart_product"
+    },
+    "cart_price": {
+      "type": "string",
+      "label": "Price Column Header",
+      "default": "cart_price"
+    },
+    "cart_quantity": {
+      "type": "string",
+      "label": "Quantity Column Header",
+      "default": "cart_quantity"
+    },
+    "cart_total": {
+      "type": "string",
+      "label": "Total Column Header",
+      "default": "cart_total"
+    },
+    "cart_remove": {
+      "type": "string",
+      "label": "Remove Button Text",
+      "default": "cart_remove"
+    },
+    "cart_empty": {
+      "type": "string",
+      "label": "Empty Cart Message",
+      "default": "cart_empty"
+    },
+    "cart_checkout_now": {
+      "type": "string",
+      "label": "Checkout Button Text",
+      "default": "cart_checkout_now"
+    },
+    "cart_increase_quantity": {
+      "type": "string",
+      "label": "Increase Quantity Button Text",
+      "default": "cart_increase_quantity"
+    },
+    "cart_decrease_quantity": {
+      "type": "string",
+      "label": "Decrease Quantity Button Text",
+      "default": "cart_decrease_quantity"
+    },
     "cart_items": {
       "type": "list",
-      "label": "عناصر السلة",
+      "label": "Cart Items",
       "schema": {
         "type": "object",
         "properties": {
-          "id": { "type": "string", "label": "المعرف" },
-          "title": { "type": "string", "label": "اسم المنتج" },
-          "size": { "type": "string", "label": "المقاس" },
-          "price": { "type": "number", "label": "السعر" },
-          "quantity": { "type": "number", "label": "الكمية" },
-          "image": { "type": "image", "label": "صورة المنتج" }
+          "id": { "type": "string", "label": "ID" },
+          "title": { "type": "string", "label": "Product Name" },
+          "size": { "type": "string", "label": "Size" },
+          "price": { "type": "number", "label": "Price" },
+          "quantity": { "type": "number", "label": "Quantity" },
+          "image": { "type": "image", "label": "Product Image" }
         }
       },
       "default": []
     }
   },
   "presets": [
-    { "category": "الصفحات", "name": "السلة" }
+    { "category": "Pages", "name": "Cart" }
   ]
 }
 

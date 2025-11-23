@@ -13,7 +13,7 @@
 >
 
   <div class="absolute top-0 left-0 w-full max-md:h-full bg-white shadow-lg">
-    <div class="flex flex-col md:px-12 px-[10px] max-md:h-full">
+    <div class="flex flex-col px-2.5 md:px-6 mx-2.5 md:mx-20 max-md:h-full">
       <!-- Header -->
       <div class="flex flex-col gap-2 pt-6">
         <div class="flex items-center justify-between">
@@ -35,6 +35,7 @@
             placeholder="ابحث عن المنتجات..."
             class="w-full px-6 py-4 text-lg border outline-none border-gray-300 rounded-lg focus:border-black transition-colors font-['Cairo'] placeholder:text-[#666666] placeholder:opacity-100"
             @input="onInput"
+            @dblclick="setSearch(search || '')"
             autocomplete="off"
           />
 

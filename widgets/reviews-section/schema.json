@@ -2,10 +2,10 @@
   "name": "آراء العملاء",
   "description": "قسم آراء العملاء مع إمكانية إضافة آراء مخصصة",
   "settings": {
-    "title": { 
+    "section_title": { 
       "type": "string", 
       "label": "العنوان", 
-      "default": "آراء عملائنا" 
+      "default": "customer_reviews"
     },
     "heroImage": {
       "type": "media",
@@ -21,12 +21,12 @@
         "name": {
           "type": "string",
           "label": "اسم العميل",
-          "default": "عبدالرحمن محمد"
+          "default": "review_1_name"
         },
         "text": {
           "type": "text",
           "label": "نص الرأي",
-          "default": "تجربة تسوق سلسة وسهلة من البداية للنهاية. أعجبتني سرعة التوصيل والتغليف الآمن"
+          "default": "review_1_text"
         },
         "image": {
           "type": "media",
@@ -43,7 +43,7 @@
         "alt": {
           "type": "string",
           "label": "النص البديل للصورة",
-          "default": "صورة العميل"
+          "default": "review_image_alt"
         }
       }
     }
@@ -57,33 +57,33 @@
           "block": "reviewItem",
           "name": "الرأي الأول",
           "settings": {
-            "name": "أحمد كرم",
-            "text": "تجربة ممتازة وخدمة عملاء محترمة. المنتجات وصلت في الوقت المحدد وبجودة عالية.",
+            "name": "review_1_name",
+            "text": "review_1_text",
             "image": "",
             "stars": 5,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
           "name": "الرأي الثاني",
           "settings": {
-            "name": "سارة محمد",
-            "text": "الشحن سريع والجودة عالية. أنصح الجميع بالتعامل مع هذا المتجر.",
+            "name": "review_2_name",
+            "text": "review_2_text",
             "image": "",
             "stars": 4,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
           "name": "الرأي الثالث",
           "settings": {
-            "name": "خالد عبدالله",
-            "text": "أسعار مناسبة وعروض مميزة. خدمة عملاء ممتازة وسريعة في الرد.",
+            "name": "review_3_name",
+            "text": "review_3_text",
             "image": "",
             "stars": 5,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         }
       ]

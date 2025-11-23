@@ -11,59 +11,26 @@
     "location": {
       "type": "string",
       "label": "المدينة/الموقع",
-      "default": "Cairo",
-      "description": "اسم المدينة أو الموقع الذي يظهر في الشريط"
+      "default": "location_default",
+      "description": "اسم المدينة أو الموقع الذي يظهر في الشريط العلوي"
     },
     "brands_text": {
       "type": "string",
       "label": "نص العلامات التجارية",
-      "default": "1,800+ brands",
-      "description": "النص الذي يظهر لعدد العلامات التجارية"
+      "default": "brands_counter",
+      "description": "النص الذي يظهر لعدد العلامات التجارية في الشريط العلوي"
     },
     "english_text": {
       "type": "string",
       "label": "نص اللغة الإنجليزية",
-      "default": "English",
-      "description": "النص الذي يظهر على زر اللغة الإنجليزية"
+      "default": "english",
+      "description": "النص الذي يظهر على زر اللغة الإنجليزية في الشريط العلوي"
     },
     "arabic_text": {
       "type": "string",
       "label": "نص اللغة العربية",
-      "default": "العربية",
-      "description": "النص الذي يظهر على زر اللغة العربية"
-    },
-    "background_color": {
-      "type": "color",
-      "label": "لون الخلفية",
-      "default": "#000000",
-      "description": "لون خلفية الشريط العلوي"
-    },
-    "background_opacity": {
-      "type": "range",
-      "label": "شفافية الخلفية",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 80,
-      "description": "مستوى الشفافية للخلفية (0 = شفاف تماماً، 100 = غير شفاف)"
-    },
-    "text_color": {
-      "type": "color",
-      "label": "لون النص",
-      "default": "#ffffff",
-      "description": "لون النص في الشريط العلوي"
-    },
-    "hover_color": {
-      "type": "color",
-      "label": "لون التمرير",
-      "default": "#3b82f6",
-      "description": "اللون الذي يظهر عند التمرير على العناصر"
-    },
-    "show_on_mobile": {
-      "type": "checkbox",
-      "label": "إظهار في الموبايل",
-      "default": false,
-      "description": "إظهار الشريط العلوي في الأجهزة المحمولة"
+      "default": "arabic",
+      "description": "النص الذي يظهر على زر اللغة العربية في الشريط العلوي"
     },
     "font_size": {
       "type": "select",

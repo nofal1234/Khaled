@@ -9,14 +9,14 @@
     "search_placeholder": {
       "type": "string",
       "label": "نص البحث",
-      "default": "ابحث عن المنتج...",
+      "default": "search_placeholder",
       "description": "النص الذي يظهر في مربع البحث"
     },
     "mobile_search_placeholder": {
       "type": "string",
       "label": "نص البحث في الموبايل",
-      "default": "ابحث...",
-      "description": "النص المختصر الذي يظهر في مربع البحث في الموبايل"
+      "default": "mobile_search_placeholder",
+      "description": "النص الذي يظهر في مربع البحث في الموبايل"
     },
     "show_wishlist": {
       "type": "checkbox",
@@ -39,38 +39,32 @@
     "wishlist_tooltip": {
       "type": "string",
       "label": "نص المفضلة",
-      "default": "المفضلة",
+      "default": "wishlist",
       "description": "النص الذي يظهر عند التمرير على أيقونة المفضلة"
     },
     "cart_tooltip": {
       "type": "string",
       "label": "نص السلة",
-      "default": "السلة",
+      "default": "cart",
       "description": "النص الذي يظهر عند التمرير على أيقونة السلة"
     },
     "user_tooltip": {
       "type": "string",
       "label": "نص الحساب",
-      "default": "الحساب",
+      "default": "account",
       "description": "النص الذي يظهر عند التمرير على أيقونة الحساب"
     },
     "mobile_menu_text": {
       "type": "string",
       "label": "نص القائمة في الموبايل",
-      "default": "الحساب",
+      "default": "more",
       "description": "النص الذي يظهر في القائمة الجانبية للموبايل"
     },
     "language_button_text": {
       "type": "string",
       "label": "نص زر اللغة",
-      "default": "English",
-      "description": "النص الذي يظهر على زر تغيير اللغة"
-    },
-    "background_color": {
-      "type": "color",
-      "label": "لون الخلفية",
-      "default": "transparent",
-      "description": "لون خلفية الهيدر"
+      "default": "english",
+      "description": "يمكن استخدامه كمفتاح ترجمة إذا احتجت لزر لغة منفصل"
     },
     "logo_height": {
       "type": "select",
@@ -133,8 +127,8 @@
         "announcementText": {
           "type": "string",
           "label": "نص الإعلان",
-          "default": "عرض خاص - خصم 20% على جميع المنتجات!",
-          "description": "رسالة الإعلان أو النص التعريفي"
+          "default": "header_announcement_text",
+          "description": "رسالة الإعلان أو النص التعريفي في شريط الهيدر"
         },
         "announcementLink": {
           "type": "path",

@@ -49,18 +49,27 @@
             <span class="text-gray-800" style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">{{ item.title | default('بدون عنوان') }}</span>
           </a>
           {% endfor %}
+        {% else %}
+          <p class="text-gray-500 text-sm">لا توجد عناصر في القائمة.</p>
         {% endif %}
       </nav>
     </div>
 
     <!-- Footer (Language Selector) -->
     <div class="p-4 border-t">
-      <a href="#" class="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-        <span class="text-lg text-gray-800">العربية</span>
-        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </a>
+      {% form 'lang', { class: 'lang-form w-full' } %}
+{% set currentLang = 'ar' %}
+{% if context.page and context.page.url %}
+  {% set urlParts = context.page.url.split('/') | reject('empty') %}
+  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en'] %}
+    {% set currentLang = urlParts[0] %}
+  {% endif %}
+{% endif %}
+        <select name="lang" class="lang-select w-full px-3 py-2 text-base sm:text-lg text-gray-800 bg-transparent focus:outline-none text-center">
+          <option value="ar" {% if currentLang == 'ar' %}selected{% endif %}>العربية</option>
+          <option value="en" {% if currentLang == 'en' %}selected{% endif %}>English</option>
+        </select>
+      {% endform %}
     </div>
 
   </div>

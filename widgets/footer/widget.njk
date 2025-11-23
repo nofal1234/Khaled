@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    {{ widget.data.company_description | default('نقدم لكم أجمل صيحات الموضة مع تشكيلة من الملابس كاملة الجودة والمصممة لتناسب جميع المناسبات، لتميزي أينما كنتي مع زهور.') }}
+                    {{ widget.data.company_description | default(t('company_description')) }}
                 </p>
                 {% set facebook = widget.data.facebook_link %}
                 {% set instagram = widget.data.instagram_link %}
@@ -52,11 +52,11 @@
               {% set secondThird = firstThird * 2 %}
               {% if firstThird > 0 %}
               <div>
-                  <h3 class="font-bold text-lg mb-4">روابط سريعة</h3>
+                  <h3 class="font-bold text-lg mb-4">{{ t('quick_links') }}</h3>
                   <ul class="space-y-2">
                       {% for item in menuItems %}
                         {% if loop.index0 < firstThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
                         {% endif %}
                       {% endfor %}
                   </ul>
@@ -64,11 +64,11 @@
               {% endif %}
               {% if secondThird > firstThird %}
               <div>
-                  <h3 class="font-bold text-lg mb-4">الفئات</h3>
+                  <h3 class="font-bold text-lg mb-4">{{ t('categories') }}</h3>
                   <ul class="space-y-2">
                       {% for item in menuItems %}
                         {% if loop.index0 >= firstThird and loop.index0 < secondThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
                         {% endif %}
                       {% endfor %}
                   </ul>
@@ -76,11 +76,11 @@
               {% endif %}
               {% if menuItems | length > secondThird %}
               <div>
-                  <h3 class="font-bold text-lg mb-4">صفحات أخري</h3>
+                  <h3 class="font-bold text-lg mb-4">{{ t('other_pages') }}</h3>
                   <ul class="space-y-2">
                       {% for item in menuItems %}
                         {% if loop.index0 >= secondThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ item.title | default('عنوان') }}</a></li>
+                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
                         {% endif %}
                       {% endfor %}
                   </ul>

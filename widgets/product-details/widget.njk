@@ -3,11 +3,9 @@
         <!-- Breadcrumb -->
         <div class="py-4 mt-2 md:mt-4">
             <nav class="flex items-center gap-2 text-sm text-gray-600">
-                <a href="#" class="hover:text-mainColor transition">الرئيسية</a>
+                <a href="/" class="hover:text-mainColor transition">{{ t('home') }}</a>
                 <span>/</span>
-                <a href="#" class="hover:text-mainColor transition">أطفال</a>
-                <span>/</span>
-                <span class="text-mainColor font-semibold">تفاصيل المنتج</span>
+                <span class="text-mainColor font-semibold">{{ t('product_details') }}</span>
             </nav>
         </div>
         <!-- Product Details Section -->
@@ -33,108 +31,103 @@
                 </div>
 
                 <!-- Product Info -->
-                <div class="flex flex-col gap-6">
+                <div class="flex flex-col gap-3">
                     <!-- Title -->
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4" x-text="context.product?.title"></h1>
+                        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-1" x-text="context.product?.title"></h1>
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <p class="text-gray-600 leading-relaxed" x-text="context.product?.description"></p>
+                        <div
+                            class="text-gray-600 leading-relaxed text-sm md:text-base font-cairo product-description text-right"
+                            x-html="context.product?.description || 'لا يوجد وصف للمنتج'">
+                        </div>
                     </div>
 
                     <!-- Price -->
                     <div class="flex gap-4 flex-col">
-                        <h1 class="text-2xl text-mainColor">السعر</h1>
+                        <h1 class="text-2xl text-mainColor">{{t('price')}}</h1>
                         <template x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
                             <div class="flex items-center gap-3">
                                 <span class="text-4xl font-bold text-mainColor" x-text="context.product?.pricing?.price"></span>
-                                <span class="text-mainColor" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
+                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
                                 <span class="text-lg text-gray-500 line-through" x-text="context.product?.pricing?.compareAtPrice"></span>
+                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
                             </div>
                         </template>
                         <template x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
                             <div class="flex items-center gap-2">
                                 <span class="text-4xl font-bold text-mainColor" x-text="context.product?.pricing?.price"></span>
-                                <span class="text-mainColor" x-text="globals.app.generalSettings.currency.currencySymbol"></span>
+                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
                             </div>
                         </template>
                     </div>
 
-                    <!-- Color Selection -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-3">اللون</h3>
-                        <div class="flex items-center gap-3">
-                            {% if widget.blocks %}
-                                {% for block in widget.blocks %}
-                                    {% if block.type == 'colorOption' %}
-                                    <button class="relative group">
-                                        {% if block.data.image %}
-                                            <img src="{{ block.data.image.fileUrl }}" alt="{{ (block.data.name | default(block.settings.name)) | striptags }}" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                                        {% else %}
-                                            <img src="{{ 'card4.png' | assets }}" alt="{{ (block.data.name | default(block.settings.name)) | striptags }}" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                                        {% endif %}
-                                    </button>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <!-- Default color options when no blocks are defined -->
-                                <button class="relative group">
-                                    <img src="{{ 'card4.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                                </button>
-                                <button class="relative group">
-                                    <img src="{{ 'card5.png' | assets }}" alt="Color Option" class="w-16 h-16 object-cover rounded-lg border-2 transition border-gray-300 hover:border-mainColor" />
-                                </button>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Size Selection -->
-                    <div>
-                        <h3 class="text-2xl text-mainColor mb-3">المقاسات</h3>
-                        <div class="flex items-center gap-3 flex-wrap">
-                            {% if widget.blocks %}
-                                {% for block in widget.blocks %}
-                                    {% if block.type == 'sizeOption' %}
-                                    <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">{{ block.data.size | default(block.settings.size) | striptags }}</button>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <!-- Default size options when no blocks are defined -->
-                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">S</button>
-                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">M</button>
-                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">L</button>
-                                <button class="px-6 py-2 bg-[#F7F7F7] text-[#8C8C8C] rounded-full hover:bg-[#D9D9D9] hover:text-[#000000] transition font-bold">XL</button>
-                            {% endif %}
-                        </div>
+                    <!-- Dynamic Product Options from context.product.options -->
+                    <div x-init="initOptions()" class="mb-2" x-show="context.product?.options?.length > 0">
+                        <template x-for="opt in context.product.options" :key="opt._id">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 font-cairo mb-2" x-text="opt.name"></label>
+                                <div class="flex flex-wrap gap-2">
+                                    <template x-for="val in opt.values" :key="val._id">
+                                        <button type="button"
+                                            class="px-4 py-2 rounded-lg border-2 transition-all duration-200 font-cairo text-sm flex items-center gap-2"
+                                            :class="selectedOptions[opt._id] === val._id
+                                                ? 'border-gray-900 bg-gray-900 text-white'
+                                                : 'border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'"
+                                            @click.prevent="selectOption(context.product,opt._id, val._id)">
+                                            <span x-text="val.label"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Quantity, Add to Cart, Buy Now -->
-                    <form id="productForm" class="flex gap-4 flex-col w-full">
+                    <form id="productForm" class="flex flex-col w-full gap-4" @submit="submitForm">
                         <input type="hidden" name="product" :value="context.product?._id">
                         <input type="hidden" name="quantity" :value="productQuantity">
-                        <div class="flex items-center gap-3">
+                        <template x-for="opt in context.product.options" :key="opt._id">
+                            <input type="hidden" name="options[]" :value="selectedOptions[opt._id]">
+                        </template>
+
+                        <!-- Row: Quantity on one side + add to cart on the other -->
+                        <div class="flex items-center gap-3 w-full">
+                            <!-- Restored original quantity styling -->
                             <div class="flex items-center border border-gray-300" style="width: 124px; height: 57px; border-radius: 33px; border-width: 1px; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; gap: 32px;">
                                 <input type="number" min="1" x-model.number="productQuantity" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" />
                                 <div class="flex flex-col items-center" style="gap: 2px;">
-                                    <button type="button" class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية" @click="increaseCartItem()">
+                                    <button type="button" class="text-gray-600 hover:text-gray-800" aria-label="{{ t('increase_quantity') }}" @click="increaseCartItem()">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                         </svg>
                                     </button>
-                                    <button type="button" class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية" @click="decreaseCartItem()">
+                                    <button type="button" class="text-gray-600 hover:text-gray-800" aria-label="{{ t('decrease_quantity') }}" @click="decreaseCartItem()">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- Primary add to cart button takes remaining width -->
+                            <button
+                                name="addToCart"
+                                type="submit"
+                                class="flex-1 bg-black text-white py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-300">
+                                {{ t('add_to_cart') }}
+                            </button>
                         </div>
-                        <div class="flex gap-4 flex-col md:flex-row">
-                            <button name="addToCart" type="submit" class="flex-1 bg-black text-white py-4 rounded-full font-bold text-lg items-center justify-center gap-2 hover:scale-105 transition-transform duration-300">إضافة الي العربة</button>
-                            <button name="buyNow" type="submit" class="flex-1 px-6 py-4 border-2 border-black rounded-full font-bold text-lg items-center justify-center hover:scale-105 transition-transform duration-300">شراء الان</button>
-                        </div>
+
+                        <!-- Full width buy now button under them -->
+                        <button
+                            name="buyNow"
+                            type="submit"
+                            class="w-full px-6 py-4 border-2 border-black rounded-full font-bold text-lg flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                            {{ t('buy_now') }}
+                        </button>
                     </form>
 
                     <!-- Additional Info -->
@@ -142,19 +135,19 @@
                         <div class="flex items-center gap-3">
                             <i class="ph-light ph-alarm text-2xl text-mainColor"></i>
                             <div>
-                                <p class="font-bold">متبقي ٢٠ قطع فقط في المخزون. اطلبها قريبًا.</p>
+                                <p class="font-bold">{{ t('stock_remaining').replace('{count}', '20') }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="ph-light ph-check text-2xl text-mainColor"></i>
                             <div>
-                                <p class="font-bold">التوصيل والشحن مجاني</p>
+                                <p class="font-bold">{{ t('free_shipping') }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="ph-light ph-check text-2xl text-mainColor"></i>
                             <div>
-                                <p class="font-bold">الدفع الآمن عبر الإنترنت</p>
+                                <p class="font-bold">{{ t('secure_payment') }}</p>
                             </div>
                         </div>
                     </div>
@@ -167,25 +160,25 @@
                                     <div class="w-24 h-16 rounded-full flex items-center justify-center">
                                         <i class="ph-light ph-star text-mainColor text-xl"></i>
                                     </div>
-                                    <h3 class="text-base text-lg text-dark">الشحن العالمي السريع</h3>
+                                    <h3 class="text-base text-lg text-dark">{{ t('fast_global_shipping') }}</h3>
                                 </div>
                                 <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                                     <div class="w-24 h-16 rounded-full flex items-center justify-center">
                                         <i class="ph-light ph-star text-mainColor text-xl"></i>
                                     </div>
-                                    <h3 class="text-base text-lg text-dark">إرجاع مجاني</h3>
+                                    <h3 class="text-base text-lg text-dark">{{ t('free_returns') }}</h3>
                                 </div>
                                 <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                                     <div class="w-24 h-16 rounded-full flex items-center justify-center">
                                         <i class="ph-light ph-star text-mainColor text-xl"></i>
                                     </div>
-                                    <h3 class="text-base text-lg text-dark">مدفوعات آمنة بنسبة 100%</h3>
+                                    <h3 class="text-base text-lg text-dark">{{ t('secure_payments_100') }}</h3>
                                 </div>
                                 <div class="flex flex-col items-center text-center p-4 sm:p-5 md:p-6 rounded-2xl border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                                     <div class="w-24 h-16 rounded-full flex items-center justify-center">
                                         <i class="ph-light ph-star text-mainColor text-xl"></i>
                                     </div>
-                                    <h3 class="text-base text-lg text-dark">شحن مجاني مع تعويض</h3>
+                                    <h3 class="text-base text-lg text-dark">{{ t('free_shipping_compensation') }}</h3>
                                 </div>
                             </div>
                         </div>

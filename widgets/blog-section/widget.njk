@@ -1,20 +1,35 @@
 <!-- Blog Section -->
 {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
-{% set showSection = hasBlocks or widget.data.default_image_1 or widget.data.default_image_2 or widget.data.default_image_3 %}
+{# Detect if there is at least one valid blogPost block #}
+{% set hasBlogPosts = false %}
+{% if hasBlocks %}
+  {% for block in widget.blocks %}
+    {% if block.block == 'blogPost' %}
+      {% set hasBlogPosts = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% set showSection = true %}
+
 {% if showSection %}
 <section class="my-12 md:my-16 px-2 mx-2.5 md:mx-20">
     <div class="rounded-2xl px-2">
         <div class="flex items-center justify-between mb-6 md:mb-6">
-            <h1 class="text-lg md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('منشورات المدونة') }}</h1>
-            <div class="flex items-center gap-2">
+            {% set rawSectionTitle = widget.data.section_title or '' %}
+            {% set sectionTitle = rawSectionTitle or t('blog_posts') %}
+            <h1 class="text-lg md:text-2xl font-bold text-dark">{{ sectionTitle }}</h1>
+            <div class="flex items-center gap-2" dir="ltr">
                 {% set viewAllHref = widget.data.view_all_link | default('/blog') %}
-                <a href="{{ viewAllHref }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+                {% set rawViewAllText = widget.data.view_all_text or '' %}
+                {% set viewAllText = rawViewAllText or t('view_all') %}
                 <div class="swiper-button-prev-blog cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
-                    <i class="ph ph-caret-right text-black text-lg"></i>
-                </div>
-                <div class="swiper-button-next-blog cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
                     <i class="ph ph-caret-left text-black text-lg"></i>
                 </div>
+                <div class="swiper-button-next-blog cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-right text-black text-lg"></i>
+                </div>
+                <a href="{{ viewAllHref }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ viewAllText }}</a>
             </div>
         </div>
         <!-- Tajawal font for mobile text -->
@@ -22,38 +37,55 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
         <style>
+        /* Desktop text alignment: RTL: right, LTR: left */
+        .blog-desktop-wrapper{ text-align:right; }
+        [dir="ltr"] .blog-desktop-wrapper{ text-align:left; }
+
+        /* Mobile text alignment */
         @media (max-width: 640px){
-          .blog-mobile-title{font-family:'Tajawal',sans-serif;font-weight:700;font-size:14px;line-height:150%;letter-spacing:0;text-align:right}
-          .blog-mobile-desc{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;text-align:right;color:#666666}
+          .blog-mobile-title{font-family:'Tajawal',sans-serif;font-weight:700;font-size:14px;line-height:150%;letter-spacing:0;}
+          .blog-mobile-desc{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;color:#666666}
+          .blog-mobile-wrapper{ text-align:right; }
+          [dir="ltr"] .blog-mobile-wrapper{ text-align:left; }
         }
-        .blog-readmore{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;text-align:right;text-decoration:underline;text-decoration-style:solid}
+
+        .blog-readmore{font-family:'Tajawal',sans-serif;font-weight:400;font-size:12px;line-height:150%;letter-spacing:0;text-decoration:underline;text-decoration-style:solid;}
+        [dir="ltr"] .blog-readmore{ text-align:left; }
+        [dir="rtl"] .blog-readmore{ text-align:right; }
         </style>
         
         <!-- Desktop Layout -->
         <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
-            {% if hasBlocks %}
+            {% if hasBlogPosts %}
                 {% for block in widget.blocks %}
-                {% if loop.index0 < 3 and block.type == 'blogPost' %}
+                {% if loop.index0 < 3 and block.block == 'blogPost' %}
                 {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else '') %}
-                {% set alt = (block.settings and block.settings.alt_text) or 'صورة المنشور' %}
-                {% set title = (block.settings and block.settings.title) or 'عنوان المنشور' %}
-                {% set desc = (block.settings and block.settings.description) or '' %}
+                {% set altKey = (block.settings and block.settings.alt_text) or 'blog_post_image_alt' %}
+                {% set titleKey = (block.settings and block.settings.title) or 'blog_post_title' %}
+                {% set descKey = (block.settings and block.settings.description) or 'blog_post_description' %}
                 {% set link = (block.settings and block.settings.link) or '#' %}
-                {% set btn = (block.settings and block.settings.button_text) or 'اقرأ المزيد' %}
-                <div class="text-right">
-                    <img src="{{ img }}" alt="{{ alt }}" class="w-full h-[30rem] object-cover rounded-lg">
+                {% set btnKey = (block.settings and block.settings.button_text) or 'read_more' %}
+                {% set rawTitle = (block.data and block.data.title) or (block.settings and block.settings.title) or '' %}
+                {% set rawDesc = (block.data and block.data.description) or (block.settings and block.settings.description) or '' %}
+                {% set rawBtn = (block.data and block.data.button_text) or (block.settings and block.settings.button_text) or '' %}
+                {% set titleText = rawTitle or t(titleKey) %}
+                {% set descText = rawDesc or t(descKey) %}
+                {% set btnText = rawBtn or t(btnKey) %}
+                <div class="blog-desktop-wrapper">
+                    <img src="{{ img }}" alt="{{ t(altKey) }}" class="w-full h-[30rem] object-cover rounded-lg">
                     <div class="mt-4">
-                        <h3 class="text-lg font-bold text-dark mb-2">{{ title }}</h3>
-                        {% if desc %}
-                        <p class="text-sm text-gray-600 mb-4">{{ desc }}</p>
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ titleText }}</h3>
+                        {% if descText %}
+                        <p class="text-sm text-gray-600 mb-4">{{ descText }}</p>
                         {% endif %}
-                        <a href="{{ link }}" class="text-mainColor blog-readmore">{{ btn }}</a>
+                        <a href="{{ link }}" class="text-mainColor blog-readmore">{{ btnText }}</a>
                     </div>
                 </div>
                 {% endif %}
                 {% endfor %}
             {% else %}
-                {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
+                {% set dBtnKey = widget.data.default_button_text or 'read_more' %}
+                {% set dBtn = t(dBtnKey) %}
                 {# Card 1 #}
                 {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
                     {% set dImg1 = widget.data.default_image_1.fileUrl %}
@@ -62,14 +94,14 @@
                 {% else %}
                     {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
                 {% endif %}
-                {% set dTitle1 = widget.data.default_title_1 | default('أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام') %}
-                {% set dDesc1 = widget.data.default_description_1 | default('استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية') %}
+                {% set dTitle1Key = widget.data.default_title_1 or 'blog_default_title_1' %}
+                {% set dDesc1Key = widget.data.default_description_1 or 'blog_default_desc_1' %}
                 {% set dLink1 = widget.data.default_link_1 | default('#') %}
-                <div class="text-right">
-                    <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                <div class="blog-desktop-wrapper">
+                    <img src="{{ dImg1 }}" alt="{{ t('blog_post_image_alt') }}" class="w-full h-[30rem] object-cover rounded-lg">
                     <div class="mt-4">
-                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle1 }}</h3>
-                        <p class="text-sm text-[#666666] mb-4">{{ dDesc1 }}</p>
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ t(dTitle1Key) }}</h3>
+                        <p class="text-sm text-[#666666] mb-4">{{ t(dDesc1Key) }}</p>
                         <a href="{{ dLink1 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
@@ -81,14 +113,14 @@
                 {% else %}
                     {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
                 {% endif %}
-                {% set dTitle2 = widget.data.default_title_2 | default('نصائح لاختيار الملابس المناسبة لكل مناسبة') %}
-                {% set dDesc2 = widget.data.default_description_2 | default('دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات') %}
+                {% set dTitle2Key = widget.data.default_title_2 or 'blog_default_title_2' %}
+                {% set dDesc2Key = widget.data.default_description_2 or 'blog_default_desc_2' %}
                 {% set dLink2 = widget.data.default_link_2 | default('#') %}
-                <div class="text-right">
-                    <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                <div class="blog-desktop-wrapper">
+                    <img src="{{ dImg2 }}" alt="{{ t('blog_post_image_alt') }}" class="w-full h-[30rem] object-cover rounded-lg">
                     <div class="mt-4">
-                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle2 }}</h3>
-                        <p class="text-sm text-[#666666] mb-4">{{ dDesc2 }}</p>
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ t(dTitle2Key) }}</h3>
+                        <p class="text-sm text-[#666666] mb-4">{{ t(dDesc2Key) }}</p>
                         <a href="{{ dLink2 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
@@ -100,14 +132,14 @@
                 {% else %}
                     {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
                 {% endif %}
-                {% set dTitle3 = widget.data.default_title_3 | default('كيفية العناية بالملابس وإطالة عمرها') %}
-                {% set dDesc3 = widget.data.default_description_3 | default('تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة') %}
+                {% set dTitle3Key = widget.data.default_title_3 or 'blog_default_title_3' %}
+                {% set dDesc3Key = widget.data.default_description_3 or 'blog_default_desc_3' %}
                 {% set dLink3 = widget.data.default_link_3 | default('#') %}
-                <div class="text-right">
-                    <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="w-full h-[30rem] object-cover rounded-lg">
+                <div class="blog-desktop-wrapper">
+                    <img src="{{ dImg3 }}" alt="{{ t('blog_post_image_alt') }}" class="w-full h-[30rem] object-cover rounded-lg">
                     <div class="mt-4">
-                        <h3 class="text-lg font-bold text-dark mb-2">{{ dTitle3 }}</h3>
-                        <p class="text-sm text-[#666666] mb-4">{{ dDesc3 }}</p>
+                        <h3 class="text-lg font-bold text-dark mb-2">{{ t(dTitle3Key) }}</h3>
+                        <p class="text-sm text-[#666666] mb-4">{{ t(dDesc3Key) }}</p>
                         <a href="{{ dLink3 }}" class="text-mainColor blog-readmore">{{ dBtn }}</a>
                     </div>
                 </div>
@@ -118,24 +150,30 @@
         <div class="md:hidden relative">
             <div class="swiper blogSwiper">
                 <div class="swiper-wrapper">
-                    {% if hasBlocks %}
+                    {% if hasBlogPosts %}
                         {% for block in widget.blocks %}
-                        {% if loop.index0 < 3 and block.type == 'blogPost' %}
+                        {% if block.block == 'blogPost' %}
                         {% set img = block.settings.image.fileUrl if block.settings.image and block.settings.image.fileUrl else (block.settings.image | assets if block.settings.image else '') %}
-                        {% set alt = (block.settings and block.settings.alt_text) or 'صورة المنشور' %}
-                        {% set title = (block.settings and block.settings.title) or 'عنوان المنشور' %}
-                        {% set desc = (block.settings and block.settings.description) or '' %}
+                        {% set altKey = (block.settings and block.settings.alt_text) or 'blog_post_image_alt' %}
+                        {% set titleKey = (block.settings and block.settings.title) or 'blog_post_title' %}
+                        {% set descKey = (block.settings and block.settings.description) or 'blog_post_description' %}
                         {% set link = (block.settings and block.settings.link) or '#' %}
-                        {% set btn = (block.settings and block.settings.button_text) or 'اقرأ المزيد' %}
+                        {% set btnKey = (block.settings and block.settings.button_text) or 'read_more' %}
+                        {% set rawTitle = (block.data and block.data.title) or (block.settings and block.settings.title) or '' %}
+                        {% set rawDesc = (block.data and block.data.description) or (block.settings and block.settings.description) or '' %}
+                        {% set rawBtn = (block.data and block.data.button_text) or (block.settings and block.settings.button_text) or '' %}
+                        {% set titleText = rawTitle or t(titleKey) %}
+                        {% set descText = rawDesc or t(descKey) %}
+                        {% set btnText = rawBtn or t(btnKey) %}
                         <div class="swiper-slide px-0">
-                            <div class="text-right">
-                                <img src="{{ img }}" alt="{{ alt }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                            <div class="blog-mobile-wrapper">
+                                <img src="{{ img }}" alt="{{ t(altKey) }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
                                 <div class="mt-3 md:mt-4 w-[260px] mx-auto">
-                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ title }}</h3>
-                                    {% if desc %}
-                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ desc }}</p>
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ titleText }}</h3>
+                                    {% if descText %}
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ descText }}</p>
                                     {% endif %}
-                                    <a href="{{ link }}" class="blog-readmore text-mainColor">{{ btn }}</a>
+                                    <a href="{{ link }}" class="blog-readmore text-mainColor">{{ btnText }}</a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +181,8 @@
                         {% endfor %}
                     {% else %}
                         <!-- Default blog posts for mobile -->
-                        {% set dBtn = widget.data.default_button_text | default('اقرأ المزيد') %}
+                        {% set dBtnKey = widget.data.default_button_text or 'read_more' %}
+                        {% set dBtn = t(dBtnKey) %}
                         {# Card 1 #}
                         {% if widget.data.default_image_1 and widget.data.default_image_1.fileUrl %}
                             {% set dImg1 = widget.data.default_image_1.fileUrl %}
@@ -152,15 +191,15 @@
                         {% else %}
                             {% set dImg1 = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=600&fit=crop' %}
                         {% endif %}
-                        {% set dTitle1 = widget.data.default_title_1 | default('أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام') %}
-                        {% set dDesc1 = widget.data.default_description_1 | default('استكشف أحدث اتجاهات الموضة المستدامة وكيفية دمجها في خزانة ملابسك اليومية') %}
+                        {% set dTitle1Key = widget.data.default_title_1 or 'blog_default_title_1' %}
+                        {% set dDesc1Key = widget.data.default_description_1 or 'blog_default_desc_1' %}
                         {% set dLink1 = widget.data.default_link_1 | default('#') %}
                         <div class="swiper-slide px-0">
-                            <div class="text-right">
-                                <img src="{{ dImg1 }}" alt="{{ dTitle1 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                            <div class="blog-mobile-wrapper">
+                                <img src="{{ dImg1 }}" alt="{{ t('blog_post_image_alt') }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
                                 <div class="mt-3 md:mt-4 w-[260px] mx-auto">
-                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle1 }}</h3>
-                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc1 }}</p>
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ t(dTitle1Key) }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ t(dDesc1Key) }}</p>
                                     <a href="{{ dLink1 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
                                 </div>
                             </div>
@@ -173,15 +212,15 @@
                         {% else %}
                             {% set dImg2 = 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=600&fit=crop' %}
                         {% endif %}
-                        {% set dTitle2 = widget.data.default_title_2 | default('نصائح لاختيار الملابس المناسبة لكل مناسبة') %}
-                        {% set dDesc2 = widget.data.default_description_2 | default('دليل شامل لاختيار الملابس المناسبة للعمل والمناسبات الاجتماعية والرحلات') %}
+                        {% set dTitle2Key = widget.data.default_title_2 or 'blog_default_title_2' %}
+                        {% set dDesc2Key = widget.data.default_description_2 or 'blog_default_desc_2' %}
                         {% set dLink2 = widget.data.default_link_2 | default('#') %}
                         <div class="swiper-slide px-0">
-                            <div class="text-right">
-                                <img src="{{ dImg2 }}" alt="{{ dTitle2 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                            <div class="blog-mobile-wrapper">
+                                <img src="{{ dImg2 }}" alt="{{ t('blog_post_image_alt') }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
                                 <div class="mt-3 md:mt-4 w-[260px] mx-auto">
-                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle2 }}</h3>
-                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc2 }}</p>
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ t(dTitle2Key) }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ t(dDesc2Key) }}</p>
                                     <a href="{{ dLink2 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
                                 </div>
                             </div>
@@ -194,15 +233,15 @@
                         {% else %}
                             {% set dImg3 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=600&fit=crop' %}
                         {% endif %}
-                        {% set dTitle3 = widget.data.default_title_3 | default('كيفية العناية بالملابس وإطالة عمرها') %}
-                        {% set dDesc3 = widget.data.default_description_3 | default('تعلم الطرق الصحيحة للعناية بملابسك وحفظها لتبقى جديدة لأطول فترة ممكنة') %}
+                        {% set dTitle3Key = widget.data.default_title_3 or 'blog_default_title_3' %}
+                        {% set dDesc3Key = widget.data.default_description_3 or 'blog_default_desc_3' %}
                         {% set dLink3 = widget.data.default_link_3 | default('#') %}
                         <div class="swiper-slide px-0">
-                            <div class="text-right">
-                                <img src="{{ dImg3 }}" alt="{{ dTitle3 }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
+                            <div class="blog-mobile-wrapper">
+                                <img src="{{ dImg3 }}" alt="{{ t('blog_post_image_alt') }}" class="block mx-auto opacity-100 w-[260px] h-[196px] rounded-[6.26px] object-cover md:w-full md:h-[30rem] md:rounded-lg">
                                 <div class="mt-3 md:mt-4 w-[260px] mx-auto">
-                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ dTitle3 }}</h3>
-                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ dDesc3 }}</p>
+                                    <h3 class="blog-mobile-title md:text-lg md:font-bold md:text-dark md:mb-2">{{ t(dTitle3Key) }}</h3>
+                                    <p class="blog-mobile-desc md:text-sm md:text-gray-600 md:mb-3">{{ t(dDesc3Key) }}</p>
                                     <a href="{{ dLink3 }}" class="blog-readmore text-mainColor">{{ dBtn }}</a>
                                 </div>
                             </div>

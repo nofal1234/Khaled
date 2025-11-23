@@ -2,29 +2,40 @@
 <section class="mt-4 md:mt-8 mb-6 md:mb-10 px-2 mx-2.5 md:mx-20">
     <div class="py-4 md:py-8 px-2 md:px-6 rounded-2xl">
         <div class="flex items-center justify-between mb-4 md:mb-6">
-            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ (widget.data.title | default('آراء العملاء')) | striptags }}</h1>
-            <div class="flex items-center gap-2">
-                <a href="#" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">عرض الكل</a>
+            {% set rawSectionTitle = widget.data.title or 'customer_reviews' %}
+            <h1 class="text-xl md:text-2xl font-bold text-dark">{{ t(rawSectionTitle) }}</h1>
+            <div class="flex items-center gap-2" dir="ltr">
                 <div class="swiper-button-prev-reviews cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
-                    <i class="ph ph-caret-right text-black text-lg"></i>
-                </div>
-                <div class="swiper-button-next-reviews cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
                     <i class="ph ph-caret-left text-black text-lg"></i>
                 </div>
+                <div class="swiper-button-next-reviews cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-right text-black text-lg"></i>
+                </div>
+                <a href="#" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{t('view_all')}}</a>
             </div>
         </div>
         
         {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
+
+        {% set nameKeys = ['review_1_name','review_2_name','review_3_name'] %}
+        {% set textKeys = ['review_1_text','review_2_text','review_3_text'] %}
         
         <!-- Desktop Layout -->
         <div class="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {% if hasBlocks %}
                 {% for block in widget.blocks %}
-                {% set name = (block.settings and block.settings.name) or (block.data and block.data.name) or 'عبدالرحمن محمد' %}
-                {% set text = (block.settings and block.settings.text) or (block.data and block.data.text) or 'تجربة تسوق سلسة وسهلة من البداية للنهاية. أعجبتني سرعة التوصيل والتغليف الآمن' %}
+                {% set idx = loop.index0 % nameKeys|length %}
+                {% set nameKey = nameKeys[idx] %}
+                {% set textKey = textKeys[idx] %}
+                {% set rawName = (block.data and block.data.name) or (block.settings and block.settings.name) or '' %}
+                {% set rawText = (block.data and block.data.text) or (block.settings and block.settings.text) or '' %}
+                {% set nameKeyToUse = rawName or nameKey %}
+                {% set textKeyToUse = rawText or textKey %}
+                {% set displayName = t(nameKeyToUse) %}
+                {% set displayText = t(textKeyToUse) %}
                 {% set rating = (block.settings and block.settings.stars) or (block.data and block.data.stars) or 5 %}
                 {% set img = (block.settings and block.settings.image and block.settings.image.fileUrl) or (block.data and block.data.image and block.data.image.fileUrl) %}
-                {% set alt = (block.settings and block.settings.alt) or (block.data and block.data.alt) or name %}
+                {% set altKey = 'review_image_alt' %}
                 <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
                     <!-- Header -->
                     <div class="flex justify-between items-start">
@@ -32,13 +43,13 @@
                         <div class="flex items-start gap-3">
                             <!-- Avatar -->
                             {% if img %}
-                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="{{ img }}" alt="{{ alt | striptags }}">
+                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="{{ img }}" alt="{{ t(altKey) }}">
                             {% else %}
-                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://i.pravatar.cc/100?u={{ name | urlencode }}" alt="{{ alt | striptags }}">
+                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://i.pravatar.cc/100?u={{ displayName | urlencode }}" alt="{{ t(altKey) }}">
                             {% endif %}
                             <!-- Name and Time -->
                             <div class="text-left">
-                                <h3 class="text-xl font-semibold text-gray-900">{{ name | striptags }}</h3>
+                                <h3 class="text-xl font-semibold text-gray-900">{{ displayName }}</h3>
                             </div>
                         </div>
                         
@@ -51,22 +62,25 @@
                     
                     <!-- Body -->
                     <div class="mt-8">
-                        <p class="text-center text-sm text-gray-600 leading-relaxed">{{ text | striptags }}</p>
+                        <p class="text-center text-sm text-gray-600 leading-relaxed">{{ displayText | striptags }}</p>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
                 <!-- Defaults when no blocks -->
+                {% for idx in range(3) %}
+                {% set nameKey = nameKeys[idx] %}
+                {% set textKey = textKeys[idx] %}
                 <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
                     <!-- Header -->
                     <div class="flex justify-between items-start">
                         <!-- User Info (Left) -->
                         <div class="flex items-start gap-3">
                             <!-- Avatar -->
-                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" alt="هشام">
+                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" alt="{{ t('review_image_alt') }}">
                             <!-- Name and Time -->
                             <div class="text-left">
-                                <h3 class="text-xl font-semibold text-gray-900">هشام</h3>
+                                <h3 class="text-xl font-semibold text-gray-900">{{ t(nameKey) }}</h3>
                             </div>
                         </div>
                         
@@ -79,67 +93,10 @@
                     
                     <!-- Body -->
                     <div class="mt-8">
-                        <p class="text-center text-sm text-gray-600 leading-relaxed">
-                            Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                        </p>
+                        <p class="text-center text-sm text-gray-600 leading-relaxed">{{ t(textKey) }}</p>
                     </div>
                 </div>
-                
-                <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
-                    <!-- Header -->
-                    <div class="flex justify-between items-start">
-                        <!-- User Info (Left) -->
-                        <div class="flex items-start gap-3">
-                            <!-- Avatar -->
-                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="سارة">
-                            <!-- Name and Time -->
-                            <div class="text-left">
-                                <h3 class="text-xl font-semibold text-gray-900">سارة</h3>
-                            </div>
-                        </div>
-                        
-                        <!-- Rating Badge (Right) -->
-                        <div class="bg-black text-white text-base font-bold rounded-md px-3 py-1.5 flex items-center gap-1">
-                            <span>4.8</span>
-                            <span class="text-white">★</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Body -->
-                    <div class="mt-8">
-                        <p class="text-center text-sm text-gray-600 leading-relaxed">
-                            Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
-                    <!-- Header -->
-                    <div class="flex justify-between items-start">
-                        <!-- User Info (Left) -->
-                        <div class="flex items-start gap-3">
-                            <!-- Avatar -->
-                            <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="أحمد">
-                            <!-- Name and Time -->
-                            <div class="text-left">
-                                <h3 class="text-xl font-semibold text-gray-900">أحمد</h3>
-                            </div>
-                        </div>
-                        
-                        <!-- Rating Badge (Right) -->
-                        <div class="bg-black text-white text-base font-bold rounded-md px-3 py-1.5 flex items-center gap-1">
-                            <span>5.0</span>
-                            <span class="text-white">★</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Body -->
-                    <div class="mt-8">
-                        <p class="text-center text-sm text-gray-600 leading-relaxed">
-                            Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                        </p>
-                    </div>
-                </div>
+                {% endfor %}
             {% endif %}
         </div>
         
@@ -149,11 +106,18 @@
                 <div class="swiper-wrapper">
                     {% if hasBlocks %}
                         {% for block in widget.blocks %}
-                        {% set name = (block.settings and block.settings.name) or (block.data and block.data.name) or 'عبدالرحمن محمد' %}
-                        {% set text = (block.settings and block.settings.text) or (block.data and block.data.text) or 'تجربة تسوق سلسة وسهلة من البداية للنهاية. أعجبتني سرعة التوصيل والتغليف الآمن' %}
+                        {% set idx = loop.index0 % nameKeys|length %}
+                        {% set nameKey = nameKeys[idx] %}
+                        {% set textKey = textKeys[idx] %}
+                        {% set rawName = (block.data and block.data.name) or (block.settings and block.settings.name) or '' %}
+                        {% set rawText = (block.data and block.data.text) or (block.settings and block.settings.text) or '' %}
+                        {% set nameKeyToUse = rawName or nameKey %}
+                        {% set textKeyToUse = rawText or textKey %}
+                        {% set displayName = t(nameKeyToUse) %}
+                        {% set displayText = t(textKeyToUse) %}
                         {% set rating = (block.settings and block.settings.stars) or (block.data and block.data.stars) or 5 %}
                         {% set img = (block.settings and block.settings.image and block.settings.image.fileUrl) or (block.data and block.data.image and block.data.image.fileUrl) %}
-                        {% set alt = (block.settings and block.settings.alt) or (block.data and block.data.alt) or name %}
+                        {% set altKey = 'review_image_alt' %}
                         <div class="swiper-slide">
                             <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
                                 <!-- Header -->
@@ -162,13 +126,13 @@
                                     <div class="flex items-start gap-3">
                                         <!-- Avatar -->
                                         {% if img %}
-                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="{{ img }}" alt="{{ alt | striptags }}">
+                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="{{ img }}" alt="{{ t(altKey) }}">
                                         {% else %}
-                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://i.pravatar.cc/100?u={{ name | urlencode }}" alt="{{ alt | striptags }}">
+                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://i.pravatar.cc/100?u={{ displayName | urlencode }}" alt="{{ t(altKey) }}">
                                         {% endif %}
                                         <!-- Name and Time -->
                                         <div class="text-left">
-                                            <h3 class="text-xl font-semibold text-gray-900">{{ name | striptags }}</h3>
+                                            <h3 class="text-xl font-semibold text-gray-900">{{ displayName }}</h3>
                                         </div>
                                     </div>
                                     
@@ -181,13 +145,16 @@
                                 
                                 <!-- Body -->
                                 <div class="mt-8">
-                                    <p class="text-center text-sm text-gray-600 leading-relaxed">{{ text | striptags }}</p>
+                                    <p class="text-center text-sm text-gray-600 leading-relaxed">{{ displayText | striptags }}</p>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
                         <!-- Default reviews for mobile -->
+                        {% for idx in range(3) %}
+                        {% set nameKey = nameKeys[idx] %}
+                        {% set textKey = textKeys[idx] %}
                         <div class="swiper-slide">
                             <div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-6 w-full">
                                 <!-- Header -->
@@ -195,10 +162,10 @@
                                     <!-- User Info (Left) -->
                                     <div class="flex items-start gap-3">
                                         <!-- Avatar -->
-                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" alt="هشام">
+                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://i.pravatar.cc/100?u={{ t(nameKey) | urlencode }}" alt="{{ t('review_image_alt') }}">
                                         <!-- Name and Time -->
                                         <div class="text-left">
-                                            <h3 class="text-xl font-semibold text-gray-900">هشام</h3>
+                                            <h3 class="text-xl font-semibold text-gray-900">{{ t(nameKey) }}</h3>
                                         </div>
                                     </div>
                                     
@@ -211,70 +178,11 @@
                                 
                                 <!-- Body -->
                                 <div class="mt-8">
-                                    <p class="text-center text-sm text-gray-600 leading-relaxed">
-                                        Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                                    </p>
+                                    <p class="text-center text-sm text-gray-600 leading-relaxed">{{ t(textKey) }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 w-full">
-                                <!-- Header -->
-                                <div class="flex justify-between items-start">
-                                    <!-- User Info (Left) -->
-                                    <div class="flex items-start gap-3">
-                                        <!-- Avatar -->
-                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="سارة">
-                                        <!-- Name and Time -->
-                                        <div class="text-left">
-                                            <h3 class="text-xl font-semibold text-gray-900">سارة</h3>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Rating Badge (Right) -->
-                                    <div class="bg-black text-white text-base font-bold rounded-md px-3 py-1.5 flex items-center gap-1">
-                                        <span>4.8</span>
-                                        <span class="text-white">★</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Body -->
-                                <div class="mt-8">
-                                    <p class="text-center text-sm text-gray-600 leading-relaxed">
-                                        Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 w-full">
-                                <!-- Header -->
-                                <div class="flex justify-between items-start">
-                                    <!-- User Info (Left) -->
-                                    <div class="flex items-start gap-3">
-                                        <!-- Avatar -->
-                                        <img class="w-10 h-10 rounded-full object-cover flex-shrink-0" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="أحمد">
-                                        <!-- Name and Time -->
-                                        <div class="text-left">
-                                            <h3 class="text-xl font-semibold text-gray-900">أحمد</h3>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Rating Badge (Right) -->
-                                    <div class="bg-black text-white text-base font-bold rounded-md px-3 py-1.5 flex items-center gap-1">
-                                        <span>5.0</span>
-                                        <span class="text-white">★</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Body -->
-                                <div class="mt-8">
-                                    <p class="text-center text-sm text-gray-600 leading-relaxed">
-                                        Laboriosam vero est voluptatem dolore laborum a molestiae. Ab molestiae praesentium autem minima et. Quo et corporis enim est dolor magni magni error mollitia. Recusandae accusamus ut suscipit.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     {% endif %}
                 </div>
             </div>

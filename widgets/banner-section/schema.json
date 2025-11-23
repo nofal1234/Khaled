@@ -5,27 +5,22 @@
     "title": {
       "type": "string",
       "label": "العنوان الرئيسي",
-      "default": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة"
+      "default": "spring_has_arrived"
     },
     "subtitle": {
       "type": "text",
       "label": "النص الفرعي",
-      "default": "غيّر مظهرك هذا الموسم"
+      "default": "change_your_look"
     },
     "button_text": {
       "type": "string",
       "label": "نص الزر",
-      "default": "اطلب الآن"
+      "default": "order_now"
     },
     "button_link": {
       "type": "string",
       "label": "رابط الزر",
       "default": "/collections"
-    },
-    "background_color": {
-      "type": "color",
-      "label": "لون الخلفية",
-      "default": "#B9C4CB"
     },
     "image": {
       "type": "media",
@@ -35,7 +30,7 @@
     "alt": {
       "type": "string",
       "label": "النص البديل للصورة",
-      "default": "صورة البانر"
+      "default": "banner_image_alt"
     }
   },
   "presets": [
@@ -43,13 +38,12 @@
       "category": "الصفحة الرئيسية",
       "name": "⭐ لافتة العروض",
       "settings": {
-        "title": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة",
-        "subtitle": "غيّر مظهرك هذا الموسم",
-        "button_text": "اطلب الآن",
+        "title": "spring_has_arrived",
+        "subtitle": "change_your_look",
+        "button_text": "order_now",
         "button_link": "/collections",
-        "background_color": "#B9C4CB",
         "image": "",
-        "alt": "صورة البانر"
+        "alt": "banner_image_alt"
       }
     }
   ]

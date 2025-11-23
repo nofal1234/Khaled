@@ -5,7 +5,7 @@
       <div class="md:block">
         <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
           <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
-            <a href="/" class="hover:text-mainColor transition">الرئيسية</a>
+            <a href="/" class="hover:text-mainColor transition">{{ t('home') }}</a>
             <span>/</span>
             <span class="text-mainColor font-semibold">{{ context.collection.title }}</span>
           </nav>
@@ -20,10 +20,10 @@
       <div class="w-auto ml-3 md:ml-6">
         <div class="relative w-[140px] h-[36px] md:w-[176px] md:h-[42px]">
           <select class="w-full h-full appearance-none border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-mainColor text-right text-xs md:text-base pr-3 pl-9 md:pr-4 md:pl-10">
-            <option>الترتيب</option>
-            <option>السعر: من الأقل للأعلى</option>
-            <option>السعر: من الأعلى للأقل</option>
-            <option>التقييم</option>
+            <option>{{ t('sort') }}</option>
+            <option>{{ t('price') }}: {{ t('from') }} {{ t('lowest') }} {{ t('to') }} {{ t('highest') }}</option>
+            <option>{{ t('price') }}: {{ t('from') }} {{ t('highest') }} {{ t('to') }} {{ t('lowest') }}</option>
+            <option>{{ t('highest_rated') }}</option>
           </select>
           <span class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -52,7 +52,7 @@
       <div class="flex items-center justify-center mb-4 text-gray-700" style="opacity: 1;">
         <span class="iconify" data-icon="lsicon:clothes-outline" style="width: 140px; height: 140px; opacity: 1;"></span>
       </div>
-      <div class="text-[24px] leading-[1.4] font-bold text-black">لا توجد منتجات!</div>
+      <div class="text-[24px] leading-[1.4] font-bold text-black">{{ t('no_products') }}</div>
     </div>
     {% endif %}
   </div>

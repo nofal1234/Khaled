@@ -68,6 +68,12 @@ function GlobalState() {
 		updateLoading(type, value) {
 			this.globalLoading[type] = value;
 		},
+		login() {
+			try { window.qumra?.login?.(); } catch (_) {}
+		},
+		logout() {
+			try { window.qumra?.logout?.(); } catch (_) {}
+		},
 		updateCartItem(id, item) {
 			// const item = this?.globals?.cart?.items?.find(i => i._id === id);
 			if (item) item = item
@@ -150,11 +156,14 @@ function GlobalState() {
 			window.globalLoading = this.globalLoading;
 			window.globals = this.globals;
 			window.showToast = this.showToast.bind(this);
+			window.login = this.login.bind(this);
+			window.logout = this.logout.bind(this);
 			 
 		},
-	};
+  };
 }
-window.GlobalState = GlobalState();
+// اجعل GlobalState متاحة كدالة لـ Alpine (x-data="GlobalState") بدون استبدالها بكائن جاهز
+window.GlobalState = GlobalState;
 
 document.addEventListener("DOMContentLoaded", () => {
 	const loginElements = document.getElementsByClassName("login");
@@ -214,4 +223,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   });
-  

@@ -1,31 +1,17 @@
 {
-  "name": "تشكيلاتنا الخاصة",
+  "name": "features_section",
   "description": "قسم العروض والخصومات الحصرية",
   "settings": {
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "تشكيلاتنا الخاصة"
+      "default": "features_section",
+      "description": "العنوان الذي يظهر أعلى سكشن المميزات"
     },
     "view_all_link": {
       "type": "string",
       "label": "رابط عرض الكل",
       "default": "#"
-    },
-    "default_title_1": {
-      "type": "string",
-      "label": "العنوان الافتراضي 1",
-      "default": "الملابس العلوية"
-    },
-    "default_title_2": {
-      "type": "string",
-      "label": "العنوان الافتراضي 2",
-      "default": "الملابس السفلية"
-    },
-    "default_title_3": {
-      "type": "string",
-      "label": "العنوان الافتراضي 3",
-      "default": "الاكسسوارات"
     },
     "default_image": {
       "type": "string",
@@ -58,7 +44,8 @@
         "alt": {
           "type": "string",
           "label": "النص البديل للصورة",
-          "default": "عرض"
+          "default": "display",
+          "description": "النص البديل الذي يظهر لو تعذر تحميل الصورة"
         },
         "title": {
           "type": "string",
@@ -85,7 +72,7 @@
             "image": "qumra://one.png",
             "link": "#",
             "alt": "العرض الأول",
-            "title": "",
+            "title": "upper_clothing",
             "description": ""
           }
         },
@@ -96,7 +83,7 @@
             "image": "qumra://two.png",
             "link": "#",
             "alt": "العرض الثاني",
-            "title": "",
+            "title": "lower_clothing",
             "description": ""
           }
         },
@@ -107,7 +94,7 @@
             "image": "qumra://three.png",
             "link": "#",
             "alt": "العرض الثالث",
-            "title": "",
+            "title": "accessories",
             "description": ""
           }
         }

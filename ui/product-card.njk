@@ -3,7 +3,18 @@
     <!-- Image Section -->
     <div class="relative overflow-hidden bg-gray-100 product-card__image">
         <img src="{{ product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ product.title }}">
-        <button class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition">
+        <button
+            class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition wishlist-heart-btn"
+            data-product-id="{{ product._id }}"
+            data-product-title="{{ product.title }}"
+            data-product-slug="{{ product.slug }}"
+            data-product-image="{{ product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}"
+            data-product-price="{{ product.pricing.price }}"
+            {% if product.pricing.compareAtPrice %}
+            data-product-compare-at-price="{{ product.pricing.compareAtPrice }}"
+            {% endif %}
+            onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }"
+        >
             <i class="ph ph-heart text-xl"></i>
         </button>
         <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
@@ -15,7 +26,7 @@
     <div class="p-4 product-card__content flex flex-col flex-1">
         <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ product.title }}</h3>
         <!-- Price Section -->
-        <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
+        <div class="flex items-end gap-3 mt-auto justify-between product-card__price-row">
             <div class="flex flex-col flex-1 gap-1">
                 {% if product.pricing.compareAtPrice %}
                 <div class="flex items-center gap-2 flex-wrap">
@@ -23,7 +34,7 @@
                     <span class="text-xs font-bold text-red-600">-{{ ((1 - (product.pricing.price / product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%</span>
                 </div>
                 {% endif %}
-                <span class="text-xl md:text-2xl font-bold text-black">{{ product.pricing.price | money }}</span>
+                <span class="text-base sm:text-lg md:text-2xl font-bold text-black whitespace-nowrap">{{ product.pricing.price | money }}</span>
             </div>
             <button onclick="if(typeof window.addProductToCart === 'function') { window.addProductToCart('{{ product._id }}', 1, []); event.stopPropagation(); event.preventDefault(); }" class="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0 shadow-lg hover:shadow-xl" title="إضافة للسلة">
                 <i class="ph ph-shopping-cart text-lg md:text-xl"></i>

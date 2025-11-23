@@ -101,7 +101,10 @@ function xDataSearch() {
 
     setSearch(q) {
       const s = (q ?? "").toString().trim();
-      if (!s) return;
+      if (!s) {
+        window.location.href = "/search";
+        return;
+      }
       window.location.href = `/search?q=${encodeURIComponent(s)}`;
     },
 

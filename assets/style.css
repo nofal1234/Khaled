@@ -33,18 +33,12 @@ body, html, * {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background: white;
+    box-shadow: none;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-}
-
-.swiper-button-next-category:hover,
-.swiper-button-prev-category:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .skeleton {
@@ -124,7 +118,8 @@ body, html, * {
     .swiper-slide .product-card--uniform,
     .swiper .product-card--uniform {
         width: 160px;
-        height: auto;
+        height: 320px;
+        min-height: 320px;
     }
 }
 
@@ -325,3 +320,103 @@ input[type="number"] {
     visibility: visible !important;
 }
 
+/* Tiny extra spacing for offers slider only in LTR (English) to match Arabic visually */
+[dir="ltr"] .productsSwiper .swiper-slide {
+    padding-inline: 2px;
+    box-sizing: border-box;
+}
+
+/* Cart alignment fixes for RTL and LTR languages */
+/* Arabic (RTL) alignment */
+[dir="rtl"] .cart-container {
+    text-align: right;
+}
+
+[dir="rtl"] .cart-header th {
+    text-align: right;
+}
+
+[dir="rtl"] .cart-item-col {
+    text-align: right;
+}
+
+[dir="rtl"] .cart-item-price {
+    text-align: center;
+}
+
+[dir="rtl"] .cart-item-quantity,
+[dir="rtl"] .cart-item-total {
+    text-align: right;
+}
+
+[dir="rtl"] .cart-summary-row > div:first-child {
+    text-align: left;
+}
+
+[dir="rtl"] .cart-summary-row > div:last-child {
+    text-align: right;
+}
+
+/* Move quantity header label to the far end in RTL without changing body cells */
+[dir="rtl"] .cart-header .cart-item-quantity {
+    text-align: left;
+}
+
+/* English (LTR) alignment */
+[dir="ltr"] .cart-container {
+    text-align: left;
+}
+
+[dir="ltr"] .cart-header th {
+    text-align: left;
+}
+
+[dir="ltr"] .cart-item-col {
+    text-align: left;
+}
+
+[dir="ltr"] .cart-item-price,
+[dir="ltr"] .cart-item-quantity,
+[dir="ltr"] .cart-item-total {
+    text-align: right;
+}
+
+[dir="ltr"] .cart-summary-row > div:first-child {
+    text-align: left;
+}
+
+[dir="ltr"] .cart-summary-row > div:last-child {
+    text-align: right;
+}
+
+/* Ensure cart title is properly aligned */
+[dir="rtl"] .cart-title {
+    text-align: right;
+}
+
+[dir="ltr"] .cart-title {
+    text-align: left;
+}
+
+/* Cart page specific alignment */
+[dir="rtl"] .cart-header .cart-product,
+[dir="rtl"] .cart-header .cart-price,
+[dir="rtl"] .cart-header .cart-total {
+    text-align: right;
+}
+
+[dir="ltr"] .cart-header .cart-product,
+[dir="ltr"] .cart-header .cart-price,
+[dir="ltr"] .cart-header .cart-quantity,
+[dir="ltr"] .cart-header .cart-total {
+    text-align: left;
+}
+
+/* Mobile cart alignment */
+[dir="rtl"] .cart-item-col {
+    text-align: right;
+}
+
+[dir="ltr"] .cart-item-col {
+    text-align: left;
+}

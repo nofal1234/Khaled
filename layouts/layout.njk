@@ -1,5 +1,22 @@
+{% set locale = 'ar' %}
+{% if context.page.url %}
+  {% set urlParts = context.page.url.split('/') | reject('empty') %}
+  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en', 'fr'] %}
+    {% set locale = urlParts[0] %}
+  {% endif %}
+{% elif context.request and context.request.path %}
+  {% set urlParts = context.request.path.split('/') | reject('empty') %}
+  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en', 'fr'] %}
+    {% set locale = urlParts[0] %}
+  {% endif %}
+{% endif %}
+{% if locale == "en" %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% else %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+{% endif %}
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,21 +30,32 @@
           --darkColor: {{settings.darkColor}};
           --swiper-navigation-size: 25px;
         }
+
+        body {
+          background-color: #FEFEFE;
+        }
     </style>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts - Tajawal -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% if locale == "en" %}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% else %}
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% endif %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
+    {% if locale == "en" %}
+    <link rel="stylesheet" href="{{ 'style.ltr.css' | assets }}" />
+    {% endif %}
 
     <!-- Tailwind Config -->
     <script>
@@ -60,21 +88,24 @@
 
 
   </head>
-  <body >
-    <div x-data="GlobalState" x-init="init()">
+  <body dir="{{t('dir')}}">
+    <div x-data="GlobalState()" x-init="init()">
       {%ui "loading-screen.njk" %}
       {% template "header" %}
       
       <main>
-        {% content %}
+       {% content " " %}
       </main>
     {% template "footer" %}
     {%ui "cart.njk" %}
+    {%ui "search.njk" %}
+    {%ui "wishlist-sidebar.njk" %}
     {# Sidebar is now included in header widget to access header_menu #}
     </div>
     {% qumra_scripts %}
     <script>
       console.log("Global Data", __qumra__);
+      
     </script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

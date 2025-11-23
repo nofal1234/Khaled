@@ -2,18 +2,18 @@
 <section class="mt-4 md:mt-8 mb-3 md:mb-5 px-2 mx-2.5 md:mx-20">
   <div class="rounded-2xl py-4 md:py-8 px-2 md:px-6">
     <div class="flex items-center justify-between mb-4 md:mb-6">
-      <h1 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('المجموعات') }}</h1>
-      <div class="flex items-center gap-2">
-        <a href="{{ widget.data.view_all_link | default('#') }}" 
-           class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition py-0 px-0 md:py-2 md:px-3">
-           عرض الكل
-        </a>
-        <div class="swiper-button-prev-category cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
-          <i class="ph ph-caret-right text-black text-lg"></i>
-        </div>
-        <div class="swiper-button-next-category cursor-pointer hover:opacity-70 transition hidden md:flex items-center justify-center bg-transparent">
+      <h1 class="text-xl md:text-2xl font-bold text-dark">{{ t(widget.data.section_title or 'collections') }}</h1>
+      <div class="flex items-center category-nav" dir="ltr">
+        <div class="swiper-button-prev-category cursor-pointer hidden md:flex items-center justify-center bg-transparent">
           <i class="ph ph-caret-left text-black text-lg"></i>
         </div>
+        <div class="swiper-button-next-category cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+          <i class="ph ph-caret-right text-black text-lg"></i>
+        </div>
+        <a href="{{ widget.data.view_all_link | default('#') }}" 
+           class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition py-0 px-0 md:py-2 md:px-3">
+           {{t('view_all')}}
+        </a>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
               <img src="{{ collection.image.fileUrl }}" alt="{{ collection.title }}" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover mb-3 border-2 border-black-100">
               {% else %}
               <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 mb-3 border-2 border-black-100 flex items-center justify-center">
-                <span class="text-gray-500 text-xs">لا توجد صورة</span>
+                <span class="text-gray-500 text-xs">{{t('no_image')}}</span>
               </div>
               {% endif %}
               <span class="text-sm md:text-base font-medium text-center text-dark">{{ collection.title }}</span>
@@ -47,7 +47,7 @@
               <img src="{{ block.settings.image | assets }}" alt="{{ block.settings.alt_text | default(block.settings.name) }}" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover mb-3 border-2 border-black-100">
               {% else %}
               <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 mb-3 border-2 border-black-100 flex items-center justify-center">
-                <span class="text-gray-500 text-xs">لا توجد صورة</span>
+                <span class="text-gray-500 text-xs">{{t('no_image')}}</span>
               </div>
               {% endif %}
               <span class="text-sm md:text-base font-medium text-center text-dark">{{ block.settings.name }}</span>

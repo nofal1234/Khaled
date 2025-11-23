@@ -53,9 +53,9 @@
       "name": "Hero Section",
       "widget": "hero-section",
       "settings": {
-        "mainTitle": "أهلاً بك في متجرنا",
-        "subtitle": "اكتشف منتجاتنا المميزة",
-        "buttonText": "تسوق الآن",
+        "mainTitle": "hero_title_default",
+        "subtitle": "hero_subtitle_default",
+        "buttonText": "hero_button_text_default",
         "buttonLink": "/collections",
         "heroImage": ""
       }
@@ -64,8 +64,8 @@
       "name": "Categories Section",
       "widget": "category-section",
       "settings": {
-        "section_title": "الاقسام",
-        "view_all_text": "عرض الكل",
+        "section_title": "categories",
+        "view_all_text": "view_all",
         "view_all_link": "/Category.html",
         "show_view_all": true,
         "title_color": "#333333",
@@ -81,8 +81,8 @@
       "name": "Offers Section",
       "widget": "offers-section",
       "settings": {
-        "section_title": "العروض",
-        "view_all_text": "عرض الكل",
+        "section_title": "offers",
+        "view_all_text": "view_all",
         "view_all_link": "#",
         "show_view_all": true,
         "title_color": "#333333",
@@ -98,21 +98,20 @@
       "name": "⭐ لافتة العروض",
       "widget": "banner-section",
       "settings": {
-        "title": "قد حلّ فصل الربيع. اكتشفوا المنتجات الجديدة",
-        "subtitle": "غيّر مظهرك هذا الموسم",
-        "button_text": "اطلب الآن",
+        "title": "",
+        "subtitle": "",
+        "button_text": "",
         "button_link": "/collections",
-        "background_color": "#B9C4CB",
         "image": "banner.png",
-        "alt": "صورة البانر"
+        "alt": "banner_image_alt"
       }
     },
     {
       "name": "Features Section",
       "widget": "features-section",
       "settings": {
-        "section_title": "تشكيلاتنا الخاصة",
-        "view_all_text": "عرض الكل",
+        "section_title": "features_section",
+        "view_all_text": "view_all",
         "view_all_link": "#",
         "show_view_all": true,
         "title_color": "#333333",
@@ -129,7 +128,7 @@
             "image": { "fileUrl": "one.png" },
             "link": "#",
             "alt": "العرض الأول",
-            "title": "",
+            "title": "upper_clothing",
             "description": ""
           }
         },
@@ -140,7 +139,7 @@
             "image": { "fileUrl": "two.png" },
             "link": "#",
             "alt": "العرض الثاني",
-            "title": "",
+            "title": "lower_clothing",
             "description": ""
           }
         },
@@ -151,7 +150,7 @@
             "image": { "fileUrl": "three.png" },
             "link": "#",
             "alt": "العرض الثالث",
-            "title": "",
+            "title": "accessories",
             "description": ""
           }
         }
@@ -161,7 +160,7 @@
       "name": "Service Features 2 Section",
       "widget": "service-features-2",
       "settings": {
-        "section_title": "مزايا الخدمة"
+        "section_title": "service_features"
       },
       "blocks": [
         {
@@ -170,8 +169,8 @@
           "settings": {
             "icon": "",
             "icon_class": "ph-thin ph-star",
-            "title": "دقة مواعيد",
-            "description": "التزام كامل بالمواعيد وخطوط السير."
+            "title": "service_feature_1_title",
+            "description": "service_feature_1_desc"
           }
         },
         {
@@ -180,8 +179,8 @@
           "settings": {
             "icon": "",
             "icon_class": "ph-thin ph-gear-six",
-            "title": "أسعار مناسبة",
-            "description": "أسعار تنافسية وخطط تناسب جميع الشركات."
+            "title": "service_feature_2_title",
+            "description": "service_feature_2_desc"
           }
         },
         {
@@ -190,8 +189,8 @@
           "settings": {
             "icon": "",
             "icon_class": "ph-thin ph-clock",
-            "title": "العمل على مدار الساعة",
-            "description": "خدمة عملاء وغرفة عمليات تعمل على مدار الساعة."
+            "title": "service_feature_3_title",
+            "description": "service_feature_3_desc"
           }
         },
         {
@@ -200,8 +199,8 @@
           "settings": {
             "icon": "",
             "icon_class": "ph-thin ph-shield-check",
-            "title": "خدمة مخصصة",
-            "description": "إمكانية تخصيص الخدمة (عدد الرحلات – الوجهات – حجم البضائع)."
+            "title": "service_feature_4_title",
+            "description": "service_feature_4_desc"
           }
         }
       ]
@@ -210,40 +209,40 @@
       "name": "Customer Reviews Section",
       "widget": "reviews-section",
       "settings": {
-        "title": "آراء عملائنا"
+        "section_title": "customer_reviews"
       },
       "blocks": [
         {
           "block": "reviewItem",
           "name": "الرأي الأول",
           "settings": {
-            "name": "أحمد كرم",
-            "text": "تجربة ممتازة وخدمة عملاء محترمة. المنتجات وصلت في الوقت المحدد وبجودة عالية.",
+            "name": "review_1_name",
+            "text": "review_1_text",
             "image": "",
             "stars": 5,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
           "name": "الرأي الثاني",
           "settings": {
-            "name": "سارة محمد",
-            "text": "الشحن سريع والجودة عالية. أنصح الجميع بالتعامل مع هذا المتجر.",
+            "name": "review_2_name",
+            "text": "review_2_text",
             "image": "",
             "stars": 4,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
           "name": "الرأي الثالث",
           "settings": {
-            "name": "خالد عبدالله",
-            "text": "أسعار مناسبة وعروض مميزة. خدمة عملاء ممتازة وسريعة في الرد.",
+            "name": "review_3_name",
+            "text": "review_3_text",
             "image": "",
             "stars": 5,
-            "alt": "صورة العميل"
+            "alt": "review_image_alt"
           }
         }
       ]
@@ -265,7 +264,45 @@
         "default_image_1": "assets/blog1.png",
         "default_image_2": "assets/blog2.png",
         "default_image_3": "assets/blog3.png"
-      }
+      },
+      "blocks": [
+        {
+          "block": "blogPost",
+          "name": "المنشور الأول",
+          "settings": {
+            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
+            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "image": "qumra://blog1.png",
+            "button_text": "عرض المزيد",
+            "link": "#",
+            "alt_text": "أزياء المستقبل"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "المنشور الثاني",
+          "settings": {
+            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
+            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "image": "qumra://blog2.png",
+            "button_text": "عرض المزيد",
+            "link": "#",
+            "alt_text": "أزياء المستقبل"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "المنشور الثالث",
+          "settings": {
+            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
+            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "image": "qumra://blog3.png",
+            "button_text": "عرض المزيد",
+            "link": "#",
+            "alt_text": "أزياء المستقبل"
+          }
+        }
+      ]
     }
   ]
 }

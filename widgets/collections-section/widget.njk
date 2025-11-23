@@ -5,8 +5,8 @@
 <section class="py-4 sm:py-6 md:py-8 bg-white mx-2.5 md:mx-20">
       <div class="container mx-auto px-2.5">
     <div class="flex items-center justify-between mb-6 md:mb-6">
-      <h2 class="text-xl md:text-2xl font-bold text-dark">{{ widget.data.section_title | default('تشكيلاتنا الخاصة') }}</h2>
-      <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ widget.data.view_all_text | default('عرض الكل') }}</a>
+      <h2 class="text-xl md:text-2xl font-bold text-dark">{{ t(widget.data.section_title or 'our_special_collections') }}</h2>
+      <a href="{{ widget.data.view_all_link | default('#') }}" class="underline text-xs md:text-sm text-black cursor-pointer hover:text-mainColor transition">{{ t(widget.data.view_all_text or 'view_all') }}</a>
     </div>
     {% set hasBlocks = widget.blocks and (widget.blocks | length) > 0 %}
     {% if hasBlocks %}
@@ -61,9 +61,9 @@
               {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
             {% endif %}
           {% endif %}
-          {% set alt = (block.settings and block.settings.alt) or 'صورة التشكيلة' %}
-          {% set title = (block.settings and block.settings.title) or 'اسم التشكيلة' %}
-          {% set subtitle = (block.settings and block.settings.subtitle) or 'وصف مختصر' %}
+          {% set alt = (block.settings and block.settings.alt) or t('collection_image') %}
+          {% set title = (block.settings and block.settings.title) or t('collection_name') %}
+          {% set subtitle = (block.settings and block.settings.subtitle) or t('short_description') %}
           {% set link = (block.settings and block.settings.link) or '#' %}
           <div class="swiper-slide">
             <a href="{{ link }}" class="relative block group">
@@ -73,7 +73,7 @@
                 {% else %}
                 <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
                   <div class="w-full h-full bg-gray-100 rounded-lg flex items-center justify-center">
-                    <span class="text-gray-500 text-xs sm:text-sm font-cairo">لا توجد صورة</span>
+                    <span class="text-gray-500 text-xs sm:text-sm font-cairo">{{t('no_image')}}</span>
                   </div>
                 </div>
                 {% endif %}
@@ -127,9 +127,9 @@
           {% set img = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop' %}
         {% endif %}
       {% endif %}
-      {% set alt = (block.settings and block.settings.alt) or 'صورة التشكيلة' %}
-      {% set title = (block.settings and block.settings.title) or 'اسم التشكيلة' %}
-      {% set subtitle = (block.settings and block.settings.subtitle) or 'وصف مختصر' %}
+      {% set alt = (block.settings and block.settings.alt) or t('collection_image') %}
+      {% set title = (block.settings and block.settings.title) or t('collection_name') %}
+      {% set subtitle = (block.settings and block.settings.subtitle) or t('short_description') %}
       {% set link = (block.settings and block.settings.link) or '#' %}
       <a href="{{ link }}" class="relative block group">
         <div class="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-48 lg:h-48 xl:w-52 xl:h-52 mx-auto bg-white rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-md overflow-hidden">

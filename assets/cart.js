@@ -307,8 +307,23 @@ function xDataCart() {
     },
 
     checkout() {
-      updateLoading('checkout', true);
-      window.qumra.checkout().finally(() => updateLoading('checkout', false));
+      try {
+        updateLoading('checkout', true);
+        const go = window?.qumra?.checkout;
+        if (typeof go === 'function') {
+          Promise.resolve(go())
+            .catch(() => { try { this.open = false; } catch(_){} })
+            .finally(() => updateLoading('checkout', false));
+        } else {
+          try { this.open = false; } catch(_){}
+          window.location.href = '/checkout';
+          updateLoading('checkout', false);
+        }
+      } catch (_) {
+        try { this.open = false; } catch(_){}
+        updateLoading('checkout', false);
+        window.location.href = '/checkout';
+      }
     },
   };
 }

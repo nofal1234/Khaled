@@ -1,14 +1,25 @@
-<section class="product-listing">
-  <div class="container mx-auto py-10">
+<section class="product-listing bg-white">
+  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pt-6 md:pt-8 pb-10">
+    {% if context.search or (context.page and context.page.url == '/search') or (globals.currentUrl == '/search') %}
+    <section class="bg-white py-0 md:py-1">
+      <div class="md:block">
+        <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
+          <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
+            <a href="/" class="hover:text-mainColor transition">الرئيسية</a>
+            <span>/</span>
+            <span class="text-mainColor font-semibold">البحث</span>
+          </nav>
+        </div>
+      </div>
+    </section>
+    {% endif %}
     {% if context.products | length > 0 %}
-    <div class=" flex  flex-col gap-4">
-      <!-- Mobile: horizontal list showing two cards visible -->
-      <div class="md:hidden -mx-4 px-4">
-        <div class="flex gap-0 overflow-x-auto snap-x snap-mandatory scrollbar-hide mobile-tight">
+    <div class="flex flex-col gap-4">
+      <!-- Mobile: grid layout (no horizontal scroll) -->
+      <div class="md:hidden px-2.5">
+        <div class="grid grid-cols-2 gap-4">
           {% for product in context.products %}
-          <div class="min-w-[50%] snap-start">
-            {%ui "product-card.njk" ,product=product ,variant='index-swiper' %}
-          </div>
+            {%ui "product-card.njk" ,product=product %}
           {% endfor %}
         </div>
       </div>

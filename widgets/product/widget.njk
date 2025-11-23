@@ -17,7 +17,7 @@
               <p class="text-xl md:text-2xl mb-8 font-cairo">{{ widget.data.subtitle }}</p>
               <a href="{{ widget.data.button_link | default('#') }}" 
                  class="inline-block bg-white text-black px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 font-cairo">
-                {{ widget.data.button_text | default('تسوق الآن') }}
+                {{ t(widget.data.button_text or 'shop_now') }}
               </a>
             </div>
           </div>
@@ -25,11 +25,11 @@
       {% else %}
         <div class="w-full h-full flex items-center justify-center">
           <div class="text-center px-4">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-600 mb-4 font-cairo">{{ widget.data.title | default('مرحبًا بك في متجرنا') }}</h1>
-            <p class="text-xl md:text-2xl text-gray-500 mb-8 font-cairo">{{ widget.data.subtitle | default('أفضل المنتجات في مكان واحد') }}</p>
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-600 mb-4 font-cairo">{{ t(widget.data.title or 'welcome_to_store') }}</h1>
+            <p class="text-xl md:text-2xl text-gray-500 mb-8 font-cairo">{{ t(widget.data.subtitle or 'best_products_one_place') }}</p>
             <a href="{{ widget.data.button_link | default('#') }}" 
                class="inline-block bg-[#003033] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#004d4d] transition-colors duration-200 font-cairo">
-              {{ widget.data.button_text | default('تسوق الآن') }}
+              {{ t(widget.data.button_text or 'shop_now') }}
             </a>
           </div>
         </div>

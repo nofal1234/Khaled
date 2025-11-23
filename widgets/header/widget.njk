@@ -45,48 +45,75 @@
             <input id="desktopSearchInput"
               type="text"
               name="search"
-              placeholder="{{ widget.data.search_placeholder | default('ابحث عن المنتج...') }}"
+              placeholder="{{ widget.data.search_placeholder or t('search_placeholder') }}"
               class="w-full py-3 px-6 pr-12 rounded-full border {{ borderColor }} {{ inputBg }} {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-900 placeholder:text-[#666666] placeholder:opacity-100 {% endif %} focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
+              onkeypress="if(event.key==='Enter' && this.value.trim()){ window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }"
+              ondblclick="window.location.href='/search'"
             />
-          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 {% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} {{ textColor }} {% endif %}">
+          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 {% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} {{ textColor }} {% endif %}"
+            onclick="const input = document.getElementById('desktopSearchInput'); if(input && input.value.trim()){ window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }">
             <i class="ph ph-magnifying-glass text-xl"></i>
           </button>
         </div>
 
         {% if widget.data.show_wishlist | default(true) %}
-        <button class="{{ textColor }} transition" title="{{ widget.data.wishlist_tooltip | default('المفضلة') }}">
+        <button onclick="window.dispatchEvent(new CustomEvent('open-wishlist'))" class="{{ textColor }} transition" title="{{ t(widget.data.wishlist_tooltip or 'wishlist') }}">
           <i class="ph ph-heart text-2xl"></i>
         </button>
         {% endif %}
 
         {% if widget.data.show_cart | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition flex items-center" title="{{ widget.data.cart_tooltip | default('السلة') }}">
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition flex items-center" title="{{ t(widget.data.cart_tooltip or 'cart') }}">
           <iconify-icon icon="proicons:cart" width="24" height="24" style="transform: scaleX(-1);" class="inline-block"></iconify-icon>
         </button>
         {% endif %}
 
         {% if widget.data.show_user | default(true) %}
-        <button class="{{ textColor }} transition" title="{{ widget.data.user_tooltip | default('الحساب') }}">
+        <button class="{{ textColor }} transition" title="{{ t(widget.data.user_tooltip or 'account') }}" onclick="(window.globals && window.globals.customer && window.globals.customer._id) ? window.logout?.() : window.login?.()">
           <i class="ph ph-user text-2xl"></i>
         </button>
         {% endif %}
+
+        <!-- Language Selector (desktop only) -->
+        <div class="relative hidden lg:block">
+          {% form 'lang', { class: 'lang-form' } %}
+{% set currentLang = 'ar' %}
+{% if context.page.url %}
+  {% set urlParts = context.page.url.split('/') | reject('empty') %}
+  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en'] %}
+    {% set currentLang = urlParts[0] %}
+  {% endif %}
+{% endif %}
+            <select name="lang" class="lang-select appearance-none bg-transparent border-none {{ textColor }} cursor-pointer text-sm md:text-base focus:outline-none pr-6 pl-2 py-1 rounded hover:bg-gray-100/10 transition">
+              <option value="ar" {% if currentLang == 'ar' %}selected{% endif %}>العربية</option>
+              <option value="en" {% if currentLang == 'en' %}selected{% endif %}>English</option>
+            </select>
+          {% endform %}
+        </div>
+
       </div>
 
       <!-- Mobile toolbar -->
       <div class="flex lg:hidden items-center gap-3">
         <!-- Search icon button (opens overlay) -->
-        <button id="mobileSearchBtn" class="{{ textColor }} transition" title="بحث">
+        <button id="mobileSearchBtn" class="{{ textColor }} transition" title="{{t('search')}}">
           <i class="ph ph-magnifying-glass text-xl"></i>
         </button>
 
+        {% if widget.data.show_wishlist | default(true) %}
+        <button onclick="window.dispatchEvent(new CustomEvent('open-wishlist'))" class="{{ textColor }} transition" title="{{ t(widget.data.wishlist_tooltip or 'wishlist') }}">
+          <i class="ph ph-heart text-xl"></i>
+        </button>
+        {% endif %}
+
         {% if widget.data.show_cart | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition" title="{{ widget.data.cart_tooltip | default('السلة') }}">
+        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition" title="{{ t(widget.data.cart_tooltip or 'cart') }}">
           <iconify-icon icon="proicons:cart" width="20" height="20" style="transform: scaleX(-1);"></iconify-icon>
         </button>
         {% endif %}
 
         {% if widget.data.show_user | default(true) %}
-        <button class="{{ textColor }} transition" title="{{ widget.data.user_tooltip | default('الحساب') }}">
+        <button class="{{ textColor }} transition" title="{{ t(widget.data.user_tooltip or 'account') }}" onclick="(window.globals && window.globals.customer && window.globals.customer._id) ? window.logout?.() : window.login?.()">
           <i class="ph ph-user text-xl"></i>
         </button>
         {% endif %}
@@ -107,7 +134,7 @@
               <button onclick="const input = this.parentElement.querySelector('input'); if(input.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }" class="{% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} text-gray-500 {% endif %} hover:text-gray-700">
                 <i class="ph ph-magnifying-glass text-lg"></i>
               </button>
-              <input id="mobileSearchInput" type="text" placeholder="{{ widget.data.mobile_search_placeholder | default('ابحث عن المنتج...') }}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-800 placeholder:text-[#666666] placeholder:opacity-100 {% endif %}" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" />
+              <input id="mobileSearchInput" type="text" placeholder="{{ widget.data.mobile_search_placeholder or t('mobile_search_placeholder') }}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none text-gray-800 placeholder:text-[#666666] placeholder:opacity-100" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" ondblclick="window.location.href='/search'" />
               <button id="mobileSearchClose" class="text-gray-500 hover:text-gray-700">
                 <i class="ph ph-x text-lg"></i>
               </button>
@@ -119,27 +146,59 @@
 
     {% if context.page.title != 'الصفحة الرئيسية' %}
     <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pb-3">
-      <nav class="hidden lg:flex items-center justify-center gap-8 {{ textColor }}">
-        {% set items = widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else [] %}
+      {% set items = widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else [] %}
+
+      {# LG فقط: نعرض 3 عناصر والباقي في المزيد #}
+      <nav class="hidden lg:flex xl:hidden items-center justify-center gap-4 {{ textColor }}">
+        {% if items | length > 0 %}
+          {% for item in items %}
+            {% if loop.index0 < 3 %}
+              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-3 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[15px] leading-[150%] tracking-normal">
+                {{ t(item.title or 'title') }}
+              </a>
+            {% endif %}
+          {% endfor %}
+          {% if items | length > 3 %}
+            <div class="relative group flex items-center">
+              <button class="min-w-[51px] h-[67px] px-3 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[16px] leading-[150%] tracking-normal" aria-label="{{t('more')}}">
+                <span>{{t('more')}}</span>
+                <i class="ph ph-caret-down text-lg mr-1"></i>
+              </button>
+              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                {% for item in items %}
+                  {% if loop.index0 >= 3 %}
+                    <a href="{{ item.url }}" class="block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
+                      {{ t(item.title or 'title') }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </nav>
+
+      {# XL وما فوق: نعرض 6 عناصر والباقي في المزيد #}
+      <nav class="hidden xl:flex items-center justify-center gap-6 {{ textColor }}">
         {% if items | length > 0 %}
           {% for item in items %}
             {% if loop.index0 < 6 %}
-              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal">
-                {{ item.title | default('عنوان') }}
+              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[16px] leading-[150%] tracking-normal">
+                {{ t(item.title or 'title') }}
               </a>
             {% endif %}
           {% endfor %}
           {% if items | length > 6 %}
             <div class="relative group flex items-center">
-              <button class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal" aria-label="المزيد">
-                <span>المزيد</span>
+              <button class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal" aria-label="{{t('more')}}">
+                <span>{{t('more')}}</span>
                 <i class="ph ph-caret-down text-lg mr-1"></i>
               </button>
-              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible.group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 {% for item in items %}
                   {% if loop.index0 >= 6 %}
-                    <a href="{{ item.url }}" class="block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
-                      {{ item.title | default('عنوان') }}
+                    <a href="{{ item.url }}" class="block px-4 py-2.text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
+                      {{ t(item.title or 'title') }}
                     </a>
                   {% endif %}
                 {% endfor %}
@@ -152,6 +211,71 @@
     {% endif %}
 
     <script>
+      // Language Change Handler
+      function changeLanguage(lang) {
+        // Save to localStorage
+        localStorage.setItem('lang', lang);
+        
+        // Get current URL
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        
+        // Get path parts
+        let pathParts = url.pathname.split('/').filter(p => p);
+        
+        // Remove existing language from path if present
+        if (pathParts.length > 0 && (pathParts[0] === 'ar' || pathParts[0] === 'en')) {
+          pathParts.shift();
+        }
+        
+        // Build new path with language prefix
+        const newPath = '/' + lang + (pathParts.length > 0 ? '/' + pathParts.join('/') : '');
+        
+        // Reload page with new language
+        window.location.href = newPath + url.search + url.hash;
+      }
+
+      // Function to update page direction based on language
+      function updatePageDirection(lang) {
+        // Arabic is RTL, all other languages are LTR
+        const dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('dir', dir);
+        if (document.body) {
+          document.body.setAttribute('dir', dir);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get current language from URL or localStorage or default to 'ar'
+        const pathParts = window.location.pathname.split('/').filter(p => p);
+        let currentLang = 'ar';
+        
+        if (pathParts.length > 0 && (pathParts[0] === 'ar' || pathParts[0] === 'en' || pathParts[0] === 'fr')) {
+          currentLang = pathParts[0];
+          localStorage.setItem('lang', currentLang);
+        } else {
+          currentLang = localStorage.getItem('lang') || 'ar';
+        }
+        
+        // Update page direction immediately
+        updatePageDirection(currentLang);
+        
+        // Handle language form submission
+        const langSelects = document.querySelectorAll('.lang-select');
+        langSelects.forEach(select => {
+          // Set current selected value
+          select.value = currentLang;
+          
+          // Handle change event
+          select.addEventListener('change', function(e) {
+            e.preventDefault();
+            const selectedLang = this.value;
+            changeLanguage(selectedLang);
+          });
+        });
+      });
+
       // Mobile Search Functionality
       document.addEventListener('DOMContentLoaded', function() {
         const mobileSearchBtn = document.getElementById('mobileSearchBtn');

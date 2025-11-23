@@ -5,27 +5,26 @@
     <!-- Left: Cairo - Hidden on mobile -->
     <div class="hidden md:flex items-center gap-2 cursor-pointer hover:text-mainColor transition -ml-2">
       <i class="ph ph-caret-down text-lg"></i>
-      <span class="text-lg">{{ widget.data.location | default('Cairo') }}</span>
+      <span class="text-lg">{{ t(widget.data.location or 'location_default') }}</span>
     </div>
 
     <!-- Center: Brands - Always visible -->
-    <div class="flex items-center gap-4 md:gap-10 mx-auto md:mx-0">
+    <div class="flex items-center gap-4 md:gap-10 mx-auto md:mx-0" dir="ltr">
       <button class="hover:text-mainColor transition" onclick="previousBrand()">
-        <i class="ph ph-caret-right text-sm md:text-base px-2 md:px-6"></i>
-      </button>
-      <span class="text-sm md:text-xl" style="direction: ltr">{{ widget.data.brands_text | default('1,800+ brands') }}</span>
-      <button class="hover:text-mainColor transition" onclick="nextBrand()">
         <i class="ph ph-caret-left text-sm md:text-base px-2 md:px-6"></i>
+      </button>
+      <span class="text-sm md:text-xl" style="direction: ltr">{{ t(widget.data.brands_text or 'brands_counter') }}</span>
+      <button class="hover:text-mainColor transition" onclick="nextBrand()">
+        <i class="ph ph-caret-right text-sm md:text-base px-2 md:px-6"></i>
       </button>
     </div>
 
     <!-- Right: Languages - Hidden on mobile -->
     <div class="hidden md:flex items-center gap-2 mr-8">
-      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('en')">{{ widget.data.english_text | default('English') }}</span>
+      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('en')">{{ t(widget.data.english_text or 'english') }}</span>
       <span class="text-lg">|</span>
-      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('ar')">{{ widget.data.arabic_text | default('العربية') }}</span>
+      <span class="cursor-pointer hover:text-mainColor text-lg transition" onclick="changeLanguage('ar')">{{ t(widget.data.arabic_text or 'arabic') }}</span>
     </div>
   </div>
 </div>
 {% endif %}
-

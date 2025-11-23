@@ -6,7 +6,7 @@
       "name": "collections-page",
       "widget": "collections-page",
       "settings": {
-        "section_title": "عرض الأقسام",
+        "section_title": "view_sections",
         "items": []
       }
     }

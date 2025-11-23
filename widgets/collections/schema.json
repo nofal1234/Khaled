@@ -9,7 +9,7 @@
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
-      "default": "اقسام المتجر"
+      "default": "collections"
     }
   },
   "presets": [

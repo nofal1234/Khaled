@@ -1,0 +1,11 @@
+{
+  "layout": "layout",
+  "title": "المفضلة",
+  "widgets": [
+    {
+      "name": "Wishlist",
+      "widget": "wishlist",
+      "settings": {}
+    }
+  ]
+}

@@ -4,8 +4,8 @@
     <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
       <!-- Section Header -->
       <div class="text-center mb-4 sm:mb-6 md:mb-8">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 font-cairo">منتجاتنا المميزة</h2>
-        <p class="text-base sm:text-lg md:text-xl text-gray-600 font-cairo">اكتشف تشكيلة واسعة من المنتجات عالية الجودة</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 font-cairo">{{t('our_featured_products')}}</h2>
+        <p class="text-base sm:text-lg md:text-xl text-gray-600 font-cairo">{{t('discover_wide_range')}}</p>
       </div>
       
       <!-- Products - Mobile horizontal list showing 2 cards -->
@@ -28,9 +28,11 @@
       
       <!-- View More Button -->
       <div class="text-center mt-4 sm:mt-6 md:mt-8">
-        <a href="/collections" class="inline-flex items-center gap-3 bg-[#003033] hover:bg-[#004d4d] text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 font-cairo">
-          <span>عرض المزيد من المنتجات</span>
-          <i class="fi fi-rr-angle-double-small-left text-xl"></i>
+        <a href="/{{t('lang')}}/collections" class="inline-flex items-center gap-3 bg-[#003033] hover:bg-[#004d4d] text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 font-cairo">
+          <span class="text-xs font-semibold">{{t('view_more_products')}}</span>
+          <span class="material-symbols-outlined text-xl">
+            {% if t('dir') == 'rtl' %}arrow_left_alt{% else %}arrow_right_alt{% endif %}
+          </span>
         </a>
       </div>
     </div>

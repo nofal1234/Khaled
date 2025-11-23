@@ -114,8 +114,8 @@
         "title": {
           "type": "string",
           "label": "عنوان الميزة",
-          "default": "شحن مجاني عند الشراء بقيمة 175",
-          "description": "نص الميزة"
+          "default": "feature_bar_free_shipping",
+          "description": "عنوان الميزة (يستخدم كمفتاح ترجمة)"
         }
       }
     },
@@ -131,8 +131,8 @@
         "announcement_text": {
           "type": "string",
           "label": "نص الإعلان",
-          "default": "شحن مجاني عند الشراء بقيمة 175",
-          "description": "النص الذي سيظهر في الإعلان"
+          "default": "feature_bar_announcement",
+          "description": "نص الإعلان (يستخدم كمفتاح ترجمة)"
         },
         "announcement_link": {
           "type": "string",
@@ -165,7 +165,7 @@
           "name": "الشحن المجاني",
           "settings": {
             "icon": "<i class='ph-light ph-package'></i>",
-            "title": "شحن مجاني عند الشراء بقيمة 175"
+            "title": "feature_bar_free_shipping"
           }
         },
         {
@@ -173,7 +173,7 @@
           "name": "المواد الصديقة للبيئة",
           "settings": {
             "icon": "<i class='ph-light ph-thumbs-up'></i>",
-            "title": "مواد صديقة للبيئة"
+            "title": "feature_bar_eco_friendly"
           }
         },
         {
@@ -181,7 +181,7 @@
           "name": "التقييمات",
           "settings": {
             "icon": "<i class='ph-light ph-star'></i>",
-            "title": "4.8/5 من 17 ألف تقييم"
+            "title": "feature_bar_high_rating"
           }
         },
         {
@@ -189,7 +189,7 @@
           "name": "الجودة العالية",
           "settings": {
             "icon": "<i class='ph-light ph-leaf'></i>",
-            "title": "خامات عالية الجودة"
+            "title": "feature_bar_high_quality"
           }
         }
       ]
