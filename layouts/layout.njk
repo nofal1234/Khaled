@@ -1,15 +1,5 @@
-{% set locale = 'ar' %}
-{% if context.page.url %}
-  {% set urlParts = context.page.url.split('/') | reject('empty') %}
-  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en', 'fr'] %}
-    {% set locale = urlParts[0] %}
-  {% endif %}
-{% elif context.request and context.request.path %}
-  {% set urlParts = context.request.path.split('/') | reject('empty') %}
-  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en', 'fr'] %}
-    {% set locale = urlParts[0] %}
-  {% endif %}
-{% endif %}
+{% set locale = localization.lang %}
+{{locale}}
 {% if locale == "en" %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">

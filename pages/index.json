@@ -125,7 +125,7 @@
           "block": "offerItem",
           "name": "الصوره الاولي",
           "settings": {
-            "image": { "fileUrl": "one.png" },
+            "image":  "qumra://one.png" ,
             "link": "#",
             "alt": "العرض الأول",
             "title": "upper_clothing",
@@ -136,7 +136,7 @@
           "block": "offerItem",
           "name": "الصوره الثانيه",
           "settings": {
-            "image": { "fileUrl": "two.png" },
+            "image":  "qumra://two.png" ,
             "link": "#",
             "alt": "العرض الثاني",
             "title": "lower_clothing",
@@ -147,7 +147,7 @@
           "block": "offerItem",
           "name": "الصوره الثالثه",
           "settings": {
-            "image": { "fileUrl": "three.png" },
+            "image":  "qumra://three.png" ,
             "link": "#",
             "alt": "العرض الثالث",
             "title": "accessories",
@@ -261,9 +261,9 @@
         "show_hover_effect": true,
         "columns_mobile": "1",
         "columns_desktop": "3",
-        "default_image_1": "assets/blog1.png",
-        "default_image_2": "assets/blog2.png",
-        "default_image_3": "assets/blog3.png"
+        "default_image_1": "qumra://blog1.png",
+        "default_image_2": "qumra://blog2.png",
+        "default_image_3": "qumra://blog3.png"
       },
       "blocks": [
         {

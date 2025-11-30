@@ -51,15 +51,15 @@
                         <template x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
                             <div class="flex items-center gap-3">
                                 <span class="text-4xl font-bold text-mainColor" x-text="context.product?.pricing?.price"></span>
-                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
+                                <span class="text-mainColor">{{ globals.app.generalSettings.currency.currencySymbol }}</span>
                                 <span class="text-lg text-gray-500 line-through" x-text="context.product?.pricing?.compareAtPrice"></span>
-                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
+                                <span class="text-mainColor">{{ globals.app.generalSettings.currency.currencySymbol }}</span>
                             </div>
                         </template>
                         <template x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
                             <div class="flex items-center gap-2">
                                 <span class="text-4xl font-bold text-mainColor" x-text="context.product?.pricing?.price"></span>
-                                <span class="text-mainColor">{{ currency.currencySymbol }}</span>
+                                <span class="text-mainColor">{{ globals.app.generalSettings.currency.currencySymbol }}</span>
                             </div>
                         </template>
                     </div>

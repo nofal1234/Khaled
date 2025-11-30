@@ -74,23 +74,6 @@
         </button>
         {% endif %}
 
-        <!-- Language Selector (desktop only) -->
-        <div class="relative hidden lg:block">
-          {% form 'lang', { class: 'lang-form' } %}
-{% set currentLang = 'ar' %}
-{% if context.page.url %}
-  {% set urlParts = context.page.url.split('/') | reject('empty') %}
-  {% if urlParts | length > 0 and urlParts[0] in ['ar', 'en'] %}
-    {% set currentLang = urlParts[0] %}
-  {% endif %}
-{% endif %}
-            <select name="lang" class="lang-select appearance-none bg-transparent border-none {{ textColor }} cursor-pointer text-sm md:text-base focus:outline-none pr-6 pl-2 py-1 rounded hover:bg-gray-100/10 transition">
-              <option value="ar" {% if currentLang == 'ar' %}selected{% endif %}>العربية</option>
-              <option value="en" {% if currentLang == 'en' %}selected{% endif %}>English</option>
-            </select>
-          {% endform %}
-        </div>
-
       </div>
 
       <!-- Mobile toolbar -->

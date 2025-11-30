@@ -14,9 +14,9 @@
       "default": "#"
     },
     "default_image": {
-      "type": "string",
+      "type": "media",
       "label": "الصورة الافتراضية",
-      "default": "assets/Frame 427322188.png",
+      "default": "qumra://Frame 427322188.png",
       "description": "الصورة التي تظهر عند عدم وجود صور للمجموعات"
     },
     "show_default_image": {
@@ -33,7 +33,7 @@
         "image": {
           "type": "media",
           "label": "صورة العرض",
-          "default": "one.png",
+          "default": "qumra://Frame 427322188.png",
           "description": "الصوره بحجم 600*400 بيكسل "
         },
         "link": {

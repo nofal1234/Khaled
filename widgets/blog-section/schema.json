@@ -46,7 +46,7 @@
       "default": "read_more",
       "description": "النص المستخدم على زر القراءة في الكروت الافتراضية"
     },
-    "default_title_1": { "type": "string", "label": "عنوان افتراضي 1", "default": "blog_default_title_1" },
+    "default_title_1": { "type": "media", "label": "عنوان افتراضي 1", "default": "blog_default_title_1" },
     "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "blog_default_desc_1" },
     "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "qumra://blog1.png" },
     "default_link_1": { "type": "string", "label": "رابط افتراضي 1", "default": "/blog" },
