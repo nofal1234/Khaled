@@ -45,7 +45,11 @@
             <input id="desktopSearchInput"
               type="text"
               name="search"
-              placeholder="{{ widget.data.search_placeholder or t('search_placeholder') }}"
+              placeholder="{% if widget.data.search_placeholder and widget.data.search_placeholder != 'search_placeholder' %}
+  {{ widget.data.search_placeholder }}
+{% else %}
+  {{ t('search_placeholder') }}
+{% endif %}"
               class="w-full py-3 px-6 pr-12 rounded-full border {{ borderColor }} {{ inputBg }} {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-900 placeholder:text-[#666666] placeholder:opacity-100 {% endif %} focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
               onkeypress="if(event.key==='Enter' && this.value.trim()){ window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }"
               ondblclick="window.location.href='/search'"
@@ -117,7 +121,11 @@
               <button onclick="const input = this.parentElement.querySelector('input'); if(input.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }" class="{% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} text-gray-500 {% endif %} hover:text-gray-700">
                 <i class="ph ph-magnifying-glass text-lg"></i>
               </button>
-              <input id="mobileSearchInput" type="text" placeholder="{{ widget.data.mobile_search_placeholder or t('mobile_search_placeholder') }}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none text-gray-800 placeholder:text-[#666666] placeholder:opacity-100" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" ondblclick="window.location.href='/search'" />
+              <input id="mobileSearchInput" type="text" placeholder="{% if widget.data.mobile_search_placeholder and widget.data.mobile_search_placeholder != 'mobile_search_placeholder' %}
+  {{ widget.data.mobile_search_placeholder }}
+{% else %}
+  {{ t('mobile_search_placeholder') }}
+{% endif %}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none text-gray-800 placeholder:text-[#666666] placeholder:opacity-100" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" ondblclick="window.location.href='/search'" />
               <button id="mobileSearchClose" class="text-gray-500 hover:text-gray-700">
                 <i class="ph ph-x text-lg"></i>
               </button>
