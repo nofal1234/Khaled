@@ -1,0 +1,181 @@
+{% set view_all_link = widget.data.view_all_link %}
+{% set show_view_all = widget.data.show_view_all %}
+{% set link_color = widget.data.link_color %}
+{% set title_color = widget.data.title_color  %}
+{% set title_size = widget.data.title_size  %}
+{% set show_navigation = widget.data.show_navigation %}
+
+{% set blog_name_color = widget.data.blog_name_color %}
+{% set blog_name_size = widget.data.blog_name_size %}
+{% set blog_description_color = widget.data.blog_description_color %}
+{% set blog_description_size = widget.data.blog_description_size %}
+
+<section class="mt-4 md:mt-8 mb-3 md:mb-5 container py-4">
+  {% if widget.blocks | length > 0 %}
+  <div class="flex items-center justify-between mb-4 md:mb-6">
+    <h1 class="blog-title font-bold" style="color: {{ title_color }}; --blog-title-size: {{ title_size }}px;">{{ t(widget.data.section_title) }}</h1>
+    <div class="flex items-center gap-4">
+      {% if show_view_all %}
+      <a href="{{ widget.data.view_all_link | default('#') }}"
+        class="underline text-xs md:text-sm cursor-pointer hover:text-mainColor transition py-0 px-0 md:py-2 md:px-3"
+        style="color: {{ link_color }};">
+        {{ t('view_all') }}
+      </a>
+      {% endif %}
+      {% if show_navigation %}
+      <div class="flex items-center gap-[38px]" >
+        <div class="cursor-pointer  swiper-button-next-blog  hidden md:flex items-center justify-center bg-transparent">
+          <i class="ph  ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+        </div>
+        <div class=" swiper-button-prev-blog cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+          <i class="ph  ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="relative">
+    <div id="blog-swiper-{{ widget.id }}" class="swiper blogSwiper">
+      <div class="swiper-wrapper">
+        {% for block in widget.blocks %}
+        <div class="swiper-slide">
+          <div class="flex flex-col gap-[34px] h-full">
+            <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt_text | default(block.data.title) }}" class="w-full md:h-[418px] h-[196px] object-cover rounded-lg">
+            <div class="flex flex-col gap-6">
+              <h3 class="md:text-lg text-sm font-bold  line-clamp-2 overflow-hidden"
+                style="color: {{ blog_name_color }}; font-size: {{ blog_name_size }}px; max-height: 3.2em">{{ t(block.data.title) }}</h3>
+              <p class="md:text-sm text-xs  line-clamp-2 overflow-hidden"
+                style="color: {{ blog_description_color }}; font-size: {{ blog_description_size }}px; max-height: 2.8em">
+                {{ t(block.data.description) }}
+              </p>
+              <a href="{{ block.data.link }}"
+              style="color: {{ link_color }};"
+                class="blog-readmore md:text-sm text-xs leading-[150%] underline">{{
+                t(block.data.button_text) }}</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+    {% ui "empty.njk" %}
+  {% endif %}
+</section>
+
+<script>
+  function initBlogSwiper() {
+    const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+    const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+    const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+    const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+    const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+    const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+    const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+    const speed = Number('{{ widget.data.speed }}');
+    const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+    const autoplay = '{{ widget.data.autoplay }}' == 'true';
+    const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+
+    var swiperElem = document.getElementById('blog-swiper-{{ widget.id }}');
+    if (!swiperElem || !window.Swiper) return;
+    if (swiperElem.swiper) {
+      swiperElem.swiper.destroy(true, true);
+    }
+    new window.Swiper(swiperElem, {
+      loop: true,
+      grabCursor: grabCursor,
+      speed: speed,
+      spaceBetween: spaceBetweenSM,
+      allowTouchMove: allowTouchMove,
+      autoplay: autoplay
+        ? {
+            delay: autoplayDelay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            reverseDirection: false
+          }
+        : false,
+      navigation: {
+        nextEl: '.swiper-button-next-blog',
+        prevEl: '.swiper-button-prev-blog'
+      },
+      breakpoints: {
+        250: {
+          centeredSlides: true,
+          slidesPerView: slidesPerViewSM,
+          spaceBetween: spaceBetweenSM
+        },
+        400: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewMD,
+          spaceBetween: spaceBetweenMD
+        },
+        768: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewMD,
+          spaceBetween: spaceBetweenMD
+        },
+        1000: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG > 3 ? 3 : slidesPerViewLG,
+          spaceBetween: spaceBetweenMD
+        },
+        1200: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG,
+          spaceBetween: spaceBetweenLG
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlogSwiper, { once: true });
+  } else {
+    initBlogSwiper();
+  }
+
+  function mountBlogSwiper(retries) {
+    if (window.Swiper) {
+      initBlogSwiper();
+      return;
+    }
+    if (retries > 0) {
+      setTimeout(function () {
+        mountBlogSwiper(retries - 1);
+      }, 150);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mountBlogSwiper(8);
+    }, { once: true });
+  } else {
+    mountBlogSwiper(8);
+  }
+</script>
+
+{% style %}
+.swiper-button-next-blog, .swiper-button-prev-blog {
+  width: 14px;
+  height: 27px;
+}
+.blogSwiper .swiper-slide {
+  display: flex;
+  height: 100%;
+}
+.blogSwiper .swiper-slide > .special-card {
+  height: 100%;
+  min-height: 360px;
+}
+.blogSwiper .swiper-wrapper {
+  align-items: stretch;
+}
+.blog-title {
+  font-size: clamp(calc(var(--blog-title-size) * 0.7), calc(var(--blog-title-size) * 0.5 + 1vw), var(--blog-title-size));
+  line-height: 1.2;
+}
+{% endstyle %}

@@ -1,75 +1,14 @@
 [
   {
     "label": {
-      "ar": "اعدادات  المظهر",
+      "ar": "إعدادات المظهر",
       "en": "Appearance Settings"
     },
     "settings": {
-      "max": {
-        "type": "number",
-        "label": "الحد الأقصى للعدد",
-        "description": "الحد الأقصى لعدد إدخالات البيانات الوصفية",
-        "default": 100
-      },
-      "navbar_text": {
-        "type": "text",
-        "label": "Metadata Schema Name",
-        "description": "النص الذي يظهر في شريط التنقل",
-        "default": "احصل على توصيل مجاني للمنزل (عند الطلب بأكثر من 1000 جنية مصرى)"
-      },
       "mainColor": {
         "type": "color",
         "label": "Main Color",
         "default": "#000000"
-      },
-      "darkColor": {
-        "type": "color",
-        "label": "Dark Color",
-        "default": "#333333"
-      },
-      "email": {
-        "type": "text",
-        "label": "Email",
-        "description": "البريد الإلكتروني للتواصل",
-        "default": "coder371@gmail.com"
-      },
-      "header": {
-        "title": {
-          "type": "text",
-          "label": "Metadata Schema Title",
-          "default": "Metadata Schema"
-        },
-        "logo": {
-          "type": "media",
-          "label": "Metadata Schema Title",
-          "default": ""
-        },
-        "description": {
-          "type": "text",
-          "label": "Metadata Schema Description",
-          "default": "Schema for metadata settings in the application."
-        },
-        "list": {
-          "type": "list",
-          "label": "Metadata List"
-        },
-        "products": {
-          "type": "Products_collection",
-          "label": "Products List",
-          "default": "main-collection"
-        }
-      },
-      "footer": {
-        "title": {
-          "type": "text",
-          "label": "Metadata Schema Title",
-          "default": "Metadata Schema"
-        },
-        "description": {
-          "type": "text",
-          "label": "Metadata Schema Description",
-          "default": "Schema for metadata settings in the application."
-        }
       }
     }
   },
@@ -79,71 +18,27 @@
       "en": "Fonts"
     },
     "settings": {
-      "max": {
-        "type": "number",
+      "font_family": {
+        "type": "select",
         "label": {
-          "ar": "الحد الأقصى لعدد إدخالات البhgjhgيانات الوصفية",
-          "en": "Maximum Number of Metadata Entries"
+          "ar": "الخط",
+          "en": "Font Family"
         },
-        "default": 100
-      },
-      "navbar_text": {
-        "type": "text",
-        "label": "Metadata Schema Name",
-        "default": "احصل على توصيل مجاني للمنزل (عند الطلب بأكثر من 1000 جنية مصرى)"
-      },
-      "mainColor": {
-        "type": "color",
-        "label": "Main Color",
-        "default": "#000000"
-      },
-      "darkColor": {
-        "type": "color",
-        "label": "Dark Color",
-        "default": "#333333"
-      },
-      "email": {
-        "type": "text",
-        "label": "Email",
-        "default": "coder371@gmail.com"
-      },
-      "header": {
-        "title": {
-          "type": "text",
-          "label": "Metadata Schema Title",
-          "default": "Metadata Schema"
-        },
-        "logo": {
-          "type": "media",
-          "label": "Metadata Schema Title",
-          "default": ""
-        },
-        "description": {
-          "type": "text",
-          "label": "Metadata Schema Description",
-          "default": "Schema for metadata settings in the application."
-        },
-        "list": {
-          "type": "list",
-          "label": "Metadata List"
-        },
-        "products": {
-          "type": "Products_collection",
-          "label": "Products List",
-          "default": "main-collection"
-        }
-      },
-      "footer": {
-        "title": {
-          "type": "text",
-          "label": "Metadata Schema Title",
-          "default": "Metadata Schema"
-        },
-        "description": {
-          "type": "text",
-          "label": "Metadata Schema Description",
-          "default": "Schema for metadata settings in the application."
-        }
+        "options": [
+          {
+            "label": "Tajawal",
+            "value": "tajawal"
+          },
+          {
+            "label": "Cairo",
+            "value": "cairo"
+          },
+          {
+            "label": "IBM Plex Sans Arabic",
+            "value": "ibm_plex_sans_arabic"
+          }
+        ],
+        "default": "tajawal"
       }
     }
   }

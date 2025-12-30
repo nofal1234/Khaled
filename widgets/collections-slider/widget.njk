@@ -1,0 +1,146 @@
+{% set section_title = widget.data.section_title %}
+{% set view_all_link = widget.data.view_all_link %}
+{% set show_view_all = widget.data.show_view_all %}
+{% set title_color = widget.data.title_color  %}
+{% set link_color = widget.data.link_color %}
+{% set card_border_color = widget.data.card_border_color %}
+{% set card_hover_color = widget.data.card_hover_color  %}
+{% set show_navigation = widget.data.show_navigation  %}
+{% set show_border = widget.data.show_border %}
+
+<section class="mt-4 md:mt-8 mb-3 md:mb-5 container">
+  <div class="rounded-2xl py-4">
+    <div class="flex items-center justify-between mb-4 md:mb-6">
+      <h1 class="text-xl md:text-2xl font-bold" style="color: {{ title_color }};">{{ t(widget.data.section_title or 'collections') }}</h1>
+      <div class="flex items-center gap-4">
+        {% if show_view_all %}
+          <a href="{{ view_all_link }}"
+            class="underline text-xs md:text-sm cursor-pointer transition py-0 px-0 md:py-2 md:px-3"
+            style="color: {{ link_color }};">
+            {{ t('view_all') }}
+          </a>
+        {% endif %}
+
+        {% if show_navigation %}
+          <div class="flex items-center gap-[38px]" >
+            <div class="cursor-pointer  swiper-button-next-category  hidden md:flex items-center justify-center bg-transparent">
+              <i class="ph  ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+            </div>
+            <div class=" swiper-button-prev-category cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+              <i class="ph  ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% set selected_collections = widget.data.collections or [] %}
+    <div class="relative">
+      <div id="category-swiper-{{ widget.id }}" class="swiper categorySwiper">
+        <div class="swiper-wrapper">
+          {% if selected_collections |length == 0 %}
+            {% for item in [1,2,3,4,5,6] %}
+              
+          <div class="swiper-slide">
+              <div class="flex flex-col md:gap-6 gap-2 items-center cursor-not-allowed opacity-60">
+                <div class="group w-24 h-24 md:w-[159px] md:h-[159px] rounded-full overflow-hidden {%if show_border %} border {%endif%} flex items-center justify-center bg-gray-100"
+                  style="border-color: {{ card_border_color }};">
+                  <span class="text-4xl text-gray-300">
+                    <i class="ph ph-image"></i>
+                  </span>
+                </div>
+                <span class="text-xs md:text-xl md:font-medium text-center text-gray-400" style="color: {{ collection_title_color }};">{{ t('لا توجد مجموعات') }}</span>
+              </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            {% for item in selected_collections %}
+            <div class="swiper-slide">
+              <a href="collection/{{item.image.handle }}"
+                class="flex flex-col md:gap-6 gap-2 items-center cursor-pointer no-underline">
+                <div
+                  class="group w-24 h-24 md:w-[159px] md:h-[159px] rounded-full overflow-hidden {%if show_border %} border {%endif%}"
+                    style="border-color: {{ card_border_color }};"
+                    onmouseover="this.style.borderColor='{{ card_hover_color }}';"
+                    onmouseout="this.style.borderColor='{{ card_border_color }}';"
+                >
+                  <img src="{{ item.image.fileUrl }}" alt="{{item.title}}"
+                    class="group-hover:scale-105 transition-all duration-300 w-24 h-24 md:w-[159px] md:h-[159px] rounded-full object-cover ">
+                </div>
+                <span class="text-xs md:text-xl md:font-medium text-center" style="color: {{ collection_title_color }};">{{  item.title}}</span>
+              </a>
+            </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var swiperElem = document.getElementById('category-swiper-{{ widget.id }}');
+    if (swiperElem && window.Swiper) {
+
+      const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+      const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+      const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+      const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+      const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+      const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+      const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+      const speed = Number('{{ widget.data.speed }}');
+      const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+      const autoplay = '{{ widget.data.autoplay }}' == 'true';
+      const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+
+      new window.Swiper('#category-swiper-{{ widget.id }}', {
+        loop: true,
+        grabCursor: grabCursor,
+        speed: speed,
+        spaceBetween: spaceBetweenSM,
+        allowTouchMove: allowTouchMove,
+        autoplay: autoplay ? {
+          delay: autoplayDelay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+          reverseDirection: true
+        } : false,
+        navigation: {
+          nextEl: '.swiper-button-next-category',
+          prevEl: '.swiper-button-prev-category'
+        },
+        breakpoints: {
+          250: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewSM,
+            spaceBetween: spaceBetweenSM
+          },
+          768: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewSM ,
+            spaceBetween: spaceBetweenMD
+          },
+          1000: {
+            slidesPerView: slidesPerViewMD,
+            centeredSlides: false,
+            spaceBetween: spaceBetweenMD
+          },
+          1200: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewLG,
+            spaceBetween: spaceBetweenLG
+          }
+        }
+      });
+    }
+  });
+</script>
+
+{% style %}
+.swiper-button-next-category, .swiper-button-prev-category {
+  width: 14px;
+  height: 27px;
+}
+{% endstyle %}

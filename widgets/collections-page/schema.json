@@ -1,5 +1,5 @@
 {
-  "name": "عرض الاقسام ",
+  "name": "collections",
   "description": "Page displaying collections with browse button",
   "settings": {
     "collections": {
@@ -19,7 +19,7 @@
   },
   "blocks": {
     "collectionItem": {
-      "name": "الاقسام",
+      "name": "collections",
       "settings": [
         {
           "id": "image",
@@ -50,7 +50,7 @@
   "presets": [
     {
       "category": "Pages",
-      "name": "🧩 Collections Page"
+      "name": "Collections"
     }
   ]
 }

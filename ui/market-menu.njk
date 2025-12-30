@@ -1,0 +1,23 @@
+{% form 'market' %}
+<div class="relative hidden md:block">
+  <button type="button" onclick="toggleModal('market')" class="flex items-center w-max gap-2 cursor-pointer transition">
+   <span>
+     <i class="ph ph-caret-down text-lg w-3  transition-transform duration-200"
+     :class="{ 'rotate-180': modal.open && modal.type === 'market' }"></i>
+    </span>
+    <span>{{ market  or data.markets[0].title }}</span>
+  </button>
+  <div  x-cloak x-show="modal.open && modal.type === 'market'" class="absolute left-0 mt-3 w-40 bg-white border border-gray-200 rounded-md z-50">
+    <ul class="py-2">
+      {% for market in data.markets %}
+      <li>
+        <button style="font-size: {{font_size}}px;color:{{text_color}}" type="submit" name="market" value="{{ market.value }}" 
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100  transition">
+          {{ market.title }}
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endform %}

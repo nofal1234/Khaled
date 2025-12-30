@@ -1,44 +1,202 @@
-{% set product = data.product or product %}
-<a href="/product/{{ product.slug }}" class="product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col">
-    <!-- Image Section -->
-    <div class="relative overflow-hidden bg-gray-100 product-card__image">
-        <img src="{{ product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}" alt="{{ product.title }}">
+{% set product = data.product %}
+
+<a href="/product/{{ product.slug }}"
+    class="product-card w-full h-full bg-white rounded-lg border border-gray overflow-hidden flex flex-col">
+    <!-- Image Section with Swiper -->
+    <div
+        class="relative group overflow-hidden bg-bgItem flex items-center justify-center product-card-swiper-container product-card__image-wrapper">
+        <div class="swiper product-card-swiper-{{ product._id }} w-full h-full ">
+            <div class="swiper-wrapper">
+                {% if product.images and (product.images | length) > 0 %}
+                {% for image in product.images %}
+                <div
+                    class="swiper-slide flex items-center justify-center  pt-[34px] md:pt-[56px] md:pb-[42px]  pb-[26px] px-[47px]  md:px-[57px]">
+                    <img src="{% if image.url %}{{ image.url | assets }}{% else %}{{ image.fileUrl  | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}{% endif %}"
+                        class="object-contain md:h-[226px] h-[141px] group-hover:scale-105 transition-all duration-300"
+                        alt="{{ product.title }}" />
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="swiper-slide flex items-center justify-center">
+                    <img src="https://placehold.co/320x420/eeeeee/666?text=No+Image"
+                        class="object-contain group-hover:scale-105 transition-all duration-300"
+                        alt="{{ product.title }}" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if product.images and (product.images | length) > 1 %}
+        <div class="swiper-pagination product-card-pagination-{{ product._id }}"></div>
+        {% endif %}
         <button
-            class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition wishlist-heart-btn"
-            data-product-id="{{ product._id }}"
-            data-product-title="{{ product.title }}"
+            class="absolute top-3 right-3 bg-white rounded-full md:w-10 md:h-10 w-[25px] h-[25px] flex items-center justify-center hover:bg-gray-100 transition z-10 wishlist-heart-btn"
+            data-product-id="{{ product._id }}" data-product-title="{{ product.title }}"
             data-product-slug="{{ product.slug }}"
-            data-product-image="{{ product.images[0].fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}"
-            data-product-price="{{ product.pricing.price }}"
-            {% if product.pricing.compareAtPrice %}
-            data-product-compare-at-price="{{ product.pricing.compareAtPrice }}"
-            {% endif %}
-            onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }"
-        >
-            <i class="ph ph-heart text-xl"></i>
+            data-product-image="{{ (product.images[0].fileUrl | assets) if product.images and product.images[0] else 'https://placehold.co/320x420/eeeeee/666?text=No+Image' }}"
+            data-product-price="{{ product.pricing.price }}" {% if product.pricing.compareAtPrice %}
+            data-product-compare-at-price="{{ product.pricing.compareAtPrice }}" {% endif %}
+            onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }">
+            <i class="ph ph-heart md:text-xl text-[10px]"></i>
         </button>
-        <div class="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-sm font-bold">
-            5.0 <i class="ph-fill ph-star" style="color: #EBB11F;"></i>
+        <div
+            class="absolute top-3 left-3 bg-white flex items-center text-black px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10">
+            <i class="ph-fill ph-star text-xs md:text-lg" style="color: #EBB11F;"></i>
+            <span class="md:text-lg text-xs font-semibold leading-[100%]">
+                5.0
+            </span>
         </div>
     </div>
 
     <!-- Content Section -->
-    <div class="p-4 product-card__content flex flex-col flex-1">
-        <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">{{ product.title }}</h3>
+    <div class="p-4 flex flex-col gap-[10px] flex-1">
+        <h3 class="md:text-lg text-sm font-bold" style="
+                {% if card_title_color %}color: {{ card_title_color }};{% endif %}
+                {% if card_title_size %}font-size: {{ card_title_size }}px;{% endif %}
+            ">
+            {{ product.title }}
+        </h3>
+        {% if product.description %}
+        <p class="font-semibold line-clamp-2" style="
+               {% if card_description_color %}color: {{ card_description_color }};{% endif %}
+               {% if card_description_size %}font-size: {{ card_description_size }}px;{% endif %}
+           ">
+            {{ product.description | striptags }}
+        </p>
+        {% endif %}
         <!-- Price Section -->
         <div class="flex items-end gap-3 mt-auto justify-between product-card__price-row">
             <div class="flex flex-col flex-1 gap-1">
                 {% if product.pricing.compareAtPrice %}
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-sm md:text-base text-gray-600 line-through">{{ product.pricing.compareAtPrice | money }}</span>
-                    <span class="text-xs font-bold text-red-600">-{{ ((1 - (product.pricing.price / product.pricing.compareAtPrice)) * 100) | round(0, 'floor') }}%</span>
+                    <span class="line-through" style="
+                              {% if price_before_color %}color: {{ price_before_color }};{% endif %}
+                              {% if price_before_size %}font-size: {{ price_before_size }}px;{% endif %}
+                          ">
+                        {{ product.pricing.compareAtPrice | money }}
+                    </span>
+                    <span class="font-bold" style="
+                              {% if discount_color %}color: {{ discount_color }};{% endif %}
+                              {% if discount_size %}font-size: {{ discount_size }}px;{% endif %}
+                          ">
+                        -{{ ((1 - (product.pricing.price / product.pricing.compareAtPrice)) * 100) | round(0, 'floor')
+                        }}%
+                    </span>
                 </div>
                 {% endif %}
-                <span class="text-base sm:text-lg md:text-2xl font-bold text-black whitespace-nowrap">{{ product.pricing.price | money }}</span>
+                <span class="font-bold whitespace-nowrap" style="
+                          {% if price_color %}color: {{ price_color }};{% endif %}
+                          {% if price_size %}font-size: {{ price_size }}px;{% endif %}
+                      ">
+                    {{ product.pricing.price | money }}
+                </span>
             </div>
-            <button onclick="if(typeof window.addProductToCart === 'function') { window.addProductToCart('{{ product._id }}', 1, []); event.stopPropagation(); event.preventDefault(); }" class="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0 shadow-lg hover:shadow-xl" title="إضافة للسلة">
+            <button
+                onclick="if(typeof window.addProductToCart === 'function') { window.addProductToCart('{{ product._id }}', 1, []); event.stopPropagation(); event.preventDefault(); }"
+                class="w-[26px] h-[26px] md:w-12 md:h-12 rounded-full font-bold
+                       hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0" style="
+                    {% if buy_button_bg %}background: {{ buy_button_bg }};{% endif %}
+                    color: #fff
+                " title="إضافة للسلة">
                 <i class="ph ph-shopping-cart text-lg md:text-xl"></i>
             </button>
         </div>
     </div>
 </a>
+
+<script>
+    function initProductCardSwipers() {
+        const productCardContainers = document.querySelectorAll('.product-card-swiper-container');
+        productCardContainers.forEach((container) => {
+            const swiperElement = container.querySelector('.swiper');
+            if (!swiperElement) return;
+
+            const swiperClass = swiperElement.className.split(' ').find(cls => cls.startsWith('product-card-swiper-'));
+            if (!swiperClass) return;
+            if (swiperElement.swiper) return;
+
+            const paginationElement = container.querySelector('.swiper-pagination');
+            const slides = swiperElement.querySelectorAll('.swiper-slide');
+            if (slides.length > 1 && window.Swiper) {
+                new Swiper(swiperElement, {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    loop: false,
+                    grabCursor: true,
+                    pagination: paginationElement ? {
+                        el: paginationElement,
+                        clickable: true,
+                        dynamicBullets: false
+                    } : false,
+                    autoplay: false,
+                    speed: 300,
+                    allowTouchMove: true
+                });
+            }
+        });
+    }
+    initProductCardSwipers();
+    const observer = new MutationObserver(() => {
+        initProductCardSwipers();
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+</script>
+
+<style>
+    /* Product Card Swiper Styles */
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .product-card__image-wrapper {
+        min-height: 260px;
+    }
+
+    .offerSwiper .swiper-slide,
+    .categorySwiper .swiper-slide {
+        display: flex;
+        height: auto;
+    }
+
+    .offerSwiper .swiper-slide>.product-card,
+    .categorySwiper .swiper-slide>.product-card {
+        height: 100%;
+    }
+
+    .product-card-swiper-container .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .product-card-swiper-container .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-card-swiper-container .swiper-pagination {
+        bottom: 16px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        width: auto !important;
+    }
+
+    .product-card-swiper-container .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 1;
+        margin: 0 3px;
+        transition: all 0.3s ease;
+    }
+
+    .product-card-swiper-container .swiper-pagination-bullet-active {
+        background: #000;
+        width: 6px;
+        border-radius: 50%;
+    }
+</style>

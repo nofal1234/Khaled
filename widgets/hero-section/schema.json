@@ -4,47 +4,91 @@
   "category": "hero",
   "icon": "image",
   "settings": {
-    "heroImage": {
-      "type": "media",
-      "label": "صورة الهيرو",
-      "description": "قم بتعيين صورة الخلفية لقسم الهيرو",
-      "default": ""
+    "banner_higth_lg": {
+      "type": "number",
+      "label": "ارتفاع البانر في الشاشات الكبيرة",
+      "default": 600
     },
-    "mainTitle": {
+    "banner_higth_sm": {
+      "type": "number",
+      "label": "ارتفاع البانر في الشاشات الصغيرة",
+      "default": 350
+    },
+     "image_lg": {
+      "type": "media",
+      "label": "صورة في الشاشات الكبيرة",
+      "default": "qumra://Hero.png"
+    },
+    "image_sm": {
+      "type": "media",
+      "label": "صورة في الشاشات الصغيرة",
+      "default": "qumra://Hero.png"
+    },
+    "title": {
       "type": "string",
       "label": "العنوان الرئيسي",
-      "default": "hero_title_default",
-      "description": "العنوان الرئيسي الذي يظهر في سكشن الهيرو"
+      "default": "spring_has_arrived"
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان الرئيسي",
+      "default": "#ffffff"
+    },
+    "title_font_size": {
+      "type": "number",
+      "label": "حجم خط العنوان الرئيسي",
+      "default": 40
     },
     "subtitle": {
-      "type": "string",
-      "label": "العنوان الفرعي",
-      "default": "hero_subtitle_default",
-      "description": "النص الفرعي الذي يظهر تحت العنوان الرئيسي"
+      "type": "text",
+      "label": "النص الفرعي",
+      "default": "hero_subtitle_default"
     },
-    "buttonText": {
+    "subtitle_color": {
+      "type": "color",
+      "label": "لون النص الفرعي",
+      "default": "#ffffff"
+    },
+    "subtitle_font_size": {
+      "type": "number",
+      "label": "حجم خط النص الفرعي",
+      "default": 18
+    },
+    "button_text": {
       "type": "string",
       "label": "نص الزر",
-      "default": "hero_button_text_default",
-      "description": "النص الذي يظهر على زر الدعوة لاتخاذ إجراء"
+      "default": "order_now"
     },
-    "buttonLink": {
+    "button_bg_color": {
+      "type": "color",
+      "label": "خلفية الزر",
+      "default": "transparent"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": "لون نص الزر",
+      "default": "#ffffff"
+    },
+    "button_text_font_size": {
+      "type": "number",
+      "label": "حجم خط نص الزر",
+      "default": 18
+    },
+    "button_link": {
       "type": "string",
       "label": "رابط الزر",
-      "default": "/collections",
-      "description": "المسار الذي ينتقل إليه الزر"
+      "default": "/collections"
     }
   },
   "presets": [
     {
-      "category": "الصفحة الرئيسية",
-      "name": "⭐ قسم الهيرو",
+      "category": "Home",
+      "name": "hero",
       "settings": {
-        "mainTitle": "hero_title_default",
+        "title": "hero_title_default",
         "subtitle": "hero_subtitle_default",
-        "buttonText": "hero_button_text_default",
-        "buttonLink": "/collections",
-        "heroImage": ""
+        "button_text": "hero_button_text_default",
+        "button_link": "/collections"
       }
     }
   ]

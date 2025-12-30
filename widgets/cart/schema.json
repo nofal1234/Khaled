@@ -2,6 +2,11 @@
   "name": "Cart",
   "description": "Display cart contents with order summary",
   "settings": {
+    "text_color": {
+      "type": "color",
+      "label": "لون النصوص",
+      "default": "#f00"
+    },
     "cart_title": {
       "type": "string",
       "label": "Cart Title",

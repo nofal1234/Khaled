@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function GlobalState() {
   const config = window.qumra || {};
-
+  
   return {
     ...__qumra__,
     globalLoading: {
@@ -145,6 +145,10 @@ function GlobalState() {
 				open: open !== undefined ? open : !this.modal.open,
 				type: type,
 			}
+			window.modal = this.modal;
+			try {
+				window.dispatchEvent(new CustomEvent('modal:changed', { detail: this.modal }));
+			} catch (_) {}
 		},
 		init() {
 			window.toggleModal = this.toggleModal.bind(this);
@@ -155,9 +159,13 @@ function GlobalState() {
 			window.updateLoading = this.updateLoading.bind(this);
 			window.globalLoading = this.globalLoading;
 			window.globals = this.globals;
+			window.modal = this.modal;
 			window.showToast = this.showToast.bind(this);
 			window.login = this.login.bind(this);
 			window.logout = this.logout.bind(this);
+			try {
+				window.dispatchEvent(new CustomEvent('modal:changed', { detail: this.modal }));
+			} catch (_) {}
 			 
 		},
   };
@@ -222,4 +230,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .finally(() => window.updateLoading?.("addToCart", false));
     }
   }
+
+  // Event listeners for opening modals
+  window.addEventListener('open-cart', () => {
+    if (window.toggleModal) {
+      window.toggleModal('cart', true);
+    }
   });
+
+  window.addEventListener('open-wishlist', () => {
+    if (window.toggleModal) {
+      window.toggleModal('wishlist', true);
+    }
+  });
+});

@@ -1,25 +1,71 @@
-<!-- Hero Section -->
-<section class="relative h-96 md:h-[600px] lg:min-h-screen flex items-center justify-center">
+<!-- Hero Section مع كلاس مميز -->
+
+{% set uniq = widget.data.id %}
+
+{% set title = widget.data.title %}
+{% set title_color = widget.data.title_color %}
+{% set title_font_size = widget.data.title_font_size %}
+{% set subtitle = widget.data.subtitle %}
+{% set subtitle_color = widget.data.subtitle_color %}
+{% set subtitle_font_size = widget.data.subtitle_font_size %}
+{% set button_text = widget.data.button_text %}
+{% set button_text_color = widget.data.button_text_color %}
+{% set button_link = widget.data.button_link %}
+{% set image_lg = widget.data.image_lg %}
+{% set image_sm = widget.data.image_sm %}
+{% set banner_higth_lg = widget.data.banner_higth_lg %}
+{% set banner_higth_sm = widget.data.banner_higth_sm %}
+{% set button_bg_color = widget.data.button_bg_color %}
+
+{% set font_size_ratio = 0.6 %}
+{% set button_text_font_size = widget.data.button_text_font_size %}
+
+{% set title_font_size_sm = (title_font_size * font_size_ratio) | round %}
+{% set subtitle_font_size_sm = (subtitle_font_size * font_size_ratio) | round %}
+{% set button_text_font_size_sm = (button_text_font_size * font_size_ratio) | round %}
+
+{% style %}
+.hero-section-higth {
+    min-height: {{ banner_higth_sm }}px;
+}
+@media (min-width: 768px) {
+    .hero-section-higth {
+        min-height: {{ banner_higth_lg }}px;
+    }
+}
+{% endstyle %}
+
+<section 
+    class="relative flex items-center justify-center hero-section-higth"
+>
     <!-- Background Image -->
-    {% if widget.data.heroImage and widget.data.heroImage.fileUrl %}
-        <img src="{{ widget.data.heroImage.fileUrl }}" alt="{{t('hero_image_alt')}}" class="absolute inset-0 w-full h-full object-cover">
-    {% else %}
-        <img src="{{ 'Hero.png' | assets }}" alt="{{t('hero_image_alt')}}" class="absolute inset-0 w-full h-full object-cover">
-    {% endif %}
-    
+    <img src="{{ image_lg.fileUrl }}" alt="{{t('hero_image_alt')}}"
+        class="absolute inset-0 w-full h-full object-cover">
+
     <!-- Overlay for better text readability -->
     <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-    
+
     <!-- Content positioned below header -->
-    <div class="relative w-full md:w-1/2 z-10 text-center px-4 mt-16 md:mt-40">
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
-            {{ t(widget.data.mainTitle or 'hero_title_default') }}
-        </h1>
-        <div class="text-lg md:text-2xl lg:text-3xl text-white mb-6 md:mb-8 drop-shadow-md max-w-2xl mx-auto">
-            {{ t(widget.data.subtitle or 'hero_subtitle_default') }}
+    <div class="relative w-full md:w-1/2 z-10 text-center px-4 mt-16 md:mt-40 flex flex-col gap-2 md:gap-6 items-center">
+        <div class="flex flex-col gap-2 md:gap-6 items-center">
+            <h1 
+                class="font-bold drop-shadow-lg"
+                style="color: {{ title_color }}; font-size: {{ title_font_size }}px;"
+            >
+                {{ t(title) }}
+            </h1>
+            <div 
+                class="font-extrabold md:font-bold drop-shadow-md max-w-lg mx-auto"
+                style="color: {{ subtitle_color }}; font-size: {{ subtitle_font_size }}px;"
+            >
+                {{ t(subtitle) | safe }}
+            </div>
         </div>
-        <a href="{{ widget.data.buttonLink | default('/collections') }}" class="bg-transparent border-2 border-white text-white font-bold py-2 md:py-3 px-6 md:px-8 rounded-full transition transform hover:bg-gray-100/20 hover:text-mainColor shadow-lg inline-block">
-            {{ t(widget.data.buttonText or 'hero_button_text_default') }}
+        <a href="{{ button_link | default('/collections') }}"
+           class="min-w-[193px] inline-block border  font-bold py-2 md:py-3 px-6 md:px-8 rounded-full transition transform hover:border-mainColor hover:bg-gray-100/20 hover:text-mainColor"
+           style="background-color: {{ button_bg_color }}; color: {{ button_text_color }}; font-size: {{ button_text_font_size }}px; border-color:{{button_text_color }}"
+        >
+            {{ t(button_text or 'hero_button_text_default') }}
         </a>
     </div>
 </section>

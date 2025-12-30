@@ -1,6 +1,6 @@
 function xDataproduct({ product }) {
   const Request = window.qumra.storeGate
-  
+
   // Helper function for showing toasts
   const showToast = (message, type = 'info', duration = 3000) => {
     if (window.showToast) {
@@ -11,6 +11,52 @@ function xDataproduct({ product }) {
   };
 
   const schema = {
+    variantByOptions: `mutation VariantByOptions($input: VariantByOptions!) {
+      variantByOptions(input: $input) {
+        success
+        message
+        data {
+          _id
+          product
+          options {
+            _id
+            option {
+              _id
+              product
+              valuesCount
+              values {
+                _id
+                label
+                type
+                sortOrder
+                createdAt
+                updatedAt
+              }
+              name
+              createdAt
+              updatedAt
+            }
+            label
+            type
+            sortOrder
+            createdAt
+            updatedAt
+          }
+          images {
+            _id
+            fileUrl
+          }
+          pricing {
+           compareAtPrice
+           originalPrice
+           price
+          }
+          quantity
+        }
+      }
+    }
+`,
+
     addToCart: `mutation AddToCart($data: AddToCartInput!) {
   addToCart(data: $data) {
     data {
@@ -107,15 +153,50 @@ function xDataproduct({ product }) {
       if (product?.options?.length) {
         return product.options.every(opt => Boolean(this.selectedOptions[opt._id]));
       }
-      return true; 
+      return true;
     },
+    variantByOptions(prod) {
+      if (!prod?.options?.length) return;
+      const allSelected = prod.options.every(
+        (opt) => Boolean(this.selectedOptions[opt._id])
+      );
+      if (!allSelected) return;
 
+      const selectedOptionValues = prod.options.map(
+        (opt) => this.selectedOptions[opt._id]
+      );
+
+      const input = {
+        options: selectedOptionValues,
+      };
+
+      Request(schema.variantByOptions, { input })
+        .then((res) => {
+          const ok = res?.variantByOptions?.success;
+          if (ok) {
+            this.loading.optionsLoading = false;
+            this.resolvedPrice = res.variantByOptions.data.pricing;
+            this.product.quantity = res.variantByOptions.data.quantity;
+            this.productQuantity = 1
+            showToast("تم تحديث السعر بنجاح", "success");
+          } else {
+            showToast(
+              res?.resolvePrice?.message || "تعذر تحديث السعر",
+              "error"
+            );
+          }
+        })
+        // .catch(() => showToast("حدث خطأ أثناء تحديث السعر", "error"))
+        .finally(() => {
+          this.loading.priceAtCall = false;
+        });
+    },
     resolvePrice(prod) {
       if (!prod?.options?.length) {
         this.loading.optionsLoading = false;
         return;
       }
-      
+
       const allSelected = prod.options.every(
         (opt) => Boolean(this.selectedOptions[opt._id])
       );
@@ -124,14 +205,14 @@ function xDataproduct({ product }) {
         this.loading.optionsLoading = false;
         return;
       }
-      
+
       // Check if all selected values are valid
       const invalidSelections = prod.options.filter(opt => {
         const selectedValue = this.selectedOptions[opt._id];
         const validValues = opt.values.map(v => v._id);
         return !validValues.includes(selectedValue);
       });
-      
+
       if (invalidSelections.length > 0) {
         console.error('Invalid option selections:', invalidSelections);
         this.loading.optionsLoading = false;
@@ -157,7 +238,7 @@ function xDataproduct({ product }) {
       console.log('Resolving price with input:', input);
 
       this.loading.priceAtCall = true;
-      
+
       // Check if Request function exists
       if (typeof Request !== 'function') {
         console.error('Request function is not defined');
@@ -212,25 +293,25 @@ function xDataproduct({ product }) {
       console.log('Selecting option:', { optionId, valueId, product: prod._id });
       this.selectedOptions[optionId] = valueId;
       this.loading.optionsLoading = true;
-      
+
       // Add timeout as backup to prevent infinite loading
       setTimeout(() => {
         if (this.loading.optionsLoading) {
           this.loading.optionsLoading = false;
         }
       }, 10000); // 10 seconds timeout
-      
+
       // Only resolve price if product has options and we have valid selections
       if (prod?.options?.length > 0) {
         // Check if all options are selected
         const allSelected = prod.options.every(
           (opt) => Boolean(this.selectedOptions[opt._id])
         );
-        
+
         if (allSelected) {
           // Check if we have valid variants for this product
           if (prod.variants && prod.variants.length > 0) {
-            this.resolvePrice(prod);
+            this.variantByOptions(prod);
           } else {
             // No variants available, just stop loading
             console.log('No variants available for this product');
@@ -265,17 +346,17 @@ function xDataproduct({ product }) {
 
     addProductToCart(productId, quantity, options = []) {
       this.updateLoading("addToCart", true);
-      
+
       if (typeof Request !== 'function') {
         console.error('Request function is not defined');
         this.updateLoading("addToCart", false);
         showToast("خطأ في الاتصال بالخادم", "error");
         return;
       }
-      
+
       // Use options as is - they should already be in the correct format
       let formattedOptions = options;
-      
+
       Request(schema.addToCart, { data: { productId, quantity, options: formattedOptions } })
         .then((res) => {
           const ok = res?.addToCart?.success;
@@ -288,8 +369,9 @@ function xDataproduct({ product }) {
               res?.addToCart?.message || "تمت إضافة المنتج للسلة بنجاح",
               "success"
             );
+
             // افتح درج السلة بعد الإضافة الناجحة مثل الثيم القديم
-            try { window.dispatchEvent(new CustomEvent("open-cart")); } catch (_) {}
+            try { window.dispatchEvent(new CustomEvent("open-cart")); } catch (_) { }
           } else {
             showToast(
               res?.addToCart?.message || "فشل إضافة المنتج للسلة",
@@ -305,6 +387,18 @@ function xDataproduct({ product }) {
     },
 
     buyNowProduct(payload) {
+      // Check if product has options and if all options are selected
+      if (product?.options?.length > 0 && !this.areOptionsSelected) {
+        showToast("يرجى تحديد الخيارات", "error");
+        return;
+      }
+      
+      // Check if product is out of stock
+      if (this.isOutOfStock) {
+        showToast("لا توفر كمية في المخزون", "error");
+        return;
+      }
+      
       this.updateLoading("buyNow", true);
       
       if (typeof Request !== 'function') {
@@ -313,9 +407,7 @@ function xDataproduct({ product }) {
         showToast("خطأ في الاتصال بالخادم", "error");
         return;
       }
-      
       // Use options as is - they should already be in the correct format
-      
       Request(schema.buyNow, payload)
         .then((res) => {
           const ok = res?.buyNow?.success;
@@ -332,7 +424,6 @@ function xDataproduct({ product }) {
         })
         .finally(() => this.updateLoading("buyNow", false));
     },
-
     decreaseCartItem() {
       if (this.productQuantity <= (product?.minQuantity || 1)) {
         showToast(`الحد الادني لكمية المنتج هو ${product?.minQuantity || 1}`, "error");
@@ -392,33 +483,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const productHandler = document.querySelector('[x-ref="productComponent"]')
     ?._x_dataStack?.[0];
 
-     form.addEventListener("submit", (e) => {
-     e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-     const formData = new FormData(form);
-     const optionsArray = formData.getAll("options[]");
-     const productId = formData.get("product");
-     const quantity = +formData.get("quantity");
-    
-     // Check if productHandler exists and has the required data
-     if (!productHandler || !productHandler.product) {
-       console.error('Product handler or product data not available');
-       return;
-     }
-     
-     console.log(productHandler.areOptionsSelected, productHandler.product);
-     if(productHandler.product.options.length > 0 && !productHandler.areOptionsSelected) {
-       showToast("يرجى تحديد الخيارات", "error");
-       return;
-     }
+    const formData = new FormData(form);
+    const optionsArray = formData.getAll("options[]");
+    const productId = formData.get("product");
+    const quantity = +formData.get("quantity");
 
-     const data = { productId, quantity, options: optionsArray };
-     const btn = e.submitter;
+    // Check if productHandler exists and has the required data
+    if (!productHandler || !productHandler.product) {
+      console.error('Product handler or product data not available');
+      return;
+    }
 
-     if (btn?.name === "addToCart") {
-       productHandler.addProductToCart(productId, quantity, optionsArray);
-     } else if (btn?.name === "buyNow") {
-       productHandler.buyNowProduct({ data });
-     }
-   });
+    console.log(productHandler.areOptionsSelected, productHandler.product);
+    if (productHandler.product.options.length > 0 && !productHandler.areOptionsSelected) {
+      showToast("يرجى تحديد الخيارات", "error");
+      return;
+    }
+
+    const data = { productId, quantity, options: optionsArray };
+    const btn = e.submitter;
+
+    if (btn?.name === "addToCart") {
+      productHandler.addProductToCart(productId, quantity, optionsArray);
+    } else if (btn?.name === "buyNow") {
+      productHandler.buyNowProduct({ data });
+    }
+  });
 });

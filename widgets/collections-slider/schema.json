@@ -1,0 +1,124 @@
+{
+  "name": "collections slider",
+  "description": "قسم المجموعات والتصنيفات",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": "المجموعات المعروضة"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "collections"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "/collections"
+    },
+   
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان ",
+      "default": "#333333"
+    },
+    "show_view_all": {
+      "type": "boolean",
+      "label": "عرض زر عرض الكل",
+      "default": true
+    },
+    "link_color": {
+      "type": "color",
+      "label": "لون رابط عرض الكل",
+      "default": "#6b7280"
+    },
+    "show_border": {
+      "type": "boolean",
+      "label": "إظهار الحدود",
+      "default": true
+    },
+    "card_border_color": {
+      "type": "color",
+      "label": "لون حدود البطاقة",
+      "default": "#e5e7eb"
+    },
+    "collection_title_color": {
+      "type": "color",
+      "label": "لون عنوان القسم",
+      "default": "#333333"
+    },
+    "card_hover_color": {
+      "type": "color",
+      "label": "لون البطاقة عند المرور",
+      "default": "#000000"
+    },
+    "show_navigation": {
+      "type": "boolean",
+      "label": "إظهار أزرار التنقل",
+      "default": true
+    },
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
+    },
+    "slides_per_view_sm": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة صغيرة)",
+      "default": 3
+    },
+    "space_between_sm": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة صغيرة)",
+      "default": 32
+    },
+    "slides_per_view_md": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة متوسطة)",
+      "default": 4
+    },
+    "space_between_md": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة متوسطة)",
+      "default": 20
+    },
+    "slides_per_view_lg": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة كبيرة)",
+      "default": 6
+    },
+    "space_between_lg": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة كبيرة)",
+      "default": 65
+    }
+  },
+
+  "presets": [
+    {
+      "category": "blog slider",
+      "name": "blog slider"
+    }
+  ]
+}

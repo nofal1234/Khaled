@@ -1,0 +1,8 @@
+{
+  "tailwindCSS.experimental.configFile": "tailwind.config.ts",
+  "tailwindCSS.includeLanguages": {
+    "njk": "html",
+    "nunjucks": "html"
+  },
+  "tailwindCSS.emmetCompletions": true
+}

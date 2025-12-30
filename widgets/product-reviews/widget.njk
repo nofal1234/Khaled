@@ -4,67 +4,44 @@
     <h1 class="text-2xl md:text-3xl font-bold text-black mb-6">
       {{ t('reviews_and_ratings') }}
     </h1>
-    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+    <div class="flex flex-col lg:flex-row md:gap-[126px] gap-4 items-start">
       <!-- Left Side - Rating Summary -->
       <div class="w-full lg:w-1/2">
-        <div class="flex gap-6 items-center">
-          <div class="text-center">
+        <div class="flex flex-col w-full md:flex-row md:gap-8 gap-4 items-center">
+          <div class="max-md:text-center flex flex-col gap-2">
             <div class="flex items-center justify-center gap-2">
-              <p class="text-gray-500 text-xl">5/</p>
-              <h2 class="text-[6rem] md:text-[8rem] font-semibold text-black leading-none">
+              <p class="text-textDescription self-end text-[18.29px] md:text-[32px]">5/</p>
+              <h2 class="text-[98.29px] md:text-[172px] font-medium text-mainColor leading-[100%]">
                 {{ widget.data.rating | default(4.5) }}
               </h2>
             </div>
-            <p class="text-gray-600 text-xs md:text-sm mt-1">
+            <p class="text-textDescription text-xs md:text-lg">
               ( {{ widget.data.totalReviews | default(30) }} {{t('new_review')}} )
             </p>
           </div>
-
-          <!-- Rating Bars -->
-          <div class="space-y-1.5 md:space-y-2 flex-1">
+          <div class=" w-full flex flex-col gap-5">
+            {% for item in widget.blocks%}
+            {% if item.blockKey=="starsRating" %}
             <div class="flex items-center gap-2">
               <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
               <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 rounded-full" style="width: 90%"></div>
+                {% set percent = ((item.data.stars or item.settings.stars or 0) / 5 * 100) %}
+                <div class="h-full bg-yellow-500 rounded-full" style="width:{{ percent }}%"></div>
               </div>
             </div>
-            <div class="flex items-center gap-2">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 rounded-full" style="width: 70%"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 rounded-full" style="width: 20%"></div>
-              </div>
-            </div>
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>
-
       <!-- Right Side - Reviews List -->
-      <div class="w-full lg:w-1/2 border border-gray-200 p-3 md:p-4 rounded-xl flex flex-col gap-3">
-        {% if widget.blocks and (widget.blocks | length) > 0 %}
+      <div class="w-full lg:w-1/2 border border-gray-200 px-8 py-4 md:px-8 md:py-[35.25px] rounded-xl flex flex-col gap-4">
           {% for block in widget.blocks %}
-            <div>
-              <h2 class="text-base md:text-lg font-bold text-dark mb-2">
+            {% if block.blockKey == "reviewItem" %}
+            <h2 class="text-base md:text-lg font-bold text-dark">
                 {{ t((block.data.name | default(block.settings.name)) | striptags) }}
               </h2>
-              <div class="flex items-center gap-1 mb-1">
+              <div class="flex items-center gap-2">
                 {% set stars = block.data.stars | default(block.settings.stars) | default(5) %}
                 {% for i in range(1, 6) %}
                   {% if i <= stars %}
@@ -74,48 +51,17 @@
                   {% endif %}
                 {% endfor %}
               </div>
-            </div>
-
             <!-- Review Images -->
-            <div class="flex gap-1.5 overflow-x-auto pb-1">
-              {% if block.data.images %}
-                {% for image in block.data.images %}
-                  <img src="{{ image.fileUrl }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image">
-                {% endfor %}
-              {% else %}
-                <img src="{{ 'card6.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-                <img src="{{ 'card7.jpg' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-                <img src="{{ 'card5.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-              {% endif %}
+            <div class="flex gap-1.5 overflow-x-auto">
+                  <img src="{{ block.data.image.fileUrl }}" class="w-[71.53px] h-[71.53px] md:w-[114px] md:h-[114px] rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image">
             </div>
 
             <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
               {{ t((block.data.review | default(block.settings.review)) | striptags) }}
             </p>
+              
+            {% endif %}
           {% endfor %}
-        {% else %}
-          <!-- Default Review -->
-          <div>
-            <h2 class="text-base md:text-lg font-bold text-dark mb-2">{{ t('review_1_name') }}</h2>
-            <div class="flex items-center gap-1 mb-1">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
-              <i class="ph-fill ph-star text-yellow-300 text-xs md:text-sm"></i>
-            </div>
-          </div>
-
-          <div class="flex gap-1.5 overflow-x-auto pb-1">
-            <img src="{{ 'card6.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-            <img src="{{ 'card7.jpg' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-            <img src="{{ 'card5.png' | assets }}" class="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="">
-          </div>
-
-          <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
-            {{ t('review_1_text') }}
-          </p>
-        {% endif %}
       </div>
     </div>
   </div>

@@ -48,12 +48,7 @@
       {% ui "pagination.njk" %}
     </div>
     {% else %}
-    <div class="flex flex-col items-center justify-center py-12 text-center">
-      <div class="flex items-center justify-center mb-4 text-gray-700" style="opacity: 1;">
-        <span class="iconify" data-icon="lsicon:clothes-outline" style="width: 140px; height: 140px; opacity: 1;"></span>
-      </div>
-      <div class="text-[24px] leading-[1.4] font-bold text-black">{{ t('no_products') }}</div>
-    </div>
+    {%ui "empty-products.njk"%}
     {% endif %}
   </div>
 </section>

@@ -1,94 +1,117 @@
-<!-- Footer -->
-<footer class="bg-black text-white py-12 md:py-16">
-    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20">
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-10 mb-8">
-            <div class="md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <a href="/">
-                        {% if widget.data.logo and widget.data.logo.fileUrl %}
-                          <img src="{{ widget.data.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-16 w-auto cursor-pointer">
-                        {% elif globals.app.logo and globals.app.logo.fileUrl %}
-                          <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-16 w-auto cursor-pointer">
-                        {% else %}
-                          <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-16 w-45 cursor-pointer">
-                        {% endif %}
-                    </a>
-                </div>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    {{ widget.data.company_description | default(t('company_description')) }}
-                </p>
-                {% set facebook = widget.data.facebook_link %}
-                {% set instagram = widget.data.instagram_link %}
-                {% set twitter = widget.data.x_link %}
-                {% set snapchat = widget.data.p_link %}
-                {% if (facebook and facebook != '#') or (instagram and instagram != '#') or (twitter and twitter != '#') or (snapchat and snapchat != '#') %}
-                <div class="flex gap-4 mt-6">
-                    {% if snapchat and snapchat != '#' %}
-                    <a href="{{ snapchat }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
-                        <i class="ph ph-snapchat-logo text-2xl"></i>
-                    </a>
-                    {% endif %}
-                    {% if instagram and instagram != '#' %}
-                    <a href="{{ instagram }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
-                        <i class="ph ph-instagram-logo text-2xl"></i>
-                    </a>
-                    {% endif %}
-                    {% if twitter and twitter != '#' %}
-                    <a href="{{ twitter }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
-                        <i class="ph ph-twitter-logo text-2xl"></i>
-                    </a>
-                    {% endif %}
-                    {% if facebook and facebook != '#' %}
-                    <a href="{{ facebook }}" target="_blank" rel="noopener" class="text-white hover:text-gray-400 transition">
-                        <i class="ph ph-facebook-logo text-2xl"></i>
-                    </a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
-            {% set menuItems = widget.data.footer_menu if widget.data.footer_menu is defined and widget.data.footer_menu is iterable else (widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else []) %}
-            {% if menuItems | length > 0 %}
-              {% set firstThird = (menuItems | length / 3) | round(0, 'ceil') %}
-              {% set secondThird = firstThird * 2 %}
-              {% if firstThird > 0 %}
-              <div>
-                  <h3 class="font-bold text-lg mb-4">{{ t('quick_links') }}</h3>
-                  <ul class="space-y-2">
-                      {% for item in menuItems %}
-                        {% if loop.index0 < firstThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
-                        {% endif %}
-                      {% endfor %}
-                  </ul>
-              </div>
-              {% endif %}
-              {% if secondThird > firstThird %}
-              <div>
-                  <h3 class="font-bold text-lg mb-4">{{ t('categories') }}</h3>
-                  <ul class="space-y-2">
-                      {% for item in menuItems %}
-                        {% if loop.index0 >= firstThird and loop.index0 < secondThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
-                        {% endif %}
-                      {% endfor %}
-                  </ul>
-              </div>
-              {% endif %}
-              {% if menuItems | length > secondThird %}
-              <div>
-                  <h3 class="font-bold text-lg mb-4">{{ t('other_pages') }}</h3>
-                  <ul class="space-y-2">
-                      {% for item in menuItems %}
-                        {% if loop.index0 >= secondThird %}
-                          <li><a href="{{ item.url | default('#') }}" class="text-gray-400 hover:text-white transition">{{ t(item.title or 'title') }}</a></li>
-                        {% endif %}
-                      {% endfor %}
-                  </ul>
-              </div>
-              {% endif %}
-            {% endif %}
+<footer class="footer bg-mainColor text-white"
+  style="
+    background: {{ widget.data.bg_color }};
+    color: {{ widget.data.text_color }};
+    {% if widget.data.footer_height %}min-height: {{ widget.data.footer_height }}px;{% endif %}
+  ">
+  <div
+    class="container grid md:grid-cols-4 grid-cols-1 gap-6 md:gap-12 lg:gap-[89px] py-[22px] md:py-16 lg:md:pt-[96px] lg:p-[70px]">
+
+    <div class="flex flex-col items-start">
+      <img class="footer-logo object-contain"
+        src="{{ widget.data.logo.fileUrl | default(globals.app.logo.fileUrl) }}"
+        alt="{{ globals.app.name | default('Logo') }}"
+        style="--footer-logo-sm: {{ widget.data.logo_higth_sm | default(29) }}px; --footer-logo-lg: {{ widget.data.logo_higth_lg | default(40) }}px;" />
+      <div class="flex flex-col gap-4 md:gap-[30px]">
+        <div class="w-full max-h-[96px] overflow-hidden break-words">
+          <p class="text-[#EDEDED] leading-[150%] line-clamp-4" style="color: {{ widget.data.text_color }};">
+            {{ widget.data.app_description | safe  }}
+          </p>
         </div>
+        <div class="flex items-center gap-[34px]">
+          {% if widget.data.show_snap_link and widget.data.snap_link %}
+          <a href="{{ widget.data.snap_link }}" target="_blank" aria-label="Snapchat" style="color: {{ widget.data.text_color }};">
+            <i class="ph-thin text-[28px] ph-snapchat-logo"></i>
+          </a>
+          {% endif %}
+          {% if widget.data.show_instagram_link and widget.data.instagram_link %}
+          <a href="{{ widget.data.instagram_link }}" target="_blank" aria-label="Instagram" style="color: {{ widget.data.text_color }};">
+            <i class="ph-thin text-[28px] ph-instagram-logo"></i>
+          </a>
+          {% endif %}
+          {% if widget.data.show_x_link and widget.data.x_link %}
+          <a href="{{ widget.data.x_link }}" target="_blank" aria-label="X" style="color: {{ widget.data.text_color }};">
+            <i class="ph-thin text-[28px] ph-x-logo"></i>
+          </a>
+          {% endif %}
+          {% if widget.data.show_facebook_link and widget.data.facebook_link %}
+          <a href="{{ widget.data.facebook_link }}" target="_blank" aria-label="Facebook" style="color: {{ widget.data.text_color }};">
+            <i class="ph-thin text-[28px] ph-facebook-logo"></i>
+          </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
+
+    <div class="flex flex-col gap-4">
+      <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">قانوني</span>
+      {% for item in widget.data.policy_links %}
+      <a href="{{ item.url }}" class="font-medium" style="color: {{ widget.data.text_color }};">{{ item.title }}</a>
+      {% endfor %}
+    </div>
+
+    {% if widget.data.collections | length > 0 %}
+    <div class="flex flex-col gap-4 truncate">
+      <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">{{ t("categories") }}</span>
+      {% for item in widget.data.collections %}
+      <a href="/collection/{{ item.handle }}" class="font-medium" style="color: {{ widget.data.text_color }};">{{ item.title }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if (widget.data.show_contact_location and widget.data.contact_location) or (widget.data.show_contact_email and widget.data.contact_email) or (widget.data.show_contact_phone and widget.data.contact_phone) %}
+    <div class="flex flex-col gap-4">
+      <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">تواصل معانا</span>
+      {% if widget.data.show_contact_location and widget.data.contact_location %}
+      <div class="flex items-center gap-2">
+        <i class="ph-thin text-2xl ph-map-pin-line" style="color: {{ widget.data.text_color }};"></i>
+        <a href="https://maps.google.com/?q={{ widget.data.contact_location | urlencode }}"
+          class="text-sm leading-[150%] hover:underline" target="_blank" rel="noopener"
+          style="color: {{ widget.data.text_color }};">
+          {{ widget.data.contact_location }}
+        </a>
+      </div>
+      {% endif %}
+      {% if widget.data.show_contact_email and widget.data.contact_email %}
+      <div class="flex items-center gap-2">
+        <i class="ph-thin text-2xl ph-envelope-simple" style="color: {{ widget.data.text_color }};"></i>
+        <a href="mailto:{{ widget.data.contact_email }}" class="text-sm leading-[150%] hover:underline"
+          style="color: {{ widget.data.text_color }};">
+          {{ widget.data.contact_email }}
+        </a>
+      </div>
+      {% endif %}
+      {% if widget.data.show_contact_phone and widget.data.contact_phone %}
+      <div class="flex items-center gap-2">
+        <i class="ph-thin text-2xl ph-phone" style="color: {{ widget.data.text_color }};"></i>
+        <a href="tel:{{ widget.data.contact_phone | replace(' ', '') }}" class="text-sm leading-[150%] hover:underline"
+          style="color: {{ widget.data.text_color }};">
+          {{ widget.data.contact_phone }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-2 items-center justify-between container py-4">
+    <div class="flex items-center gap-[14px]">
+      <i class="ph-thin ph-copyright"></i>
+      <span style="color: {{ widget.data.text_color }};">{{ widget.data.powered_text }}</span>
+    </div>
+    <img src="{{ widget.data.powered_logo }}" alt="">
+  </div>
 </footer>
 
-  
+<style>
+.footer-logo {
+  height: var(--footer-logo-sm);
+}
+
+@media (min-width: 768px) {
+  .footer-logo {
+    height: var(--footer-logo-lg);
+  }
+}
+</style>

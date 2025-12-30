@@ -1,116 +1,83 @@
 {
-  "title": "Product Details",
+  "title": "product details",
   "name": "product-details",
-  "icon": "box",
-  "fields": [
-    {
-      "type": "text",
-      "name": "title",
-      "label": "Product Title",
-      "default": "عنوان المنتج"
+  "blocks": {
+    "productDetails": {
+      "name": "مميزات عامة",
+      "settings": {
+        "title": {
+          "type": "string",
+          "label": "نص الميزة",
+          "default": ""
+        }
+      }
     },
-    {
-      "type": "textarea",
-      "name": "description",
-      "label": "Product Description",
-      "default": "وصف مختصر للمنتج."
-    },
-    {
-      "type": "number",
-      "name": "price",
-      "label": "Product Price",
-      "default": 69.95
-    },
-    {
-      "type": "text",
-      "name": "currency",
-      "label": "Currency",
-      "default": "$"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "colorOption",
-      "title": "Color Option",
-      "icon": "palette",
-      "fields": [
-        {
-          "type": "text",
-          "name": "name",
-          "label": "Color Name"
+    "productFeatures": {
+      "name": "مميزات المنتج",
+      "settings": {
+        "title": {
+          "type": "string",
+          "label": "نص الميزة"
         },
-        {
+        "image": {
           "type": "media",
-          "name": "image",
-          "label": "Color Image"
+          "label": "ايقونة الميزة",
+          "default": ""
         }
-      ]
-    },
-    {
-      "type": "sizeOption",
-      "title": "Size Option",
-      "icon": "ruler",
-      "fields": [
-        {
-          "type": "text",
-          "name": "size",
-          "label": "Size",
-          "default": "S"
-        }
-      ]
+      }
     }
-  ],
+  },
   "presets": [
     {
-      "category": "Product Page",
-      "name": "📦 Product Details",
+      "category": "Pages",
+      "name": "product details",
       "settings": {
-        "title": "عنوان المنتج",
-        "description": "وصف مختصر للمنتج.",
-        "price": 69.95,
-        "currency": "$"
       },
       "blocks": [
         {
-          "block": "colorOption",
-          "name": "Black",
+          "block": "productFeatures",
+          "name": "future 1",
           "settings": {
-            "name": "أسود"
+            "title": "secure_payments_100",
+            "image": "qumra://star.png"
           }
         },
         {
-          "block": "colorOption",
-          "name": "White",
+          "block": "productFeatures",
+          "name": "future 1",
           "settings": {
-            "name": "أبيض"
+            "title": "free_shipping_compensation",
+            "image": "qumra://star.png"
           }
         },
         {
-          "block": "sizeOption",
-          "name": "Small",
+          "block": "productFeatures",
+          "name": "future 3",
           "settings": {
-            "size": "S"
+            "title": "free_returns",
+            "image": "qumra://star.png"
           }
         },
         {
-          "block": "sizeOption",
-          "name": "Medium",
+          "block": "productFeatures",
+          "name": "future 4",
           "settings": {
-            "size": "M"
+            "title": "fast_global_shipping",
+            "image": "qumra://Review1.png"
           }
         },
         {
-          "block": "sizeOption",
-          "name": "Large",
+          "block": "productDetails",
+          "name": "future 1",
           "settings": {
-            "size": "L"
+            "title": "free_shipping"
           }
         },
         {
-          "block": "sizeOption",
-          "name": "Extra Large",
+          "block": "productDetails",
+          "name": "future 2",
           "settings": {
-            "size": "XL"
+            "title": "secure_payment"
           }
         }
       ]

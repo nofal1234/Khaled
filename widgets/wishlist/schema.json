@@ -1,5 +1,5 @@
 {
-  "name": "المفضلة",
+  "name": "wishlist",
   "description": "عرض قائمة المنتجات المضافة إلى المفضلة",
   "settings": {
     "placeholder_text": {
@@ -9,6 +9,10 @@
     }
   },
   "presets": [
-    { "category": "الصفحات", "name": "المفضلة" }
+    {
+      "category": "Pages",
+      "name": "special slider",
+      "settings":{}
+    }
   ]
 }

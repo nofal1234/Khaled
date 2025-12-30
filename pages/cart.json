@@ -5,9 +5,7 @@
     {
       "name": "Service Features",
       "widget": "cart",
-      "settings": {
-        
-      }
+      "settings": {}
     }
   ]
 }

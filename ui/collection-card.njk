@@ -1,0 +1,31 @@
+{% set collection = data.collection  %}
+{% set uniqueId = collection._id %}
+<a href="/collection/{{ collection.slug }}" class="  h-full  bg-white rounded-lg border border-gray overflow-hidden  flex flex-col">
+    <div class="relative group overflow-hidden bg-bgItem flex items-center justify-center">
+        <div class="w-full flex items-center justify-center pt-[34px] md:pt-[56px] md:pb-[42px] pb-[26px] px-[47px] md:px-[57px]">
+            <img 
+                src="{{collection.image.fileUrl |  default('https://placehold.co/320x420/eeeeee/666?text=No+Image')}}"
+                class="object-contain md:h-[226px] h-[141px] group-hover:scale-105 transition-all duration-300"
+                alt="{{ collection.title }}"
+            />
+        </div>
+        <div class="absolute top-3 left-3 bg-white flex items-center text-black px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10">
+            <i class="ph-fill ph-star text-xs md:text-lg" style="color: #EBB11F;"></i>
+           <span class="md:text-lg text-xs font-semibold leading-[100%]">
+               5.0
+            </span>
+        </div>
+    </div>
+
+    <div class="flex-1 p-4 flex flex-col items-center gap-4">
+      <div class=" flex-1 w-full flex flex-col gap-2.5 items-center ">
+        <p class=" md:text-2xl text-sm font-medium w-full text-center  leading-[150%] truncate">{{collection.title}}</p>
+        {% if collection.description %}
+        <p class="  md:text-sm text-xs font-medium w-full  text-center leading-[150%]  truncate line-clamp-2">{{collection.description}}</p>
+        {% endif %}
+      </div>
+      <button
+        onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/collection/{{ collection.slug }}';"
+        class=" bg-mainColor flex items-start justify-center py-[8.62px] md:py-2.5  text-white rounded-lg md:rounded-[10px] w-full">تصفح الان</button>
+    </div>
+</a>

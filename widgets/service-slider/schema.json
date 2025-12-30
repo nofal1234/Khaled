@@ -1,0 +1,157 @@
+{
+  "name": "service slider",
+  "description": "قسم المزايا",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "مزايا الخدمة"
+    },
+    "title_size": {
+      "type": "number",
+      "label": "حجم العنوان (بالبكسل)",
+      "default": 28
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#111111"
+    },
+
+
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "disable_on_interaction": {
+      "type": "boolean",
+      "label": "تعطيل التشغيل التلقائي عند التفاعل",
+      "default": false
+    },
+    "pause_on_mouse_enter": {
+      "type": "boolean",
+      "label": "إيقاف التشغيل التلقائي عند المرور بالماوس",
+      "default": true
+    },
+    "reverse_direction": {
+      "type": "boolean",
+      "label": "عكس اتجاه التشغيل التلقائي",
+      "default": true
+    }
+  },
+  "blocks": {
+    "featureItem": {
+      "name": "ميزة",
+      "settings": {
+        "icon": {
+          "type": "media",
+          "label": "أيقونة الميزة (صورة)",
+          "default": "",
+          "description": "ارفع صورة أيقونة بحجم 64x64 تقريباً بخلفية شفافة إن أمكن"
+        },
+        "title": {
+          "type": "string",
+          "label": "عنوان الميزة",
+          "default": "ميزة"
+        },
+        "title_size": {
+          "type": "number",
+          "label": "حجم نص العنوان",
+          "default": 18
+        },
+        "title_color": {
+          "type": "color",
+          "label": "لون نص العنوان",
+          "default": "#000"
+        },
+        "description": {
+          "type": "string",
+          "label": "وصف الميزة",
+          "default": "وصف مختصر للميزة."
+        },
+        "description_size": {
+          "type": "number",
+          "label": "حجم نص الوصف",
+          "default": 18
+        },
+        "description_color": {
+          "type": "color",
+          "label": "لون نص الوصف",
+          "default": "#000"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "sliders",
+      "name": "service slider",
+      "blocks": [
+        {
+          "block": "featureItem",
+          "name": "feature 1",
+          "settings": {
+            "icon": "qumra://service1.png",
+            "icon_class": "",
+            "title": "service_feature_1_title",
+            "description": "service_feature_1_desc"
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "feature 2",
+          "settings": {
+            "icon": "qumra://service2.png",
+            "icon_class": "",
+            "title": "service_feature_2_title",
+            "description": "service_feature_2_desc"
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "feature 3",
+          "settings": {
+            "icon": "qumra://service3.png",
+            "icon_class": "",
+            "title": "service_feature_3_title",
+            "description": "service_feature_3_desc"
+          }
+        },
+        {
+          "block": "featureItem",
+          "name": "feature 4",
+          "settings": {
+            "icon": "qumra://service4.png",
+            "icon_class": "",
+            "title": "service_feature_4_title",
+            "description": "service_feature_4_desc"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

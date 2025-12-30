@@ -1,40 +1,48 @@
 {
     "name": "Footer",
     "settings": {
+      "bg_color": {
+        "type": "color",
+        "label": "لون خلفية الفوتر",
+        "default": "#000"
+      },
+      "text_color": {
+        "type": "color",
+        "label": "الوان الفوتر",
+        "default": "#fff"
+      },
         "logo": {
           "type": "image_picker",
           "label": "الشعار",
           "description": "قم بتحميل شعار الموقع"
         },
-        "header_menu": {
-          "type": "menu",
-          "label": "القائمة",
-          "default": "header"
+        "logo_higth_lg": {
+          "type": "number",
+          "label": "ارتفاع الشعار (ديسكتوب px)",
+          "default": 40,
+          "description": "حدد ارتفاع الشعار بالبيكسل لأجهزة الديسكتوب (اختياري: اتركه فارغًا للحجم الافتراضي)"
         },
-        "company_description": {
-          "type": "textarea",
+        "logo_higth_sm": {
+          "type": "number",
+          "label": "ارتفاع الشعار (موبايل px)",
+          "default": 29,
+          "description": "حدد ارتفاع الشعار بالبيكسل لأجهزة الجوال (اختياري: اتركه فارغًا للحجم الافتراضي)"
+        },
+        "footer_height": {
+          "type": "number",
+          "label": "ارتفاع الفوتر (px)",
+          "default": 100,
+          "description": "حدد ارتفاع الفوتر بالبيكسل (اختياري: اتركه فارغًا للحجم الافتراضي)"
+        },
+        "app_description": {
+          "type": "text",
           "label": "وصف الشركة",
           "default": "نحن شركة متخصصة في [مجال الشركة]، نقدم لك أفضل المنتجات والخدمات بجودة عالية."
         },
-        "footer_menu": {
-          "type": "menu",
-          "label": "القائمة السفلية",
-          "default": "header"
-        },
-        "contact_phone": {
-          "type": "string",
-          "label": "رقم الهاتف",
-          "default": "01093106133"
-        },
-        "contact_location": {
-          "type": "string",
-          "label": "العنوان",
-          "default": "القاهرة، مصر"
-        },
-        "contact_email": {
-          "type": "string",
-          "label": "البريد الإلكتروني",
-          "default": "info@minikid.com"
+        "collections": {
+          "type": "collections",
+          "label": "اقسام المعروضه في الفوتر",
+          "default": "home-page"
         },
         "policy_links": {
           "type": "array",
@@ -71,74 +79,85 @@
             }
           ]
         },
-        "support_links": {
-          "type": "array",
-          "label": "روابط الدعم",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "label": "عنوان الرابط"
-              },
-              "url": {
-                "type": "string",
-                "label": "رابط الرابط"
-              }
-            }
-          },
-          "default": [
-            {
-              "title": "الأسئلة الشائعة",
-              "url": "#"
-            },
-            {
-              "title": "حسابي",
-              "url": "#"
-            },
-            {
-              "title": "تتبع طلبي",
-              "url": "#"
-            },
-            {
-              "title": "خدمة العملاء",
-              "url": "#"
-            },
-            {
-              "title": "الدعم الفني",
-              "url": "#"
-            }
-          ]
+        "show_contact_phone": {
+          "type": "boolean",
+          "label": "إظهار رقم الهاتف",
+          "default": true
+        },
+        "contact_phone": {
+          "type": "string",
+          "label": "رقم الهاتف",
+          "default": "*********"
+        },
+        "show_contact_location": {
+          "type": "boolean",
+          "label": "إظهار العنوان",
+          "default": true
+        },
+        "contact_location": {
+          "type": "string",
+          "label": "العنوان",
+          "default": "القاهرة، مصر"
+        },
+        "show_contact_email": {
+          "type": "boolean",
+          "label": "إظهار البريد الإلكتروني",
+          "default": true
+        },
+        "contact_email": {
+          "type": "string",
+          "label": "البريد الإلكتروني",
+          "default": "info@minikid.com"
+        },
+        "show_facebook_link": {
+          "type": "boolean",
+          "label": "إظهار رابط فيسبوك",
+          "default": true
         },
         "facebook_link": {
           "type": "string",
           "label": "رابط فيسبوك",
           "default": "#"
         },
+        "show_x_link": {
+          "type": "boolean",
+          "label": "إظهار رابط X (تويتر سابقًا)",
+          "default": true
+        },
         "x_link": {
           "type": "string",
           "label": "رابط X (تويتر سابقًا)",
           "default": "#"
+        },
+        "show_instagram_link": {
+          "type": "boolean",
+          "label": "إظهار رابط انستجرام",
+          "default": true
         },
         "instagram_link": {
           "type": "string",
           "label": "رابط انستجرام",
           "default": "#"
         },
-        "p_link": {
+        "show_snap_link": {
+          "type": "boolean",
+          "label": "إظهار رابط سناب",
+          "default": true
+        },
+        "snap_link": {
           "type": "string",
-          "label": "رابط P",
+          "label": "رابط سناب",
           "default": "#"
         },
         "powered_text": {
           "type": "string",
           "label": "نص المشغل",
-          "default": "مشغل بواسطة قمره"
+          "default": "قمرة . جميع الحقوق محفوظ"
         },
         "powered_logo": {
-          "type": "image",
+          "type": "media",
           "label": "لوجو المشغل",
-          "default": "/assets/logo/qumra.svg"
+          "default": "qumra://payment-methods.jpg"
         }
       }
       

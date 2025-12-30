@@ -18,18 +18,43 @@ function xDataWishlist() {
       }
     }`,
   };
+  // Store quantities for each item
+  const itemQuantities = {};
+
   return {
     items: [],
     loadingId: null, // ← عشان التحكم في حالة الزر
 
+    // Access modal from GlobalState - make it reactive
+    modal: window.modal || { open: false, type: '' },
+
+    toggleModal(type, open) {
+      if (window.toggleModal) {
+        window.toggleModal(type, open);
+      }
+    },
+
     init() {
       this.loadItems();
       window.addEventListener('wishlist:changed', () => this.loadItems());
+      window.addEventListener('modal:changed', (e) => { this.modal = e.detail || { open: false, type: '' }; });
+      // Initialize quantities for existing items
+      this.items.forEach(item => {
+        if (!itemQuantities[item._id]) {
+          itemQuantities[item._id] = 1;
+        }
+      });
     },
 
     loadItems() {
       try {
         this.items = JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]');
+        // Initialize quantities for new items
+        this.items.forEach(item => {
+          if (!itemQuantities[item._id]) {
+            itemQuantities[item._id] = 1;
+          }
+        });
       } catch {
         this.items = [];
       }
@@ -37,6 +62,24 @@ function xDataWishlist() {
 
     count() {
       return this.items.length;
+    },
+
+    getItemQuantity(id) {
+      return itemQuantities[id] || 1;
+    },
+
+    setItemQuantity(id, event) {
+      const value = Number(event.target.value) || 1;
+      itemQuantities[id] = Math.max(1, value);
+    },
+
+    increaseQuantity(id) {
+      itemQuantities[id] = (itemQuantities[id] || 1) + 1;
+    },
+
+    decreaseQuantity(id) {
+      const current = itemQuantities[id] || 1;
+      itemQuantities[id] = Math.max(1, current - 1);
     },
 
     clear() {

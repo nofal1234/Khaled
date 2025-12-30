@@ -1,0 +1,239 @@
+{
+  "name": "reviews slider",
+  "description": "قسم آراء العملاء مع إمكانية إضافة آراء مخصصة",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": "العنوان",
+      "default": "customer_reviews"
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#333333"
+    },
+    "title_size": {
+      "type": "number",
+      "label": "حجم العنوان",
+      "default": 18
+    },
+    "link_color": {
+      "type": "color",
+      "label": "لون أزرار التنقل",
+      "default": "#6b7280"
+    },
+    "user_name_color": {
+      "type": "color",
+      "label": "لون اسم المستخدم",
+      "default": "#222222"
+    },
+    "user_name_size": {
+      "type": "number",
+      "label": "حجم اسم المستخدم",
+      "default": 16
+    },
+    "user_description_color": {
+      "type": "color",
+      "label": "لون وصف الرأي",
+      "default": "#777777"
+    },
+    "user_description_size": {
+      "type": "number",
+      "label": "حجم وصف المستخدم",
+      "default": 16
+    },
+    "review_text_color": {
+      "type": "color",
+      "label": "لون التقييم",
+      "default": "#ffffff"
+    },
+    "review_bg_color": {
+      "type": "color",
+      "label": "لون خلفية التقييم",
+      "default": "#ffffff"
+    },
+    "show_navigation": {
+      "type": "boolean",
+      "label": "إظهار أزرار التنقل",
+      "default": true
+    },
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "disable_on_interaction": {
+      "type": "boolean",
+      "label": "تعطيل التشغيل التلقائي عند التفاعل",
+      "default": false
+    },
+    "pause_on_mouse_enter": {
+      "type": "boolean",
+      "label": "إيقاف التشغيل التلقائي عند المرور بالماوس",
+      "default": true
+    },
+    "pauseOnMouseEnter": {
+      "type": "boolean",
+      "label": "إيقاف التشغيل التلقائي عند المرور بالماوس",
+      "default": false,
+      "description": "قم بتفعيل هذا الخيار لإيقاف التشغيل التلقائي للسلايدر مؤقتًا عند مرور مؤشر الفأرة."
+    },
+    "disableOnInteraction": {
+      "type": "boolean",
+      "label": "تعطيل التشغيل التلقائي عند التفاعل",
+      "default": false,
+      "description": "قم بتفعيل هذا الخيار لإيقاف التشغيل التلقائي عند تفاعل المستخدم مع السلايدر."
+    },
+    "reverse_direction": {
+      "type": "boolean",
+      "label": "عكس اتجاه التشغيل التلقائي",
+      "default": false
+    },
+    "slides_per_view_sm": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة صغيرة)",
+      "default": 1
+    },
+    "space_between_sm": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة صغيرة)",
+      "default": 12
+    },
+    "slides_per_view_md": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة متوسطة)",
+      "default": 2
+    },
+    "space_between_md": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة متوسطة)",
+      "default": 14
+    },
+    "slides_per_view_lg": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة كبيرة)",
+      "default": 3
+    },
+    "space_between_lg": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة كبيرة)",
+      "default": 16
+    }
+  },
+  "blocks": {
+    "reviewItem": {
+      "name": "رأي عميل",
+      "settings": {
+        "name": {
+          "type": "string",
+          "label": "اسم العميل",
+          "default": "review_1_name"
+        },
+        "days_work": {
+          "type": "string",
+          "label": "فترة الاستخدام",
+          "default": "review_1_name"
+        },
+        "description": {
+          "type": "text",
+          "label": "نص الرأي",
+          "default": "review_1_text"
+        },
+        "image": {
+          "type": "media",
+          "label": "صورة العميل",
+          "default": ""
+        },
+        "stars": {
+          "type": "number",
+          "label": "عدد النجوم",
+          "default": 5,
+          "min": 1,
+          "max": 5
+        },
+        "alt": {
+          "type": "string",
+          "label": "النص البديل للصورة",
+          "default": "review_image_alt"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "sliders",
+      "name": "reviews slider",
+      "blocks": [
+        {
+          "block": "reviewItem",
+          "name": "review 1",
+          "settings": {
+            "name": "review_1_name",
+            "days_work": "days_work",
+            "description": "review_1_text",
+            "image": "qumra://Review1.png",
+            "stars": 5.4,
+            "alt": "review_image_alt"
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "review 2",
+          "settings": {
+            "name": "review_2_name",
+            "days_work": "days_work",
+            "description": "review_2_text",
+            "image": "qumra://Review1.png",
+            "stars": 4.4,
+            "alt": "review_image_alt"
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "review 3",
+          "settings": {
+            "name": "review_3_name",
+            "description": "review_3_text",
+            "days_work": "days_work",
+            "image": "qumra://Review1.png",
+            "stars": 5.6,
+            "alt": "review_image_alt"
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "review 1",
+          "settings": {
+            "name": "review_1_name",
+            "days_work": "days_work",
+            "description": "review_1_text",
+            "image": "qumra://Review1.png",
+            "stars": 5.4,
+            "alt": "review_image_alt"
+          }
+        }
+      ]
+    }
+  ]
+}

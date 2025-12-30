@@ -1,0 +1,64 @@
+
+<div
+  class="review-card max-w-md mx-auto flex flex-col md:gap-[26px] gap-[21px] rounded-[13px] border border-stork px-4 md:px-[26px] py-[20px] md:py-[13px] w-full h-full"
+  style="
+    background: {{ data.review_bg_color }};
+    --review-name-size: {{ data.user_name_size }}px;
+    --review-desc-size: {{ data.user_description_size }}px;
+    --review-text-size: {{ data.title_size }}px;
+  ">
+  <div class="flex justify-between items-start md:gap-[26px] gap-5">
+    <div class="flex items-center flex-1 truncate gap-[13px]">
+      <div class="py-[13.3px] px-[15.8px]">
+        <img class="w-[35px] h-[35px]  object-contain flex-shrink-0" src="{{ data.review.image.fileUrl }}">
+      </div>
+      <div class="flex flex-col gap-1 flex-1 min-w-0  overflow-hidden">
+        <h3 
+          class="truncate font-medium leading-[150%]" 
+          style="color: {{ data.user_name_color }};">
+            {{ t(data.review.name) }}
+        </h3>
+        <p 
+          class="truncate leading-[150%]"
+          style="color: {{ data.user_description_color }};">
+            {{ t(data.review.days_work) }}
+        </p>
+      </div>
+    </div>
+    <div
+      class="rounded-md px-[10.5px] flex items-center gap-1 font-bold"
+      style="
+        background: {{ data.link_color }};
+        color: {{ data.review_text_color }};
+        min-width: 70px;
+        font-size: 16px;
+        height: 35px;
+      "
+    >
+      <span 
+        class="font-medium leading-[150%]" 
+        style="font-size: 18px;">
+        {{ data.review.stars }}
+      </span>
+      <i class="ph-fill ph-star text-[15px]"></i>
+    </div>
+  </div>
+  <p
+    class="leading-[150%]"
+    style="color: {{ data.title_color }};"
+  >{{ t(data.review.description) | striptags }}</p>
+</div>
+
+<style>
+.review-card h3 {
+  font-size: clamp(calc(var(--review-name-size) * 0.75), calc(var(--review-name-size) * 0.55 + 1vw), var(--review-name-size));
+}
+
+.review-card p {
+  font-size: clamp(calc(var(--review-desc-size) * 0.75), calc(var(--review-desc-size) * 0.55 + 0.9vw), var(--review-desc-size));
+}
+
+.review-card > p {
+  font-size: clamp(calc(var(--review-text-size) * 0.75), calc(var(--review-text-size) * 0.55 + 1vw), var(--review-text-size));
+}
+</style>

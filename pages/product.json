@@ -6,17 +6,154 @@
       "name": "product-details",
       "widget": "product-details",
       "allowDeleted": false,
-      "settings": {}
+      "settings": {},
+      "blocks": [
+        {
+          "block": "productFeatures",
+          "name": "future 1",
+          "settings": {
+            "title": "secure_payments_100",
+            "image": "qumra://star.png"
+          }
+        },
+        {
+          "block": "productFeatures",
+          "name": "future 1",
+          "settings": {
+            "title": "free_shipping_compensation",
+            "image": "qumra://star.png"
+          }
+        },
+        {
+          "block": "productFeatures",
+          "name": "future 3",
+          "settings": {
+            "title": "free_returns",
+            "image": "qumra://star.png"
+          }
+        },
+        {
+          "block": "productFeatures",
+          "name": "future 4",
+          "settings": {
+            "title": "fast_global_shipping",
+            "image": "qumra://Review1.png"
+          }
+        },
+        {
+          "block": "productDetails",
+          "name": "future 1",
+          "settings": {
+            "title": "free_shipping"
+          }
+        },
+        {
+          "block": "productDetails",
+          "name": "future 2",
+          "settings": {
+            "title": "secure_payment"
+          }
+        }
+      ]
     },
     {
       "name": "product-reviews",
       "widget": "product-reviews",
-      "settings": {}
+      "settings": {},
+      "blocks": [
+        {
+          "block": "reviewItem",
+          "name": "First Review",
+          "settings": {
+            "name": "review_1_name",
+            "stars": 5,
+            "image":"qumra://card7.jpg",
+            "review": "review_1_text"
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 5
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 5
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 4
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 3
+          }
+        }
+        
+      ]
     },
     {
       "name": "faq-section",
       "widget": "faq-section",
-      "settings": {}
+      "settings": {
+        "show_related_products":true
+      },
+      "blocks": [
+        {
+          "block": "faqItem",
+          "name": "Description",
+          "settings": {
+            "question": "description",
+            "answer": "default_description_text_1"
+          }
+        },
+        {
+          "block": "faqItem",
+          "name": "Shipping & Returns",
+          "settings": {
+            "question": "delivery_and_returns",
+            "answer": "delivery_info"
+          }
+        },
+        {
+          "block": "faqItem",
+          "name": "Contact Us",
+          "settings": {
+            "question": "contact_us",
+            "answer": "contact_info"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offers Section",
+      "widget": "offers-slider",
+      "settings": {
+        "section_title": "offers",
+        "view_all_text": "view_all",
+        "view_all_link": "/collection/homepage",
+        "show_view_all": true,
+        "title_color": "#333333",
+        "link_color": "#6b7280",
+        "card_border_color": "#e5e7eb",
+        "show_navigation": true,
+        "autoplay": true,
+        "autoplay_delay": 4000,
+        "products_collection": "latest"
+      }
     }
   ]
 }
+
+
+

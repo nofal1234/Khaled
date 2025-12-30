@@ -34,18 +34,33 @@
           "min": 1,
           "max": 5
         },
+        "image":{
+          "type": "media",
+          "label": "صورة التقيم"
+        },
         "review": {
           "type": "textarea",
           "label": "Review Text",
           "default": "review_1_text"
         }
       }
+    },
+    "starsRating": {
+      "name": "Stars Rating",
+      "settings": {
+        "stars": {
+          "type": "number",
+          "label": "Stars",
+          "min": 1,
+          "max": 5
+        }
+      }
     }
   },
   "presets": [
     {
-      "category": "الصفحة الرئيسية",
-      "name": "⭐ Product Reviews",
+      "category": "Home",
+      "name": "Product Reviews",
       "settings": {
         "title": "reviews_and_ratings",
         "rating": 4.5,
@@ -58,9 +73,49 @@
           "settings": {
             "name": "review_1_name",
             "stars": 5,
+            "image":"qumra://card6.jpg",
             "review": "review_1_text"
           }
+        },
+        {
+          "block": "reviewItem",
+          "name": "First Review",
+          "settings": {
+            "name": "review_1_name",
+            "stars": 5,
+            "image":"qumra://card7.jpg",
+            "review": "review_1_text"
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 5
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 5
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 4
+          }
+        },
+        {
+          "block": "starsRating",
+          "name": "First Rating",
+          "settings": {
+            "stars": 3
+          }
         }
+        
       ]
     }
   ]

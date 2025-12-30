@@ -1,0 +1,16 @@
+{% set currentLang = localization.language or 'en' %}
+
+{% form 'lang' %}
+<div class="hidden sm:flex items-center gap-2">
+  {% for lang in localization.availableLanguages %}
+  {% set lang_color = "#EF9B13" if lang == currentLang else text_color %}
+  <button type="submit" name="lang" value="{{ lang }}" style="font-size: {{font_size}}px;color:{{lang_color}}" class="text-lg transition cursor-pointer bg-transparent border-0 p-0 m-0 
+      hover:underline focus:outline-none ">
+    {{ t(lang) }}
+  </button>
+  {% if not loop.last %}
+  <span class="text-lg">|</span>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endform %}

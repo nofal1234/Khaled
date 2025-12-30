@@ -1,0 +1,207 @@
+{
+  "name": "blog slider",
+  "description": "عرض منشورات المدونة مع صور وتأثيرات تفاعلية",
+  "settings": {
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "features_section",
+      "description": "العنوان الذي يظهر أعلى سكشن المميزات"
+    },
+    "title_size": {
+      "type": "number",
+      "label": "حجم العنوان ",
+      "default":18
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "#"
+    },  
+      "title_color": {
+        "type": "color",
+        "label": "لون العنوان ",
+        "default": "#333333"
+      },
+      "blog_name_color": {
+        "type": "color",
+        "label": "لون اسم المدونة",
+        "default": "#1c1c1c"
+      },
+      "blog_name_size": {
+        "type": "number",
+        "label": "حجم اسم المدونة",
+        "default": 18
+      },
+      "blog_description_color": {
+        "type": "color",
+        "label": "لون وصف المدونة",
+        "default": "#6b7280"
+      },
+      "blog_description_size": {
+        "type": "number",
+        "label": "حجم وصف المدونة",
+        "default": 14
+      },
+    "show_view_all": {
+      "type": "boolean",
+      "label": "عرض زر عرض الكل",
+      "default": true
+    },
+    "link_color": {
+      "type": "color",
+      "label": "لون رابط عرض الكل",
+      "default": "#6b7280"
+    },
+    "show_navigation": {
+      "type": "boolean",
+      "label": "إظهار أزرار التنقل",
+      "default": true
+    },
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
+    },
+    "slides_per_view_sm": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة صغيرة)",
+      "default": 1.5
+    },
+    "space_between_sm": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة صغيرة)",
+      "default": 8
+    },
+    "slides_per_view_md": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة متوسطة)",
+      "default": 2
+    },
+    "space_between_md": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة متوسطة)",
+      "default": 8
+    },
+    "slides_per_view_lg": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة كبيرة)",
+      "default": 4
+    },
+    "space_between_lg": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة كبيرة)",
+      "default": 16
+    }
+  },
+  "blocks": {
+    "blogPost": {
+      "name": "منشور المدونة",
+      "settings": {
+        "title": {
+          "type": "string",
+          "label": "عنوان المنشور",
+          "description": "العنوان الذي يظهر فوق نص منشور المدونة"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "وصف المنشور",
+          "description": "وصف مختصر أسفل عنوان منشور المدونة"
+        },
+        "image": {
+          "type": "media",
+          "label": "صورة المنشور",
+          "description": "قم برفع/اختيار صورة المنشور من البيلدر"
+        },
+        "button_text": {
+          "type": "string",
+          "label": "نص الرابط",
+          "description": "النص الذي يظهر على رابط أو زر قراءة المزيد"
+        },
+        "link": {
+          "type": "string",
+          "label": "رابط المنشور",
+          "description": "الرابط الذي ينتقل إليه عند الضغط على المنشور"
+        },
+        "alt_text": {
+          "type": "string",
+          "label": "النص البديل للصورة",
+          "description": "نص بديل يُستخدم لوصف صورة المنشور لمحركات البحث وذوي الاحتياجات الخاصة"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "sliders",
+      "name": "blog slider",
+      "blocks": [
+        {
+          "block": "blogPost",
+          "name": "blog 1",
+          "settings": {
+            "title": "blog_title",
+            "description": "blog_desc",
+            "image": "qumra://blog1.png",
+            "button_text": "view_more",
+            "link": "#"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "blog 2",
+          "settings": {
+            "title": "blog_title",
+            "description": "blog_desc",
+            "image": "qumra://blog2.png",
+            "button_text": "view_more",
+            "link": "#"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "blog 3",
+          "settings": {
+            "title": "blog_title",
+            "description": "blog_desc",
+            "image": "qumra://blog3.png",
+            "button_text": "view_more",
+            "link": "#"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "blog 1",
+          "settings": {
+            "title": "blog_title",
+            "description": "blog_desc",
+            "image": "qumra://blog2.png",
+            "button_text": "view_more",
+            "link": "#"
+          }
+        }
+      ]
+    }
+  ]
+}

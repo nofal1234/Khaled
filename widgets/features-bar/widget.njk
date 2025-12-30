@@ -1,29 +1,108 @@
-<!-- Features Bar Section -->
-<section class="w-full py-2 sm:py-3 md:py-4 mb-6 md:mb-8 bg-black border-b border-gray-800">
-    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 h-full">
-        <div class="ticker" dir="rtl">
-            {% set featureKeys = [
-                'feature_bar_free_shipping',
-                'feature_bar_eco_friendly',
-                'feature_bar_high_rating',
-                'feature_bar_high_quality'
-            ] %}
-            <div class="ticker__track gap-[8.25px] sm:gap-3 md:gap-5">
-                {% for feature in widget.blocks %}
-                {% set key = featureKeys[loop.index0 % featureKeys|length] %}
-                <div class="ticker__item gap-[8.25px] sm:gap-2 md:gap-3 px-[8.25px] sm:px-2 md:px-4">
-                    <span class="text-white text-sm sm:text-base md:text-lg lg:text-xl flex-shrink-0">{{ feature.data.icon | safe }}</span>
-                    <span class="ticker__text text-white text-xs sm:text-sm md:text-xs lg:text-sm font-bold leading-tight">{{ t(key) }}</span>
-                </div>
-                {% endfor %}
-                {% for feature in widget.blocks %}
-                {% set key = featureKeys[loop.index0 % featureKeys|length] %}
-                <div class="ticker__item gap-[8.25px] sm:gap-2 md:gap-3 px-[8.25px] sm:px-2 md:px-4">
-                    <span class="text-white text-sm sm:text-base md:text-lg lg:text-xl flex-shrink-0">{{ feature.data.icon | safe }}</span>
-                    <span class="ticker__text text-white text-xs sm:text-sm md:text-xs lg:text-sm font-bold leading-tight">{{ t(key) }}</span>
-                </div>
+{% set use_container = widget.data.use_container %}
+{% set bg_color = widget.data.bg_color %}
+{% set text_color = widget.data.text_color %}
+{% set border_color = widget.data.border_color %}
+{% set show_border = widget.data.show_border %}
+{% set padding_vh = widget.data.padding_vh %}
+{% set item_number = widget.data.item_number %}
+{% set slider_speed = widget.data.slider_speed %}
+{% set slider_pause_on_hover = widget.data.slider_pause_on_hover %}
+{% set slider_reverse_direction = widget.data.slider_reverse_direction %}
+{% set slider_space_between = widget.data.slider_space_between %}
+{% set slider_loop = widget.data.slider_loop %}
+{% set slider_free_mode = widget.data.slider_free_mode %}
+{% set slider_delay = widget.data.slider_delay %}
+
+
+<section 
+    id="{{widget.id}}" 
+    class="w-full  {% if show_border %}border-b{% endif %} "
+    style=" background-color: {{ bg_color }}; color: {{ text_color }};padding-top: {{padding_vh}}px;padding-bottom: {{padding_vh}}px;
+     {% if show_border %}border-bottom: 1px solid {{ border_color }};{% endif %}"
+>
+    <div class="{% if use_container %}container mx-auto{% else %}px-2.5{% endif %} h-full">
+        <div class="swiper features-bar-swiper" dir="rtl">
+            <div class="swiper-wrapper">
+                {% for feature in widget.blocks | concat(widget.blocks) %}
+                    <div class="swiper-slide">
+                        <div class="flex items-center gap-2 sm:gap-2 md:gap-3">
+                            <span 
+                                class="flex items-center text-sm sm:text-base md:text-lg lg:text-xl flex-shrink-0"
+                                style="color: {{ text_color }}"
+                            >
+                                {{ feature.data.icon | safe }}
+                            </span>
+                            <span 
+                                class="text-xs sm:text-sm md:text-xs lg:text-sm font-bold leading-tight whitespace-nowrap"
+                                style="color: {{ text_color }}"
+                            >
+                                {{ t(feature.data.title) }}
+                            </span>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const featuresBarSwiperElement = document.getElementById(`{{widget.id}}`);
+    if (featuresBarSwiperElement) {
+        const slides = featuresBarSwiperElement.querySelectorAll('.swiper-slide').length;
+        const loopedSlides = Math.max({{ item_number or 5 }}, Math.ceil(slides / 2));
+        const sliderSpeed = {{ slider_speed }};
+        const sliderDelay = {{ slider_delay }};
+        const sliderPauseOnHover = {{ slider_pause_on_hover }};
+        const sliderReverseDirection = {{ slider_reverse_direction }};
+        const sliderSpaceBetween = {{ slider_space_between }};
+        const sliderLoop = {{ slider_loop }};
+        const sliderFreeMode = {{ slider_free_mode }};
+        const featuresBarSwiper = new Swiper('.features-bar-swiper', {
+            slidesPerView: 'auto',
+            loop: sliderLoop,
+            loopedSlides: loopedSlides,
+            autoplay: {
+                delay: sliderDelay,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: sliderPauseOnHover,
+                reverseDirection: sliderReverseDirection,
+            },
+            speed: sliderSpeed,
+            freeMode: {
+                enabled: sliderFreeMode,
+                momentum: false,
+                sticky: false,
+            },
+            spaceBetween: sliderSpaceBetween,
+            breakpoints: {
+                640: {
+                    spaceBetween: sliderSpaceBetween,
+                },
+                768: {
+                    spaceBetween: sliderSpaceBetween,
+                },
+            }
+        });
+    }
+});
+</script>
+
+<style>
+.features-bar-swiper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.features-bar-swiper .swiper-wrapper {
+    transition-timing-function: linear !important;
+    display: flex;
+    align-items: center;
+}
+
+.features-bar-swiper .swiper-slide {
+    width: auto !important;
+    flex-shrink: 0;
+}
+</style>

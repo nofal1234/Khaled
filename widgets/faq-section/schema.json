@@ -1,11 +1,16 @@
 {
-  "name": "FAQ Section",
+  "name": "FAQ  slider",
   "description": "Section for frequently asked questions with expandable answers",
   "settings": {
     "title": {
       "type": "string",
       "label": "Section Title",
       "default": "more_information"
+    },
+    "show_related_products": {
+      "type": "boolean",
+      "label": "عرض منتجات مشابة",
+      "default": true
     }
   },
   "blocks": {
@@ -27,10 +32,11 @@
   },
   "presets": [
     {
-      "category": "الصفحة الرئيسية",
-      "name": "❓ FAQ Section",
+      "category": "sliders",
+      "name": "FAQ slider",
       "settings": {
-        "title": "more_information"
+        "title": "more_information",
+        "show_related_products":true
       },
       "blocks": [
         {

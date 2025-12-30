@@ -1,146 +1,0 @@
-{
-  "name": "Blog Section",
-  "description": "عرض منشورات المدونة مع صور وتأثيرات تفاعلية",
-  "settings": {
-    "section_title": {
-      "type": "string",
-      "label": "عنوان القسم",
-      "default": "blog_posts",
-      "description": "العنوان الرئيسي الذي يظهر أعلى سكشن منشورات المدونة"
-    },
-    "view_all_text": {
-      "type": "string",
-      "label": "نص عرض الكل",
-      "default": "view_all",
-      "description": "النص الذي يظهر على رابط عرض الكل بجانب الأسهم"
-    },
-    "view_all_link": {
-      "type": "string",
-      "label": "رابط عرض الكل",
-      "default": "#",
-      "description": "الرابط الذي ينتقل إليه عند الضغط على عرض الكل"
-    },
-    
-    "columns_mobile": {
-      "type": "select",
-      "label": "عدد الأعمدة في الشاشات الصغيرة",
-      "default": "1",
-      "options": [
-        {"value": "1", "label": "عمود واحد"},
-        {"value": "2", "label": "عمودين"}
-      ]
-    },
-    "columns_desktop": {
-      "type": "select",
-      "label": "عدد الأعمدة في الشاشات الكبيرة",
-      "default": "3",
-      "options": [
-        {"value": "2", "label": "عمودين"},
-        {"value": "3", "label": "ثلاثة أعمدة"},
-        {"value": "4", "label": "أربعة أعمدة"}
-      ]
-    },
-    "default_button_text": {
-      "type": "string",
-      "label": "نص الرابط الافتراضي",
-      "default": "read_more",
-      "description": "النص المستخدم على زر القراءة في الكروت الافتراضية"
-    },
-    "default_title_1": { "type": "media", "label": "عنوان افتراضي 1", "default": "blog_default_title_1" },
-    "default_description_1": { "type": "textarea", "label": "وصف افتراضي 1", "default": "blog_default_desc_1" },
-    "default_image_1": { "type": "media", "label": "صورة افتراضية 1", "default": "qumra://blog1.png" },
-    "default_link_1": { "type": "string", "label": "رابط افتراضي 1", "default": "/blog" },
-    "default_title_2": { "type": "string", "label": "عنوان افتراضي 2", "default": "blog_default_title_2" },
-    "default_description_2": { "type": "textarea", "label": "وصف افتراضي 2", "default": "blog_default_desc_2" },
-    "default_image_2": { "type": "media", "label": "صورة افتراضية 2", "default": "assets/blog2.png" },
-    "default_link_2": { "type": "string", "label": "رابط افتراضي 2", "default": "/blog" },
-    "default_title_3": { "type": "string", "label": "عنوان افتراضي 3", "default": "blog_default_title_3" },
-    "default_description_3": { "type": "textarea", "label": "وصف افتراضي 3", "default": "blog_default_desc_3" },
-    "default_image_3": { "type": "media", "label": "صورة افتراضية 3", "default": "assets/blog3.png" },
- "default_link_3": { "type": "string", "label": "رابط افتراضي 3", "default": "/blog" }
-  },   
-  "blocks": {
-    "blogPost": {
-      "name": "منشور المدونة",
-      "settings": {
-        "title": {
-          "type": "string",
-          "label": "عنوان المنشور",
-          "default": "blog_post_title",
-          "description": "العنوان الذي يظهر فوق نص منشور المدونة"
-        },
-        "description": {
-          "type": "textarea",
-          "label": "وصف المنشور",
-          "default": "blog_post_description",
-          "description": "وصف مختصر أسفل عنوان منشور المدونة"
-        },
-        "image": {
-          "type": "media",
-          "label": "صورة المنشور",
-          "description": "قم برفع/اختيار صورة المنشور من البيلدر",
-          "default": "assets/blog1.png" 
-        },
-        "button_text": {
-          "type": "string",
-          "label": "نص الرابط",
-          "default": "read_more",
-          "description": "النص الذي يظهر على رابط أو زر قراءة المزيد"
-        },
-        "link": {
-          "type": "string",
-          "label": "رابط المنشور",
-          "default": "#",
-          "description": "الرابط الذي ينتقل إليه عند الضغط على المنشور"
-        },
-        "alt_text": {
-          "type": "string",
-          "label": "النص البديل للصورة",
-          "default": "blog_post_image_alt",
-          "description": "نص بديل يُستخدم لوصف صورة المنشور لمحركات البحث وذوي الاحتياجات الخاصة"
-        }
-      }
-    }
-  },
-  "presets": [
-    {
-      "category": "الصفحة الرئيسية",
-      "name": "📝 منشورات المدونة",
-      "blocks": [
-        {
-          "block": "blogPost",
-          "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": "qumra://blog1.png",
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
-          }
-        },
-        {
-          "block": "blogPost",
-          "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": { "fileUrl": "assets/blog2.png" },
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
-          }
-        },
-        {
-          "block": "blogPost",
-          "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
-            "image": { "fileUrl": "assets/blog3.png" },
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
-          }
-        }
-      ]
-    }
-  ]
-}

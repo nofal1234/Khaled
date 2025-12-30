@@ -1,67 +1,47 @@
-{% set current = context.pagination.currentPage|default(1) %}
-{% set total = context.pagination.totalPages|default(1) %}
-
-<div dir="rtl" class="py-8 flex justify-center">
-  <nav class="inline-flex items-center gap-2 md:gap-3">
-    {# Previous Page #}
-    {% if current > 1 %}
-    <a href="?page={{ current - 1 }}" rel="prev" aria-label="الصفحة السابقة" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 transition">
-      <span class="text-gray-700">‹</span>
-    </a>
-    {% else %}
-    <span aria-disabled="true" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">
-      <span>‹</span>
-    </span>
-    {% endif %}
-
-    {# Page Numbers #}
-    {% set start = 1 %}
-    {% set end = total %}
-    
-    {% if total > 5 %}
-      {% if current <= 3 %} {% set start=1 %} {% set end=5 %} {% elif current >= total - 2 %}
-        {% set start = total - 4 %}
-        {% set end = total %}
-      {% else %}
-        {% set start = current - 2 %}
-        {% set end = current + 2 %}
-      {% endif %}
-    {% endif %}
-
-    {% if start > 1 %}
-    <a href="?page=1" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
-      1
-    </a>
-    <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center text-gray-500">…</span>
-    {% endif %}
-
-    {% for p in range(start, end + 1) %}
-      {% if p == current %}
-      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-black text-white text-sm md:text-base">
-        {{ p }}
-      </span>
-      {% else %}
-      <a href="?page={{ p }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
-        {{ p }}
+  <!-- Pagination -->
+  {% set current = (context.pagination and context.pagination.currentPage) or 1 %}
+  {% set total = (context.pagination and context.pagination.totalPages) or 10 %}
+  <div class="flex items-center justify-center mt-6">
+    <nav class="flex items-center gap-3">
+      {# Prev #}
+      {% if current > 1 %}
+      <a href="?page={{ current - 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
+        <span class="text-gray-700">‹</span>
       </a>
-      {% endif %}
-    {% endfor %}
-
-    {% if end < total %} <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center text-gray-500">…</span>
-      <a href="?page={{ total }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 text-sm md:text-base">
-        {{ total }}
-      </a>
+      {% else %}
+      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">‹</span>
       {% endif %}
 
-      {# Next Page #}
+      {# Page 1..3 #}
+      {% for p in [1,2,3] %}
+        {% if p <= total %}
+          {% if p == current %}
+          <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-mainColor text-white">{{ p }}</span>
+          {% else %}
+          <a href="?page={{ p }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ p }}</a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {# Ellipsis and last page #}
+      {% if total > 4 %}
+        <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-500">…</span>
+        <a href="?page={{ total }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">{{ total }}</a>
+      {% elseif total == 4 %}
+        {% if 4 == current %}
+        <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full bg-mainColor text-white">4</span>
+        {% else %}
+        <a href="?page=4" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">4</a>
+        {% endif %}
+      {% endif %}
+
+      {# Next #}
       {% if current < total %}
-      <a href="?page={{ current + 1 }}" rel="next" aria-label="الصفحة التالية" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50 transition">
+      <a href="?page={{ current + 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50">
         <span class="text-gray-700">›</span>
       </a>
       {% else %}
-      <span aria-disabled="true" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">
-        <span>›</span>
-      </span>
+      <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 cursor-not-allowed">›</span>
       {% endif %}
-  </nav>
-</div>
+    </nav>
+  </div>

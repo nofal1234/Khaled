@@ -1,0 +1,155 @@
+<!-- Offers Section - Infinity Autoplay Swiper -->
+
+{% set related_products = context.related_products or [] %}
+{% set products_collection = widget.data.products_collection or [] %}
+{% set products = related_products  | concat(products_collection) %}
+{% set section_title = widget.data.section_title %}
+{% set view_all_link = widget.data.view_all_link %}
+{% set show_view_all = widget.data.show_view_all %}
+{% set title_color = widget.data.title_color  %}
+{% set link_color = widget.data.link_color %}
+{% set show_navigation = widget.data.show_navigation  %}
+{% set card_title_color = widget.data.card_title_color %}
+{% set card_title_size = widget.data.card_title_size %}
+{% set card_description_color = widget.data.card_description_color %}
+{% set card_description_size = widget.data.card_description_size %}
+{% set price_before_color = widget.data.price_before_color %}
+{% set price_before_size = widget.data.price_before_size %}
+{% set price_color = widget.data.price_color %}
+{% set price_size = widget.data.price_size %}
+{% set discount_color = widget.data.discount_color %}
+{% set discount_size = widget.data.discount_size %}
+{% set buy_button_bg = widget.data.buy_button_bg %}
+
+{# ========== read slider settings from widget.data #}
+
+{% log "products",products %}
+{% if products | length > 0 %}
+<section class="mt-4 md:mt-8 mb-3 md:mb-5 container">
+  <div class="rounded-2xl py-4">
+    <div class="flex items-center justify-between mb-4 md:mb-6">
+      <h1 class="text-xl md:text-2xl font-bold" style="color: {{ title_color }}">
+        {{ t(section_title or 'offers') }}
+      </h1>
+      <div class="flex items-center gap-4">
+        {% if show_view_all %}
+        <a href="{{ view_all_link | default('/collection/home-page') }}"
+          class="underline text-xs md:text-sm cursor-pointer hover:text-mainColor transition py-0 px-0 md:py-2 md:px-3"
+          style="color: {{ link_color }}">
+          {{ t('view_all') }}
+        </a>
+        {% endif %}
+        {% if show_navigation %}
+        <div class="flex items-center gap-[38px]" dir="ltr">
+          <div
+            class="cursor-pointer hidden md:flex items-center justify-center bg-transparent swiper-button-prev-offer">
+            <i class="ph ph-caret-left  text-lg" style="color: {{ link_color }};"></i>
+          </div>
+          <div
+            class="cursor-pointer hidden md:flex items-center justify-center bg-transparent swiper-button-next-offer">
+            <i class="ph ph-caret-right  text-lg" style="color: {{ link_color }};"></i>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="relative">
+      <div id="offer-swiper-{{ widget.id }}" class="swiper offerSwiper">
+        <div class="swiper-wrapper">
+          {% for product in products %}
+          <div class="swiper-slide  h-full">
+            {% ui "product-card.njk", product=product,
+                  card_title_color=card_title_color,
+                  card_title_size=card_title_size,
+                  card_description_color=card_description_color,
+                  card_description_size=card_description_size,
+                  price_before_color=price_before_color,
+                  price_before_size=price_before_size,
+                  price_color=price_color,
+                  price_size=price_size,
+                  discount_color=discount_color,
+                  discount_size=discount_size,
+                  buy_button_bg=buy_button_bg
+            %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
+{% ui "empty.njk" %}
+{% endif %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var swiperElem = document.getElementById('offer-swiper-{{ widget.id }}');
+    if (swiperElem && window.Swiper) {
+
+      // استعمل المتغيرات دي
+      const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+      const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+      const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+      const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+      const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+      const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+      const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+      const speed = Number('{{ widget.data.speed }}');
+      const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+      const autoplay = '{{ widget.data.autoplay }}' == 'true';
+      const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+
+      new window.Swiper('#offer-swiper-{{ widget.id }}', {
+        loop: true,
+        grabCursor: grabCursor,
+        speed: speed,
+        spaceBetween: spaceBetweenSM,
+        allowTouchMove: allowTouchMove,
+        autoplay: autoplay ? {
+          delay: autoplayDelay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+          reverseDirection: true
+        } : false,
+        navigation: {
+          nextEl: '.swiper-button-next-offer',
+          prevEl: '.swiper-button-prev-offer'
+        },
+        breakpoints: {
+          250: {
+            centeredSlides: true,
+            slidesPerView: 1.5,
+            spaceBetween: 8
+          },
+          400: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewSM,
+            spaceBetween: spaceBetweenSM
+          },
+          768: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewMD,
+            spaceBetween: spaceBetweenMD
+          },
+          1000: {
+            slidesPerView: slidesPerViewMD,
+            centeredSlides: false,
+            spaceBetween: spaceBetweenMD
+          },
+          1200: {
+            centeredSlides: false,
+            slidesPerView: slidesPerViewLG,
+            spaceBetween: spaceBetweenLG
+          }
+        }
+      });
+    }
+  });
+</script>
+
+{% style %}
+.swiper-button-next-offer, .swiper-button-prev-offer {
+  width: 14px;
+  height: 27px;
+}
+{% endstyle %}

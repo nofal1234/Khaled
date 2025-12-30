@@ -6,6 +6,17 @@
       "name": "products",
       "widget": "products",
       "settings": {}
+    },
+    {
+      "name": "banner photo with title",
+      "widget": "banner-section",
+      "settings": {
+        "title": "spring_has_arrived",
+        "subtitle": "change_your_look",
+        "button_text": "order_now",
+        "button_link": "/collections",
+        "image": "qumra://banner.png"
+      }
     }
   ]
 }

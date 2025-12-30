@@ -1,111 +1,105 @@
 {% set locale = localization.lang %}
-{{locale}}
-{% if locale == "en" %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-{% else %}
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-{% endif %}
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang={{locale}} dir="rtl">
 
-    <title>{{ context.page.title | default("Store") }}</title>
-    {% seo %}
-    {% qumra_head %}
-    <style>
-        :root {
-          --mainColor: {{settings.mainColor}};
-          --darkColor: {{settings.darkColor}};
-          --swiper-navigation-size: 25px;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{{ context.page.title | default("Store") }}</title>
+  {% seo %}
+  {% qumra_head %}
+  {% log "mainColor", settings.mainColor %}
+  <style>
+    :root {
+      --mainColor: {{ settings.mainColor }};
+
+      --darkColor: {
+          {
+          settings.darkColor
         }
+      }
 
-        body {
-          background-color: #FEFEFE;
-        }
-    </style>
+      ;
+      --swiper-navigation-size: 25px;
+    }
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    body {
+      background-color: #FEFEFE;
+    }
+  </style>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    {% if locale == "en" %}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    {% else %}
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    {% endif %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
-    {% if locale == "en" %}
-    <link rel="stylesheet" href="{{ 'style.ltr.css' | assets }}" />
-    {% endif %}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Config -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              'tajawal': ['tajawal'],
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="{{ 'style.css' | assets }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'tajawal': ['tajawal'],
+          },
+          colors: {
+            mainColor: {
+              DEFAULT: 'var(--mainColor)',
             },
-            colors: {
-              mainColor: {
-                DEFAULT: '{{settings.mainColor}}',
-              },
-              dark: {
-                DEFAULT: '{{settings.darkColor}}',
-              }
-            }
+            successGreenLight: "#ECFDF3",
+            successGreen: "#ECFDF3",
+            error: "#B42318",
+            errorLight: "#FEF3F2",
+            stork: "#E2E2E2",
+            bgItem: "#F7F7F7",
+            textDescription: "#666666",
           }
         }
       }
-    </script>
-    <!-- Iconify for Flat Icons -->
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <!-- Flaticon UIcons Regular Rounded -->
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css">
-    
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    }
+  </script>
+  <!-- Swiper CSS -->
 
+</head>
 
+<body dir="{{t('dir')}}">
+  <div x-data="GlobalState()" x-init="init()">
+    {%ui "loading-screen.njk" %}
+    {% template "header" %}
 
-  </head>
-  <body dir="{{t('dir')}}">
-    <div x-data="GlobalState()" x-init="init()">
-      {%ui "loading-screen.njk" %}
-      {% template "header" %}
-      
-      <main>
-       {% content " " %}
-      </main>
+    <main>
+      {% content " " %}
+    </main>
     {% template "footer" %}
-    {%ui "cart.njk" %}
-    {%ui "search.njk" %}
     {%ui "wishlist-sidebar.njk" %}
-    {# Sidebar is now included in header widget to access header_menu #}
-    </div>
-    {% qumra_scripts %}
-    <script>
-      console.log("Global Data", __qumra__);
-      
-    </script>
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
-    <script src="{{ 'main.js' | assets }}"></script>
-    <script src="{{ 'cart.js' | assets }}"></script>
-    <script src="{{ 'product.js' | assets }}"></script>
-    <script src="{{ 'wishlist.js' | assets }}"></script>
-    <script src="{{ 'sidebar.js' | assets }}"></script>
-    <script src="{{ 'search.js' | assets }}"></script>
-    <script src="{{ 'swiper-init.js' | assets }}"></script>
-  </body>
+    {%ui "cart.njk" %}
+  </div>
+  {% qumra_scripts %}
+  <script>
+    console.log("Global Data", __qumra__);
+
+  </script>
+  <!-- Swiper JS -->
+
+  <script src="{{ 'main.js' | assets }}"></script>
+  <script src="{{ 'cart.js' | assets }}"></script>
+  <script src="{{ 'product.js' | assets }}"></script>
+  <script src="{{ 'wishlist.js' | assets }}"></script>
+  <script src="{{ 'sidebar.js' | assets }}"></script>
+  <script src="{{ 'search.js' | assets }}"></script>
+  <script src="{{ 'swiper-init.js' | assets }}"></script>
+</body>
+
 </html>

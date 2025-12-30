@@ -1,6 +1,42 @@
 {
-  "name": "رأس الصفحة",
+  "name": "heder",
   "settings": {
+    "bg_color_fixed": {
+      "type": "color",
+      "label": "لون خلفية الهيدر",
+      "default": "#fff",
+      "description": "لون خلفية الهيدر عندما تكون الصفحة في الأعلى"
+    },
+    "text_color_fixed": {
+      "type": "color",
+      "label": "لون نص الهيدر",
+      "default": "#000",
+      "description": "لون النص في الهيدر عندما تكون الصفحة في الأعلى"
+    },
+    "bg_color_scrolled": {
+      "type": "color",
+      "label": "لون خلفية الهيدر",
+      "default": "#fff",
+      "description": "لون خلفية الهيدر عند تمرير الصفحة للأسفل"
+    },
+    "text_color_scrolled": {
+      "type": "color",
+      "label": "لون نص الهيدر عند التمرير",
+      "default": "#000",
+      "description": "لون النص في الهيدر عند تمرير الصفحة للأسفل"
+    },
+    "bg_in_page": {
+      "type": "color",
+      "label": "لون خلفية الهيدر داخل الصفحات",
+      "default": "#fff",
+      "description": "لون الخلفية الذي يظهر للهيدر عندما تكون داخل صفحة غير رئيسية"
+    },
+    "text_color_in_page": {
+      "type": "color",
+      "label": "لون نص الهيدر داخل الصفحات",
+      "default": "#000",
+      "description": "لون النص في الهيدر عندما تكون داخل صفحة غير رئيسية"
+    },
     "logo": {
       "type": "image_picker",
       "label": "الشعار",
@@ -36,83 +72,17 @@
       "default": true,
       "description": "إظهار أو إخفاء أيقونة الحساب"
     },
-    "wishlist_tooltip": {
-      "type": "string",
-      "label": "نص المفضلة",
-      "default": "wishlist",
-      "description": "النص الذي يظهر عند التمرير على أيقونة المفضلة"
+    "logo_higth_lg": {
+      "type": "number",
+      "label": "ارتفاع الشعار (ديسكتوب px)",
+      "default": 40,
+      "description": "حدد ارتفاع الشعار بالبيكسل لأجهزة الديسكتوب (اختياري: اتركه فارغًا للحجم الافتراضي)"
     },
-    "cart_tooltip": {
-      "type": "string",
-      "label": "نص السلة",
-      "default": "cart",
-      "description": "النص الذي يظهر عند التمرير على أيقونة السلة"
-    },
-    "user_tooltip": {
-      "type": "string",
-      "label": "نص الحساب",
-      "default": "account",
-      "description": "النص الذي يظهر عند التمرير على أيقونة الحساب"
-    },
-    "mobile_menu_text": {
-      "type": "string",
-      "label": "نص القائمة في الموبايل",
-      "default": "more",
-      "description": "النص الذي يظهر في القائمة الجانبية للموبايل"
-    },
-    "language_button_text": {
-      "type": "string",
-      "label": "نص زر اللغة",
-      "default": "english",
-      "description": "يمكن استخدامه كمفتاح ترجمة إذا احتجت لزر لغة منفصل"
-    },
-    "logo_height": {
-      "type": "select",
-      "label": "ارتفاع الشعار",
-      "options": [
-        {
-          "value": "h-8",
-          "label": "صغير (32px)"
-        },
-        {
-          "value": "h-10",
-          "label": "متوسط (40px)"
-        },
-        {
-          "value": "h-12",
-          "label": "كبير (48px)"
-        },
-        {
-          "value": "h-16",
-          "label": "أكبر (64px)"
-        },
-        {
-          "value": "h-20",
-          "label": "أكبر بكثير (80px)"
-        }
-      ],
-      "default": "h-12",
-      "description": "اختر ارتفاع الشعار المناسب"
-    },
-    "search_style": {
-      "type": "select",
-      "label": "نمط البحث",
-      "options": [
-        {
-          "value": "rounded-full",
-          "label": "مدور"
-        },
-        {
-          "value": "rounded-lg",
-          "label": "مستطيل بزوايا مدورة"
-        },
-        {
-          "value": "rounded-none",
-          "label": "مستطيل"
-        }
-      ],
-      "default": "rounded-full",
-      "description": "اختر نمط مربع البحث"
+    "logo_higth_sm": {
+      "type": "number",
+      "label": "ارتفاع الشعار (موبايل px)",
+      "default": 29,
+      "description": "حدد ارتفاع الشعار بالبيكسل لأجهزة الجوال (اختياري: اتركه فارغًا للحجم الافتراضي)"
     },
     "header_menu": {
       "type": "menu",
@@ -141,8 +111,8 @@
   },
   "presets": [
     {
-      "category": "الصفحة الرئيسية",
-      "name": "⭐ رأس الصفحة الجديد"
+      "category": "Home",
+      "name": "heder"
     }
   ]
 }

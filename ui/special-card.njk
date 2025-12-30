@@ -1,0 +1,81 @@
+<a href="{{ data.special.link }}" class="special-card flex w-full flex-col gap-3 h-full group"
+   style="
+    --special-name-size: {{ special_name_size }}px;
+    --special-description-size: {{ special_description_size }}px;
+   "
+>
+  <div class="special-card__image w-full overflow-hidden relative">
+      <img src="{{ data.special.image.fileUrl }}" 
+           class="special-card-image w-full h-full object-cover rounded-lg transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:rotate-1 group-hover:brightness-110">
+      <div class="absolute inset-0 rounded-lg pointer-events-none transition-all duration-500 opacity-0 group-hover:opacity-30 group-hover:bg-black"></div>
+  </div>
+  <div class="special-card__content flex flex-col gap-2 transition-colors duration-400 group-hover:bg-gray-50 rounded-lg">
+    {% if data.special.title %}
+    <span 
+      class="special-card__name font-bold text-center block line-clamp-2 transition-colors duration-300 group-hover:text-mainColor"
+      style="
+        color: {{ special_name_color }};
+        font-size: clamp(calc(var(--special-name-size) * 0.75), calc(var(--special-name-size) * 0.55 + 1vw), var(--special-name-size));
+      "
+    >{{ t(data.special.title)}}</span>
+    {% endif %}
+    {% if data.special.description %}
+    <span 
+      class="special-card__desc text-center block line-clamp-2 transition-colors duration-300 group-hover:text-gray-800"
+      style="
+        color: {{ special_description_color }};
+        font-size: clamp(calc(var(--special-description-size) * 0.75), calc(var(--special-description-size) * 0.55 + 0.9vw), var(--special-description-size));
+      "
+    >{{ t(data.special.description)  | safe }}</span>
+    {% endif %}
+  </div>
+</a>
+
+<style>
+.special-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  height: 100%;
+  min-height: 360px;
+  /* shadow removed */
+  transition: none;
+}
+
+.special-card:hover, .special-card:focus, .special-card:active {
+  /* shadow removed */
+  box-shadow: none;
+  text-decoration: none;
+  outline: none;
+}
+
+.special-card__image {
+  width: 100%;
+  height: 400px;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  /* shadow removed */
+  transition: none;
+  backface-visibility: hidden;
+}
+
+.special-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.special-card:hover .special-card__image,
+.special-card:focus .special-card__image {
+  /* shadow removed */
+  box-shadow: none;
+}
+
+.special-card-image {
+  transition: transform 0.5s cubic-bezier(.4,2.5,.5,1), filter 0.5s;
+  will-change: transform, filter;
+}
+</style>

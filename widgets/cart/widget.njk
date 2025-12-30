@@ -1,353 +1,206 @@
-m <section class="py-4 md:py-6 bg-white pt-6 md:pt-8 cart-container">
-  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20">
-    <div x-data="xDataCart()" x-init="console.log('Cart isEmpty:', isEmpty, 'items:', globals?.cart?.items)">
-      <!-- Page Title -->
-      <div class="mb-4 md:mb-6 cart-title">
-        <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-black" x-show="globals?.cart?.items?.length > 0">
-          {{ t(widget.data.cart_title or 'cart_title') }}
-        </h1>
+{%  set text_color = widget.data.text_color%}
+<section class="py-4 md:py-[37px] max-sm:!max-w-[100%] m-auto sm:container " x-data="xDataCart()">
+  <!-- Page Title -->
+  <div x-show="globals?.cart?.items?.length > 0" class="flex flex-col gap-4">
+    <h1 class="text-xl md:text-2xl lg:text-[40px] max-sm:px-4 leading-[120%] tracking-[2%] font-bold" style="color: {{text_color}};" 
+      x-show="globals?.cart?.items?.length > 0">
+      {{ t(widget.data.cart_title or 'cart_title') }}
+    </h1>
+
+    <div class="grid md:grid-cols-9 gap-3  relative">
+      <div class="max-md:hidden md:col-span-6  md:sticky md:top-36  flex  self-start">
+        <table class=" w-full ">
+          <thead>
+            <tr class="">
+              <th style="color: {{text_color}};" class="pb-2 font-medium">المنتج</th>
+              <th style="color: {{text_color}};" class="pb-2 font-medium">السعر</th>
+              <th style="color: {{text_color}};" class="pb-2 font-medium">الكمية</th>
+              <th style="color: {{text_color}};" class="pb-2 text-start font-medium">المجموع الكلي</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="item in globals?.cart?.items" :key="item._id">
+              <tr class="border-t py-2">
+                <td class="pt-2 p-0 h-full flex items-center gap-4" style="color: {{text_color}};">
+                  <div class="flex items-center gap-2">
+                    <button @click="clearCartItem(item._id)">
+                      <i class="ph text-textDescription ph-trash"></i>
+                    </button>
+                    <div class="bg-bgItem rounded-lg">
+                      <img :src="item.productData.image.fileUrl" :alt="item.productData.title"
+                        class="w-[103px] h-[87px] object-contain" />
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2 justify-center" style="height: -webkit-fill-available; color: {{text_color}};">
+                    <span class="text-sm font-medium leading-[150%]" x-text="item.productData.title" style="color: {{text_color}};"></span>
+                    <template x-for="option in item.variantData.options" :key="option.label">
+                      <span class="leading-[150%]" x-text="option.label" style="color: {{text_color}};"></span>
+                    </template>
+                  </div>
+                </td>
+                <td class="pt-2 p-0 font-medium text-base" x-text="money(item.price)" style="color: {{text_color}};"></td>
+                <td class="pt-2 p-0">
+                  <div
+                  style="border-color: {{text_color}};"
+                    class="flex w-[98px] h-[45px] items-center border  justify-between px-[22px] rounded-full">
+                    <div>
+                      <input type="number" :value="item.quantity" min="1"
+                        class="qty-input max-w-8 text-center border-0 p-0 focus:ring-0 font-medium"
+                        style="color: {{text_color}};"
+                        @change="updateCartItemQuantity(item._id, $event.target.value)" />
+                    </div>
+                    <div class="flex flex-col items-center justify-between">
+                      <button @click="increaseCartItem(item._id, item.quantity)"
+                  style="color: {{text_color}};"
+                        class=" hover:text-gray-800" aria-label="زيادة الكمية">
+                        <i class="ph text-sm ph-caret-up"></i>
+                      </button>
+                      <button @click="decreaseCartItem(item._id, item.quantity)"
+                  style="color: {{text_color}};"
+                  class=" hover:text-gray-800" aria-label="تقليل الكمية">
+                        <i class="ph text-sm ph-caret-down"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="pt-2 p-0">
+                  <div class="font-bold" style="color: {{text_color}};"
+                    x-text="'€' + parseFloat(item.price * item.quantity).toFixed(2)"></div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
       </div>
-      
-      <!-- Cart Section -->
-      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8" x-show="globals?.cart?.items?.length > 0">
-        <!-- Right Side: Cart Items -->
-        <div class="w-full lg:w-2/3">
-          <!-- Mobile-friendly cart items -->
-          <div class="space-y-4 md:space-y-0">
-            <!-- Desktop table headers -->
-            <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-300 pb-3 cart-header">
-              <div class="col-span-6 cart-item-col cart-product">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_product or 'cart_product') }}</h3>
-              </div>
-              <div class="col-span-2 cart-item-col cart-price">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_price or 'cart_price') }}</h3>
-              </div>
-              <div class="col-span-2 cart-item-col cart-quantity">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_quantity or 'cart_quantity') }}</h3>
-              </div>
-              <div class="col-span-2 cart-item-col cart-total">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_total or 'cart_total') }}</h3>
-              </div>
-            </div>
-            <div>
-          <template x-for="item in globals?.cart?.items || []" :key="item._id">
-            <div>
-              <div class="flex md:hidden justify-between items-start gap-3 pb-4 border-b border-gray-100">
-                <div class="flex items-start gap-3 flex-1">
-                  <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                  <div class="flex-grow cart-item-col">
-                    <p class="font-semibold text-gray-800 text-sm" x-text="item?.productData?.title"></p>
-                    <p class="text-xs text-gray-500 mt-1" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
-                    <div class="flex items-center border border-gray-300 mt-3" style="width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
-                      <input type="number" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" :value="item.quantity" @input="updateQuantityFromInput(item._id, $event)" />
-                      <div class="flex flex-col items-center" style="gap: 2px;">
-                        <button class="text-gray-600 hover:text-gray-800" aria-label="{{ t(widget.data.cart_increase_quantity or 'cart_increase_quantity') }}" @click="increaseCartItem(item._id, item.quantity)">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" /></svg>
-                        </button>
-                        <button class="text-gray-600 hover:text-gray-800" aria-label="{{ t(widget.data.cart_decrease_quantity or 'cart_decrease_quantity') }}" @click="decreaseCartItem(item._id, item.quantity)">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 ه-3"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
-                        </button>
+
+      <div class="max-sm:px-4 md:hidden">
+        <table class=" w-full ">
+          <thead>
+            <tr class="">
+              <th class="pb-2 text-start text-sm leading-[150%] font-medium" style="color: {{text_color}};">المنتج</th>
+              <th class="pb-2 text-end text-sm leading-[150%] font-medium" style="color: {{text_color}};">السعر</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="item in globals?.cart?.items" :key="item._id">
+              <tr class="border-t py-2">
+                <td class="pt-2 p-0 h-full flex items-center gap-4" style="color: {{text_color}};">
+                  <div class="flex items-center gap-2">
+                    <div class="bg-bgItem rounded-lg">
+                      <img :src="item.productData.image.fileUrl" :alt="item.productData.title"
+                        class="w-[69px] h-[92px] object-contain" />
+                    </div>
+                    <div class="flex flex-col gap-2" style="color: {{text_color}};">
+                      <span class="md:text-sm text-xs font-medium leading-[150%]"
+                        x-text="item.productData.title" style="color: {{text_color}};"></span>
+                      <template x-for="option in item.variantData.options" :key="option.label">
+                        <span class="leading-[150%] text-xs" x-text="option.label" style="color: {{text_color}};"></span>
+                      </template>
+                      <div
+                        class="flex w-[97px] h-[27px] items-center border border-mainColor justify-between px-[22px] rounded-full">
+                        <div>
+                          <input type="number" :value="item.quantity" min="1"
+                            class="qty-input max-w-8 text-center border-0 p-0 focus:ring-0 font-medium"
+                            style="color: {{text_color}};"
+                            @change="updateCartItemQuantity(item._id, $event.target.value)" />
+                        </div>
+                        <div class="flex flex-col gap-1.5 items-center justify-between">
+                          <button @click="increaseCartItem(item._id, item.quantity)"
+                            class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
+                            <svg width="12" height="6" viewBox="0 0 12 6" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M3.2854 4.5L5.99731 1.78809L6.13403 1.9248L8.71021 4.5L8.96606 4.24316L6.21509 1.49121L6.21411 1.49023C6.18588 1.46188 6.15241 1.43921 6.11548 1.42383C6.07842 1.40841 6.03843 1.40039 5.99829 1.40039C5.95818 1.4004 5.91814 1.40842 5.8811 1.42383C5.84419 1.43922 5.81068 1.46188 5.78247 1.49023L5.78149 1.49121L3.02856 4.24316L3.2854 4.5Z"
+                                fill="black" stroke="black" stroke-width="0.387097" />
+                            </svg>
+                          </button>
+                          <button @click="decreaseCartItem(item._id, item.quantity)"
+                            class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
+                            <svg width="12" height="6" viewBox="0 0 12 6" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M8.71484 1.49609L6.00293 4.20801L5.86621 4.07129L3.29004 1.49609L3.03418 1.75293L5.78516 4.50488L5.78613 4.50586C5.81436 4.53421 5.84783 4.55688 5.88477 4.57227C5.92183 4.58769 5.96181 4.5957 6.00195 4.5957C6.04207 4.59569 6.0821 4.58768 6.11914 4.57227C6.15606 4.55687 6.18956 4.53422 6.21777 4.50586L6.21875 4.50488L8.97168 1.75293L8.71484 1.49609Z"
+                                fill="black" stroke="black" stroke-width="0.387097" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="flex flex-col items-end">
-                  <button class="text-gray-400 hover:text-red-500 mb-2" aria-label="{{ t(widget.data.cart_remove or 'cart_remove') }}" @click="clearCartItem(item._id)">
-                    <iconify-icon icon="ph:trash" class="w-5 h-5"></iconify-icon>
-                  </button>
-                  <div class="font-semibold text-gray-800 text-sm cart-item-price"><span x-text="item.totalPrice"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
-                  <div class="text-xs text-gray-500 mt-1 cart-item-price"><span x-text="item?.price ?? item?.variantData?.price ?? item?.productData?.pricing?.price ?? item?.productData?.price"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
-                </div>
-              </div>
-              <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-100 pb-4 items-center">
-                <div class="col-span-6 flex items-center gap-4 cart-item-col">
-                  <button class="text-gray-400 hover:text-red-500" aria-label="{{ t(widget.data.cart_remove or 'cart_remove') }}" @click="clearCartItem(item._id)">
-                    <iconify-icon icon="ph:trash" class="w-5 h-5"></iconify-icon>
-                  </button>
-                  <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                  <div class="cart-item-col">
-                    <p class="font-semibold text-gray-800" x-text="item?.productData?.title"></p>
-                    <p class="text-sm text-gray-500 mt-1" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
-                  </div>
-                </div>
-                <div class="col-span-2 text-center cart-item-col cart-item-price">
-                  <div class="font-semibold text-gray-800"><span x-text="item?.price ?? item?.variantData?.price ?? item?.productData?.pricing?.price ?? item?.productData?.price"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
-                </div>
-                <div class="col-span-2 flex justify-center cart-item-col cart-item-quantity">
-                  <div class="flex items-center border border-gray-300 rounded-full py-0.5 px-3 w-fit">
-                    <input type="number" :value="item.quantity" min="1" class="qty-input w-10 text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" @input="updateQuantityFromInput(item._id, $event)" />
-                    <div class="flex flex-col items-center ml-2">
-                      <button class="text-gray-600 hover:text-gray-800" aria-label="{{ t(widget.data.cart_increase_quantity or 'cart_increase_quantity') }}" @click="increaseCartItem(item._id, item.quantity)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" /></svg>
-                      </button>
-                      <button class="text-gray-600 hover:text-gray-800 mt-1" aria-label="{{ t(widget.data.cart_decrease_quantity or 'cart_decrease_quantity') }}" @click="decreaseCartItem(item._id, item.quantity)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-2 text-center cart-item-col cart-item-total">
-                  <div class="font-semibold text-gray-800"><span x-text="item.totalPrice"></span> <span x-text="globals?.currency?.currencySymbol"></span></div>
-                </div>
-              </div>
-            </div>
-          </template>
-          </div>
-          {% set cartItems = widget.data.cart_items or [] %}
-          {% if false %}
-            <!-- Mobile headers -->
-            <div class="flex md:hidden justify-between pb-3 border-b border-gray-300 mb-4 cart-header">
-              <div class="cart-item-col cart-product">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_product or 'cart_product') }}</h3>
-              </div>
-              <div class="cart-item-col cart-price">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_price or 'cart_price') }}</h3>
-              </div>
-            </div>
-            {% for item in cartItems %}
-            <!-- Mobile: Row with image+name on left, price on right -->
-            <div class="flex md:hidden justify-between items-start gap-3 pb-4 border-b border-gray-100">
-              <div class="flex items-start gap-3 flex-1">
-                <img src="{{ item.image }}" alt="{{ item.title }}" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                <div class="flex-grow cart-item-col">
-                  <p class="font-semibold text-gray-800 text-sm">{{ item.title }}</p>
-                  <p class="text-xs text-gray-500 mt-1">{{ item.size }}</p>
-                  <!-- Quantity control on mobile -->
-                  <div class="flex items-center border border-gray-300 mt-3" style="width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
-                    <input type="number" value="{{ item.quantity }}" min="1" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" />
-                    <div class="flex flex-col items-center" style="gap: 2px;">
-                      <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                        </svg>
-                      </button>
-                      <button class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-col items-end">
-                <button class="text-gray-400 hover:text-red-500 mb-2" aria-label="حذف المنتج">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12.54 0c-.342.052-.682.107-1.022.166m11.518 0c-3.478-.397-7.04-.397-10.518 0m10.518 0a48.1 48.1 0 0 1 3.478.397" />
-                  </svg>
-                </button>
-                <div class="font-semibold text-gray-800 text-sm cart-item-price">€{{ (item.price * item.quantity) | round(2) }}</div>
-                <div class="text-xs text-gray-500 mt-1 cart-item-price">€{{ item.price }}</div>
-              </div>
-            </div>
-            
-            <!-- Desktop: Grid layout -->
-            <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-100 pb-4 items-center">
-              <!-- Product Column (6 cols) -->
-              <div class="col-span-6 flex items-center gap-4 cart-item-col">
-                <button class="text-gray-400 hover:text-red-500" aria-label="حذف المنتج">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12.54 0c-.342.052-.682.107-1.022.166m11.518 0c-3.478-.397-7.04-.397-10.518 0m10.518 0a48.1 48.1 0 0 1 3.478.397" />
-                  </svg>
-                </button>
-                <img src="{{ item.image }}" alt="{{ item.title }}" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                <div class="cart-item-col">
-                  <p class="font-semibold text-gray-800">{{ item.title }}</p>
-                  <p class="text-sm text-gray-500 mt-1">{{ item.size }}</p>
-                </div>
-              </div>
-              <!-- Price Column (2 cols) -->
-              <div class="col-span-2 text-center cart-item-col cart-item-price">
-                <div class="font-semibold text-gray-800">€{{ item.price }}</div>
-              </div>
-              <!-- Quantity Column (2 cols) -->
-              <div class="col-span-2 flex justify-center cart-item-col cart-item-quantity">
-                <!-- Quantity control on desktop -->
-                <div class="flex items-center border border-gray-300 rounded-full py-0.5 px-3 w-fit">
-                  <input type="number" value="{{ item.quantity }}" min="1" class="qty-input w-10 text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" />
-                  <div class="flex flex-col items-center ml-2">
-                    <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                      </svg>
-                    </button>
-                    <button class="text-gray-600 hover:text-gray-800 mt-1" aria-label="تقليل الكمية">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                      </svg>
+                </td>
+                <td class="pt-2 p-0 align-top">
+                  <div class="flex flex-col justify-between items-end min-h-[97px]" style="color: {{text_color}};">
+                    <span x-text="money(item.price)" style="color: {{text_color}};"></span>
+                    <button @click="clearCartItem(item._id)">
+                      <i class="ph text-textDescription ph-trash"></i>
                     </button>
                   </div>
-                </div>
-              </div>
-              <!-- Total Column (2 cols) -->
-              <div class="col-span-2 text-center cart-item-col cart-item-total">
-                <div class="font-semibold text-gray-800">€{{ (item.price * item.quantity) | round(2) }}</div>
-              </div>
-            </div>
-            {% endfor %}
-          {% else %}
-            {% set sampleProducts = [] %}
-            
-            {% if sampleProducts | length > 0 %}
-            <div class="flex md:hidden justify-between pb-3 border-b border-gray-300 mb-4 cart-header">
-              <div class="cart-item-col cart-product">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_product or 'cart_product') }}</h3>
-              </div>
-              <div class="cart-item-col cart-price">
-                <h3 class="text-lg text-black font-bold">{{ t(widget.data.cart_price or 'cart_price') }}</h3>
-              </div>
-            </div>
-            
-            {% for item in sampleProducts %}
-            <!-- Mobile: Row with image+name on left, price on right -->
-            <div class="flex md:hidden justify-between items-start gap-3 pb-4 border-b border-gray-100">
-              <div class="flex items-start gap-3 flex-1">
-                <img src="{{ item.image }}" alt="{{ item.title }}" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                <div class="flex-grow cart-item-col">
-                  <p class="font-semibold text-gray-800 text-sm">{{ item.title }}</p>
-                  <p class="text-xs text-gray-500 mt-1">{{ item.size }}</p>
-                  <!-- Quantity control on mobile -->
-                  <div class="flex items-center border border-gray-300 mt-3" style="width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
-                    <input type="number" value="{{ item.quantity }}" min="1" class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" style="width: 20px;" />
-                    <div class="flex flex-col items-center" style="gap: 2px;">
-                      <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                        </svg>
-                      </button>
-                      <button class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-col items-end">
-                <button class="text-gray-400 hover:text-red-500 mb-2" aria-label="حذف المنتج">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12.54 0c-.342.052-.682.107-1.022.166m11.518 0c-3.478-.397-7.04-.397-10.518 0m10.518 0a48.1 48.1 0 0 1 3.478.397" />
-                  </svg>
-                </button>
-                <div class="font-semibold text-gray-800 text-sm cart-item-price">€{{ (item.price * item.quantity) | round(2) }}</div>
-                <div class="text-xs text-gray-500 mt-1 cart-item-price">€{{ item.price }}</div>
-              </div>
-            </div>
-            
-            <!-- Desktop: Grid layout -->
-            <div class="hidden md:grid grid-cols-12 gap-4 border-b border-gray-100 pb-4 items-center">
-              <!-- Product Column (6 cols) -->
-              <div class="col-span-6 flex items-center gap-4 cart-item-col">
-                <button class="text-gray-400 hover:text-red-500" aria-label="حذف المنتج">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12.54 0c-.342.052-.682.107-1.022.166m11.518 0c-3.478-.397-7.04-.397-10.518 0m10.518 0a48.1 48.1 0 0 1 3.478.397" />
-                  </svg>
-                </button>
-                <img src="{{ item.image }}" alt="{{ item.title }}" class="w-20 h-24 rounded-lg object-cover flex-shrink-0 border border-gray-200" />
-                <div class="cart-item-col">
-                  <p class="font-semibold text-gray-800">{{ item.title }}</p>
-                  <p class="text-sm text-gray-500 mt-1">{{ item.size }}</p>
-                </div>
-              </div>
-              <!-- Price Column (2 cols) -->
-              <div class="col-span-2 text-center cart-item-col cart-item-price">
-                <div class="font-semibold text-gray-800">€{{ item.price }}</div>
-              </div>
-              <!-- Quantity Column (2 cols) -->
-              <div class="col-span-2 flex justify-center cart-item-col cart-item-quantity">
-                <!-- Quantity control on desktop -->
-                <div class="flex items-center border border-gray-300 rounded-full py-0.5 px-3 w-fit">
-                  <input type="number" value="{{ item.quantity }}" min="1" class="qty-input w-10 text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800" />
-                  <div class="flex flex-col items-center ml-2">
-                    <button class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                      </svg>
-                    </button>
-                    <button class="text-gray-600 hover:text-gray-800 mt-1" aria-label="تقليل الكمية">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <!-- Total Column (2 cols) -->
-              <div class="col-span-2 text-center cart-item-col cart-item-total">
-                <div class="font-semibold text-gray-800">€{{ (item.price * item.quantity) | round(2) }}</div>
-              </div>
-            </div>
-            {% endfor %}
-            {% endif %}
-          {% endif %}
-        </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Left Side: Order Summary -->
-      <div class="w-full lg:w-1/3" x-show="(globals?.cart?.items || []).length > 0">
-
-        <div class="bg-[#F7F7F7] rounded-2xl p-6 sticky top-6">
-          <div class="flex items-center py-5 gap-2 text-md text-gray-500">
-            <i class="ph ph-package text-gray-600 flex-shrink-0"></i>
-            <p>{{ t('free_shipping_compensation') }}</p>
+      <div class="md:col-span-3" x-show="(globals?.cart?.items || []).length > 0">
+        <div class="bg-bgItem flex flex-col gap-4  md:rounded-2xl py-2 px-4">
+          <div class="flex items-center px-[13px] gap-1" style="color: {{text_color}};">
+            <i class="ph ph-package md:text-2xl text-xl" style="color: {{text_color}};"></i>
+            <p class="p-2.5 md:text-base text-xs leading-[150%]" style="color: {{text_color}};">{{ t('free_shipping_compensation') }}</p>
           </div>
-
-          <div class="space-y-3 py-4 cart-summary">
+          <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between cart-summary-row">
-              <span class="text-gray-600">{{ t('price') }}</span>
-              <span class="text-gray-800"><span x-text="globals?.cart?.totalPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
-            </div>
-            <div class="flex items-center justify-between cart-summary-row">
-              <span class="text-gray-600">{{ t('discount') }}</span>
-              <span class="text-red-600 font-bold"><span x-text="globals?.cart?.totalSavings || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
+              <span class="md:text-base text-sm leading-[150%]" style="color: {{text_color}};">{{ t('price') }}</span>
+              <span class="md:text-base text-sm font-medium" style="letter-spacing: 2%; color: {{text_color}};"><span
+                  x-text="globals?.cart?.totalPrice || 0"></span> <span
+                  x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
             <div class="flex items-center justify-between cart-summary-row">
-              <span class="text-gray-600">{{ t('tax') }}</span>
-              <span class="text-gray-800"><span x-text="globals?.cart?.shippingPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
+              <span class="md:text-base text-sm leading-[150%]" style="color: {{text_color}};">{{ t('discount') }}</span>
+              <span class="text-error md:text-base text-sm font-medium"><span
+                  x-text="globals?.cart?.totalSavings || 0"></span> <span
+                  x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
-            <div class="flex items-center justify-between pt-3 cart-summary-row">
-              <span class="text-lg font-bold text-black">{{ t(widget.data.cart_total or 'cart_total') }}</span>
-              <span class="text-lg font-bold text-black"><span x-text="globals?.cart?.totalPrice || 0"></span> <span x-text="globals?.currency?.currencySymbol"></span></span>
+            <div class="flex items-center justify-between cart-summary-row">
+              <span class="md:text-base text-sm" style="color: {{text_color}};">{{ t('tax') }}</span>
+              <span class="md:text-base text-sm font-medium" style="color: {{text_color}};"><span
+                  x-text="globals?.cart?.shippingPrice || 0"></span> <span
+                  x-text="globals?.currency?.currencySymbol"></span></span>
+            </div>
+            <div class="flex items-center justify-between cart-summary-row">
+              <span class="md:text-xl font-bold" style="color: {{text_color}};">{{ t(widget.data.cart_total or 'cart_total') }}</span>
+              <span class="md:text-2xl text-lg font-bold" style="color: {{text_color}};"><span
+                  x-text="globals?.cart?.totalPrice || 0"></span>
+                <span x-text="globals?.currency?.currencySymbol"></span></span>
             </div>
           </div>
-
-          <div class="mb-6">
-            <label for="orderNotes" class="block text-sm font-medium text-gray-700 mb-2">{{ t('notes') }}</label>
-            <textarea
-              id="orderNotes"
-              rows="4"
-              placeholder="{{ t('add_order_notes') }}..."
-              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor focus:border-transparent resize-none text-sm"
-            ></textarea>
+          <div>
+            <label for="orderNotes" class="block leading-[150%] font-medium" style="color: {{text_color}};">{{ t('notes') }}</label>
+            <textarea id="orderNotes" rows="4" placeholder="{{ t('add_order_notes') }}..."
+              class="w-full px-4 py-2.5 border-2 bg-bgItem outline-none border-stork rounded-lg resize-none text-sm" style="color: {{text_color}};"></textarea>
           </div>
-
-          <div class="flex items-start gap-2 mb-6">
-            <input
-              type="checkbox"
-              id="terms"
-              class="mt-1 w-4 h-4 text-mainColor border-gray-300 rounded focus:ring-mainColor"
-            />
-            <label for="terms" class="text-lg text-black leading-relaxed">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" id="terms"
+              class="w-4 h-4 border-mainColor rounded focus:ring-mainColor" style="color: {{text_color}};" />
+            <label for="terms" class="leading-[150%]" style="color: {{text_color}};">
               {{ t('agree_to_terms') }}
             </label>
           </div>
-
           <button
-            class="w-[403px] h-[48px] bg-black text-white font-bold pt-[10px] pr-[10px] pl-[10px] rounded-[30px] border border-black transition flex items-center justify-center gap-[10px] opacity-100 max-w-full"
-            @click="checkout()"
-          >
-            <span class="font-medium text-[18px] leading-[150%] tracking-normal text-center" style="font-family: 'Tajawal', sans-serif;">{{ t(widget.data.cart_checkout_now or 'cart_checkout_now') }}</span>
+            class="bg-mainColor max-h-[48px] text-white font-bold md:pt-[15.5px] pt-[13px] md:pb-[5.5px] pb-[4.69px] rounded-full border border-mainColor transition opacity-100 max-w-full"
+            @click="checkout()">
+            <span class="font-medium text-[15.52px] md:text-lg leading-[150%] text-center">{{
+              t(widget.data.cart_checkout_now or 'cart_checkout_now')}}</span>
           </button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Empty Cart Message -->
-      <div x-show="!(globals?.cart?.items?.length > 0)" class="flex flex-col items-center justify-center py-20 px-4 min-h-[60vh]">
-        <iconify-icon icon="proicons:cart" width="80" height="80" style="transform: scaleX(-1);" class="text-gray-400 mb-6"></iconify-icon>
-        <p class="text-lg md:text-xl font-semibold text-gray-700">{{ t(widget.data.cart_empty or 'cart_empty') }}</p>
-      </div>
-
+  <div x-show="!globals?.cart || !globals?.cart?.items || globals?.cart?.items?.length === 0">
+    <div class="flex flex-col w-full items-center justify-center gap-4">
+      <i class="ph ma:text-[110px] text-[150px] ph-shopping-cart" style="color: {{text_color}};"></i>
+      <span class="text-2xl font-bold leading-[140%]" style="color: {{text_color}};">{{t("emptycart")}}</span>
     </div>
   </div>
 </section>

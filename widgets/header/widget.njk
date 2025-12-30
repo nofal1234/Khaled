@@ -1,319 +1,169 @@
- {% if context.page.title == 'الصفحة الرئيسية' %}
-{% set headerClass = 'bg-transparent absolute top-12 left-0 w-full z-50 md:top-12' %}
-{% set textColor = 'text-white' %}
-{% set borderColor = 'border-white' %}
-{% set inputBg = 'bg-transparent' %}
-{% set placeholderColor = 'placeholder:text-white/70' %}
-{% else %}
-{% set headerClass = 'bg-white sticky top-0 left-0 w-full z-50 md:top-0 border-b border-gray-200' %}
-{% set textColor = 'text-gray-900' %}
-{% set borderColor = 'border-[#F7F7F7]' %}
-{% set inputBg = 'bg-gray-100' %}
-{% set placeholderColor = 'placeholder:text-[#666666]' %}
-{% endif %}
- <div class="{{ headerClass }}">
-    <!-- Iconify Script -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    
-    <!-- Force placeholder colors -->
-    {% if context.page.title != 'الصفحة الرئيسية' %}
-    <style>
-      #desktopSearchInput::placeholder,
-      #mobileSearchInput::placeholder {
-        color: #666666 !important;
-        opacity: 1 !important;
-      }
-    </style>
-    {% endif %}
-    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 py-3 md:py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <div class="flex items-center gap-2">
-              <a href="/">
-                {% if widget.data.logo and widget.data.logo.fileUrl %}
-                  <img src="{{ widget.data.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-12 md:h-20 w-auto cursor-pointer" />
-                {% elif globals.app.logo and globals.app.logo.fileUrl %}
-                  <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}" class="h-12 md:h-20 w-auto cursor-pointer" />
-                {% else %}
-                  <img src="{{ 'logo.png' | assets }}" alt="Logo" class="h-12 md:h-20 w-auto cursor-pointer" />
-                {% endif %}
-              </a>
-      </div>
 
-      <!-- Desktop Search & Icons -->
-      <div class="hidden lg:flex items-center gap-6 flex-1 max-w-5xl px-8">
-        <div class="relative flex-1">
-            <input id="desktopSearchInput"
-              type="text"
-              name="search"
-              placeholder="{% if widget.data.search_placeholder and widget.data.search_placeholder != 'search_placeholder' %}
-  {{ widget.data.search_placeholder }}
-{% else %}
-  {{ t('search_placeholder') }}
-{% endif %}"
-              class="w-full py-3 px-6 pr-12 rounded-full border {{ borderColor }} {{ inputBg }} {% if context.page.title == 'الصفحة الرئيسية' %} text-white placeholder:text-white/70 {% else %} text-gray-900 placeholder:text-[#666666] placeholder:opacity-100 {% endif %} focus:outline-none focus:ring-2 focus:ring-mainColor transition-all"
-              onkeypress="if(event.key==='Enter' && this.value.trim()){ window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }"
-              ondblclick="window.location.href='/search'"
-            />
-          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 {% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} {{ textColor }} {% endif %}"
-            onclick="const input = document.getElementById('desktopSearchInput'); if(input && input.value.trim()){ window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }">
-            <i class="ph ph-magnifying-glass text-xl"></i>
+{% set  search_placeholder = t(widget.data.search_placeholder) %}
+{% set  bg_color_fixed = widget.data.bg_color_fixed %}
+{% set  bg_color_scrolled = widget.data.bg_color_scrolled %}
+{% set  bg_in_page = widget.data.bg_in_page%}
+{% set  text_color_in_page = widget.data.text_color_in_page %}
+{% set  text_color_scrolled = widget.data.text_color_scrolled %}
+{% set  text_color_fixed = widget.data.text_color_fixed %}
+{% set logo_higth_sm = widget.data.logo_higth_sm or 29 %}
+{% set logo_higth_lg = widget.data.logo_higth_lg or 40 %}
+
+{% style %}
+.img-higth {
+  height: {{ logo_higth_sm }}px;
+}
+
+@media (min-width: 768px) {
+  .img-higth {
+    height: {{ logo_higth_lg }}px;
+  }
+}
+{% endstyle %}
+
+<div x-data="{ scrolled: false, isMain: {{ context.page.isMain}} ? true : false }" x-init="
+    scrolled = window.scrollY > 10;
+    window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 })
+  "
+  :class="scrolled ? 'bg-mainColor fixed top-0 shadow-lg' : (isMain ? 'bg-transparent fixed top-[49px] ' : ' bg-white  sticky top-[49px] border-b  border-stork')"
+  class="flex max-h-[171px] gap-6 w-full transition-all z-50 duration-200 ease-in-out"
+  :style="{ backgroundColor: scrolled ? '{{ bg_color_scrolled }}' : (isMain ? '{{ bg_color_fixed }}' : '{{ bg_in_page }}'), color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
+  style="transition-property: background-color, top, box-shadow; ">
+  <div class=" w-full flex flex-col transition-all duration-300 ease-in-out">
+    <div class="container flex md:gap-[122px] max-h-[87px] items-center justify-between py-1">
+      {# py-[8.5px] #}
+      <a href="{{globals.app.url}}" class="transition-all duration-300 ease-in-out">
+        {% if widget.data.logo and widget.data.logo.fileUrl %}
+        <img  src="{{ widget.data.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}"
+          class="img-higth  w-auto cursor-pointer transition-all duration-300 ease-in-out" />
+        {% elif globals.app.logo and globals.app.logo.fileUrl %}
+        <img src="{{ globals.app.logo.fileUrl }}" alt="{{ globals.app.name | default('Logo') }}"
+          class="img-higth  w-auto cursor-pointer transition-all duration-300 ease-in-out" />
+        {% else %}
+        <img src="{{ 'logo.png' | assets }}" alt="Logo"
+          class="img-higth  w-auto cursor-pointer transition-all duration-300 ease-in-out" />
+        {% endif %}
+      </a>
+
+      <div class="flex items-center justify-end md:gap-6 gap-[13px] flex-1 transition-all duration-300 ease-in-out">
+        {%ui "search.njk" ,search_placeholder=search_placeholder%}
+
+        <div class="flex md:gap-6 gap-[13px] items-center transition-all duration-300 ease-in-out">
+          <button @click="toggleModal('wishlist')" type="button" class="focus:outline-none flex items-center"
+            aria-label="المفضلة">
+            <i class="ph text-[22px] md:text-[28px] ph-heart"
+              :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
+          </button>
+          <button @click="toggleModal('cart')" type="button" class="focus:outline-none flex items-center"
+            aria-label="عربة التسوق">
+            <i class="ph text-[22px] md:text-[28px] ph-shopping-cart"
+              :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
+          </button>
+          <button @click="toggleModal('search')" type="button" class="focus:outline-none md:hidden flex items-center"
+            aria-label="عربة التسوق">
+            <i class="ph text-[22px] ph-magnifying-glass"
+              :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
+          </button>
+          {% if customer?._id %}
+          <button type="button" class="focus:outline-none flex items-center"  :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }">
+            {{ "<i class='ph text-[22px] md:text-[28px] ph-user'></i>" | customer_logout_link }}
+          </button>
+          {% else %}
+          <button type="button" class="focus:outline-none flex items-center"  :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }">
+            {{ "<i class='ph text-[22px] md:text-[28px] ph-user' ></i>" | customer_login_link }}
+          </button>
+          {% endif %}
+          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none md:hidden" aria-label="حسابي">
+            <i 
+              :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
+            class="ph text-[22px] text-black ph-list"></i>
           </button>
         </div>
-
-        {% if widget.data.show_wishlist | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-wishlist'))" class="{{ textColor }} transition" title="{{ t(widget.data.wishlist_tooltip or 'wishlist') }}">
-          <i class="ph ph-heart text-2xl"></i>
-        </button>
-        {% endif %}
-
-        {% if widget.data.show_cart | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition flex items-center" title="{{ t(widget.data.cart_tooltip or 'cart') }}">
-          <iconify-icon icon="proicons:cart" width="24" height="24" style="transform: scaleX(-1);" class="inline-block"></iconify-icon>
-        </button>
-        {% endif %}
-
-        {% if widget.data.show_user | default(true) %}
-        <button class="{{ textColor }} transition" title="{{ t(widget.data.user_tooltip or 'account') }}" onclick="(window.globals && window.globals.customer && window.globals.customer._id) ? window.logout?.() : window.login?.()">
-          <i class="ph ph-user text-2xl"></i>
-        </button>
-        {% endif %}
-
       </div>
 
-      <!-- Mobile toolbar -->
-      <div class="flex lg:hidden items-center gap-3">
-        <!-- Search icon button (opens overlay) -->
-        <button id="mobileSearchBtn" class="{{ textColor }} transition" title="{{t('search')}}">
-          <i class="ph ph-magnifying-glass text-xl"></i>
-        </button>
-
-        {% if widget.data.show_wishlist | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-wishlist'))" class="{{ textColor }} transition" title="{{ t(widget.data.wishlist_tooltip or 'wishlist') }}">
-          <i class="ph ph-heart text-xl"></i>
-        </button>
-        {% endif %}
-
-        {% if widget.data.show_cart | default(true) %}
-        <button onclick="window.dispatchEvent(new CustomEvent('open-cart'))" class="relative {{ textColor }} transition" title="{{ t(widget.data.cart_tooltip or 'cart') }}">
-          <iconify-icon icon="proicons:cart" width="20" height="20" style="transform: scaleX(-1);"></iconify-icon>
-        </button>
-        {% endif %}
-
-        {% if widget.data.show_user | default(true) %}
-        <button class="{{ textColor }} transition" title="{{ t(widget.data.user_tooltip or 'account') }}" onclick="(window.globals && window.globals.customer && window.globals.customer._id) ? window.logout?.() : window.login?.()">
-          <i class="ph ph-user text-xl"></i>
-        </button>
-        {% endif %}
-
-        <button @click="toggleModal('sidebar', true)" class="{{ textColor }} transition">
-          <i class="ph ph-list text-xl"></i>
-        </button>
-      </div>
-
-      <!-- Mobile Search Overlay -->
-      <div id="mobileSearchOverlay" class="fixed inset-0 z-[60] hidden">
-        <!-- backdrop -->
-        <div id="mobileSearchBackdrop" class="absolute inset-0 bg-black/60"></div>
-        <!-- top search box -->
-        <div class="relative z-[61] px-4 pt-6">
-          <div class="bg-white rounded-2xl shadow-xl p-3">
-            <div class="flex items-center gap-2">
-              <button onclick="const input = this.parentElement.querySelector('input'); if(input.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(input.value.trim()); }" class="{% if context.page.title != 'الصفحة الرئيسية' %} text-[#666666] {% else %} text-gray-500 {% endif %} hover:text-gray-700">
-                <i class="ph ph-magnifying-glass text-lg"></i>
-              </button>
-              <input id="mobileSearchInput" type="text" placeholder="{% if widget.data.mobile_search_placeholder and widget.data.mobile_search_placeholder != 'mobile_search_placeholder' %}
-  {{ widget.data.mobile_search_placeholder }}
-{% else %}
-  {{ t('mobile_search_placeholder') }}
-{% endif %}" class="w-full py-2 px-2 rounded-full bg-transparent outline-none text-gray-800 placeholder:text-[#666666] placeholder:opacity-100" onkeypress="if(event.key==='Enter' && this.value.trim()) { window.location.href='/search?q=' + encodeURIComponent(this.value.trim()); }" ondblclick="window.location.href='/search'" />
-              <button id="mobileSearchClose" class="text-gray-500 hover:text-gray-700">
-                <i class="ph ph-x text-lg"></i>
-              </button>
+    </div>
+    {% set header_menu = widget.data.header_menu %}
+    {% if widget.data.header_menu | length > 0 and page.isMain == false %}
+    <div class="flex justify-center max-md:hidden">
+    <div class="w-9/12 px-10 md:px-12">
+      <div class="container  relative py-2 ">
+        <div id="{{widget.id}}-header-menu" class="swiper header-offers-swiper  ">
+          <div class="swiper-wrapper items-center">
+            
+            {%log "header_menu",widget.data.header_menu%}
+            {% for item in header_menu | concat(header_menu) %}
+            <div class="swiper-slide">
+              <a  href="{{item.url}}"
+              class="block  font-bold text-nowrap text-lg text-center"
+                :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
+              >{{item.title}}</a>
             </div>
+            {% endfor %}
           </div>
         </div>
-      </div>
-    </div>
-
-    {% if context.page.title != 'الصفحة الرئيسية' %}
-    <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pb-3">
-      {% set items = widget.data.header_menu if widget.data.header_menu is defined and widget.data.header_menu is iterable else [] %}
-
-      {# LG فقط: نعرض 3 عناصر والباقي في المزيد #}
-      <nav class="hidden lg:flex xl:hidden items-center justify-center gap-4 {{ textColor }}">
-        {% if items | length > 0 %}
-          {% for item in items %}
-            {% if loop.index0 < 3 %}
-              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-3 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[15px] leading-[150%] tracking-normal">
-                {{ t(item.title or 'title') }}
-              </a>
-            {% endif %}
-          {% endfor %}
-          {% if items | length > 3 %}
-            <div class="relative group flex items-center">
-              <button class="min-w-[51px] h-[67px] px-3 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[16px] leading-[150%] tracking-normal" aria-label="{{t('more')}}">
-                <span>{{t('more')}}</span>
-                <i class="ph ph-caret-down text-lg mr-1"></i>
-              </button>
-              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                {% for item in items %}
-                  {% if loop.index0 >= 3 %}
-                    <a href="{{ item.url }}" class="block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
-                      {{ t(item.title or 'title') }}
-                    </a>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-        {% endif %}
-      </nav>
-
-      {# XL وما فوق: نعرض 6 عناصر والباقي في المزيد #}
-      <nav class="hidden xl:flex items-center justify-center gap-6 {{ textColor }}">
-        {% if items | length > 0 %}
-          {% for item in items %}
-            {% if loop.index0 < 6 %}
-              <a href="{{ item.url }}" class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] {% if item.url == globals.currentUrl or item.url == context.page.url %}border-black{% else %}border-transparent{% endif %} flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[16px] leading-[150%] tracking-normal">
-                {{ t(item.title or 'title') }}
-              </a>
-            {% endif %}
-          {% endfor %}
-          {% if items | length > 6 %}
-            <div class="relative group flex items-center">
-              <button class="min-w-[51px] h-[67px] px-4 pt-6 pb-4 border-b-[3px] border-transparent flex items-center justify-center whitespace-nowrap opacity-100 hover:opacity-90 font-tajawal font-bold text-[18px] leading-[150%] tracking-normal" aria-label="{{t('more')}}">
-                <span>{{t('more')}}</span>
-                <i class="ph ph-caret-down text-lg mr-1"></i>
-              </button>
-              <div class="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 min-w-[12rem] opacity-0 invisible.group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                {% for item in items %}
-                  {% if loop.index0 >= 6 %}
-                    <a href="{{ item.url }}" class="block px-4 py-2.text-gray-600 hover:text-black hover:bg-gray-50 whitespace-nowrap {% if item.url == globals.currentUrl or item.url == context.page.url %}font-bold text-black{% else %}font-normal{% endif %}">
-                      {{ t(item.title or 'title') }}
-                    </a>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-        {% endif %}
-      </nav>
+      </div
+      ></div>
     </div>
     {% endif %}
 
-    <script>
-      // Language Change Handler
-      function changeLanguage(lang) {
-        // Save to localStorage
-        localStorage.setItem('lang', lang);
-        
-        // Get current URL
-        const currentUrl = window.location.href;
-        const url = new URL(currentUrl);
-        
-        // Get path parts
-        let pathParts = url.pathname.split('/').filter(p => p);
-        
-        // Remove existing language from path if present
-        if (pathParts.length > 0 && (pathParts[0] === 'ar' || pathParts[0] === 'en')) {
-          pathParts.shift();
-        }
-        
-        // Build new path with language prefix
-        const newPath = '/' + lang + (pathParts.length > 0 ? '/' + pathParts.join('/') : '');
-        
-        // Reload page with new language
-        window.location.href = newPath + url.search + url.hash;
-      }
 
-      // Function to update page direction based on language
-      function updatePageDirection(lang) {
-        // Arabic is RTL, all other languages are LTR
-        const dir = lang === 'ar' ? 'rtl' : 'ltr';
-        document.documentElement.setAttribute('lang', lang);
-        document.documentElement.setAttribute('dir', dir);
-        if (document.body) {
-          document.body.setAttribute('dir', dir);
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        // Get current language from URL or localStorage or default to 'ar'
-        const pathParts = window.location.pathname.split('/').filter(p => p);
-        let currentLang = 'ar';
-        
-        if (pathParts.length > 0 && (pathParts[0] === 'ar' || pathParts[0] === 'en' || pathParts[0] === 'fr')) {
-          currentLang = pathParts[0];
-          localStorage.setItem('lang', currentLang);
-        } else {
-          currentLang = localStorage.getItem('lang') || 'ar';
-        }
-        
-        // Update page direction immediately
-        updatePageDirection(currentLang);
-        
-        // Handle language form submission
-        const langSelects = document.querySelectorAll('.lang-select');
-        langSelects.forEach(select => {
-          // Set current selected value
-          select.value = currentLang;
-          
-          // Handle change event
-          select.addEventListener('change', function(e) {
-            e.preventDefault();
-            const selectedLang = this.value;
-            changeLanguage(selectedLang);
-          });
-        });
-      });
-
-      // Mobile Search Functionality
-      document.addEventListener('DOMContentLoaded', function() {
-        const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-        const mobileSearchOverlay = document.getElementById('mobileSearchOverlay');
-        const mobileSearchBackdrop = document.getElementById('mobileSearchBackdrop');
-        const mobileSearchClose = document.getElementById('mobileSearchClose');
-
-        // Show search overlay when search button is clicked
-        if (mobileSearchBtn && mobileSearchOverlay) {
-          mobileSearchBtn.addEventListener('click', function() {
-            mobileSearchOverlay.classList.remove('hidden');
-            // Focus on search input after a short delay
-            setTimeout(() => {
-              const searchInput = mobileSearchOverlay.querySelector('input[type="text"]');
-              if (searchInput) searchInput.focus();
-            }, 100);
-          });
-        }
-
-        // Hide search overlay when backdrop is clicked
-        if (mobileSearchBackdrop && mobileSearchOverlay) {
-          mobileSearchBackdrop.addEventListener('click', function() {
-            mobileSearchOverlay.classList.add('hidden');
-          });
-        }
-
-        // Hide search overlay when close button is clicked
-        if (mobileSearchClose && mobileSearchOverlay) {
-          mobileSearchClose.addEventListener('click', function() {
-            mobileSearchOverlay.classList.add('hidden');
-          });
-        }
-
-        // Hide search overlay when pressing Escape key
-        document.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape' && mobileSearchOverlay && !mobileSearchOverlay.classList.contains('hidden')) {
-            mobileSearchOverlay.classList.add('hidden');
-          }
-        });
-      });
-    </script>
-
-    {# Pass header menu to sidebar #}
-    {% if widget.data.header_menu is defined and widget.data.header_menu is iterable %}
-      {%ui "sidebar.njk", menu=widget.data.header_menu %}
-    {% else %}
-      {%ui "sidebar.njk", menu=[] %}
-    {% endif %}
 
   </div>
+</div>
+{%ui "sidebar.njk" ,menu=header_menu ,search_placeholder=search_placeholder %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const headerMenuSwiperElement = document.getElementById(`{{widget.id}}-header-menu`);
+    if (headerMenuSwiperElement) {
+        const slides = headerMenuSwiperElement.querySelectorAll('.swiper-slide').length;
+        const loopedSlides = Math.max(5, Math.ceil(slides / 2));
+        
+        const headerOffersSwiper = new Swiper('.header-offers-swiper', {
+            slidesPerView: 'auto',
+            loop: true,
+            loopedSlides: loopedSlides,
+            autoplay: {
+                delay: 1,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false,
+                reverseDirection: false,
+            },
+            speed: 5000,
+            freeMode: {
+                enabled: true,
+                momentum: false,
+                sticky: false,
+            },
+            spaceBetween: 78,
+            breakpoints: {
+                640: {
+                    spaceBetween: 78,
+                },
+                768: {
+                    spaceBetween: 78,
+                },
+            }
+        });
+    }
+});
+</script>
+
+<style>
+.header-offers-swiper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.header-offers-swiper .swiper-wrapper {
+    transition-timing-function: linear !important;
+    display: flex;
+    align-items: center;
+}
+
+.header-offers-swiper .swiper-slide {
+    width: auto !important;
+    flex-shrink: 0;
+}
+</style>
+

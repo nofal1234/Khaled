@@ -1,0 +1,123 @@
+<!-- Reviews Section -->
+{% set title_color = widget.data.title_color  %}
+{% set show_navigation = widget.data.show_navigation  %}
+{% set title_size = widget.data.title_size %}
+{% set user_name_color = widget.data.user_name_color %}
+{% set user_name_size = widget.data.user_name_size %}
+{% set user_description_color = widget.data.user_description_color %}
+{% set user_description_size = widget.data.user_description_size %}
+{% set review_text_color = widget.data.review_text_color %}
+{% set review_bg_color = widget.data.review_bg_color %}
+{% set link_color = widget.data.link_color %}
+<section class="mt-4 md:mt-8 mb-6 md:mb-10 container flex-col flex gap-6">
+    <div class="flex items-center justify-between">
+        <h1 class="reviews-title font-bold text-dark" style="color: {{ link_color }}; --reviews-title-size: {{ title_size }}px;">{{ t(widget.data.title) }}</h1>
+        {% if show_navigation %}
+        <div class="flex items-center gap-[38px]" >
+            <div class="cursor-pointer swiper-button-next-reviews hidden md:flex items-center justify-center bg-transparent">
+                <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+            </div>
+            <div class="swiper-button-prev-reviews cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+                <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="relative">
+        <div id="reviews-swiper-{{ widget.id }}" class="swiper reviewsSwiper">
+            <div class="swiper-wrapper">
+                {% for block in widget.blocks %}
+                <div class="swiper-slide">
+                    {%ui "review-card.njk",
+                        review=block.data,
+                        title_color=title_color,
+                        title_size=title_size,
+                        user_name_color=user_name_color,
+                        user_name_size=user_name_size,
+                        user_description_color=user_description_color,
+                        user_description_size=user_description_size,
+                        review_text_color=review_text_color,
+                        review_bg_color=review_bg_color,
+                        link_color=link_color
+                    %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+        const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+        const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+        const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+        const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+        const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+        const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+        const speed = Number('{{ widget.data.speed }}');
+        const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+        const autoplay = '{{ widget.data.autoplay }}' == 'true';
+        const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+        const disableOnInteraction = '{{ widget.data.disable_on_interaction }}' == 'true';
+        const pauseOnMouseEnter = '{{ widget.data.pause_on_mouse_enter }}' == 'true';
+        const reverseDirection = '{{ widget.data.reverse_direction }}' == 'true';
+
+        var swiperElem = document.getElementById('reviews-swiper-{{ widget.id }}');
+        if (swiperElem && window.Swiper) {
+            new window.Swiper(swiperElem, {
+                loop: true,
+                grabCursor: grabCursor,
+                speed: speed,
+                allowTouchMove: allowTouchMove,
+                autoplay: autoplay
+                  ? {
+                      delay: autoplayDelay,
+                      disableOnInteraction: disableOnInteraction,
+                      pauseOnMouseEnter: pauseOnMouseEnter,
+                      reverseDirection: reverseDirection
+                  }
+                  : false,
+                navigation: {
+                    nextEl: '.swiper-button-next-reviews',
+                    prevEl: '.swiper-button-prev-reviews'
+                },
+                breakpoints: {
+                    250: {
+                        slidesPerView: slidesPerViewSM,
+                        spaceBetween: spaceBetweenSM
+                    },
+                    640: {
+                        slidesPerView: slidesPerViewMD,
+                        spaceBetween: spaceBetweenMD
+                    },
+                    1024: {
+                        slidesPerView: slidesPerViewLG,
+                        spaceBetween: spaceBetweenLG
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+{% style %}
+.swiper-button-next-reviews, .swiper-button-prev-reviews {
+width: 14px;
+height: 27px;
+}
+.reviewsSwiper .swiper-slide {
+    display: flex;
+    height: auto;
+}
+.reviewsSwiper .swiper-slide > * {
+    width: 100%;
+    height: 100%;
+}
+
+.reviews-title {
+    font-size: clamp(calc(var(--reviews-title-size) * 0.7), calc(var(--reviews-title-size) * 0.5 + 1vw), var(--reviews-title-size));
+    line-height: 1.2;
+}
+{% endstyle %}

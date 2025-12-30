@@ -1,0 +1,160 @@
+{
+  "name": "offers slider",
+  "description": "سلايدر العروض",
+  "settings": {
+    "products_collection": {
+      "type": "products",
+      "label": "القسم المعروض"
+    },
+    "section_title": {
+      "type": "string",
+      "label": "عنوان القسم",
+      "default": "العروض"
+    },
+    "view_all_link": {
+      "type": "string",
+      "label": "رابط عرض الكل",
+      "default": "/collections"
+    },
+
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان ",
+      "default": "#333333"
+    },
+    "show_view_all": {
+      "type": "boolean",
+      "label": "عرض زر عرض الكل",
+      "default": true
+    },
+    "link_color": {
+      "type": "color",
+      "label": "لون رابط عرض الكل",
+      "default": "#6b7280"
+    },
+    "show_navigation": {
+      "type": "boolean",
+      "label": "إظهار أزرار التنقل",
+      "default": true
+    },
+
+    "card_title_color": {
+      "type": "color",
+      "label": "لون عنوان الكارد",
+      "default": "#333333"
+    },
+    "card_title_size": {
+      "type": "number",
+      "label": "حجم عنوان الكارد (px)",
+      "default": 18
+    },
+    "card_description_color": {
+      "type": "color",
+      "label": "لون وصف الكارد",
+      "default": "#6b7280"
+    },
+    "card_description_size": {
+      "type": "number",
+      "label": "حجم وصف الكارد (px)",
+      "default": 14
+    },
+    "price_before_color": {
+      "type": "color",
+      "label": "لون السعر قبل الخصم",
+      "default": "#a8a8a8"
+    },
+    "price_before_size": {
+      "type": "number",
+      "label": "حجم السعر قبل الخصم (px)",
+      "default": 15
+    },
+    "price_color": {
+      "type": "color",
+      "label": "لون السعر الحالي",
+      "default": "#d97706"
+    },
+    "price_size": {
+      "type": "number",
+      "label": "حجم السعر الحالي (px)",
+      "default": 18
+    },
+    "discount_color": {
+      "type": "color",
+      "label": "لون الخصم",
+      "default": "#ef4444"
+    },
+    "discount_size": {
+      "type": "number",
+      "label": "حجم الخصم (px)",
+      "default": 13
+    },
+    "buy_button_bg": {
+      "type": "color",
+      "label": "لون خلفية زر الشراء",
+      "default": "#088e5c"
+    },
+
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
+    },
+    "slides_per_view_sm": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة صغيرة)",
+      "default": 2
+    },
+    "space_between_sm": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة صغيرة)",
+      "default": 8
+    },
+    "slides_per_view_md": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة متوسطة)",
+      "default": 3
+    },
+    "space_between_md": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة متوسطة)",
+      "default": 8
+    },
+    "slides_per_view_lg": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة كبيرة)",
+      "default": 4
+    },
+    "space_between_lg": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة كبيرة)",
+      "default": 16
+    }
+  },
+  "presets": [
+    {
+      "category": "sliders",
+      "name": "offers"
+    }
+  ]
+}

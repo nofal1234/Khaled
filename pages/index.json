@@ -3,87 +3,104 @@
   "title": "الصفحة الرئيسية",
   "widgets": [
     {
+      "name": "Hero Section",
+      "widget": "hero-section",
+      "settings": {
+        "title": "hero_title_default",
+        "subtitle": "hero_subtitle_default",
+        "button_text": "hero_button_text_default",
+        "button_link": "/collections"
+      }
+    },
+    {
       "name": "Features Bar",
       "widget": "features-bar",
       "settings": {
-        "background_color": "#000000",
-        "text_color": "#ffffff",
-        "border_color": "#374151",
+        "use_container": true,
+        "bg_color": "#f3f4f6",
+        "text_color": "#1f2937",
+        "border_color": "#e5e7eb",
         "show_border": true,
-        "padding_y": "py-2",
-        "layout": "grid-cols-2",
-        "alignment": "justify-center"
+        "padding_vh": 16,
+        "item_number": 8,
+        "slider_speed": 5000,
+        "slider_delay": 1,
+        "slider_free_mode": true,
+        "slider_loop": true,
+        "slider_pause_on_hover": false,
+        "slider_reverse_direction": false,
+        "slider_space_between": 78
       },
       "blocks": [
         {
           "block": "featureItem",
-          "name": "الشحن المجاني",
+          "name": "feature 1",
           "settings": {
             "icon": "<i class='ph-light ph-package'></i>",
-            "title": "شحن مجاني عند الشراء بقيمة 175"
+            "title": "feature_bar_free_shipping"
           }
         },
         {
           "block": "featureItem",
-          "name": "المواد الصديقة للبيئة",
+          "name": "feature 2",
           "settings": {
             "icon": "<i class='ph-light ph-thumbs-up'></i>",
-            "title": "مواد صديقة للبيئة"
+            "title": "feature_bar_eco_friendly"
           }
         },
         {
           "block": "featureItem",
-          "name": "التقييمات",
+          "name": "feature 3",
           "settings": {
             "icon": "<i class='ph-light ph-star'></i>",
-            "title": "4.8/5 من 17 ألف تقييم"
+            "title": "feature_bar_high_rating"
           }
         },
         {
           "block": "featureItem",
-          "name": "الجودة العالية",
+          "name": "feature 4",
           "settings": {
             "icon": "<i class='ph-light ph-leaf'></i>",
-            "title": "خامات عالية الجودة"
+            "title": "feature_bar_high_quality"
           }
         }
       ]
     },
     {
-      "name": "Hero Section",
-      "widget": "hero-section",
+      "name": "collections slider",
+      "widget": "collections-slider",
       "settings": {
-        "mainTitle": "hero_title_default",
-        "subtitle": "hero_subtitle_default",
-        "buttonText": "hero_button_text_default",
-        "buttonLink": "/collections",
-        "heroImage": ""
-      }
-    },
-    {
-      "name": "Categories Section",
-      "widget": "category-section",
-      "settings": {
-        "section_title": "categories",
-        "view_all_text": "view_all",
-        "view_all_link": "/Category.html",
-        "show_view_all": true,
+        "section_title": "collections",
+        "view_all_link": "/collections",
         "title_color": "#333333",
+        "show_view_all": true,
         "link_color": "#6b7280",
+        "show_border": true,
         "card_border_color": "#e5e7eb",
+        "collection_title_color": "#333333",
         "card_hover_color": "#000000",
         "show_navigation": true,
+        "allow_touch_move": true,
         "autoplay": true,
-        "autoplay_delay": 3000
+        "grab_cursor": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "slides_per_view_sm": 3,
+        "space_between_sm": 32,
+        "slides_per_view_md": 5,
+        "space_between_md": 20,
+        "slides_per_view_lg": 6,
+        "space_between_lg": 65
       }
+    
     },
     {
       "name": "Offers Section",
-      "widget": "offers-section",
+      "widget": "offers-slider",
       "settings": {
         "section_title": "offers",
         "view_all_text": "view_all",
-        "view_all_link": "#",
+        "view_all_link": "/collection/homepage",
         "show_view_all": true,
         "title_color": "#333333",
         "link_color": "#6b7280",
@@ -95,61 +112,84 @@
       }
     },
     {
-      "name": "⭐ لافتة العروض",
+      "name": "banner photo with title",
       "widget": "banner-section",
       "settings": {
-        "title": "",
-        "subtitle": "",
-        "button_text": "",
-        "button_link": "/collections",
-        "image": "banner.png",
-        "alt": "banner_image_alt"
+        "image_lg": "qumra://banner.png",
+        "image_sm": "qumra://banner.png",
+        "banner_higth_lg": 800,
+        "banner_higth_sm": 400,
+        "title": "spring_has_arrived",
+        "title_color": "#ffffff",
+        "title_font_size": 40,
+        "subtitle": "change_your_look",
+        "subtitle_color": "#ffffff",
+        "subtitle_font_size": 18,
+        "button_text": "order_now",
+        "button_text_color": "#ffffff",
+        "button_text_font_size": 18,
+        "button_link": "/collections"
       }
     },
     {
       "name": "Features Section",
-      "widget": "features-section",
+      "widget": "special-slider",
       "settings": {
         "section_title": "features_section",
-        "view_all_text": "view_all",
         "view_all_link": "#",
         "show_view_all": true,
         "title_color": "#333333",
         "link_color": "#6b7280",
         "show_navigation": true,
+        "allow_touch_move": true,
         "autoplay": true,
-        "autoplay_delay": 3000
+        "grab_cursor": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "slides_per_view_sm": 1.5,
+        "space_between_sm": 8,
+        "slides_per_view_md": 2,
+        "space_between_md": 8,
+        "slides_per_view_lg": 3,
+        "space_between_lg": 16
       },
       "blocks": [
         {
           "block": "offerItem",
-          "name": "الصوره الاولي",
+          "name": "special 1",
           "settings": {
-            "image":  "qumra://one.png" ,
+            "image": "qumra://two.png",
             "link": "#",
-            "alt": "العرض الأول",
             "title": "upper_clothing",
             "description": ""
           }
         },
         {
           "block": "offerItem",
-          "name": "الصوره الثانيه",
+          "name": "special 1",
           "settings": {
-            "image":  "qumra://two.png" ,
+            "image": "qumra://three.png",
             "link": "#",
-            "alt": "العرض الثاني",
+            "title": "upper_clothing",
+            "description": ""
+          }
+        },
+        {
+          "block": "offerItem",
+          "name": "special 1",
+          "settings": {
+            "image": "qumra://two.png",
+            "link": "#",
             "title": "lower_clothing",
             "description": ""
           }
         },
         {
           "block": "offerItem",
-          "name": "الصوره الثالثه",
+          "name": "special 3",
           "settings": {
-            "image":  "qumra://three.png" ,
+            "image": "qumra://three.png",
             "link": "#",
-            "alt": "العرض الثالث",
             "title": "accessories",
             "description": ""
           }
@@ -157,48 +197,48 @@
       ]
     },
     {
-      "name": "Service Features 2 Section",
-      "widget": "service-features-2",
+      "name": "service slider",
+      "widget": "service-slider",
       "settings": {
         "section_title": "service_features"
       },
       "blocks": [
         {
           "block": "featureItem",
-          "name": "دقة مواعيد",
+          "name": "feature 1",
           "settings": {
-            "icon": "",
-            "icon_class": "ph-thin ph-star",
+            "icon": "qumra://service1.png",
+            "icon_class": "",
             "title": "service_feature_1_title",
             "description": "service_feature_1_desc"
           }
         },
         {
           "block": "featureItem",
-          "name": "أسعار مناسبة",
+          "name": "feature 2",
           "settings": {
-            "icon": "",
-            "icon_class": "ph-thin ph-gear-six",
+            "icon": "qumra://service2.png",
+            "icon_class": "",
             "title": "service_feature_2_title",
             "description": "service_feature_2_desc"
           }
         },
         {
           "block": "featureItem",
-          "name": "العمل على مدار الساعة",
+          "name": "feature 3",
           "settings": {
-            "icon": "",
-            "icon_class": "ph-thin ph-clock",
+            "icon": "qumra://service3.png",
+            "icon_class": "",
             "title": "service_feature_3_title",
             "description": "service_feature_3_desc"
           }
         },
         {
           "block": "featureItem",
-          "name": "خدمة مخصصة",
+          "name": "feature 4",
           "settings": {
-            "icon": "",
-            "icon_class": "ph-thin ph-shield-check",
+            "icon": "qumra://service4.png",
+            "icon_class": "",
             "title": "service_feature_4_title",
             "description": "service_feature_4_desc"
           }
@@ -206,100 +246,110 @@
       ]
     },
     {
-      "name": "Customer Reviews Section",
-      "widget": "reviews-section",
+      "name": "reviews slider",
+      "widget": "reviews-slider",
       "settings": {
-        "section_title": "customer_reviews"
+        "title": "customer_reviews"
       },
       "blocks": [
         {
           "block": "reviewItem",
-          "name": "الرأي الأول",
+          "name": "review 1",
           "settings": {
             "name": "review_1_name",
-            "text": "review_1_text",
-            "image": "",
-            "stars": 5,
+            "days_work": "days_work",
+            "description": "review_1_text",
+            "image": "qumra://Review1.png",
+            "stars": 5.4,
             "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
-          "name": "الرأي الثاني",
+          "name": "review 2",
           "settings": {
             "name": "review_2_name",
-            "text": "review_2_text",
-            "image": "",
-            "stars": 4,
+            "days_work": "days_work",
+            "description": "review_2_text",
+            "image": "qumra://Review1.png",
+            "stars": 4.4,
             "alt": "review_image_alt"
           }
         },
         {
           "block": "reviewItem",
-          "name": "الرأي الثالث",
+          "name": "review 3",
           "settings": {
             "name": "review_3_name",
-            "text": "review_3_text",
-            "image": "",
-            "stars": 5,
+            "description": "review_3_text",
+            "days_work": "days_work",
+            "image": "qumra://Review1.png",
+            "stars": 5.6,
+            "alt": "review_image_alt"
+          }
+        },
+        {
+          "block": "reviewItem",
+          "name": "review 1",
+          "settings": {
+            "name": "review_1_name",
+            "days_work": "days_work",
+            "description": "review_1_text",
+            "image": "qumra://Review1.png",
+            "stars": 5.4,
             "alt": "review_image_alt"
           }
         }
       ]
     },
     {
-      "name": "Blog Section",
-      "widget": "blog-section",
+      "name": "blog slider",
+      "widget": "blog-slider",
       "settings": {
-        "section_title": "منشورات المدونة",
-        "view_all_text": "عرض الكل",
-        "view_all_link": "/blog",
-        "show_view_all": true,
-        "title_color": "#333333",
-        "link_color": "#6b7280",
-        "card_background": "#ffffff",
-        "show_hover_effect": true,
-        "columns_mobile": "1",
-        "columns_desktop": "3",
-        "default_image_1": "qumra://blog1.png",
-        "default_image_2": "qumra://blog2.png",
-        "default_image_3": "qumra://blog3.png"
       },
-      "blocks": [
+     "blocks": [
         {
           "block": "blogPost",
-          "name": "المنشور الأول",
+          "name": "blog 1",
           "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "title": "blog_title",
+            "description": "blog_desc",
             "image": "qumra://blog1.png",
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
+            "button_text": "view_more",
+            "link": "#"
           }
         },
         {
           "block": "blogPost",
-          "name": "المنشور الثاني",
+          "name": "blog 2",
           "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "title": "blog_title",
+            "description": "blog_desc",
             "image": "qumra://blog2.png",
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
+            "button_text": "view_more",
+            "link": "#"
           }
         },
         {
           "block": "blogPost",
-          "name": "المنشور الثالث",
+          "name": "blog 3",
           "settings": {
-            "title": "أزياء المستقبل: رحلة نحو أسلوب أنيق ومستدام.",
-            "description": "نشرت هذا المقال جوليا هامبل بتاريخ 1 مارس 2024",
+            "title": "blog_title",
+            "description": "blog_desc",
             "image": "qumra://blog3.png",
-            "button_text": "عرض المزيد",
-            "link": "#",
-            "alt_text": "أزياء المستقبل"
+            "button_text": "view_more",
+            "link": "#"
+          }
+        },
+        {
+          "block": "blogPost",
+          "name": "blog 1",
+          "settings": {
+            "title": "blog_title",
+            "description": "blog_desc",
+            "image": "qumra://blog1.png",
+            "button_text": "view_more",
+            "link": "#"
           }
         }
       ]

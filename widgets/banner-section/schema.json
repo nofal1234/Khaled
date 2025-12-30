@@ -1,49 +1,88 @@
 {
-  "name": "لافتة العروض",
+  "name": "banner photo with title",
   "description": "بانر قابل للتخصيص مع نص وصورة وزر",
   "settings": {
+    "image_lg": {
+      "type": "media",
+      "label": "صورة في الشاشات الكبيرة",
+      "default": "qumra://banner.png"
+    },
+    "image_sm": {
+      "type": "media",
+      "label": "صورة في الشاشات الصغيرة",
+      "default": "qumra://banner.png"
+    },
+    "banner_higth_lg": {
+      "type": "number",
+      "label": "ارتفاع البانر في الشاشات الكبيرة",
+      "default": 800
+    },
+    "banner_higth_sm": {
+      "type": "number",
+      "label": "ارتفاع البانر في الشاشات الصغيرة",
+      "default": 400
+    },
     "title": {
       "type": "string",
       "label": "العنوان الرئيسي",
       "default": "spring_has_arrived"
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان الرئيسي",
+      "default": "#ffffff"
+    },
+    "title_font_size": {
+      "type": "number",
+      "label": "حجم خط العنوان الرئيسي",
+      "default": 40
     },
     "subtitle": {
       "type": "text",
       "label": "النص الفرعي",
       "default": "change_your_look"
     },
+    "subtitle_color": {
+      "type": "color",
+      "label": "لون النص الفرعي",
+      "default": "#ffffff"
+    },
+    "subtitle_font_size": {
+      "type": "number",
+      "label": "حجم خط النص الفرعي",
+      "default": 18
+    },
     "button_text": {
       "type": "string",
       "label": "نص الزر",
       "default": "order_now"
     },
+    "button_text_color": {
+      "type": "color",
+      "label": "لون نص الزر",
+      "default": "#ffffff"
+    },
+    "button_text_font_size": {
+      "type": "number",
+      "label": "حجم خط نص الزر",
+      "default": 18
+    },
     "button_link": {
       "type": "string",
       "label": "رابط الزر",
       "default": "/collections"
-    },
-    "image": {
-      "type": "media",
-      "label": "صورة البانر",
-      "default": ""
-    },
-    "alt": {
-      "type": "string",
-      "label": "النص البديل للصورة",
-      "default": "banner_image_alt"
     }
   },
   "presets": [
     {
-      "category": "الصفحة الرئيسية",
-      "name": "⭐ لافتة العروض",
+      "category": "banners",
+      "name": "banner photo with title",
       "settings": {
         "title": "spring_has_arrived",
         "subtitle": "change_your_look",
         "button_text": "order_now",
         "button_link": "/collections",
-        "image": "",
-        "alt": "banner_image_alt"
+        "image": ""
       }
     }
   ]

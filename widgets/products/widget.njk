@@ -1,30 +1,30 @@
-<section class="product-listing bg-white">
-  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 pt-6 md:pt-8 pb-10">
+<section class=" bg-white relative ">
+  <div class="container mt-[37px] flex flex-col gap-4">
     {% if context.search or (context.page and context.page.url == '/search') or (globals.currentUrl == '/search') %}
-    <section class="bg-white py-0 md:py-1">
+    <div class="bg-white py-0 md:py-1">
       <div class="md:block">
         <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
           <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
-            <a href="/" class="hover:text-mainColor transition">الرئيسية</a>
+            <a href="/" class="hover:text-mainColor transition">{{t("home")}}</a>
             <span>/</span>
-            <span class="text-mainColor font-semibold">البحث</span>
+            <span class="text-mainColor font-semibold">{{t("search")}} </span>
           </nav>
         </div>
       </div>
-    </section>
+    </div>
+    {% else %}
+      <p class=" leading-[150%]">{{t("home")}}  /  {{t(context.page.handle)}}</p>
     {% endif %}
+    {# <div class="flex justify-end">
+      <button  class="md:py-[9px] py-2  rounded md:px-4 px-3 border border-stork flex items-center gap-2">
+        <span class=" text-xs font-medium leading-[150%] md:text-base">افضل المبيعات</span>
+        <i class="ph-thin text-xl ph-caret-down"></i>
+      </button>
+    </div> #}
+    <p class=" text-lg md:text-[40px] font-bold">{{t(context.page.handle)}}</p>
     {% if context.products | length > 0 %}
     <div class="flex flex-col gap-4">
-      <!-- Mobile: grid layout (no horizontal scroll) -->
-      <div class="md:hidden px-2.5">
-        <div class="grid grid-cols-2 gap-4">
-          {% for product in context.products %}
-            {%ui "product-card.njk" ,product=product %}
-          {% endfor %}
-        </div>
-      </div>
-      <!-- Desktop Grid -->
-      <div class="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-6">
         {% for product in context.products %}
         {%ui "product-card.njk" ,product=product %}
         {% endfor %}
@@ -32,12 +32,7 @@
       {%ui "pagination.njk" %}
     </div>
     {% else %}
-    <div class="flex flex-col items-center justify-center py-12 text-center">
-      <div class="flex items-center justify-center mb-4 text-gray-700" style="opacity: 1;">
-        <span class="iconify" data-icon="lsicon:clothes-outline" style="width: 140px; height: 140px; opacity: 1;"></span>
-      </div>
-      <div class="text-[24px] leading-[1.4] font-bold text-black">لا توجد منتجات!</div>
-    </div>
+    {%ui "empty-products.njk"%}
     {% endif %}
   </div>
 </section>
