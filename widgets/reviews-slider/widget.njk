@@ -23,6 +23,8 @@
         </div>
         {% endif %}
     </div>
+    {% if widget.blocks | length > 0 %}
+
     <div class="relative">
         <div id="reviews-swiper-{{ widget.id }}" class="swiper reviewsSwiper">
             <div class="swiper-wrapper">
@@ -45,10 +47,21 @@
             </div>
         </div>
     </div>
+    
+    {% else  %}
+    {% ui "empty.njk" %}
+          
+        {% endif %}
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    function initReviewsSwiper() {
+        var swiperElem = document.getElementById('reviews-swiper-{{ widget.id }}');
+        if (!swiperElem || !window.Swiper) return;
+        if (swiperElem.swiper) {
+            swiperElem.swiper.destroy(true, true);
+        }
+
         const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
         const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
         const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
@@ -64,42 +77,59 @@
         const pauseOnMouseEnter = '{{ widget.data.pause_on_mouse_enter }}' == 'true';
         const reverseDirection = '{{ widget.data.reverse_direction }}' == 'true';
 
-        var swiperElem = document.getElementById('reviews-swiper-{{ widget.id }}');
-        if (swiperElem && window.Swiper) {
-            new window.Swiper(swiperElem, {
-                loop: true,
-                grabCursor: grabCursor,
-                speed: speed,
-                allowTouchMove: allowTouchMove,
-                autoplay: autoplay
-                  ? {
-                      delay: autoplayDelay,
-                      disableOnInteraction: disableOnInteraction,
-                      pauseOnMouseEnter: pauseOnMouseEnter,
-                      reverseDirection: reverseDirection
-                  }
-                  : false,
-                navigation: {
-                    nextEl: '.swiper-button-next-reviews',
-                    prevEl: '.swiper-button-prev-reviews'
+        new window.Swiper(swiperElem, {
+            loop: true,
+            grabCursor: grabCursor,
+            speed: speed,
+            allowTouchMove: allowTouchMove,
+            autoplay: autoplay
+              ? {
+                  delay: autoplayDelay,
+                  disableOnInteraction: disableOnInteraction,
+                  pauseOnMouseEnter: pauseOnMouseEnter,
+                  reverseDirection: reverseDirection
+              }
+              : false,
+            navigation: {
+                nextEl: '.swiper-button-next-reviews',
+                prevEl: '.swiper-button-prev-reviews'
+            },
+            breakpoints: {
+                250: {
+                    slidesPerView: slidesPerViewSM,
+                    spaceBetween: spaceBetweenSM
                 },
-                breakpoints: {
-                    250: {
-                        slidesPerView: slidesPerViewSM,
-                        spaceBetween: spaceBetweenSM
-                    },
-                    640: {
-                        slidesPerView: slidesPerViewMD,
-                        spaceBetween: spaceBetweenMD
-                    },
-                    1024: {
-                        slidesPerView: slidesPerViewLG,
-                        spaceBetween: spaceBetweenLG
-                    }
+                640: {
+                    slidesPerView: slidesPerViewMD,
+                    spaceBetween: spaceBetweenMD
+                },
+                1024: {
+                    slidesPerView: slidesPerViewLG,
+                    spaceBetween: spaceBetweenLG
                 }
-            });
+            }
+        });
+    }
+
+    function mountReviewsSwiper(retries) {
+        if (window.Swiper) {
+            initReviewsSwiper();
+            return;
         }
-    });
+        if (retries > 0) {
+            setTimeout(function () {
+                mountReviewsSwiper(retries - 1);
+            }, 150);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            mountReviewsSwiper(8);
+        }, { once: true });
+    } else {
+        mountReviewsSwiper(8);
+    }
 </script>
 
 {% style %}

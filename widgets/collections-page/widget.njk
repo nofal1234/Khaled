@@ -1,11 +1,27 @@
-<section class="product-listing bg-white">
+{% set button_bg_color = widget.data.button_bg_color %}
+{% set button_text_color = widget.data.button_text_color %}
+{% set button_text_type = widget.data.button_text_type %}
+{% set image_size = widget.data.image_size %}
+{% set title_color = widget.data.title_color %}
+{% set title_size = widget.data.title_size %}
+{% set rating_bg_color = widget.data.rating_bg_color %}
+{% set rating_color = widget.data.rating_color %}
+{% set bg_image = widget.data.bg_image %}
+{% set bg_container = widget.data.bg_container %}
+{% set is_image_radius = widget.data.is_image_radius %}
+{% set button_padding_y = widget.data.button_padding_y %}
+{% set card_border_radius = widget.data.card_border_radius %}
+{% set description_color = widget.data.description_color %}
+{% set description_size = widget.data.description_size %}
+{% set button_text = t(widget.data.button_text) %}
+<section class="product-listing ">
   <div class="container pt-6 md:pt-8 pb-10">
   <!-- Breadcrumb & Filters (from Category.html simplified) -->
-  <section class="bg-white py-0 md:py-1">
+  <section class=" py-0 md:py-1">
     <div class="md:block">
       <div class=" py-0 mb-3 md:mb-4">
         <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
-          <a href="#" class="hover:text-mainColor transition">{{t('home')}}</a>
+          <a href="/" class="hover:text-mainColor transition">{{t('home')}}</a>
           <span>/</span>
           <span class="text-mainColor font-semibold">{{t(context.page.handle)}}</span>
         </nav>
@@ -46,15 +62,24 @@
     {% set items = (context.collections and context.collections) or (widget.data.collections and widget.data.collections) or [] %}
     <!-- Grid -->
    {% if items | length > 0  %}
-    
-  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+
+  {% set cols_mobile = widget.data.cards_per_row_mobile or 2 %}
+  {% set cols_tablet = widget.data.cards_per_row_tablet or 3 %}
+  {% set cols_desktop = widget.data.cards_per_row_desktop or 4 %}
+
+  <div class="grid gap-4 md:gap-6
+      grid-cols-{{ cols_mobile }}
+      sm:grid-cols-{{ cols_mobile }}
+      md:grid-cols-{{ cols_tablet }}
+      lg:grid-cols-{{ cols_desktop }}">
     {% if widget.blocks and (widget.blocks | length) > 0 %}
       {% for block in widget.blocks %}
-      {%ui "collection-card.njk",collection=block.data%}
+        {% ui "collection-card.njk", collection=block.data %}
       {% endfor %}
     {% else %}
+      {% log "image_rcccacdius", widget.data.is_image_radius %}
       {% for item in items %}
-      {%ui "collection-card.njk",collection=item%}
+        {% ui "collection-card.njk", collection=item %}
       {% endfor %}
     {% endif %}
   </div>

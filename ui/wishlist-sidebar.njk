@@ -1,3 +1,9 @@
+{% set wishlist_main_color = settings.wishlist_main_color | default('#000') %}
+{% set wishlist_background_color = settings.wishlist_background_color | default('#ffffff') %}
+{% set wishlist_add_button_bg = settings.wishlist_add_button_bg | default('#003033') %}
+{% set wishlist_add_button_text_color = settings.wishlist_add_button_text_color | default('#ffffff') %}
+{% set wishlist_image_size = settings.wishlist_image_size | default(120) %}
+
 <div x-data="xDataWishlist()" x-cloak x-show="modal.open && modal.type === 'wishlist'"
 class="fixed inset-0 z-50">
 <!-- Overlay -->
@@ -8,7 +14,7 @@ class="fixed inset-0 z-50">
     class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
   <!-- Side Menu Panel -->
-  <div class="absolute top-0 right-0  w-11/12  lg:w-4/12 md:w-6/12 bg-white h-full flex flex-col"
+  <div class="absolute top-0 right-0 bg-white  w-11/12  lg:w-4/12 md:w-6/12 h-full flex flex-col"
     x-show="modal.open && modal.type === 'wishlist'" x-transition:enter="transition ease-in-out duration-300 transform"
     x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
     x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
@@ -17,7 +23,7 @@ class="fixed inset-0 z-50">
     <!-- Header -->
     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-full flex items-center justify-center bg-mainColor/10 text-mainColor">
+        <div class="h-9 w-9 rounded-full flex items-center justify-center" style="background-color: {{ wishlist_main_color }}1a; color: {{ wishlist_main_color }};">
           <i class="ph ph-heart text-xl"></i>
         </div>
         <div class="flex flex-col">
@@ -51,7 +57,8 @@ class="fixed inset-0 z-50">
           <template x-for="it in items" :key="it._id">
             <div class="bg-white rounded-2xl border border-gray-100  p-3 flex gap-3 sm:gap-4">
               <!-- Image -->
-              <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+              <div class="flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center"
+                style="width: {{ wishlist_image_size }}px; height: {{ wishlist_image_size }}px;">
                 <template x-if="it.image && it.image.fileUrl">
                   <img :src="it.image.fileUrl" :alt="it.title" class="w-full h-full object-cover" loading="lazy" />
                 </template>
@@ -65,7 +72,10 @@ class="fixed inset-0 z-50">
                 <div class="space-y-1">
                   <!-- العنوان + زر الحذف -->
                   <div class="flex items-center justify-between gap-2">
-                    <p class="font-tajawal font-medium text-[15px] md:text-sm text-gray-900 line-clamp-2 min-w-0" x-text="it.title"></p>
+                    <p class="font-tajawal font-medium text-[15px] md:text-sm line-clamp-2 min-w-0"
+                       x-text="it.title"
+                       style="color: {{ wishlist_main_color }}"
+                    ></p>
                     <button @click="remove(it._id)" class="p-2.5 rounded-full text-gray-400 hover:text-red-500 flex items-center justify-center">
                       <i class="ph ph-trash text-lg"></i>
                     </button>
@@ -74,7 +84,10 @@ class="fixed inset-0 z-50">
                   <!-- السعر + الكمية + الزر تحت العنوان -->
                   <div class="mt-1 flex items-center justify-between gap-3 flex-wrap">
                     <div class="flex items-center gap-2 text-[13px] flex-shrink-0">
-                      <span class="font-semibold text-mainColor" x-text="(it.price ?? it.finalPrice ?? 0) + ' ' + currency(it)"></span>
+                      <span class="font-semibold"
+                            x-text="(it.price ?? it.finalPrice ?? 0) + ' ' + currency(it)"
+                            style="color: {{ wishlist_main_color }}"
+                      ></span>
                       <template x-if="it.compareAtPrice && it.compareAtPrice > (it.price ?? it.finalPrice ?? 0)">
                         <span class="text-[11px] text-gray-400 line-through" x-text="it.compareAtPrice + ' ' + currency(it)"></span>
                       </template>
@@ -105,7 +118,8 @@ class="fixed inset-0 z-50">
                       <button
                         @click="addToCart(it, (function(){ const inp = $el.closest('.wishlist-controls').querySelector('input[type=number]'); return inp ? inp.value : 1; })())"
                         :disabled="loadingId === it._id"
-                        class="px-4 py-2 rounded-full text-xs font-medium flex items-center gap-2 bg-mainColor text-white hover:bg-gray-900 disabled:opacity-60 disabled:cursor-not-allowed"
+                        class="px-4 py-2 rounded-full text-xs font-medium flex items-center gap-2 hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
+                        style="background-color: {{ wishlist_add_button_bg }}; color: {{ wishlist_add_button_text_color }};"
                       >
                         <span x-show="loadingId !== it._id">{{ t('wishlist_add_to_cart') }}</span>
                         <span x-show="loadingId === it._id" class="flex items-center gap-1">

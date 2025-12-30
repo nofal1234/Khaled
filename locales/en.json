@@ -202,5 +202,13 @@
   "wishlist_close":"Wishlist close",
   "emptycart":"Empty Cart !",
   "emptyproduct":"No products found!",
-  "empty":"No items available"
+  "empty":"No items available",
+  "processing": "Processing...",
+  "updating_price": "Updating price...",
+  "adding_to_cart": "Adding to cart...",
+  "show_less": "Show less",
+  "show_more": "Show more",
+  "shopping_cart": "Shopping cart",
+"choose_language": "Choose language"
+
 }

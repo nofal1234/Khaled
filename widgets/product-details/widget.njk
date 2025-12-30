@@ -1,6 +1,41 @@
-<section id="product-details" class="bg-white" x-data="xDataproduct({ product: context.product })"
-    x-ref="productComponent">
-    <div class="container pt-[37px] flex flex-col gap-4">
+{% set title_font_size = widget.data.title_font_size %}
+{% set title_color = widget.data.title_color %}
+{% set desc_font_size = widget.data.desc_font_size %}
+{% set desc_color = widget.data.desc_color %}
+{% set price_font_size = widget.data.price_font_size %}
+{% set price_color = widget.data.price_color %}
+{% set old_price_color = widget.data.old_price_color %}
+{% set option_selected_bg = widget.data.option_selected_bg %}
+{% set option_unselected_bg = widget.data.option_unselected_bg %}
+{% set option_selected_text = widget.data.option_selected_text %}
+{% set option_unselected_text = widget.data.option_unselected_text %}
+{% set option_font_size = widget.data.option_font_size %}
+{% set option_border_color = widget.data.option_border_color %}
+{% set option_border_show = widget.data.option_border_show %}
+{% set buy_button_text = widget.data.buy_button_text %}
+{% set buy_button_bg = widget.data.buy_button_bg %}
+{% set buy_button_text_color = widget.data.buy_button_text_color %}
+{% set main_section_padding = widget.data.main_section_padding %}
+{% set add_to_cart_bg = widget.data.add_to_cart_bg %}
+{% set add_to_cart_text_color = widget.data.add_to_cart_text_color %}
+{% set add_to_cart_margin_top = widget.data.add_to_cart_margin_top %}
+{% set cart_font_size = widget.data.cart_font_size %}
+{% set quantity_buttons_color = widget.data.quantity_buttons_color %}
+{% set features_title_color = widget.data.features_title_color %}
+{% set features_title_font_size = widget.data.features_title_font_size %}
+{% set features_bg_color = widget.data.features_bg_color %}
+{% set features_icon_size = widget.data.features_icon_size %}
+{% set additional_title_color = widget.data.additional_title_color %}
+{% set additional_title_font_size = widget.data.additional_title_font_size %}
+{% set additional_icon_size = widget.data.additional_icon_size %}
+{% set image_aspect_ratio = widget.data.image_aspect_ratio | default(50) %}
+{% set info_aspect_ratio = 100 - image_aspect_ratio %}
+{% set thumb_base = 160 %}
+{% set thumb_size = (thumb_base * image_aspect_ratio / 100) | round(0, 'floor') %}
+{% set thumb_size_mobile = (thumb_size * 0.7) | round(0, 'floor') %}
+
+<section id="product-details" x-data="xDataproduct({ product: context.product })">
+    <div class="container flex flex-col gap-4" style="padding-top: {{ main_section_padding }}px; padding-bottom: {{ main_section_padding }}px;">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-1">
             <a href="/" class="text-mainColor transition">{{ t('home') }}</a>
@@ -9,9 +44,9 @@
         </nav>
         <!-- Product Details Section -->
         <section>
-            <div class="grid relative grid-cols-1 lg:grid-cols-5 gap-4 md:gap-[23px]">
+            <div class="relative flex flex-col lg:flex-row gap-4 md:gap-[23px]">
                 <!-- Product Images -->
-                <div class="flex lg:sticky lg:top-48 flex-col lg:col-span-3 md:col-span-2 gap-4 self-start"
+                <div class="flex lg:sticky lg:top-48 flex-col gap-4 self-start product-left-{{ widget.id }}"
                     x-data="{ imgSelected: 0 }">
                     <!-- Main Image -->
                     <div class="bg-gray-100 rounded-2xl overflow-hidden">
@@ -20,7 +55,7 @@
                     </div>
 
                     <!-- Thumbnail Images -->
-                    <div class="grid grid-cols-3 gap-4 md:gap-[32px]">
+                    <div class="grid grid-cols-3 gap-4 md:gap-[32px] thumbs-{{ widget.id }}">
                         <template x-for="(image, index) in context.product?.images || []" :key="index">
                             <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 transition"
                                 :class="imgSelected === index ? 'border-stork' : 'border-white hover:border-stork'"
@@ -32,19 +67,22 @@
                 </div>
 
                 <!-- Product Info -->
-                <div class="flex flex-col md:col-span-2 gap-6">
+                <div class="flex flex-col gap-6 product-right-{{ widget.id }}">
                     <!-- Title -->
                     <div class=" flex flex-col gap-4">
-                        <h1 class="md:text-[32px] text-2xl  font-bold text-dark" x-text="context.product?.title"></h1>
+                        <h1  class="font-bold"
+                            style="font-size: {{ title_font_size }}px; color: {{ title_color }};"
+                            x-text="context.product?.title"></h1>
                         <div x-data="{ expanded: false }">
                             <div x-ref="desc"
                                 :class="!expanded ? 'line-clamp-3 max-h-[4.5em] overflow-hidden relative' : ''"
-                                class="text-textDescription leading-[150%] text-xs md:text-base text-right transition-all duration-300"
+                                class="text-textDescription leading-[150%] text-right transition-all duration-300"
+                                style="font-size: {{ desc_font_size }}px; color: {{ desc_color }};"
                                 x-html="context.product?.description || 'لا يوجد وصف للمنتج'">
                             </div>
                             <div x-show="$refs.desc && ($refs.desc.scrollHeight > $refs.desc.offsetHeight || expanded)">
                                 <button class="text-black text-sm font-bold leading-[150%]  cursor-pointer"
-                                    @click="expanded = !expanded" x-text="expanded ? 'عرض أقل' : 'عرض المزيد'">
+                                    @click="expanded = !expanded" x-text="expanded ? '{{ t("show_less") }}' : '{{ t("show_more") }}'">
                                 </button>
                             </div>
                         </div>
@@ -54,20 +92,22 @@
 
                     <!-- Price -->
                     <div class="flex gap-2 flex-col">
-                        <h1 class="text-xl font-medium text-mainColor">{{t('price')}}</h1>
+                        <h1 color: {{ price_color }}; class="text-xl font-medium">{{t('price')}}</h1>
                         <template
                             x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center">
-                                    <span class="text-4xl font-bold text-mainColor"
+                                    <span class="font-bold"
+                                        style="font-size: {{ price_font_size }}px; color: {{ price_color }};"
                                         x-text="context.product?.pricing?.price"></span>
-                                    <span class="text-mainColor">{{
+                                    <span class="text-mainColor" style="font-size: {{ (price_font_size * 0.6) | round(1, 'floor') }}px;">{{
                                         globals.app.generalSettings.currency.currencySymbol}}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <span class="text-lg text-gray-500 line-through"
+                                    <span class="text-lg line-through"
+                                        style="color: {{ old_price_color }};"
                                         x-text="context.product?.pricing?.compareAtPrice"></span>
-                                    <span class="text-mainColor">{{
+                                    <span style="color: {{ old_price_color }};">{{
                                         globals.app.generalSettings.currency.currencySymbol}}</span>
                                 </div>
                             </div>
@@ -75,9 +115,10 @@
                         <template
                             x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
                             <div class="flex items-center gap-2">
-                                <span class="text-4xl font-bold text-mainColor"
+                                <span class="font-bold"
+                                    style="font-size: {{ price_font_size }}px; color: {{ price_color }};"
                                     x-text="context.product?.pricing?.price"></span>
-                                <span class="text-mainColor">{{ globals.app.generalSettings.currency.currencySymbol
+                                <span  style="font-size: {{ (price_font_size * 0.6) | round(1, 'floor') }}px; color: {{ price_color }};"">{{ globals.app.generalSettings.currency.currencySymbol
                                     }}</span>
                             </div>
                         </template>
@@ -91,10 +132,11 @@
                                 <div class="flex flex-wrap gap-4">
                                     <template x-for="val in opt.values" :key="val._id">
                                         <button type="button"
-                                            class="p-[9.34px] rounded-full border transition-all duration-200 font-cairo text-sm flex items-center gap-2"
-                                            :class="selectedOptions[opt._id] === val._id
-                                                ? ' bg-mainColor text-white '
-                                                : 'text-[#8C8C8C] bg-bgItem hover:border-gray-300 hover:bg-gray-50'"
+                                            class="p-[9.34px] rounded-full border transition-all duration-200 font-cairo flex items-center gap-2"
+                                            :style="selectedOptions[opt._id] === val._id
+                                                ? 'background-color: {{ option_selected_bg }}; color: {{ option_selected_text }}; border-color: {{ option_border_color }};'
+                                                : 'background-color: {{ option_unselected_bg }}; color: {{ option_unselected_text }}; border-color: {{ option_border_show and option_border_color or \"transparent\" }};'"
+                                            style="font-size: {{ option_font_size }}px;"
                                             @click.prevent="selectOption(context.product,opt._id, val._id)">
                                             <span x-text="val.label"></span>
                                         </button>
@@ -120,26 +162,25 @@
                         </template>
 
                         <!-- Row: Quantity on one side + add to cart on the other -->
-                        <div class="flex items-center gap-2 w-full">
-                            <!-- Restored original quantity styling -->
-                            <div class="flex items-center md:h-[57px] h-[45px] px-8 min-w-[86px] md:min-w-[124px] border border-mainColor"
-                                style=" border-radius: 33px; border-width: 1px; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; gap: 32px;">
-                                <input type="number" min="1" x-model.number="productQuantity"
-                                    class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold text-gray-800"
-                                    style="width: 20px;" />
-                                <div class="flex flex-col items-center" style="gap: 2px;">
-                                    <button type="button" class="text-gray-600 hover:text-gray-800"
+                        <div class="flex items-center gap-2 w-full" style="margin-top: {{ add_to_cart_margin_top }}px;">
+                            <!-- Quantity -->
+                            <div class="flex items-center md:h-[57px] h-[45px] px-4  justify-between border rounded-full"
+                                style="border-color: {{ quantity_buttons_color }}; border-radius: 33px; border-width: 1px; padding-top: 8px; padding-bottom: 8px; gap: 12px; width: 120px;">
+                                <input style="color: {{ quantity_buttons_color }}; width: 28px;" type="number" min="1" x-model.number="productQuantity"
+                                    class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold" />
+                                <div class="flex flex-col items-center" style="gap: 4px;">
+                                    <button type="button" class="hover:text-gray-800"
                                         aria-label="{{ t('increase_quantity') }}" @click="increaseCartItem()">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                            stroke-width="2.5" stroke="{{quantity_buttons_color}}" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                         </svg>
                                     </button>
-                                    <button type="button" class="text-gray-600 hover:text-gray-800"
+                                    <button type="button" class="hover:text-gray-800"
                                         aria-label="{{ t('decrease_quantity') }}" @click="decreaseCartItem()">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                            stroke-width="2.5" stroke="{{quantity_buttons_color}}" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                         </svg>
@@ -150,41 +191,48 @@
                             <!-- Primary add to cart button takes remaining width -->
                             <button name="addToCart" type="submit"
                                 :disabled="loading.addToCart || loading.optionsLoading || productQuantity === 0"
-                                class="flex-1 bg-mainColor text-white py-[7.9px] md:py-[15px] rounded-full  font-medium  text-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-300">
+                                class="flex-1 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-300"
+                                style="background-color: {{ add_to_cart_bg }}; color: {{ add_to_cart_text_color }}; padding-top: 12px; padding-bottom: 12px; font-size: {{ cart_font_size }}px;">
                                 <div x-show="loading.optionsLoading">
                                     {%ui "loading.njk" %}
                                 </div>
                                 <span x-show="!loading.addToCart && !loading.optionsLoading">
                                     {{ t('add_to_cart') }}
                                 </span>
-                                <span x-show="loading.addToCart">جاري الإضافة...</span>
-                                <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
+                                <span x-show="loading.addToCart">{{t("adding_to_cart")}}</span>
+                                <span x-show="loading.optionsLoading">{{t("updating_price")}}</span>
                             </button>
                         </div>
 
                         <!-- Full width buy now button under them -->
                         <button name="buyNow" type="submit"
-                            class="w-full px-6 py-[7.9px] md:pt-5 pb-2.5 border border-mainColor font-medium rounded-full  text-lg flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                            class="w-full px-6 py-[7.9px] md:pt-5 pb-2.5 font-medium rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-300"
+                            style="background-color: {{ buy_button_bg }}; color: {{ buy_button_text_color }}; border: 1px solid {{ buy_button_bg }}; font-size: {{ cart_font_size }}px;">
                             <div x-show="loading.optionsLoading">
                                 {%ui "loading.njk" %}
                             </div>
-                            <span x-show="!loading.buyNow && !loading.optionsLoading">{{ t('buy_now') }}</span>
-                            <span x-show="loading.buyNow">جاري المعالجة...</span>
-                            <span x-show="loading.optionsLoading">جاري تحديث السعر...</span>
+                            <span x-show="!loading.buyNow && !loading.optionsLoading">{{ t(buy_button_text) }}</span>
+                            <span x-show="loading.buyNow">{{t("updating_price")}}</span>
+                            <span x-show="loading.optionsLoading">{{t("processing")}}</span>
                         </button>
                     </form>
                     <!-- Additional Info -->
                     <div class=" flex flex-col gap-4">
                         <div class="flex items-center gap-3">
-                            <i class="ph-light ph-alarm text-[28px] text-mainColor"></i>
+                            <i class="ph-light ph-alarm text-mainColor"
+                               style="color: {{ additional_title_color }};font-size: {{ additional_icon_size }}px;"></i>
                             <p class="font-medium leading-[150%]"
+                                style="color: {{ additional_title_color }}; font-size: {{ additional_title_font_size }}px;"
                                 x-text="'{{ t('stock_remaining') }}'.replace('{count}', product.quantity || 1)"></p>
                         </div>
                         {% for block in widget.blocks %}
                         {% if block.blockKey=="productDetails" %}
                         <div class="flex items-center gap-2">
-                            <i class="ph-light ph-check text-2xl text-mainColor"></i>
-                            <p class="font-medium leading-[150%] text-sm">{{ t(block.data.title) }}</p>
+                            <i class="ph-light ph-check text-mainColor"
+                               style="font-size: {{ additional_icon_size }}px;"></i>
+                            <p class="font-medium leading-[150%]"
+                               style="color: {{ additional_title_color }}; font-size: {{ additional_title_font_size }}px;">
+                               {{ t(block.data.title) }}</p>
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -197,9 +245,13 @@
                                 {% for block in widget.blocks %}
                                 {% if block.blockKey=="productFeatures" %}
                                 <div
-                                    class=" gap-4 flex flex-col items-center justify-center text-center cursor-pointer p-4 sm:p-5 md:p-6 rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1">
-                                    <i class="ph-light ph-star text-mainColor text-lg"></i>
-                                    <h3 class="text-[8px] text-mainColor">{{ t(block.data.title)}}</h3>
+                                    class=" gap-4 flex flex-col items-center justify-center text-center cursor-pointer p-4 sm:p-5 md:p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:-translate-y-1"
+                                    style="background-color: {{ features_bg_color }};">
+                                    <i class="ph-light ph-star"
+                                       style="color: {{ features_title_color }}; font-size: {{ features_icon_size }}px;"></i>
+                                    <h3
+                                      style="color: {{ features_title_color }}; font-size: {{ features_title_font_size }}px;">
+                                      {{ t(block.data.title)}}</h3>
                                 </div>
                                 {% endif %}
                                 {% endfor %}
@@ -212,3 +264,27 @@
         </section>
     </div>
 </section>
+{% style %}
+@media (min-width: 1024px) {
+  .product-left-{{ widget.id }} {
+    width: {{ image_aspect_ratio }}%;
+  }
+  .product-right-{{ widget.id }} {
+    width: {{ info_aspect_ratio }}%;
+  }
+}
+@media (max-width: 1023px) {
+  .product-left-{{ widget.id }},
+  .product-right-{{ widget.id }} {
+    width: 100%;
+  }
+}
+.thumbs-{{ widget.id }} .thumb-img-{{ widget.id }} {
+  height: {{ thumb_size_mobile }}px;
+}
+@media (min-width: 768px) {
+  .thumbs-{{ widget.id }} .thumb-img-{{ widget.id }} {
+    height: {{ thumb_size }}px;
+  }
+}
+{% endstyle %}

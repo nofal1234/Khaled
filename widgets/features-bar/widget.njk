@@ -4,14 +4,7 @@
 {% set border_color = widget.data.border_color %}
 {% set show_border = widget.data.show_border %}
 {% set padding_vh = widget.data.padding_vh %}
-{% set item_number = widget.data.item_number %}
-{% set slider_speed = widget.data.slider_speed %}
-{% set slider_pause_on_hover = widget.data.slider_pause_on_hover %}
-{% set slider_reverse_direction = widget.data.slider_reverse_direction %}
-{% set slider_space_between = widget.data.slider_space_between %}
-{% set slider_loop = widget.data.slider_loop %}
-{% set slider_free_mode = widget.data.slider_free_mode %}
-{% set slider_delay = widget.data.slider_delay %}
+
 
 
 <section 
@@ -47,46 +40,73 @@
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const featuresBarSwiperElement = document.getElementById(`{{widget.id}}`);
-    if (featuresBarSwiperElement) {
-        const slides = featuresBarSwiperElement.querySelectorAll('.swiper-slide').length;
-        const loopedSlides = Math.max({{ item_number or 5 }}, Math.ceil(slides / 2));
-        const sliderSpeed = {{ slider_speed }};
-        const sliderDelay = {{ slider_delay }};
-        const sliderPauseOnHover = {{ slider_pause_on_hover }};
-        const sliderReverseDirection = {{ slider_reverse_direction }};
-        const sliderSpaceBetween = {{ slider_space_between }};
-        const sliderLoop = {{ slider_loop }};
-        const sliderFreeMode = {{ slider_free_mode }};
-        const featuresBarSwiper = new Swiper('.features-bar-swiper', {
-            slidesPerView: 'auto',
-            loop: sliderLoop,
-            loopedSlides: loopedSlides,
-            autoplay: {
-                delay: sliderDelay,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: sliderPauseOnHover,
-                reverseDirection: sliderReverseDirection,
-            },
-            speed: sliderSpeed,
-            freeMode: {
-                enabled: sliderFreeMode,
-                momentum: false,
-                sticky: false,
-            },
-            spaceBetween: sliderSpaceBetween,
-            breakpoints: {
-                640: {
-                    spaceBetween: sliderSpaceBetween,
-                },
-                768: {
-                    spaceBetween: sliderSpaceBetween,
-                },
-            }
-        });
+function initFeaturesBarSwiper() {
+    const wrapper = document.getElementById(`{{widget.id}}`);
+    if (!wrapper || !window.Swiper) return;
+    const swiperEl = wrapper.querySelector('.features-bar-swiper');
+    if (!swiperEl) return;
+    if (swiperEl.swiper) {
+        swiperEl.swiper.destroy(true, true);
     }
-});
+
+    const slides = wrapper.querySelectorAll('.swiper-slide').length;
+
+    const loopedSlides = Math.max(Number('{{ widget.data.item_number | default(5) }}'), Math.ceil(slides / 2));
+    const sliderSpeed = Number('{{ widget.data.slider_speed }}');
+    const sliderDelay = Number('{{ widget.data.slider_delay }}');
+    const sliderPauseOnHover = '{{ widget.data.slider_pause_on_hover }}' === 'true';
+    const sliderReverseDirection = '{{ widget.data.slider_reverse_direction }}' === 'true';
+    const sliderSpaceBetween = Number('{{ widget.data.slider_space_between }}');
+    const sliderLoop = '{{ widget.data.slider_loop }}' === 'true';
+    const sliderFreeMode = '{{ widget.data.slider_free_mode }}' === 'true';
+
+    new window.Swiper(swiperEl, {
+        slidesPerView: 'auto',
+        loop: sliderLoop,
+        loopedSlides: loopedSlides,
+        autoplay: {
+            delay: sliderDelay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: sliderPauseOnHover,
+            reverseDirection: sliderReverseDirection,
+        },
+        speed: sliderSpeed,
+        freeMode: {
+            enabled: sliderFreeMode,
+            momentum: false,
+            sticky: false,
+        },
+        spaceBetween: sliderSpaceBetween,
+        breakpoints: {
+            640: {
+                spaceBetween: sliderSpaceBetween,
+            },
+            768: {
+                spaceBetween: sliderSpaceBetween,
+            },
+        }
+    });
+}
+
+function mountFeaturesBarSwiper(retries) {
+    if (window.Swiper) {
+        initFeaturesBarSwiper();
+        return;
+    }
+    if (retries > 0) {
+        setTimeout(function () {
+            mountFeaturesBarSwiper(retries - 1);
+        }, 150);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        mountFeaturesBarSwiper(8);
+    }, { once: true });
+} else {
+    mountFeaturesBarSwiper(8);
+}
 </script>
 
 <style>

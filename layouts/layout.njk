@@ -74,7 +74,7 @@
 
 </head>
 
-<body dir="{{t('dir')}}">
+<body style="background-color: {{settings.backgroundColor}};" dir="{{t('dir')}}">
   <div x-data="GlobalState()" x-init="init()">
     {%ui "loading-screen.njk" %}
     {% template "header" %}

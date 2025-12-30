@@ -1,4 +1,22 @@
 <!-- ############### START: PROFESSIONAL CART MODAL ############### -->
+{% set cart_title_text = settings.cart_title_text %}
+{% set cart_title_font_size = settings.cart_title_font_size %}
+{% set cart_title_weight = settings.cart_title_weight %}
+{% set button_vertical_padding = settings.button_vertical_padding %}
+{% set cart_vertical_padding = settings.cart_vertical_padding %}
+{% set checkout_button_bg = settings.checkout_button_bg %}
+{% set checkout_button_text_color = settings.checkout_button_text_color %}
+{% set checkout_button_text = settings.checkout_button_text %}
+{% set open_cart_button_text_color = settings.open_cart_button_text_color %}
+{% set open_cart_button_font_size = settings.open_cart_button_font_size %}
+{% set product_title_color = settings.product_title_color %}
+{% set product_title_font_size = settings.product_title_font_size %}
+{% set product_image_size = settings.product_image_size %}
+{% set quantity_buttons_color = settings.quantity_buttons_color %}
+{% set cart_drawer_height_full = settings.cart_drawer_height_full %}
+{% set cart_drawer_background_color = settings.cart_drawer_background_color %}
+{% set cart_drawer_table_color = settings.cart_drawer_table_color  %}
+{% set cart_drawer_price_color = settings.cart_drawer_price_color %}
 <style>
   @media (max-width: 360px) {
     .cart-drawer .header {
@@ -87,14 +105,15 @@
   <div class="absolute inset-0 pointer-events-none">
 
     <!-- ✅ cart-drawer صار flex flex-col -->
-    <div
-      class="cart-drawer absolute top-0 left-0 bg-white rounded-none rounded-r-lg overflow-hidden pointer-events-auto
-             w-11/12 min-h-[560px] h-3/4 md:w-3/4 transform-gpu flex flex-col"
+    <div 
+    style="padding-top: {{ cart_vertical_padding }}px; padding-bottom: {{ cart_vertical_padding }}px; background-color: {{ cart_drawer_background_color }};"
+      class="cart-drawer absolute top-0 left-0 rounded-none rounded-r-lg overflow-hidden pointer-events-auto
+             w-11/12 {% if cart_drawer_height_full %}h-full{% else %}min-h-[560px] h-3/4{% endif %} md:w-3/4 transform-gpu flex flex-col"
       x-transition:enter="transform ease-out duration-300" x-transition:enter-start="-translate-x-full"
       x-transition:enter-end="translate-x-0" x-transition:leave="transform ease-in duration-200"
       x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full">
       <!-- ✅ wrapper الداخلي بقى flex-col + min-h-0 -->
-      <div class="h-full w-full flex flex-col  items-center justify-center md:py-[45px] max-md:pt-[28px] max-md:pb-[22px] px-[15px] min-h-0">
+      <div class="h-full w-full flex flex-col  items-center justify-center px-[15px] min-h-0">
 
         <!-- ✅ المحتوى الرئيسي بقى h-full min-h-0 -->
         <div x-show="globals?.cart?.items?.length > 0" class="flex w-full flex-col md:gap-6 gap-4 h-full min-h-0">
@@ -102,8 +121,8 @@
           <!-- Header -->
           <div class="flex justify-between items-center"
             :class="(globals?.cart?.items?.length > 0) ? 'flex-row' : 'flex-row-reverse'">
-            <h2 class="md:text-2xl text-lg font-bold leading-[140%] text-mainColor">
-              {{ t('cart_title') }}
+            <h2 class="leading-[140%]" style="font-size: {{ cart_title_font_size }}px; font-weight: {{ cart_title_weight }}; color: {{ product_title_color }};">
+              {{ t(cart_title_text) }}
             </h2>
             <button @click="toggleModal('cart')" class="text-textDescription hover:text-gray-700 transition">
               <i class="ph text-[28px] md:text-[32px] ph-x"></i>
@@ -114,14 +133,14 @@
           <div class="flex-1 flex flex-col min-h-0">
 
             <!-- Headers -->
-            <div class="grid grid-cols-2 md:grid-cols-12 border-b border-stork pb-2 font-medium text-mainColor flex-shrink-0">
-              <div class="md:col-span-6 text-sm md:text-base leading-[150%] font-medium">
+            <div class="grid grid-cols-2 md:grid-cols-12 border-b border-stork pb-2 font-medium flex-shrink-0">
+              <div class="md:col-span-6 text-sm md:text-base leading-[150%] font-medium" style="color: {{ cart_drawer_table_color }};">
                 {{ t('cart_product') }}
               </div>
-              <div class="md:col-span-4 text-sm md:text-base max-md:text-end leading-[150%] font-medium">
+              <div class="md:col-span-4 text-sm md:text-base max-md:text-end leading-[150%] font-medium" style="color: {{ cart_drawer_table_color }};">
                 {{ t('cart_price') }}
               </div>
-              <div class="hidden md:block md:col-span-2 leading-[150%] font-medium">
+              <div class="hidden md:block md:col-span-2 leading-[150%] font-medium" style="color: {{ cart_drawer_table_color }};">
                 {{ t('cart_quantity') }}
               </div>
             </div>
@@ -135,19 +154,21 @@
                   <div class="flex md:hidden justify-between items-start gap-3">
                     <div class="flex items-start gap-2 flex-1">
                       <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title"
-                        class="bg-bgItem w-[69px] h-[155px] rounded-lg object-cover flex-shrink-0" />
+                        class="bg-bgItem rounded-lg object-cover flex-shrink-0"
+                        style="width: {{ product_image_size }}px; height: {{ product_image_size }}px;" />
                       <div class="flex-1 flex flex-col gap-2 min-w-0">
-                        <p class="title text-mainColor text-sm cart-title-truncate" x-text="item?.productData?.title"></p>
+                        <p class="title cart-title-truncate" x-text="item?.productData?.title"
+                           style="color: {{ product_title_color }}; font-size: {{ product_title_font_size }}px;"></p>
 
                         <div class="flex flex-col gap-4">
                           <p x-show="item?.variantData?.options.length > 0" class="text-xs text-textDescription"
                             x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
 
                           <!-- Quantity control -->
-                          <div class="flex items-center border border-mainColor"
-                            style="width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
+                          <div class="flex items-center border"
+                            style="border-color: {{ quantity_buttons_color }}; width: 76px; height: 27px; border-radius: 12.77px; border-width: 0.39px; padding: 3.1px 6.19px; gap: 13px;">
                             <input type="number"
-                              class="qty-input text-center border-0 p-0 focus:ring-0 font-medium text-mainColor"
+                              class="qty-input text-center border-0 p-0 focus:ring-0 font-medium"
                               style="width: 20px;"
                               :value="item.quantity"
                               @input="updateQuantityFromInput(item._id, $event)" />
@@ -156,7 +177,7 @@
                                 aria-label="{{ t('cart_increase_quantity') }}"
                                 @click="increaseCartItem(item._id, item.quantity)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                  stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
+                                  stroke-width="2.5" stroke="{{ quantity_buttons_color }}" class="w-3 h-3">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                 </svg>
                               </button>
@@ -164,7 +185,7 @@
                                 aria-label="{{ t('cart_decrease_quantity') }}"
                                 @click="decreaseCartItem(item._id, item.quantity)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                  stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
+                                  stroke-width="2.5" stroke="{{ quantity_buttons_color }}" class="w-3 h-3">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                 </svg>
                               </button>
@@ -182,9 +203,9 @@
                       </div>
                     </div>
 
-                    <div class="font-bold text-mainColor price">
+                    <div class="font-bold price" style="color: {{ cart_drawer_price_color }};">
                       <span x-text="item.totalPrice"></span>
-                      <span>{{ currency.currencySymbol }}</span>
+                      <span>{{ globals.currency.currencySymbol }}</span>
                     </div>
                   </div>
 
@@ -196,39 +217,43 @@
                       </button>
                       <div class="flex items-center gap-4">
                         <img :src="item?.productData?.image?.fileUrl" :alt="item?.productData?.title"
-                          class="bg-bgItem w-[87px] h-[103px] rounded-lg object-cover flex-shrink-0" />
+                          class="bg-bgItem rounded-lg object-cover flex-shrink-0"
+                          style="width: {{ product_image_size }}px; height: {{ product_image_size }}px;" />
                         <div class="flex-grow flex flex-col gap-2">
-                          <p class="font-medium leading-[150%] text-mainColor text-sm" x-text="item?.productData?.title"></p>
+                          <p class="font-medium leading-[150%]" x-text="item?.productData?.title"
+                             style="color: {{ product_title_color }}; font-size: {{ product_title_font_size }}px;"></p>
                           <p class="text-textDescription" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="hidden md:block col-span-4 font-bold text-mainColor price">
+                  <div class="hidden md:block col-span-4 font-bold price" style="color: {{ cart_drawer_price_color }};">
                     <span x-text="item.totalPrice"></span>
-                    <span>{{ currency.currencySymbol }}</span>
+                    <span>{{ globals.currency.currencySymbol }}</span>
                   </div>
 
                   <div class="hidden md:flex col-span-2 justify-start">
-                    <div class="flex w-[97px] h-[45px] items-center border border-mainColor justify-between px-[22px] rounded-full">
+                    <div class="flex w-[97px] h-[45px] items-center border justify-between px-[22px] rounded-full"
+                      style="border-color: {{ quantity_buttons_color }};">
                       <div>
                         <input type="number" :value="item.quantity" min="1"
-                          class="qty-input max-w-8 text-center border-0 p-0 focus:ring-0 font-medium text-mainColor"
+                          class="qty-input max-w-8 text-center border-0 p-0 focus:ring-0 font-medium"
+                          style="color: {{ quantity_buttons_color }};"
                           @change="updateCartItemQuantity(item._id, $event.target.value)" />
                       </div>
                       <div class="flex flex-col gap-1.5 items-center justify-between">
                         <button @click="increaseCartItem(item._id, item.quantity)"
                           class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                            stroke="currentColor" class="w-3 h-3">
+                            stroke="{{ quantity_buttons_color }}" class="w-3 h-3">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                           </svg>
                         </button>
                         <button @click="decreaseCartItem(item._id, item.quantity)"
                           class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                            stroke="currentColor" class="w-3 h-3">
+                            stroke="{{ quantity_buttons_color }}" class="w-3 h-3">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                           </svg>
                         </button>
@@ -245,7 +270,7 @@
               <span class="md:text-xl leading-[150%] font-medium text-mainColor">{{ t('cart_total') }}</span>
               <span class="md:text-2xl text-lg leading-[150%] font-bold text-mainColor">
                 <span x-text="globals?.cart?.totalPrice || 0"></span>
-                <span>{{ currency.currencySymbol }}</span>
+                <span>{{ globals.currency.currencySymbol }}</span>
               </span>
             </div>
 
@@ -254,11 +279,12 @@
           <!-- Footer Buttons -->
           <div class="grid grid-cols-2 gap-2 flex-shrink-0">
             <button
-              class="w-full bg-mainColor text-white md:pt-[20px] md:pb-[10px] py-[8.5px] rounded-full font-medium md:text-base text-sm hover:bg-mainColor transition disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full rounded-full font-medium md:text-base text-sm hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="{{ t('cart_checkout_now') }}"
               :disabled="globalLoading.checkout"
-              @click="checkout()">
-              <span x-show="!globalLoading.checkout">{{ t('cart_checkout_now') }}</span>
+              @click="checkout()"
+              style="background-color: {{ checkout_button_bg }}; color: {{ checkout_button_text_color }}; padding-top: {{ button_vertical_padding }}px; padding-bottom: {{ button_vertical_padding }}px;">
+              <span x-show="!globalLoading.checkout">{{ t(checkout_button_text) }}</span>
               <template x-if="globalLoading.checkout">
                 <div class="flex justify-center">
                   {%ui "loading.njk" %}
@@ -267,8 +293,9 @@
             </button>
 
             <a href="/cart"
-              class="w-full bg-white border border-mainColor text-mainColor md:pt-[20px] md:pb-[10px] py-[8.5px] rounded-full
-                     font-medium md:text-base text-sm hover:bg-gray-100 text-center transition">
+              class="w-full bg-white border border-mainColor rounded-full
+                     font-medium md:text-base text-sm hover:bg-gray-100 text-center transition"
+              style="color: {{ open_cart_button_text_color }}; font-size: {{ open_cart_button_font_size }}px;padding-top: {{ button_vertical_padding }}px; padding-bottom: {{ button_vertical_padding }}px;">
               {{ t('cart_open_cart') }}
             </a>
           </div>

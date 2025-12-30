@@ -1,7 +1,7 @@
-<section class=" bg-white relative ">
+<section class="  relative ">
   <div class="container mt-[37px] flex flex-col gap-4">
     {% if context.search or (context.page and context.page.url == '/search') or (globals.currentUrl == '/search') %}
-    <div class="bg-white py-0 md:py-1">
+    <div class=" py-0 md:py-1">
       <div class="md:block">
         <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
           <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
@@ -21,12 +21,24 @@
         <i class="ph-thin text-xl ph-caret-down"></i>
       </button>
     </div> #}
-    <p class=" text-lg md:text-[40px] font-bold">{{t(context.page.handle)}}</p>
+    <p class=" font-bold latest-handle-title" style="color: {{ widget.data.title_color }};">
+      {{ t(context.page.handle) }}
+    </p>
     {% if context.products | length > 0 %}
     <div class="flex flex-col gap-4">
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-6">
         {% for product in context.products %}
-        {%ui "product-card.njk" ,product=product %}
+        {%ui "product-card.njk" ,product=product, card_title_color=widget.data.card_title_color,
+        card_title_size=widget.data.card_title_size,
+        card_description_color=widget.data.card_description_color,
+        card_description_size=widget.data.card_description_size,
+        price_before_color=widget.data.price_before_color,
+        price_before_size=widget.data.price_before_size,
+        price_color=widget.data.price_color,
+        price_size=widget.data.price_size,
+        discount_color=widget.data.discount_color,
+        discount_size=widget.data.discount_size,
+        buy_button_bg=widget.data.buy_button_bg  %}
         {% endfor %}
       </div>
       {%ui "pagination.njk" %}
@@ -36,3 +48,14 @@
     {% endif %}
   </div>
 </section>
+
+{% style %}
+.latest-handle-title {
+  font-size: {{widget.data.title_size}}px;
+}
+@media (max-width: 640px) {
+  .latest-handle-title {
+    font-size: {{ (widget.data.title_size * 0.7) | round(1, 'floor') }}px;
+  }
+}
+{% endstyle %}

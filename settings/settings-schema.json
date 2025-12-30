@@ -7,38 +7,268 @@
     "settings": {
       "mainColor": {
         "type": "color",
-        "label": "Main Color",
+        "label": {
+          "ar": "اللون الرئيسي",
+          "en": "Main Color"
+        },
         "default": "#000000"
+      },
+      "backgroundColor": {
+        "type": "color",
+        "label": {
+          "ar": "لون الخلفية",
+          "en": "Background Color"
+        },
+        "default": "#ffffff"
+      },
+      "pagination_background_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون خلفية الباجنيشن",
+          "en": "Pagination Background Color"
+        },
+        "default": "#0000"
+      },
+      "pagination_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون نص الباجنيشن",
+          "en": "Pagination Text Color"
+        },
+        "default": "#ffff"
       }
     }
   },
   {
     "label": {
-      "ar": "الخطوط",
-      "en": "Fonts"
+      "ar": "إعدادات السلة الجانية",
+      "en": ""
     },
     "settings": {
-      "font_family": {
+      "cart_drawer_background_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون خلفية السلة الجانبية",
+          "en": "Cart Drawer Background Color"
+        },
+        "default": "#ffffff"
+      },
+      "cart_drawer_table_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون الجدول",
+          "en": "Table Color"
+        },
+        "default": "#000"
+      },
+      "cart_drawer_price_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون السعر",
+          "en": "Price Color"
+        },
+        "default": "#000"
+      },
+      "cart_drawer_height_full": {
+        "type": "boolean",
+        "label": {
+          "ar": "هل ارتفاع السلة الجانبية بالكامل",
+          "en": "Full Cart Drawer Height"
+        },
+        "default": true
+      },
+      "cart_title_text": {
+        "type": "string",
+        "label": {
+          "ar": "عنوان السلة",
+          "en": "Cart Title"
+        },
+        "default": "shopping_cart"
+      },
+      "cart_title_font_size": {
+        "type": "number",
+        "label": {
+          "ar": "حجم عنوان السلة (px)",
+          "en": "Cart Title Font Size (px)"
+        },
+        "default": 24,
+        "min": 12,
+        "max": 64
+      },
+      "cart_title_weight": {
         "type": "select",
         "label": {
-          "ar": "الخط",
-          "en": "Font Family"
+          "ar": "نوع خط العنوان",
+          "en": "Title Font Weight"
         },
-        "options": [
-          {
-            "label": "Tajawal",
-            "value": "tajawal"
-          },
-          {
-            "label": "Cairo",
-            "value": "cairo"
-          },
-          {
-            "label": "IBM Plex Sans Arabic",
-            "value": "ibm_plex_sans_arabic"
-          }
-        ],
-        "default": "tajawal"
+        "options": ["normal", "medium", "bold"],
+        "default": "bold"
+      },
+      "cart_vertical_padding": {
+        "type": "range",
+        "label": {
+          "ar": "هامش السلة الرأسي (بكسل)",
+          "en": "Cart Button Vertical Padding (px)"
+        },
+        "min": 0,
+        "max": 80,
+        "default": 24
+      },
+      "button_vertical_padding": {
+        "type": "range",
+        "label": {
+          "ar": "هامش رأسي للأزرار (بكسل)",
+          "en": "Button Vertical Padding (px)"
+        },
+        "min": 0,
+        "max": 80,
+        "default": 18
+      },
+      "checkout_button_bg": {
+        "type": "color",
+        "label": {
+          "ar": "لون خلفية زر الشراء",
+          "en": "Checkout Button Background"
+        },
+        "default": "#003033"
+      },
+      "checkout_button_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون نص زر الشراء",
+          "en": "Checkout Button Text Color"
+        },
+        "default": "#FFFFFF"
+      },
+      "checkout_button_text": {
+        "type": "string",
+        "label": {
+          "ar": "نص زر الشراء",
+          "en": "Checkout Button Text"
+        },
+        "default": "buy_now"
+      },
+      "open_cart_button_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون نص زر فتح السلة",
+          "en": "Open Cart Button Text Color"
+        },
+        "default": "#111111"
+      },
+      "open_cart_button_font_size": {
+        "type": "number",
+        "label": {
+          "ar": "حجم نص زر فتح السلة (px)",
+          "en": "Open Cart Button Font Size (px)"
+        },
+        "default": 16,
+        "min": 10,
+        "max": 40
+      },
+      "product_title_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون اسم المنتج",
+          "en": "Product Title Color"
+        },
+        "default": "#222222"
+      },
+      "product_title_font_size": {
+        "type": "number",
+        "label": {
+          "ar": "حجم اسم المنتج (px)",
+          "en": "Product Title Font Size (px)"
+        },
+        "default": 16,
+        "min": 10,
+        "max": 40
+      },
+      "product_image_size": {
+        "type": "range",
+        "label": {
+          "ar": "حجم صورة المنتج (px)",
+          "en": "Product Image Size (px)"
+        },
+        "min": 40,
+        "max": 300,
+        "default": 120
+      },
+      "quantity_buttons_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون أزرار الكمية",
+          "en": "Quantity Controls Color"
+        },
+        "default": "#003033"
+      }
+    }
+  },
+  {
+    "label": {
+      "ar": "إعدادات المفضلة",
+      "en": "Wishlist Settings"
+    },
+    "settings": {
+      "wishlist_main_color": {
+        "type": "color",
+        "label": {
+          "ar": "اللون الرئيسي للمفضلة",
+          "en": "Wishlist Main Color"
+        },
+        "default": "#000"
+      },
+      "wishlist_add_button_bg": {
+        "type": "color",
+        "label": {
+          "ar": "لون زر الإضافة",
+          "en": "Add Button Background"
+        },
+        "default": "#003033"
+      },
+      "wishlist_add_button_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون نص زر الإضافة",
+          "en": "Add Button Text Color"
+        },
+        "default": "#ffffff"
+      },
+      "wishlist_image_size": {
+        "type": "range",
+        "label": {
+          "ar": "حجم صورة المنتج (px)",
+          "en": "Product Image Size (px)"
+        },
+        "min": 40,
+        "max": 300,
+        "default": 120
+      }
+    }
+  },
+  {
+    "label": {
+      "ar": "إعدادات القائمة الجانية",
+      "en": "Sidebar Settings"
+    },
+    "settings": {
+      "sidebar_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون النص",
+          "en": "Text Color"
+        },
+        "default": "#111111"
+      },
+      "sidebar_font_size": {
+        "type": "number",
+        "label": {
+          "ar": "حجم النص (px)",
+          "en": "Text Font Size (px)"
+        },
+        "default": 16,
+        "min": 10,
+        "max": 40
       }
     }
   }

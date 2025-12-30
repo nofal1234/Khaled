@@ -1,31 +1,72 @@
-{% set collection = data.collection  %}
-{% set uniqueId = collection._id %}
-<a href="/collection/{{ collection.slug }}" class="  h-full  bg-white rounded-lg border border-gray overflow-hidden  flex flex-col">
-    <div class="relative group overflow-hidden bg-bgItem flex items-center justify-center">
-        <div class="w-full flex items-center justify-center pt-[34px] md:pt-[56px] md:pb-[42px] pb-[26px] px-[47px] md:px-[57px]">
-            <img 
-                src="{{collection.image.fileUrl |  default('https://placehold.co/320x420/eeeeee/666?text=No+Image')}}"
-                class="object-contain md:h-[226px] h-[141px] group-hover:scale-105 transition-all duration-300"
-                alt="{{ collection.title }}"
-            />
+{% set collection = collection or data.collection %}
+{% set collection_uid = collection._id or collection.slug %}
+{% set mobile_title_size = (title_size * 0.9) | round(1, 'floor') %}
+
+<a style="background-color: {{ data.bg_container }}; border-radius: {{  '18' if card_border_radius else '0' }}px;"
+    href="/collection/{{ collection.slug }}"
+    class="h-full bg-white rounded-lg border border-gray overflow-hidden flex flex-col ">
+    <div class="relative group overflow-hidden flex items-center justify-center" style="background-color: {{ bg_image }}; 
+    border-top-left-radius: {{ card_border_radius }}px; 
+    border-top-right-radius: {{  '18px' if card_border_radius else '0' }}px;
+    ">
+        <div class="w-full flex items-center justify-center" style="
+                padding-top: {{ (image_size * 0.2)|round(0, 'floor') }}px;
+                padding-bottom: {{ (image_size * 0.1)|round(0, 'floor') }}px;
+                padding-left: {{ (image_size * 0.2)|round(0, 'floor') }}px;
+                padding-right: {{ (image_size * 0.2)|round(0, 'floor') }}px;
+            ">
+            <img src="{{ collection.image.fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}"
+                class="object-contain"
+                style="height: {{ image_size }}px; border-radius: {{ '50%' if is_image_radius else '0' }};"
+                alt="{{ collection.title }}" />
         </div>
-        <div class="absolute top-3 left-3 bg-white flex items-center text-black px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10">
-            <i class="ph-fill ph-star text-xs md:text-lg" style="color: #EBB11F;"></i>
-           <span class="md:text-lg text-xs font-semibold leading-[100%]">
-               5.0
+        <div class="absolute top-3 left-3 flex items-center px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10"
+            style="background-color: {{ rating_bg_color }}; color: {{ rating_color }};">
+            <i class="ph-fill ph-star text-xs md:text-lg" style="color: {{ rating_color }};"></i>
+            {# Generate a random rating between 4.1 and 5.0, rounded to 1 decimal place #}
+            {% set random_rating = (4 + (range(1, 10) | random) / 10.0) | float %}
+            <span class="md:text-lg text-xs font-semibold leading-[100%]" style="color: {{ rating_color }};">
+                {{ random_rating | round(1) }}
             </span>
         </div>
     </div>
 
     <div class="flex-1 p-4 flex flex-col items-center gap-4">
-      <div class=" flex-1 w-full flex flex-col gap-2.5 items-center ">
-        <p class=" md:text-2xl text-sm font-medium w-full text-center  leading-[150%] truncate">{{collection.title}}</p>
-        {% if collection.description %}
-        <p class="  md:text-sm text-xs font-medium w-full  text-center leading-[150%]  truncate line-clamp-2">{{collection.description}}</p>
-        {% endif %}
-      </div>
-      <button
-        onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/collection/{{ collection.slug }}';"
-        class=" bg-mainColor flex items-start justify-center py-[8.62px] md:py-2.5  text-white rounded-lg md:rounded-[10px] w-full">تصفح الان</button>
+        <div class="flex-1 w-full flex flex-col gap-2.5 items-center">
+            <p class="w-full text-center leading-[150%] truncate collection-title" style="
+                color: {{ title_color }};
+                font-weight: {{ 'bold' if button_text_type == 'bold' else 'normal' }};
+            ">
+
+                {{ collection.title }}
+            </p>
+            {% if collection.description %}
+            <p class="w-full text-center leading-[150%] truncate line-clamp-2 collection-description"
+                style="color: {{ description_color }};"">{{ collection.description }}</p>
+            {% endif %}
+        </div>
+        <button
+            onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/collection/{{ collection.slug }}';"
+            class="flex items-start justify-center w-full collection-button"
+            style="background-color: {{ button_bg_color }}; color: {{ button_text_color }}; font-weight: {{ 'bold' if button_text_type == 'bold' else 'normal' }}; border-radius: {{  '18px' if card_border_radius else '0' }}px; padding: {{ button_padding_y }}px 0;">
+            {{button_text}}
+        </button>
     </div>
 </a>
+
+<style>
+      .collection-title {
+        font-size: {{ title_size * 0.7 }}px;
+      }
+      .collection-description {
+        font-size: {{ description_size * 0.7 }}px;
+      }
+      @media (min-width: 720px) {
+        .collection-title {
+          font-size: {{ title_size }}px;
+        }
+        .collection-description {
+          font-size: {{ description_size }}px;
+        }
+      }
+</style>

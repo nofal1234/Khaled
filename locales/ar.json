@@ -217,6 +217,13 @@
   "no_similar_products": "لا توجد عناصر مشابهة",
   "wishlist_close":"إغلاق القائمة",
    "emptycart":" العربة فارغة !",
-   "emptyproduct":" العربة منتجات !",
-   "empty":"لا توجد عناصر حالياً"
+   "emptyproduct":" ل توجد منتجات !",
+   "empty":"لا توجد عناصر حالياً",
+  "processing": "جاري المعالجة...",
+  "updating_price": "جاري تحديث السعر...",
+  "adding_to_cart": "جاري الإضافة...",
+  "show_less": "عرض أقل",
+  "show_more": "عرض المزيد",
+  "shopping_cart":"عربة التسوق",
+  "choose_language": "اختر اللغة"
 }

@@ -1,5 +1,7 @@
 <!-- Navigation Drawer (from Right) -->
 {% set headerMenu = data.menu or [] %}
+{% set sidebar_text_color = settings.sidebar_text_color | default('#111111') %}
+{% set sidebar_font_size = settings.sidebar_font_size | default(16) %}
 <div x-data="xDataSidebar({ menu: {{ headerMenu | dump }} })" x-cloak x-show="modal.open && modal.type === 'sidebar'"
   class="fixed inset-0 z-50">
   <!-- Overlay -->
@@ -34,9 +36,7 @@
         </svg>
       </button>
     </div>
-    <div class="p-4 text-mainColor border-t h-20">
-      {% ui "lang-form.njk",class="text-mainColor"%}
-    </div>
+
     <!-- Menu Content -->
     <div class="flex-grow p-4 overflow-y-auto">
       <!-- Menu Items -->
@@ -45,8 +45,8 @@
         {% for item in headerMenu %}
         <a href="{{ item.url | default('#') }}" @click="toggleModal('sidebar', false)"
           class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-          <span class="text-gray-800"
-            style="font-family: Tajawal; font-weight: 400; font-size: 14px; line-height: 150%; letter-spacing: 0%; text-align: right;">{{
+          <span
+            style="font-family: Tajawal; font-weight: 400; font-size: {{ sidebar_font_size }}px; line-height: 150%; letter-spacing: 0%; text-align: right; color: {{ sidebar_text_color }};">{{
             item.title | default('بدون عنوان') }}</span>
         </a>
         {% endfor %}
@@ -56,8 +56,36 @@
       </nav>
     </div>
 
+
     <!-- Footer (Language Selector) -->
   
+    {% set currentLang = localization.language or 'en' %}
 
+    <div class="border-t border-gray-100 p-4 bg-white">
+      <div class="flex items-center justify-center">
+        <span class="text-gray-500 text-sm mr-2 font-medium">{{ t("choose_language") }}</span>
+        {% form 'lang' %}
+        <div class="flex items-center gap-2">
+          {% for lang in localization.availableLanguages %}
+            <button 
+              type="submit" 
+              name="lang" 
+              value="{{ lang }}"
+              class="px-3 py-1 rounded-full text-sm font-semibold focus:outline-none transition-all
+                {% if lang == currentLang %}
+                  bg-[#EF9B13] text-white shadow 
+                {% else %}
+                  bg-gray-100 text-gray-700 hover:bg-[#EF9B13] hover:text-white
+                {% endif %}
+              "
+              style="font-family: Tajawal;"
+            >
+              {{ t(lang) }}
+            </button>
+          {% endfor %}
+        </div>
+        {% endform %}
+      </div>
+    </div>
   </div>
 </div>

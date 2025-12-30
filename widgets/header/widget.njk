@@ -30,7 +30,7 @@
   :style="{ backgroundColor: scrolled ? '{{ bg_color_scrolled }}' : (isMain ? '{{ bg_color_fixed }}' : '{{ bg_in_page }}'), color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
   style="transition-property: background-color, top, box-shadow; ">
   <div class=" w-full flex flex-col transition-all duration-300 ease-in-out">
-    <div class="container flex md:gap-[122px] max-h-[87px] items-center justify-between py-1">
+    <div class="container flex gap-6 lg:gap-[122px] max-h-[87px] items-center justify-between py-1">
       {# py-[8.5px] #}
       <a href="{{globals.app.url}}" class="transition-all duration-300 ease-in-out">
         {% if widget.data.logo and widget.data.logo.fileUrl %}
@@ -73,10 +73,10 @@
             {{ "<i class='ph text-[22px] md:text-[28px] ph-user' ></i>" | customer_login_link }}
           </button>
           {% endif %}
-          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none md:hidden" aria-label="حسابي">
+          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none" aria-label="حسابي">
             <i 
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
-            class="ph text-[22px] text-black ph-list"></i>
+            class="ph text-[22px] md:text-[28px] text-black ph-list"></i>
           </button>
         </div>
       </div>
@@ -110,6 +110,7 @@
 
   </div>
 </div>
+
 {%ui "sidebar.njk" ,menu=header_menu ,search_placeholder=search_placeholder %}
 
 <script>

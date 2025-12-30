@@ -1,8 +1,22 @@
 <!-- Reviews Section -->
-<section class="py-6 bg-white">
-  <div class="px-2.5 md:px-6 mx-2.5 md:mx-20 py-6 bg-white rounded-2xl">
-    <h1 class="text-2xl md:text-3xl font-bold text-black mb-6">
-      {{ t('reviews_and_ratings') }}
+{% set title = widget.data.title%}
+{% set title_color = widget.data.title_color %}
+{% set title_font_size = widget.data.title_font_size %}
+{% set rating_color = widget.data.rating_color %}
+{% set rating_font_size = widget.data.rating_font_size %}
+{% set total_reviews_color = widget.data.total_reviews_color %}
+{% set total_reviews_font_size = widget.data.total_reviews_font_size %}
+{% set customer_name_color = widget.data.customer_name_color %}
+{% set customer_name_font_size = widget.data.customer_name_font_size %}
+{% set review_text_color = widget.data.review_text_color %}
+{% set review_text_font_size = widget.data.review_text_font_size %}
+{% set review_image_size = widget.data.review_image_size %}
+{% set stars_color = widget.data.stars_color %}
+
+<section class="py-6">
+  <div class="container py-6">
+    <h1 class="font-bold mb-6 review-title" style=" color: {{ title_color }};">
+      {{ t(title) }}
     </h1>
     <div class="flex flex-col lg:flex-row md:gap-[126px] gap-4 items-start">
       <!-- Left Side - Rating Summary -->
@@ -10,59 +24,81 @@
         <div class="flex flex-col w-full md:flex-row md:gap-8 gap-4 items-center">
           <div class="max-md:text-center flex flex-col gap-2">
             <div class="flex items-center justify-center gap-2">
-              <p class="text-textDescription self-end text-[18.29px] md:text-[32px]">5/</p>
-              <h2 class="text-[98.29px] md:text-[172px] font-medium text-mainColor leading-[100%]">
-                {{ widget.data.rating | default(4.5) }}
+              <p class="text-textDescription self-end" style="font-size: {{ (rating_font_size * 0.2) | round(1, 'floor') + 10 }}px; color: {{ total_reviews_color }};">5/</p>
+              <h2 class="font-medium leading-[100%]" style="font-size: {{ rating_font_size }}px; color: {{ rating_color }};">
+                {{ context.product.averageRating }}
               </h2>
             </div>
-            <p class="text-textDescription text-xs md:text-lg">
-              ( {{ widget.data.totalReviews | default(30) }} {{t('new_review')}} )
+            <p class="text-textDescription" style="font-size: {{ total_reviews_font_size }}px; color: {{ total_reviews_color }};">
+              ( {{  context.product.reviewsCount }} {{t('new_review')}} )
             </p>
           </div>
           <div class=" w-full flex flex-col gap-5">
-            {% for item in widget.blocks%}
-            {% if item.blockKey=="starsRating" %}
+            {% for stars, count in context.product.ratings %}
             <div class="flex items-center gap-2">
-              <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+              
+              <span class="text-xs md:text-sm font-medium">
+                {{ stars }}
+              </span>
+          
+              <i class="ph-fill ph-star text-xs md:text-sm" style="color: {{ stars_color }};"></i>
+          
               <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                {% set percent = ((item.data.stars or item.settings.stars or 0) / 5 * 100) %}
-                <div class="h-full bg-yellow-500 rounded-full" style="width:{{ percent }}%"></div>
+                {% set percent = (count / 5 * 100) %}
+                <div
+                  class="h-full rounded-full"
+                  style="width: {{ percent }}%; background-color: {{ stars_color }};">
+                </div>
               </div>
+          
+              <span class="text-xs md:text-sm">
+                {{ count }}
+              </span>
+          
             </div>
-            {% endif %}
-            {% endfor %}
+          {% endfor %}
+          
           </div>
         </div>
       </div>
       <!-- Right Side - Reviews List -->
       <div class="w-full lg:w-1/2 border border-gray-200 px-8 py-4 md:px-8 md:py-[35.25px] rounded-xl flex flex-col gap-4">
-          {% for block in widget.blocks %}
-            {% if block.blockKey == "reviewItem" %}
-            <h2 class="text-base md:text-lg font-bold text-dark">
-                {{ t((block.data.name | default(block.settings.name)) | striptags) }}
+          {% for item in context.product.reviews %}
+            <h2 class="font-bold" style="color: {{ customer_name_color }}; font-size: {{ customer_name_font_size }}px;">
+                {{ item.customerName | striptags }}
               </h2>
               <div class="flex items-center gap-2">
-                {% set stars = block.data.stars | default(block.settings.stars) | default(5) %}
+                {% set stars = item.rating %}
                 {% for i in range(1, 6) %}
                   {% if i <= stars %}
-                    <i class="ph-fill ph-star text-yellow-500 text-xs md:text-sm"></i>
+                    <i class="ph-fill ph-star text-xs md:text-sm" style="color: {{ stars_color }};"></i>
                   {% else %}
-                    <i class="ph-fill ph-star text-yellow-300 text-xs md:text-sm"></i>
+                    <i class="ph-fill ph-star text-xs md:text-sm" style="color: {{ stars_color }}; opacity: 0.35;"></i>
                   {% endif %}
                 {% endfor %}
               </div>
             <!-- Review Images -->
             <div class="flex gap-1.5 overflow-x-auto">
-                  <img src="{{ block.data.image.fileUrl }}" class="w-[71.53px] h-[71.53px] md:w-[114px] md:h-[114px] rounded-lg object-cover border border-gray-200 flex-shrink-0" alt="review image">
+                  <img src="{{ item.avatar.fileUrl }}" class="rounded-lg object-cover border border-gray-200 flex-shrink-0"
+                       style="width: {{ review_image_size }}px; height: {{ review_image_size }}px;" alt="review image">
             </div>
 
-            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
-              {{ t((block.data.review | default(block.settings.review)) | striptags) }}
+            <p class="leading-relaxed" style="color: {{ review_text_color }}; font-size: {{ review_text_font_size }}px;">
+              {{ item.comment | striptags }}
             </p>
               
-            {% endif %}
           {% endfor %}
       </div>
     </div>
   </div>
 </section>
+{% style %}
+.review-title {
+  font-size: {{ title_font_size}}px;
+}
+@media (max-width: 640px) {
+  .review-title {
+    font-size: {{ (title_font_size * 0.7) | round(1, 'floor') }}px;
+  }
+}
+{% endstyle %}

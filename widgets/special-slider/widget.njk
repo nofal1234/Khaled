@@ -48,7 +48,7 @@
   {% endif %}
 </section>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initSpecialSwiper() {
     const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
     const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
     const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
@@ -62,55 +62,77 @@
     const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
 
     var swiperElem = document.getElementById('special-swiper-{{ widget.id }}');
-    if (swiperElem && window.Swiper) {
-      new window.Swiper(swiperElem, {
-        loop: true,
-        grabCursor: grabCursor,
-        speed: speed,
-        spaceBetween: spaceBetweenSM,
-        allowTouchMove: allowTouchMove,
-        autoplay: autoplay
-          ? {
-              delay: autoplayDelay,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-              reverseDirection: true
-            }
-          : false,
-        navigation: {
-          nextEl: '.swiper-button-next-special',
-          prevEl: '.swiper-button-prev-special'
-        },
-        breakpoints: {
-          250: {
-            centeredSlides: true,
-            slidesPerView: slidesPerViewSM,
-            spaceBetween: spaceBetweenSM
-          },
-          400: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewMD,
-            spaceBetween: spaceBetweenMD
-          },
-          768: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewMD,
-            spaceBetween: spaceBetweenMD
-          },
-          1000: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewLG > 3 ? 3 : slidesPerViewLG,
-            spaceBetween: spaceBetweenMD
-          },
-          1200: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewLG,
-            spaceBetween: spaceBetweenLG
-          }
-        }
-      });
+    if (!swiperElem || !window.Swiper) return;
+    if (swiperElem.swiper) {
+      swiperElem.swiper.destroy(true, true);
     }
-  });
+    new window.Swiper(swiperElem, {
+      loop: true,
+      grabCursor: grabCursor,
+      speed: speed,
+      spaceBetween: spaceBetweenSM,
+      allowTouchMove: allowTouchMove,
+      autoplay: autoplay
+        ? {
+            delay: autoplayDelay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            reverseDirection: true
+          }
+        : false,
+      navigation: {
+        nextEl: '.swiper-button-next-special',
+        prevEl: '.swiper-button-prev-special'
+      },
+      breakpoints: {
+        250: {
+          centeredSlides: true,
+          slidesPerView: slidesPerViewSM,
+          spaceBetween: spaceBetweenSM
+        },
+        400: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewMD,
+          spaceBetween: spaceBetweenMD
+        },
+        768: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewMD,
+          spaceBetween: spaceBetweenMD
+        },
+        1000: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG > 3 ? 3 : slidesPerViewLG,
+          spaceBetween: spaceBetweenMD
+        },
+        1200: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG,
+          spaceBetween: spaceBetweenLG
+        }
+      }
+    });
+  }
+
+  function mountSpecialSwiper(retries) {
+    if (window.Swiper) {
+      initSpecialSwiper();
+      return;
+    }
+    if (retries > 0) {
+      setTimeout(function () {
+        mountSpecialSwiper(retries - 1);
+      }, 150);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mountSpecialSwiper(8);
+    }, { once: true });
+  } else {
+    mountSpecialSwiper(8);
+  }
 </script>
 
 

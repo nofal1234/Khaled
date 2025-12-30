@@ -1,19 +1,28 @@
-<section class="py-6 bg-white container flex gap-6">
-    <div id="faq-app" class="flex flex-col flex-[0_0_57%] gap-4">
-        <h2 class="text-2xl md:text-3xl font-bold">{{ t('more_information') }}</h2>
+{% set title = widget.data.title or 'more_information' %}
+{% set title_color = widget.data.title_color %}
+{% set title_font_size = widget.data.title_font_size %}
+{% set question_color = widget.data.question_color %}
+{% set question_font_size = widget.data.question_font_size %}
+{% set answer_color = widget.data.answer_color %}
+{% set answer_font_size = widget.data.answer_font_size %}
+{% set show_related_products = widget.data.show_related_products is not defined or widget.data.show_related_products == true %}
+
+<section class="py-6  container flex flex-col md:flex-row gap-6">
+    <div id="faq-app" class="flex flex-col gap-4 {% if show_related_products %}md:w-[57%] w-full{% else %}w-full{% endif %}">
+        <h2 class="font-bold" style="font-size: {{ title_font_size }}px; color: {{ title_color }};">{{ t(title) }}</h2>
         <div class="flex flex-col gap-6">
             {% for block in widget.blocks %}
             <div class="border-b border-gray-200">
                 <button
                     class="faq-toggle w-full flex items-center justify-between py-4 text-right hover:bg-gray-50 transition-colors"
                     aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}">
-                    <h3 class="text-xl font-medium text-mainColor">{{ t((block.data.question |
+                    <h3 class="font-medium" style="font-size: {{ question_font_size }}px; color: {{ question_color }};">{{ t((block.data.question |
                         default(block.settings.question)) | striptags) }}</h3>
                     <span class="faq-sign text-2xl text-gray-500 mr-4">{% if loop.index == 1 %}−{% else %}+{% endif
                         %}</span>
                 </button>
                 <div class="faq-content pb-4 text-right {% if loop.index != 1 %}hidden{% endif %}">
-                    <p class="text-gray-700 leading-relaxed">
+                    <p class="leading-relaxed" style="color: {{ answer_color }}; font-size: {{ answer_font_size }}px;">
                         {{ t((block.data.answer | default(block.settings.answer)) | striptags) }}
                     </p>
                 </div>
@@ -21,28 +30,39 @@
             {% endfor %}
         </div>
     </div>
-    {% if widget.data.show_related_products is null or widget.data.show_related_products == true %}
-    <div class="flex flex-col gap-6 flex-[0_0_43%]">
+    {% if show_related_products %}
+    <div class="flex flex-col gap-6  {% if show_related_products %}md:max-w-[43%]{% endif %}">
         <h3 class="text-[32px] font-bold">{{t("products_you_may_like")}}</h3>
         {% if context.related_products and context.related_products|length > 0 %}
-        <div class="relative">
+        <div class="relative max-h-max">
             <div id="related-swiper-{{ widget.id }}" class="swiper">
                 <div class="swiper-wrapper">
                     {% for product in context.related_products %}
-                    <div class="swiper-slide">
-                        {% ui "product-card.njk", product=product %}
+                    <div class="swiper-slide ">
+                        {% ui "product-card.njk", product=product,
+                        card_title_color=widget.data.card_title_color,
+                        card_title_size=widget.data.card_title_size,
+                        card_description_color=widget.data.card_description_color,
+                        card_description_size=widget.data.card_description_size,
+                        price_before_color=widget.data.price_before_color,
+                        price_before_size=widget.data.price_before_size,
+                        price_color=widget.data.price_color,
+                        price_size=widget.data.price_size,
+                        discount_color=widget.data.discount_color,
+                        discount_size=widget.data.discount_size,
+                        buy_button_bg=widget.data.buy_button_bg  %}
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            <div class="flex items-center justify-between mt-2" dir="ltr">
-                <button class="swiper-button-prev-related-{{ widget.id }} text-mainColor flex items-center gap-1">
-                    <span class="text-lg">‹</span>
+            {# <div class="flex w-max  gap-[38px] items-center justify-between mt-2" dir="ltr">
+                <button class="swiper-button-prev-related-{{ widget.id }} w-5 text-mainColor flex items-center justify-center">
+                    <span class="text-xl">‹</span>
                 </button>
-                <button class="swiper-button-next-related-{{ widget.id }} text-mainColor flex items-center gap-1">
-                    <span class="text-lg">›</span>
+                <button class="swiper-button-next-related-{{ widget.id }} text-mainColor w-5 flex items-center justify-center">
+                    <span class="text-xl">›</span>
                 </button>
-            </div>
+            </div> #}
         </div>
         {% else %}
         <div class="text-gray-500 text-lg p-4 text-center">{{t("no_similar_products")}}</div>
@@ -72,24 +92,46 @@
             });
         });
     })();
-    document.addEventListener('DOMContentLoaded', function () {
+    function initRelatedSwiper() {
         var swiperEl = document.getElementById('related-swiper-{{ widget.id }}');
-        if (swiperEl && window.Swiper) {
-            new window.Swiper(swiperEl, {
-                slidesPerView: 1.1,
-                spaceBetween: 12,
-                navigation: {
-                    nextEl: '.swiper-button-next-related-{{ widget.id }}',
-                    prevEl: '.swiper-button-prev-related-{{ widget.id }}'
-                },
-                breakpoints: {
-                    640: {
-                        slidesPerView: 2,
-                        spaceBetween: 12
-                    }
-                }
-            });
+        if (!swiperEl || !window.Swiper) return;
+        if (swiperEl.swiper) {
+            swiperEl.swiper.destroy(true, true);
         }
-    });
+        new window.Swiper(swiperEl, {
+            slidesPerView: 1.1,
+            spaceBetween: 12,
+            navigation: {
+                nextEl: '.swiper-button-next-related-{{ widget.id }}',
+                prevEl: '.swiper-button-prev-related-{{ widget.id }}'
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 12
+                }
+            }
+        });
+    }
+
+    function mountRelatedSwiper(retries) {
+        if (window.Swiper) {
+            initRelatedSwiper();
+            return;
+        }
+        if (retries > 0) {
+            setTimeout(function () {
+                mountRelatedSwiper(retries - 1);
+            }, 150);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            mountRelatedSwiper(8);
+        }, { once: true });
+    } else {
+        mountRelatedSwiper(8);
+    }
 
 </script>

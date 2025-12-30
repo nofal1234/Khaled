@@ -1,5 +1,4 @@
 {% set product = data.product %}
-
 <a href="/product/{{ product.slug }}"
     class="product-card w-full h-full bg-white rounded-lg border border-gray overflow-hidden flex flex-col">
     <!-- Image Section with Swiper -->
@@ -38,27 +37,30 @@
             onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }">
             <i class="ph ph-heart md:text-xl text-[10px]"></i>
         </button>
+        {%log "procccdubct",product%}
+        {% if product.averageRating %}
         <div
-            class="absolute top-3 left-3 bg-white flex items-center text-black px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10">
+            class="absolute top-3 left-3 bg-white flex items-center text-black px-[6.85px] gap-1 md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10">
             <i class="ph-fill ph-star text-xs md:text-lg" style="color: #EBB11F;"></i>
             <span class="md:text-lg text-xs font-semibold leading-[100%]">
-                5.0
+                {{product.averageRating}}
             </span>
         </div>
+        {% endif %}
     </div>
 
     <!-- Content Section -->
     <div class="p-4 flex flex-col gap-[10px] flex-1">
         <h3 class="md:text-lg text-sm font-bold" style="
-                {% if card_title_color %}color: {{ card_title_color }};{% endif %}
-                {% if card_title_size %}font-size: {{ card_title_size }}px;{% endif %}
+                {% if data.card_title_color %}color: {{ data.card_title_color }};{% endif %}
+                {% if data.card_title_size %}font-size: {{ data.card_title_size }}px;{% endif %}
             ">
             {{ product.title }}
         </h3>
         {% if product.description %}
         <p class="font-semibold line-clamp-2" style="
-               {% if card_description_color %}color: {{ card_description_color }};{% endif %}
-               {% if card_description_size %}font-size: {{ card_description_size }}px;{% endif %}
+               {% if data.card_description_color %}color: {{ data.card_description_color }};{% endif %}
+               {% if data.card_description_size %}font-size: {{ data.card_description_size }}px;{% endif %}
            ">
             {{ product.description | striptags }}
         </p>
@@ -69,14 +71,14 @@
                 {% if product.pricing.compareAtPrice %}
                 <div class="flex items-center gap-2 flex-wrap">
                     <span class="line-through" style="
-                              {% if price_before_color %}color: {{ price_before_color }};{% endif %}
-                              {% if price_before_size %}font-size: {{ price_before_size }}px;{% endif %}
+                              {% if data.price_before_color %}color: {{ data.price_before_color }};{% endif %}
+                              {% if data.price_before_size %}font-size: {{ data.price_before_size }}px;{% endif %}
                           ">
                         {{ product.pricing.compareAtPrice | money }}
                     </span>
                     <span class="font-bold" style="
-                              {% if discount_color %}color: {{ discount_color }};{% endif %}
-                              {% if discount_size %}font-size: {{ discount_size }}px;{% endif %}
+                              {% if data.discount_color %}color: {{ data.discount_color }};{% endif %}
+                              {% if data.discount_size %}font-size: {{ data.discount_size }}px;{% endif %}
                           ">
                         -{{ ((1 - (product.pricing.price / product.pricing.compareAtPrice)) * 100) | round(0, 'floor')
                         }}%
@@ -84,8 +86,8 @@
                 </div>
                 {% endif %}
                 <span class="font-bold whitespace-nowrap" style="
-                          {% if price_color %}color: {{ price_color }};{% endif %}
-                          {% if price_size %}font-size: {{ price_size }}px;{% endif %}
+                          {% if data.data.price_color %}color: {{ data.data.price_color }};{% endif %}
+                          {% if data.data.price_size %}font-size: {{ data.data.price_size }}px;{% endif %}
                       ">
                     {{ product.pricing.price | money }}
                 </span>
@@ -94,7 +96,7 @@
                 onclick="if(typeof window.addProductToCart === 'function') { window.addProductToCart('{{ product._id }}', 1, []); event.stopPropagation(); event.preventDefault(); }"
                 class="w-[26px] h-[26px] md:w-12 md:h-12 rounded-full font-bold
                        hover:bg-gray-800 transition flex items-center justify-center flex-shrink-0" style="
-                    {% if buy_button_bg %}background: {{ buy_button_bg }};{% endif %}
+                    {% if data.buy_button_bg %}background: {{ data.buy_button_bg }};{% endif %}
                     color: #fff
                 " title="إضافة للسلة">
                 <i class="ph ph-shopping-cart text-lg md:text-xl"></i>

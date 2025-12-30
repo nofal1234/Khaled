@@ -7,54 +7,67 @@
       "label": "Section Title",
       "default": "reviews_and_ratings"
     },
-    "rating": {
-      "type": "number",
-      "label": "Average Rating",
-      "default": 4.5
+    "title_color": {
+      "type": "color",
+      "label": "Title Color",
+      "default": "#000000"
     },
-    "totalReviews": {
+    "title_font_size": {
       "type": "number",
-      "label": "Total Reviews",
-      "default": 30
-    }
-  },
-  "blocks": {
-    "reviewItem": {
-      "name": "Review Item",
-      "settings": {
-        "name": {
-          "type": "text",
-          "label": "Customer Name",
-          "default": "review_1_name"
-        },
-        "stars": {
-          "type": "number",
-          "label": "Stars",
-          "default": 5,
-          "min": 1,
-          "max": 5
-        },
-        "image":{
-          "type": "media",
-          "label": "صورة التقيم"
-        },
-        "review": {
-          "type": "textarea",
-          "label": "Review Text",
-          "default": "review_1_text"
-        }
-      }
+      "label": "Title Font Size (px)",
+      "default": 32
     },
-    "starsRating": {
-      "name": "Stars Rating",
-      "settings": {
-        "stars": {
-          "type": "number",
-          "label": "Stars",
-          "min": 1,
-          "max": 5
-        }
-      }
+    "rating_color": {
+      "type": "color",
+      "label": "Rating Number Color",
+      "default": "#f5c518"
+    },
+    "rating_font_size": {
+      "type": "number",
+      "label": "Rating Number Font Size (px)",
+      "default": 80
+    },
+    "total_reviews_color": {
+      "type": "color",
+      "label": "Total Reviews Color",
+      "default": "#5a5a5a"
+    },
+    "total_reviews_font_size": {
+      "type": "number",
+      "label": "Total Reviews Font Size (px)",
+      "default": 16
+    },
+    "customer_name_color": {
+      "type": "color",
+      "label": "Customer Name Color",
+      "default": "#222222"
+    },
+    "customer_name_font_size": {
+      "type": "number",
+      "label": "Customer Name Font Size (px)",
+      "default": 20
+    },
+    "review_text_color": {
+      "type": "color",
+      "label": "Review Description Color",
+      "default": "#23262F"
+    },
+    "review_text_font_size": {
+      "type": "number",
+      "label": "Review Text Font Size (px)",
+      "default": 16
+    },
+    "review_image_size": {
+      "type": "range",
+      "label": "Customer Review Image Height (px)",
+      "min": 0,
+      "max": 200,
+      "default": 114
+    },
+    "stars_color": {
+      "type": "color",
+      "label": "Stars Color",
+      "default": "#FFD700"
     }
   },
   "presets": [
@@ -62,61 +75,8 @@
       "category": "Home",
       "name": "Product Reviews",
       "settings": {
-        "title": "reviews_and_ratings",
-        "rating": 4.5,
-        "totalReviews": 30
-      },
-      "blocks": [
-        {
-          "block": "reviewItem",
-          "name": "First Review",
-          "settings": {
-            "name": "review_1_name",
-            "stars": 5,
-            "image":"qumra://card6.jpg",
-            "review": "review_1_text"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "First Review",
-          "settings": {
-            "name": "review_1_name",
-            "stars": 5,
-            "image":"qumra://card7.jpg",
-            "review": "review_1_text"
-          }
-        },
-        {
-          "block": "starsRating",
-          "name": "First Rating",
-          "settings": {
-            "stars": 5
-          }
-        },
-        {
-          "block": "starsRating",
-          "name": "First Rating",
-          "settings": {
-            "stars": 5
-          }
-        },
-        {
-          "block": "starsRating",
-          "name": "First Rating",
-          "settings": {
-            "stars": 4
-          }
-        },
-        {
-          "block": "starsRating",
-          "name": "First Rating",
-          "settings": {
-            "stars": 3
-          }
-        }
-        
-      ]
+        "title": "reviews_and_ratings"
+      }
     }
   ]
 }

@@ -7,10 +7,95 @@
       "label": "Section Title",
       "default": "more_information"
     },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#1a1a1a"
+    },
+    "title_font_size": {
+      "type": "number",
+      "label": "حجم العنوان (px)",
+      "default": 32
+    },
+    "question_color": {
+      "type": "color",
+      "label": "لون السؤال",
+      "default": "#222222"
+    },
+    "question_font_size": {
+      "type": "number",
+      "label": "حجم السؤال (px)",
+      "default": 20
+    },
+    "answer_color": {
+      "type": "color",
+      "label": "لون الإجابة",
+      "default": "#23262F"
+    },
+    "answer_font_size": {
+      "type": "number",
+      "label": "حجم الإجابة (px)",
+      "default": 16
+    },
     "show_related_products": {
       "type": "boolean",
       "label": "عرض منتجات مشابة",
       "default": true
+    },
+    "card_title_color": {
+      "type": "color",
+      "label": "لون عنوان الكارد",
+      "default": "#333333"
+    },
+    "card_title_size": {
+      "type": "number",
+      "label": "حجم عنوان الكارد (px)",
+      "default": 18
+    },
+    "card_description_color": {
+      "type": "color",
+      "label": "لون وصف الكارد",
+      "default": "#6b7280"
+    },
+    "card_description_size": {
+      "type": "number",
+      "label": "حجم وصف الكارد (px)",
+      "default": 14
+    },
+    "price_before_color": {
+      "type": "color",
+      "label": "لون السعر قبل الخصم",
+      "default": "#a8a8a8"
+    },
+    "price_before_size": {
+      "type": "number",
+      "label": "حجم السعر قبل الخصم (px)",
+      "default": 15
+    },
+    "price_color": {
+      "type": "color",
+      "label": "لون السعر الحالي",
+      "default": "#d97706"
+    },
+    "price_size": {
+      "type": "number",
+      "label": "حجم السعر الحالي (px)",
+      "default": 18
+    },
+    "discount_color": {
+      "type": "color",
+      "label": "لون الخصم",
+      "default": "#ef4444"
+    },
+    "discount_size": {
+      "type": "number",
+      "label": "حجم الخصم (px)",
+      "default": 13
+    },
+    "buy_button_bg": {
+      "type": "color",
+      "label": "لون خلفية زر الشراء",
+      "default": "#088e5c"
     }
   },
   "blocks": {

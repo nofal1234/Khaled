@@ -1,6 +1,188 @@
 {
   "title": "product details",
   "name": "product-details",
+  "settings": {
+    "title_font_size": {
+      "type": "number",
+      "label": "حجم عنوان البانر",
+      "default": 32,
+      "min": 12,
+      "max": 120
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون عنوان البانر",
+      "default": "#111111"
+    },
+    "desc_font_size": {
+      "type": "number",
+      "label": "حجم وصف البانر",
+      "default": 20,
+      "min": 10,
+      "max": 80
+    },
+    "desc_color": {
+      "type": "color",
+      "label": "لون وصف البانر",
+      "default": "#666666"
+    },
+    "price_font_size": {
+      "type": "number",
+      "label": "حجم السعر",
+      "default": 24,
+      "min": 10,
+      "max": 48
+    },
+    "price_color": {
+      "type": "color",
+      "label": "لون السعر",
+      "default": "#d0021b"
+    },
+    "old_price_color": {
+      "type": "color",
+      "label": "لون السعر قبل الخصم",
+      "default": "#999999"
+    },
+    "option_selected_bg": {
+      "type": "color",
+      "label": "لون خلفية الخيار المحدد",
+      "default": "#003033"
+    },
+    "option_unselected_bg": {
+      "type": "color",
+      "label": "لون خلفية الخيار غير المحدد",
+      "default": "#FFFFFF"
+    },
+    "option_selected_text": {
+      "type": "color",
+      "label": "لون نص الخيار المحدد",
+      "default": "#FFFFFF"
+    },
+    "option_unselected_text": {
+      "type": "color",
+      "label": "لون نص الخيار غير المحدد",
+      "default": "#003033"
+    },
+    "option_font_size": {
+      "type": "number",
+      "label": "حجم نص الخيار",
+      "default": 18,
+      "min": 10,
+      "max": 40
+    },
+    "option_border_color": {
+      "type": "color",
+      "label": "لون إطار الخيار",
+      "default": "#E5E7EB"
+    },
+    "option_border_show": {
+      "type": "checkbox",
+      "label": "إظهار إطار الخيار",
+      "default": true
+    },
+    "buy_button_text": {
+      "type": "string",
+      "label": "نص زر الشراء",
+      "default": "buy_now"
+    },
+    "buy_button_bg": {
+      "type": "color",
+      "label": "لون خلفية زر الشراء",
+      "default": "#003033"
+    },
+    "buy_button_text_color": {
+      "type": "color",
+      "label": "لون نص زر الشراء",
+      "default": "#FFFFFF"
+    },
+    "main_section_padding": {
+      "type": "range",
+      "label": "المسافة الرئيسية (Padding)",
+      "min": 0,
+      "max": 100,
+      "default": 24
+    },
+    "add_to_cart_bg": {
+      "type": "color",
+      "label": "لون خلفية زر الإضافة للسلة",
+      "default": "#38B2AC"
+    },
+    "add_to_cart_text_color": {
+      "type": "color",
+      "label": "لون نص زر الإضافة للسلة",
+      "default": "#FFFFFF"
+    },
+    "add_to_cart_margin_top": {
+      "type": "range",
+      "label": "المسافة العلوية لزر الإضافة للسلة",
+      "min": 0,
+      "max": 60,
+      "default": 16
+    },
+    "cart_font_size": {
+      "type": "number",
+      "label": "حجم خط زر إضافة للسلة",
+      "default": 18,
+      "min": 10,
+      "max": 40
+    },
+    "quantity_buttons_color": {
+      "type": "color",
+      "label": "لون أزرار التحكم في الكمية",
+      "default": "#003033"
+    },
+    "features_title_color": {
+      "type": "color",
+      "label": "لون نص مميزات المنتج",
+      "default": "#003033"
+    },
+    "features_title_font_size": {
+      "type": "number",
+      "label": "حجم نص مميزات المنتج",
+      "default": 10,
+      "min": 6,
+      "max": 36
+    },
+    "features_bg_color": {
+      "type": "color",
+      "label": "لون خلفية كرت ميزة المنتج",
+      "default": "#FFFFFF"
+    },
+    "features_icon_size": {
+      "type": "number",
+      "label": "حجم الايقونة لمميزات المنتج",
+      "default": 20,
+      "min": 8,
+      "max": 56
+    },
+    "image_aspect_ratio": {
+      "type": "range",
+      "label": "نسبة حجم الصورة (Aspect Ratio)",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "default": 50
+    },
+    "additional_title_color": {
+      "type": "color",
+      "label": "لون نص Additional Info",
+      "default": "#111111"
+    },
+    "additional_title_font_size": {
+      "type": "number",
+      "label": "حجم نص Additional Info",
+      "default": 14,
+      "min": 8,
+      "max": 36
+    },
+    "additional_icon_size": {
+      "type": "number",
+      "label": "حجم الايقونة لAdditional Info",
+      "default": 20,
+      "min": 8,
+      "max": 56
+    }
+  },
   "blocks": {
     "productDetails": {
       "name": "مميزات عامة",

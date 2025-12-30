@@ -34,6 +34,7 @@
       </div>
     </div>
     {% set selected_collections = widget.data.collections or [] %}
+    {% if selected_collections | length > 0 %}
     <div class="relative">
       <div id="category-swiper-{{ widget.id }}" class="swiper categorySwiper">
         <div class="swiper-wrapper">
@@ -55,7 +56,7 @@
             {% else %}
             {% for item in selected_collections %}
             <div class="swiper-slide">
-              <a href="collection/{{item.image.handle }}"
+              <a href="collection/{{item.handle }}"
                 class="flex flex-col md:gap-6 gap-2 items-center cursor-pointer no-underline">
                 <div
                   class="group w-24 h-24 md:w-[159px] md:h-[159px] rounded-full overflow-hidden {%if show_border %} border {%endif%}"
@@ -74,68 +75,95 @@
         </div>
       </div>
     </div>
+    {% else  %}
+{% ui "empty.njk" %}
+      
+    {% endif %}
+
   </div>
 
 
 </section>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initCategorySwiper() {
     var swiperElem = document.getElementById('category-swiper-{{ widget.id }}');
-    if (swiperElem && window.Swiper) {
-
-      const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
-      const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
-      const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
-      const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
-      const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
-      const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
-      const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
-      const speed = Number('{{ widget.data.speed }}');
-      const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
-      const autoplay = '{{ widget.data.autoplay }}' == 'true';
-      const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
-
-      new window.Swiper('#category-swiper-{{ widget.id }}', {
-        loop: true,
-        grabCursor: grabCursor,
-        speed: speed,
-        spaceBetween: spaceBetweenSM,
-        allowTouchMove: allowTouchMove,
-        autoplay: autoplay ? {
-          delay: autoplayDelay,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-          reverseDirection: true
-        } : false,
-        navigation: {
-          nextEl: '.swiper-button-next-category',
-          prevEl: '.swiper-button-prev-category'
-        },
-        breakpoints: {
-          250: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewSM,
-            spaceBetween: spaceBetweenSM
-          },
-          768: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewSM ,
-            spaceBetween: spaceBetweenMD
-          },
-          1000: {
-            slidesPerView: slidesPerViewMD,
-            centeredSlides: false,
-            spaceBetween: spaceBetweenMD
-          },
-          1200: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewLG,
-            spaceBetween: spaceBetweenLG
-          }
-        }
-      });
+    if (!swiperElem || !window.Swiper) return;
+    if (swiperElem.swiper) {
+      swiperElem.swiper.destroy(true, true);
     }
-  });
+
+    const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+    const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+    const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+    const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+    const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+    const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+    const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+    const speed = Number('{{ widget.data.speed }}');
+    const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+    const autoplay = '{{ widget.data.autoplay }}' == 'true';
+    const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+
+    new window.Swiper('#category-swiper-{{ widget.id }}', {
+      loop: true,
+      grabCursor: grabCursor,
+      speed: speed,
+      spaceBetween: spaceBetweenSM,
+      allowTouchMove: allowTouchMove,
+      autoplay: autoplay ? {
+        delay: autoplayDelay,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+        reverseDirection: true
+      } : false,
+      navigation: {
+        nextEl: '.swiper-button-next-category',
+        prevEl: '.swiper-button-prev-category'
+      },
+      breakpoints: {
+        250: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewSM,
+          spaceBetween: spaceBetweenSM
+        },
+        768: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewSM ,
+          spaceBetween: spaceBetweenMD
+        },
+        1000: {
+          slidesPerView: slidesPerViewMD,
+          centeredSlides: false,
+          spaceBetween: spaceBetweenMD
+        },
+        1200: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG,
+          spaceBetween: spaceBetweenLG
+        }
+      }
+    });
+  }
+
+  function mountCategorySwiper(retries) {
+    if (window.Swiper) {
+      initCategorySwiper();
+      return;
+    }
+    if (retries > 0) {
+      setTimeout(function () {
+        mountCategorySwiper(retries - 1);
+      }, 150);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mountCategorySwiper(8);
+    }, { once: true });
+  } else {
+    mountCategorySwiper(8);
+  }
 </script>
 
 {% style %}

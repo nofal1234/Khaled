@@ -82,69 +82,91 @@
 {% ui "empty.njk" %}
 {% endif %}
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initOfferSwiper() {
     var swiperElem = document.getElementById('offer-swiper-{{ widget.id }}');
-    if (swiperElem && window.Swiper) {
-
-      // استعمل المتغيرات دي
-      const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
-      const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
-      const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
-      const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
-      const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
-      const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
-      const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
-      const speed = Number('{{ widget.data.speed }}');
-      const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
-      const autoplay = '{{ widget.data.autoplay }}' == 'true';
-      const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
-
-      new window.Swiper('#offer-swiper-{{ widget.id }}', {
-        loop: true,
-        grabCursor: grabCursor,
-        speed: speed,
-        spaceBetween: spaceBetweenSM,
-        allowTouchMove: allowTouchMove,
-        autoplay: autoplay ? {
-          delay: autoplayDelay,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-          reverseDirection: true
-        } : false,
-        navigation: {
-          nextEl: '.swiper-button-next-offer',
-          prevEl: '.swiper-button-prev-offer'
-        },
-        breakpoints: {
-          250: {
-            centeredSlides: true,
-            slidesPerView: 1.5,
-            spaceBetween: 8
-          },
-          400: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewSM,
-            spaceBetween: spaceBetweenSM
-          },
-          768: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewMD,
-            spaceBetween: spaceBetweenMD
-          },
-          1000: {
-            slidesPerView: slidesPerViewMD,
-            centeredSlides: false,
-            spaceBetween: spaceBetweenMD
-          },
-          1200: {
-            centeredSlides: false,
-            slidesPerView: slidesPerViewLG,
-            spaceBetween: spaceBetweenLG
-          }
-        }
-      });
+    if (!swiperElem || !window.Swiper) return;
+    if (swiperElem.swiper) {
+      swiperElem.swiper.destroy(true, true);
     }
-  });
+
+    // استعمل المتغيرات دي
+    const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
+    const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+    const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
+    const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
+    const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+    const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
+    const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+    const speed = Number('{{ widget.data.speed }}');
+    const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+    const autoplay = '{{ widget.data.autoplay }}' == 'true';
+    const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+
+    new window.Swiper('#offer-swiper-{{ widget.id }}', {
+      loop: true,
+      grabCursor: grabCursor,
+      speed: speed,
+      spaceBetween: spaceBetweenSM,
+      allowTouchMove: allowTouchMove,
+      autoplay: autoplay ? {
+        delay: autoplayDelay,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+        reverseDirection: true
+      } : false,
+      navigation: {
+        nextEl: '.swiper-button-next-offer',
+        prevEl: '.swiper-button-prev-offer'
+      },
+      breakpoints: {
+        250: {
+          centeredSlides: true,
+          slidesPerView: 1.5,
+          spaceBetween: 8
+        },
+        400: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewSM,
+          spaceBetween: spaceBetweenSM
+        },
+        768: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewMD,
+          spaceBetween: spaceBetweenMD
+        },
+        1000: {
+          slidesPerView: slidesPerViewMD,
+          centeredSlides: false,
+          spaceBetween: spaceBetweenMD
+        },
+        1200: {
+          centeredSlides: false,
+          slidesPerView: slidesPerViewLG,
+          spaceBetween: spaceBetweenLG
+        }
+      }
+    });
+  }
+
+  function mountOfferSwiper(retries) {
+    if (window.Swiper) {
+      initOfferSwiper();
+      return;
+    }
+    if (retries > 0) {
+      setTimeout(function () {
+        mountOfferSwiper(retries - 1);
+      }, 150);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mountOfferSwiper(8);
+    }, { once: true });
+  } else {
+    mountOfferSwiper(8);
+  }
 </script>
 
 {% style %}

@@ -11,10 +11,110 @@
       "label": "Section Title",
       "default": "view_sections"
     },
-    "view_all_link": {
+    "bg_image": {
+      "type": "color",
+      "label": "لون خلفية الصورة",
+      "default": "#f4f4f4"
+    },
+    "bg_container": {
+      "type": "color",
+      "label": "لون خلفية الحاوية",
+      "default": "#f4f4f4"
+    },
+    "card_border_radius": {
+      "type": "boolean",
+      "label": "حواف الكارد",
+      "default": 16,
+      "min": 0,
+      "max": 40
+    },
+    "description_color": {
+      "type": "color",
+      "label": "لون وصف الكارد",
+      "default": "#6b7280"
+    },
+    "description_size": {
+      "type": "number",
+      "label": "حجم وصف الكارد (px)",
+      "default": 14
+    },
+    "button_bg_color": {
+      "type": "color",
+      "label": "لون خلفية الزر",
+      "default": "#088e5c"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": "لون نص الزر",
+      "default": "#ffffff"
+    },
+    "button_text_type": {
+      "type": "boolean",
+      "label": "نوع نص الزر",
+      "default": true
+    },
+    "button_text": {
       "type": "string",
-      "label": "View All Link",
-      "default": "#"
+      "label": "نص الزر",
+      "default": "browse_now"
+    },
+    "button_padding_y": {
+      "type": "number",
+      "label": "Padding Y للزر",
+      "default": 10,
+      "min": 0,
+      "max": 32
+    },
+    "image_size": {
+      "type": "number",
+      "label": "حجم الصورة (px)",
+      "default": 128
+    },
+    "is_image_radius": {
+      "type": "boolean",
+      "label": "صورة دائرية",
+      "default": true
+    },
+    "title_color": {
+      "type": "color",
+      "label": "لون العنوان",
+      "default": "#333333"
+    },
+    "title_size": {
+      "type": "number",
+      "label": "حجم العنوان (px)",
+      "default": 22
+    },
+    "rating_bg_color": {
+      "type": "color",
+      "label": "لون خلفية التقييم",
+      "default": "#f4f4f4"
+    },
+    "rating_color": {
+      "type": "color",
+      "label": "لون التقييم",
+      "default": "#ffbb00"
+    },
+    "cards_per_row_mobile": {
+      "type": "number",
+      "label": "عدد الكروت في الصف (شاشة صغيرة)",
+      "default": 2,
+      "min": 1,
+      "max": 2
+    },
+    "cards_per_row_tablet": {
+      "type": "number",
+      "label": "عدد الكروت في الصف (شاشة متوسطة)",
+      "default": 3,
+      "min": 1,
+      "max": 6
+    },
+    "cards_per_row_desktop": {
+      "type": "number",
+      "label": "عدد الكروت في الصف (شاشة كبيرة)",
+      "default": 4,
+      "min": 1,
+      "max": 8
     }
   },
   "blocks": {

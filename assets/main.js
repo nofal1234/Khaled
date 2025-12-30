@@ -122,20 +122,41 @@ function GlobalState() {
 				cart.totalQuantity = totalQuantity;
 			} catch (_) {}
 	   },
-	   showToast(message, type = "success") {
-		Toastify({
-			text: message,
-			duration: 3000,
-			close: true,
-			gravity: "top", 
-			position: "right", 
-			stopOnFocus: true,
-			style: {
-				background: type === "success" ? "linear-gradient(to right, #00b09b, #96c93d)"
-					: "linear-gradient(to right, #ff5f6d, #ffc371)",
-			},
-		}).showToast();
-	},
+   showToast(message, type = "success") {
+    const isSuccess = type === "success";
+    const palette = isSuccess
+      ? { bg: "linear-gradient(135deg, #ecfdf3, #d1fae5)", fg: "#065f46", border: "#a7f3d0" }
+      : { bg: "linear-gradient(135deg, #fef3f2, #fee2e2)", fg: "#b42318", border: "#fecdd3" };
+
+    Toastify({
+      text: `<div style="display:inline-flex;align-items:center;gap:10px;">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:${palette.fg}10;color:${palette.fg};font-size:13px;">
+          ${isSuccess ? "✓" : "!"}
+        </span>
+        <span style="font-weight:600; line-height:1.3;">${message}</span>
+      </div>`,
+      duration: 3400,
+      close: true,
+      gravity: "top",
+      position: "right",
+      stopOnFocus: true,
+      escapeMarkup: false,
+      offset: { x: 14, y: 16 },
+      style: {
+        background: palette.bg,
+        color: palette.fg,
+        boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+        borderRadius: "8px",
+        border: `1px solid ${palette.border}`,
+        backdropFilter: "blur(10px)",
+        padding: "8px 12px",
+        minWidth: "0",
+        width: "fit-content",
+        maxWidth: "360px",
+        lineHeight: "1.3",
+      },
+    }).showToast();
+  },
 		modal: {
 			open: false,
 			type: "",
