@@ -2,9 +2,8 @@
 <section id="{{widget.id}}" class="my-12 flex flex-col gap-4 md:my-16 px-2 mx-2.5 md:mx-20 service-features-section">
     <div>
         <h1 
-            class="service-title font-bold text-center"
+            class="md:text-[40px] text-lg md:leading-[120%] leading-[150%] font-bold text-center"
             style="
-                --service-title-size: {{ widget.data.title_size }}px;
                 color: {{ widget.data.title_color }};
             "
         >
@@ -22,8 +21,8 @@
                 <h3
                     class="service-feature__title font-medium text-dark text-center"
                     style="
-                        --feature-item-title-size: {{ block.data.title_size | default(18) }}px;
-                        {% if block.data.title_color %}color: {{ block.data.title_color }};{% endif %}
+                        --feature-item-title-size: {{ widget.data.title_size | default(18) }}px;
+                        {% if  widget.data.title_color %}color: {{  widget.data.title_color }};{% endif %}
                     "
                 >
                     {{ t(block.data.title) }}
@@ -31,8 +30,8 @@
                 <p
                     class="service-feature__desc md:leading-[150%] leading-[100%] text-center max-w-xs mx-auto"
                     style="
-                        --feature-item-desc-size: {{ block.data.description_size | default(14) }}px;
-                        {% if block.data.description_color %}color: {{ block.data.description_color }};{% endif %}
+                        --feature-item-desc-size: {{ widget.data.description_size | default(14) }}px;
+                        {% if widget.data.description_color %}color: {{ widget.data.description_color }};{% endif %}
                     "
                 >
                     {{ t(block.data.description) }}
@@ -54,8 +53,8 @@
                             <h3 
                                 class="service-feature__title font-medium text-dark text-center"
                                 style="
-                                    --feature-item-title-size: {{ block.data.title_size | default(18) }}px;
-                                    {% if block.data.title_color %}color: {{ block.data.title_color }};{% endif %}
+                                    --feature-item-title-size: {{  widget.data.title_size }}px;
+                                    {% if  widget.data.title_color %}color: {{  widget.data.title_color }};{% endif %}
                                 "
                             >
                                 {{ t(block.data.title) }}
@@ -63,8 +62,8 @@
                             <p
                                 class="service-feature__desc md:leading-[150%] leading-[100%] text-center max-w-xs mx-auto"
                                 style="
-                                    --feature-item-desc-size: {{ block.data.description_size | default(14) }}px;
-                                    {% if block.data.description_color %}color: {{ block.data.description_color }};{% endif %}
+                                    --feature-item-desc-size: {{ widget.data.description_size | default(14) }}px;
+                                    {% if widget.data.description_color %}color: {{ widget.data.description_color }};{% endif %}
                                 "
                             >
                                 {{ t(block.data.description) }}

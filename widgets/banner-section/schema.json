@@ -15,12 +15,12 @@
     "banner_higth_lg": {
       "type": "number",
       "label": "ارتفاع البانر في الشاشات الكبيرة",
-      "default": 800
+      "default": 362
     },
     "banner_higth_sm": {
       "type": "number",
       "label": "ارتفاع البانر في الشاشات الصغيرة",
-      "default": 400
+      "default": 362
     },
     "title": {
       "type": "string",
@@ -32,11 +32,6 @@
       "label": "لون العنوان الرئيسي",
       "default": "#ffffff"
     },
-    "title_font_size": {
-      "type": "number",
-      "label": "حجم خط العنوان الرئيسي",
-      "default": 40
-    },
     "subtitle": {
       "type": "text",
       "label": "النص الفرعي",
@@ -46,11 +41,6 @@
       "type": "color",
       "label": "لون النص الفرعي",
       "default": "#ffffff"
-    },
-    "subtitle_font_size": {
-      "type": "number",
-      "label": "حجم خط النص الفرعي",
-      "default": 18
     },
     "button_text": {
       "type": "string",

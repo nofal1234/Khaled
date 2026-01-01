@@ -1,5 +1,4 @@
 <!-- Offers Section - Infinity Autoplay Swiper -->
-
 {% set related_products = context.related_products or [] %}
 {% set products_collection = widget.data.products_collection or [] %}
 {% set products = related_products  | concat(products_collection) %}
@@ -23,12 +22,11 @@
 
 {# ========== read slider settings from widget.data #}
 
-{% log "products",products %}
 {% if products | length > 0 %}
 <section class="mt-4 md:mt-8 mb-3 md:mb-5 container">
-  <div class="rounded-2xl py-4">
-    <div class="flex items-center justify-between mb-4 md:mb-6">
-      <h1 class="text-xl md:text-2xl font-bold" style="color: {{ title_color }}">
+  <div class="flex flex-col gap-4 md:gap-6 py-4">
+    <div class="flex items-center justify-between">
+      <h1 class="md:text-[40px] text-lg md:leading-[120%] leading-[150%] font-bold" style="color: {{ title_color }}">
         {{ t(section_title or 'offers') }}
       </h1>
       <div class="flex items-center gap-4">
@@ -54,6 +52,7 @@
       </div>
     </div>
     <div class="relative">
+    
       <div id="offer-swiper-{{ widget.id }}" class="swiper offerSwiper">
         <div class="swiper-wrapper">
           {% for product in products %}
@@ -83,91 +82,113 @@
 {% endif %}
 <script>
   function initOfferSwiper() {
-    var swiperElem = document.getElementById('offer-swiper-{{ widget.id }}');
+    const swiperElem = document.getElementById('offer-swiper-{{ widget.id }}');
     if (!swiperElem || !window.Swiper) return;
+
     if (swiperElem.swiper) {
       swiperElem.swiper.destroy(true, true);
     }
 
-    // استعمل المتغيرات دي
+    const slidesCount = swiperElem.querySelectorAll('.swiper-slide').length;
+    const autoplayEnabled = '{{ widget.data.autoplay }}' === 'true';
+
     const slidesPerViewSM = Number('{{ widget.data.slides_per_view_sm }}');
-    const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
     const slidesPerViewMD = Number('{{ widget.data.slides_per_view_md }}');
-    const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
     const slidesPerViewLG = Number('{{ widget.data.slides_per_view_lg }}');
+
+    const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
+    const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
     const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
-    const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+
+    const allowTouchMove = '{{ widget.data.allow_touch_move }}' === 'true';
+    const grabCursor = '{{ widget.data.grab_cursor }}' === 'true';
     const speed = Number('{{ widget.data.speed }}');
-    const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
-    const autoplay = '{{ widget.data.autoplay }}' == 'true';
     const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
 
-    new window.Swiper('#offer-swiper-{{ widget.id }}', {
-      loop: true,
-      grabCursor: grabCursor,
-      speed: speed,
-      spaceBetween: spaceBetweenSM,
-      allowTouchMove: allowTouchMove,
-      autoplay: autoplay ? {
-        delay: autoplayDelay,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-        reverseDirection: true
-      } : false,
+    const swiper = new Swiper('#offer-swiper-{{ widget.id }}', {
+      grabCursor,
+      speed,
+      allowTouchMove,
+
+      autoplay: false, // ❌ لا نحددها هنا
+      loop: false,
+
       navigation: {
         nextEl: '.swiper-button-next-offer',
         prevEl: '.swiper-button-prev-offer'
       },
+
       breakpoints: {
-        250: {
-          centeredSlides: true,
+        0: {
           slidesPerView: 1.5,
           spaceBetween: 8
         },
         400: {
-          centeredSlides: false,
           slidesPerView: slidesPerViewSM,
           spaceBetween: spaceBetweenSM
         },
         768: {
-          centeredSlides: false,
           slidesPerView: slidesPerViewMD,
-          spaceBetween: spaceBetweenMD
-        },
-        1000: {
-          slidesPerView: slidesPerViewMD,
-          centeredSlides: false,
           spaceBetween: spaceBetweenMD
         },
         1200: {
-          centeredSlides: false,
           slidesPerView: slidesPerViewLG,
           spaceBetween: spaceBetweenLG
         }
+      },
+
+      on: {
+        init() {
+          handleAutoplay(this);
+        },
+        breakpoint() {
+          handleAutoplay(this);
+        }
       }
     });
-  }
 
-  function mountOfferSwiper(retries) {
-    if (window.Swiper) {
-      initOfferSwiper();
-      return;
-    }
-    if (retries > 0) {
-      setTimeout(function () {
-        mountOfferSwiper(retries - 1);
-      }, 150);
+    function handleAutoplay(swiperInstance) {
+      if (!autoplayEnabled) {
+        swiperInstance.autoplay?.stop();
+        swiperInstance.loopDestroy?.();
+        return;
+      }
+
+      const currentSlidesPerView = Math.ceil(
+        swiperInstance.params.slidesPerView
+      );
+
+      const shouldAutoplay = slidesCount > currentSlidesPerView;
+
+      if (shouldAutoplay) {
+        if (!swiperInstance.params.loop) {
+          swiperInstance.params.loop = true;
+          swiperInstance.loopCreate();
+        }
+
+        swiperInstance.params.autoplay = {
+          delay: autoplayDelay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        };
+
+        swiperInstance.autoplay.start();
+      } else {
+        swiperInstance.autoplay.stop();
+        swiperInstance.loopDestroy();
+        swiperInstance.params.loop = false;
+      }
     }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      mountOfferSwiper(8);
-    }, { once: true });
+    document.addEventListener('DOMContentLoaded', initOfferSwiper, { once: true });
   } else {
-    mountOfferSwiper(8);
+    initOfferSwiper();
   }
 </script>
+
+
 
 {% style %}
 .swiper-button-next-offer, .swiper-button-prev-offer {

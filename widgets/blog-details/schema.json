@@ -1,0 +1,11 @@
+{
+  "name": "blog slider",
+  "description": "عرض منشورات المدونة مع صور وتأثيرات تفاعلية",
+  "settings": { },
+  "blocks": {
+ 
+  },
+  "presets": [
+  
+  ]
+}

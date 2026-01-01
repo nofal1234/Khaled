@@ -1,21 +1,16 @@
 <!-- Reviews Section -->
 {% set title = widget.data.title%}
 {% set title_color = widget.data.title_color %}
-{% set title_font_size = widget.data.title_font_size %}
 {% set rating_color = widget.data.rating_color %}
-{% set rating_font_size = widget.data.rating_font_size %}
 {% set total_reviews_color = widget.data.total_reviews_color %}
-{% set total_reviews_font_size = widget.data.total_reviews_font_size %}
 {% set customer_name_color = widget.data.customer_name_color %}
-{% set customer_name_font_size = widget.data.customer_name_font_size %}
 {% set review_text_color = widget.data.review_text_color %}
-{% set review_text_font_size = widget.data.review_text_font_size %}
 {% set review_image_size = widget.data.review_image_size %}
 {% set stars_color = widget.data.stars_color %}
 
 <section class="py-6">
-  <div class="container py-6">
-    <h1 class="font-bold mb-6 review-title" style=" color: {{ title_color }};">
+  <div class="container py-6 flex flex-col gap-4">
+    <h1 class="font-bold md:text-[32px] text-xl max-md:text-center" style=" color: {{ title_color }};">
       {{ t(title) }}
     </h1>
     <div class="flex flex-col lg:flex-row md:gap-[126px] gap-4 items-start">
@@ -23,13 +18,13 @@
       <div class="w-full lg:w-1/2">
         <div class="flex flex-col w-full md:flex-row md:gap-8 gap-4 items-center">
           <div class="max-md:text-center flex flex-col gap-2">
-            <div class="flex items-center justify-center gap-2">
-              <p class="text-textDescription self-end" style="font-size: {{ (rating_font_size * 0.2) | round(1, 'floor') + 10 }}px; color: {{ total_reviews_color }};">5/</p>
-              <h2 class="font-medium leading-[100%]" style="font-size: {{ rating_font_size }}px; color: {{ rating_color }};">
+            <div class="flex items-center justify-center gap-1 leading-[100%]">
+              <p class="text-textDescription text-lg font-medium md:text-[32px] leading-[100%]">5/</p>
+              <h2 class="font-medium md:text-[172px] text-[98.29px] leading-none" style="color: {{ rating_color }};">
                 {{ context.product.averageRating }}
               </h2>
             </div>
-            <p class="text-textDescription" style="font-size: {{ total_reviews_font_size }}px; color: {{ total_reviews_color }};">
+            <p class="text-textDescription md:text-xl text-nowrap text-base leading-[150%]">
               ( {{  context.product.reviewsCount }} {{t('new_review')}} )
             </p>
           </div>
@@ -63,8 +58,10 @@
       </div>
       <!-- Right Side - Reviews List -->
       <div class="w-full lg:w-1/2 border border-gray-200 px-8 py-4 md:px-8 md:py-[35.25px] rounded-xl flex flex-col gap-4">
-          {% for item in context.product.reviews %}
-            <h2 class="font-bold" style="color: {{ customer_name_color }}; font-size: {{ customer_name_font_size }}px;">
+          {% if context.product.review | length > 0 %}
+            
+        {% for item in context.product.reviews %}
+            <h2 class="font-medium md:text-xl text-sm" style="color: {{ customer_name_color }}">
                 {{ item.customerName | striptags }}
               </h2>
               <div class="flex items-center gap-2">
@@ -83,22 +80,24 @@
                        style="width: {{ review_image_size }}px; height: {{ review_image_size }}px;" alt="review image">
             </div>
 
-            <p class="leading-relaxed" style="color: {{ review_text_color }}; font-size: {{ review_text_font_size }}px;">
+            <p class="leading-[150%]  font-medium md:text-lg text-sm" style="color: {{ review_text_color }}; ">
               {{ item.comment | striptags }}
             </p>
               
           {% endfor %}
-      </div>
+          {% else  %}
+          <div class="flex flex-col items-center justify-center py-12 opacity-70">
+            <div class="flex gap-1 mb-3">
+              {% for i in range(1, 6) %}
+                <i class="ph ph-star text-3xl text-gray-300"></i>
+              {% endfor %}
+            </div>
+            <p class="text-gray-400 md:text-lg text-base text-center select-none">
+              {{t("no_reviews_yet")}}
+            </p>
+          </div>
+          {% endif %}
+        </div>
     </div>
   </div>
 </section>
-{% style %}
-.review-title {
-  font-size: {{ title_font_size}}px;
-}
-@media (max-width: 640px) {
-  .review-title {
-    font-size: {{ (title_font_size * 0.7) | round(1, 'floor') }}px;
-  }
-}
-{% endstyle %}

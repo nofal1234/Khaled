@@ -8,20 +8,15 @@
       "default": "features_section",
       "description": "العنوان الذي يظهر أعلى سكشن المميزات"
     },
-    "title_size": {
-      "type": "number",
-      "label": "حجم العنوان ",
-      "default":18
-    },
     "view_all_link": {
       "type": "string",
       "label": "رابط عرض الكل",
-      "default": "#"
+      "default": "#000"
     },  
       "title_color": {
         "type": "color",
         "label": "لون العنوان ",
-        "default": "#333333"
+        "default": "#000"
       },
       "special_name_color": {
         "type": "color",
@@ -51,7 +46,7 @@
     "link_color": {
       "type": "color",
       "label": "لون رابط عرض الكل",
-      "default": "#6b7280"
+      "default": "#000"
     },
     "show_navigation": {
       "type": "boolean",
@@ -67,6 +62,11 @@
     "autoplay": {
       "type": "boolean",
       "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "loop": {
+      "type": "boolean",
+      "label": "تكرار السلايدر تلقائيًا (loop)",
       "default": true
     },
     "grab_cursor": {
@@ -153,7 +153,7 @@
           "block": "offerItem",
           "name": "special 1",
           "settings": {
-            "image": "qumra://special.png",
+            "image": "qumra://special1.png",
             "link": "#",
             "title": "upper_clothing",
             "description": ""
@@ -163,7 +163,7 @@
           "block": "offerItem",
           "name": "special 1",
           "settings": {
-            "image": "qumra://two.png",
+            "image": "qumra://special2.png",
             "link": "#",
             "title": "lower_clothing",
             "description": ""
@@ -173,7 +173,7 @@
           "block": "offerItem",
           "name": "special 3",
           "settings": {
-            "image": "qumra://three.png",
+            "image": "qumra://special3.png",
             "link": "#",
             "title": "accessories",
             "description": ""

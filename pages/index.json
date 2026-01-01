@@ -6,9 +6,20 @@
       "name": "Hero Section",
       "widget": "hero-section",
       "settings": {
-        "title": "hero_title_default",
+        "banner_higth_lg": 600,
+        "banner_higth_sm": 350,
+        "image_lg": "qumra://Hero.png",
+        "image_sm": "qumra://Hero.png",
+        "title": "spring_has_arrived",
+        "title_color": "#ffffff",
+        "title_font_size": 40,
         "subtitle": "hero_subtitle_default",
-        "button_text": "hero_button_text_default",
+        "subtitle_color": "#ffffff",
+        "subtitle_font_size": 18,
+        "button_text": "order_now",
+        "button_bg_color": "transparent",
+        "button_text_color": "#ffffff",
+        "button_text_font_size": 18,
         "button_link": "/collections"
       }
     },
@@ -16,7 +27,7 @@
       "name": "Features Bar",
       "widget": "features-bar",
       "settings": {
-        "use_container": true,
+        "use_container": false,
         "bg_color": "#f3f4f6",
         "text_color": "#1f2937",
         "border_color": "#e5e7eb",
@@ -32,38 +43,10 @@
         "slider_space_between": 78
       },
       "blocks": [
-        {
-          "block": "featureItem",
-          "name": "feature 1",
-          "settings": {
-            "icon": "<i class='ph-light ph-package'></i>",
-            "title": "feature_bar_free_shipping"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 2",
-          "settings": {
-            "icon": "<i class='ph-light ph-thumbs-up'></i>",
-            "title": "feature_bar_eco_friendly"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 3",
-          "settings": {
-            "icon": "<i class='ph-light ph-star'></i>",
-            "title": "feature_bar_high_rating"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 4",
-          "settings": {
-            "icon": "<i class='ph-light ph-leaf'></i>",
-            "title": "feature_bar_high_quality"
-          }
-        }
+        { "block": "featureItem", "name": "feature 1", "settings": { "icon": "<i class='ph-light ph-package'></i>", "title": "feature_bar_free_shipping" } },
+        { "block": "featureItem", "name": "feature 2", "settings": { "icon": "<i class='ph-light ph-thumbs-up'></i>", "title": "feature_bar_eco_friendly" } },
+        { "block": "featureItem", "name": "feature 3", "settings": { "icon": "<i class='ph-light ph-star'></i>", "title": "feature_bar_high_rating" } },
+        { "block": "featureItem", "name": "feature 4", "settings": { "icon": "<i class='ph-light ph-leaf'></i>", "title": "feature_bar_high_quality" } }
       ]
     },
     {
@@ -87,28 +70,46 @@
         "speed": 900,
         "slides_per_view_sm": 3,
         "space_between_sm": 32,
-        "slides_per_view_md": 5,
+        "slides_per_view_md": 4,
         "space_between_md": 20,
         "slides_per_view_lg": 6,
         "space_between_lg": 65
       }
-    
     },
     {
-      "name": "Offers Section",
+      "name": "Offers Slider",
       "widget": "offers-slider",
       "settings": {
         "section_title": "offers",
-        "view_all_text": "view_all",
-        "view_all_link": "/collection/homepage",
+        "view_all_link": "/collections",
         "show_view_all": true,
         "title_color": "#333333",
         "link_color": "#6b7280",
         "card_border_color": "#e5e7eb",
         "show_navigation": true,
+        "products_collection": "",
+        "card_title_color": "#000000",
+        "card_title_size": 14,
+        "card_description_color": "#666666",
+        "card_description_size": 12,
+        "price_before_color": "#a8a8a8",
+        "price_before_size": 15,
+        "price_color": "#d97706",
+        "price_size": 18,
+        "discount_color": "#ef4444",
+        "discount_size": 13,
+        "buy_button_bg": "#000000",
+        "allow_touch_move": true,
         "autoplay": true,
-        "autoplay_delay": 4000,
-        "products_collection": "latest"
+        "grab_cursor": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "slides_per_view_sm": 2,
+        "space_between_sm": 8,
+        "slides_per_view_md": 3,
+        "space_between_md": 8,
+        "slides_per_view_lg": 4,
+        "space_between_lg": 16
       }
     },
     {
@@ -117,14 +118,12 @@
       "settings": {
         "image_lg": "qumra://banner.png",
         "image_sm": "qumra://banner.png",
-        "banner_higth_lg": 800,
-        "banner_higth_sm": 400,
+        "banner_higth_lg": 362,
+        "banner_higth_sm": 362,
         "title": "spring_has_arrived",
         "title_color": "#ffffff",
-        "title_font_size": 40,
         "subtitle": "change_your_look",
         "subtitle_color": "#ffffff",
-        "subtitle_font_size": 18,
         "button_text": "order_now",
         "button_text_color": "#ffffff",
         "button_text_font_size": 18,
@@ -136,29 +135,34 @@
       "widget": "special-slider",
       "settings": {
         "section_title": "features_section",
-        "view_all_link": "#",
+        "view_all_link": "#000",
         "show_view_all": true,
-        "title_color": "#333333",
-        "link_color": "#6b7280",
+        "title_color": "#000000",
+        "link_color": "#000000",
         "show_navigation": true,
         "allow_touch_move": true,
         "autoplay": true,
         "grab_cursor": true,
         "autoplay_delay": 3000,
+        "loop": true,
         "speed": 900,
         "slides_per_view_sm": 1.5,
         "space_between_sm": 8,
         "slides_per_view_md": 2,
         "space_between_md": 8,
         "slides_per_view_lg": 3,
-        "space_between_lg": 16
+        "space_between_lg": 24,
+        "special_name_color": "#1c1c1c",
+        "special_name_size": 18,
+        "special_description_color": "#6b7280",
+        "special_description_size": 14
       },
       "blocks": [
         {
           "block": "offerItem",
           "name": "special 1",
           "settings": {
-            "image": "qumra://two.png",
+            "image": "qumra://special1.png",
             "link": "#",
             "title": "upper_clothing",
             "description": ""
@@ -168,17 +172,7 @@
           "block": "offerItem",
           "name": "special 1",
           "settings": {
-            "image": "qumra://three.png",
-            "link": "#",
-            "title": "upper_clothing",
-            "description": ""
-          }
-        },
-        {
-          "block": "offerItem",
-          "name": "special 1",
-          "settings": {
-            "image": "qumra://two.png",
+            "image": "qumra://special2.png",
             "link": "#",
             "title": "lower_clothing",
             "description": ""
@@ -188,7 +182,7 @@
           "block": "offerItem",
           "name": "special 3",
           "settings": {
-            "image": "qumra://three.png",
+            "image": "qumra://blog1.png",
             "link": "#",
             "title": "accessories",
             "description": ""
@@ -200,158 +194,89 @@
       "name": "service slider",
       "widget": "service-slider",
       "settings": {
-        "section_title": "service_features"
+        "title": "service_features",
+        "title_size": 18,
+        "title_color": "#000000",
+        "description_size": 16,
+        "description_color": "#666666",
+        "autoplay": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "grab_cursor": true,
+        "allow_touch_move": true,
+        "disable_on_interaction": false,
+        "pause_on_mouse_enter": true,
+        "reverse_direction": true
       },
       "blocks": [
-        {
-          "block": "featureItem",
-          "name": "feature 1",
-          "settings": {
-            "icon": "qumra://service1.png",
-            "icon_class": "",
-            "title": "service_feature_1_title",
-            "description": "service_feature_1_desc"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 2",
-          "settings": {
-            "icon": "qumra://service2.png",
-            "icon_class": "",
-            "title": "service_feature_2_title",
-            "description": "service_feature_2_desc"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 3",
-          "settings": {
-            "icon": "qumra://service3.png",
-            "icon_class": "",
-            "title": "service_feature_3_title",
-            "description": "service_feature_3_desc"
-          }
-        },
-        {
-          "block": "featureItem",
-          "name": "feature 4",
-          "settings": {
-            "icon": "qumra://service4.png",
-            "icon_class": "",
-            "title": "service_feature_4_title",
-            "description": "service_feature_4_desc"
-          }
-        }
+        { "block": "featureItem", "name": "feature 1", "settings": { "icon": "qumra://service1.png", "title": "service_feature_1_title", "description": "service_feature_1_desc" } },
+        { "block": "featureItem", "name": "feature 2", "settings": { "icon": "qumra://service2.png", "title": "service_feature_2_title", "description": "service_feature_2_desc" } },
+        { "block": "featureItem", "name": "feature 3", "settings": { "icon": "qumra://service3.png", "title": "service_feature_3_title", "description": "service_feature_3_desc" } },
+        { "block": "featureItem", "name": "feature 4", "settings": { "icon": "qumra://service4.png", "title": "service_feature_4_title", "description": "service_feature_4_desc" } }
       ]
     },
     {
       "name": "reviews slider",
       "widget": "reviews-slider",
       "settings": {
-        "title": "customer_reviews"
+        "title": "customer_reviews",
+        "title_color": "#000000",
+        "title_size": 18,
+        "link_color": "#000000",
+        "user_name_color": "#000000",
+        "user_name_size": 16,
+        "user_description_color": "#000000",
+        "user_description_size": 14,
+        "review_text_color": "#ffffff",
+        "review_bg_color": "#ffffff",
+        "show_navigation": true,
+        "autoplay": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "grab_cursor": true,
+        "allow_touch_move": true,
+        "disable_on_interaction": false,
+        "pause_on_mouse_enter": true,
+        "reverse_direction": false
       },
       "blocks": [
-        {
-          "block": "reviewItem",
-          "name": "review 1",
-          "settings": {
-            "name": "review_1_name",
-            "days_work": "days_work",
-            "description": "review_1_text",
-            "image": "qumra://Review1.png",
-            "stars": 5.4,
-            "alt": "review_image_alt"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "review 2",
-          "settings": {
-            "name": "review_2_name",
-            "days_work": "days_work",
-            "description": "review_2_text",
-            "image": "qumra://Review1.png",
-            "stars": 4.4,
-            "alt": "review_image_alt"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "review 3",
-          "settings": {
-            "name": "review_3_name",
-            "description": "review_3_text",
-            "days_work": "days_work",
-            "image": "qumra://Review1.png",
-            "stars": 5.6,
-            "alt": "review_image_alt"
-          }
-        },
-        {
-          "block": "reviewItem",
-          "name": "review 1",
-          "settings": {
-            "name": "review_1_name",
-            "days_work": "days_work",
-            "description": "review_1_text",
-            "image": "qumra://Review1.png",
-            "stars": 5.4,
-            "alt": "review_image_alt"
-          }
-        }
+        { "block": "reviewItem", "name": "review 1", "settings": { "name": "review_1_name", "days_work": "days_work", "description": "review_1_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } },
+        { "block": "reviewItem", "name": "review 2", "settings": { "name": "review_2_name", "days_work": "days_work", "description": "review_2_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } },
+        { "block": "reviewItem", "name": "review 3", "settings": { "name": "review_3_name", "days_work": "days_work", "description": "review_3_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } },
+        { "block": "reviewItem", "name": "review 4", "settings": { "name": "review_1_name", "days_work": "days_work", "description": "review_1_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } }
       ]
     },
     {
       "name": "blog slider",
       "widget": "blog-slider",
       "settings": {
+        "section_title": "features_section",
+        "view_all_link": "#",
+        "title_color": "#333333",
+        "blog_name_color": "#1c1c1c",
+        "blog_name_size": 18,
+        "blog_description_color": "#6b7280",
+        "blog_description_size": 14,
+        "show_view_all": true,
+        "link_color": "#6b7280",
+        "show_navigation": true,
+        "allow_touch_move": true,
+        "autoplay": true,
+        "grab_cursor": true,
+        "autoplay_delay": 3000,
+        "speed": 900,
+        "slides_per_view_sm": 1.5,
+        "space_between_sm": 8,
+        "slides_per_view_md": 2,
+        "space_between_md": 8,
+        "slides_per_view_lg": 4,
+        "space_between_lg": 16
       },
-     "blocks": [
-        {
-          "block": "blogPost",
-          "name": "blog 1",
-          "settings": {
-            "title": "blog_title",
-            "description": "blog_desc",
-            "image": "qumra://blog1.png",
-            "button_text": "view_more",
-            "link": "#"
-          }
-        },
-        {
-          "block": "blogPost",
-          "name": "blog 2",
-          "settings": {
-            "title": "blog_title",
-            "description": "blog_desc",
-            "image": "qumra://blog2.png",
-            "button_text": "view_more",
-            "link": "#"
-          }
-        },
-        {
-          "block": "blogPost",
-          "name": "blog 3",
-          "settings": {
-            "title": "blog_title",
-            "description": "blog_desc",
-            "image": "qumra://blog3.png",
-            "button_text": "view_more",
-            "link": "#"
-          }
-        },
-        {
-          "block": "blogPost",
-          "name": "blog 1",
-          "settings": {
-            "title": "blog_title",
-            "description": "blog_desc",
-            "image": "qumra://blog1.png",
-            "button_text": "view_more",
-            "link": "#"
-          }
-        }
+      "blocks": [
+        { "block": "blogPost", "name": "blog 1", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog1.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
+        { "block": "blogPost", "name": "blog 2", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog2.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
+        { "block": "blogPost", "name": "blog 3", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog3.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
+        { "block": "blogPost", "name": "blog 4", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog2.png", "button_text": "view_more", "link": "#", "alt_text": "" } }
       ]
     }
   ]

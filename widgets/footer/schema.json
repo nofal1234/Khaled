@@ -109,46 +109,6 @@
           "label": "البريد الإلكتروني",
           "default": "info@minikid.com"
         },
-        "show_facebook_link": {
-          "type": "boolean",
-          "label": "إظهار رابط فيسبوك",
-          "default": true
-        },
-        "facebook_link": {
-          "type": "string",
-          "label": "رابط فيسبوك",
-          "default": "#"
-        },
-        "show_x_link": {
-          "type": "boolean",
-          "label": "إظهار رابط X (تويتر سابقًا)",
-          "default": true
-        },
-        "x_link": {
-          "type": "string",
-          "label": "رابط X (تويتر سابقًا)",
-          "default": "#"
-        },
-        "show_instagram_link": {
-          "type": "boolean",
-          "label": "إظهار رابط انستجرام",
-          "default": true
-        },
-        "instagram_link": {
-          "type": "string",
-          "label": "رابط انستجرام",
-          "default": "#"
-        },
-        "show_snap_link": {
-          "type": "boolean",
-          "label": "إظهار رابط سناب",
-          "default": true
-        },
-        "snap_link": {
-          "type": "string",
-          "label": "رابط سناب",
-          "default": "#"
-        },
         "powered_text": {
           "type": "string",
           "label": "نص المشغل",
@@ -159,7 +119,65 @@
           "label": "لوجو المشغل",
           "default": "qumra://payment-methods.jpg"
         }
-      }
-      
+      },
+      "blocks": {
+        "social_media": {
+          "name": "السوشيال ميديا",
+          "settings": {
+            "icon": {
+              "type": "media",
+              "label": "الايقونة المعبرة",
+              "default": "",
+              "description": "أضف أيقونة خاصة بمنصة أو وسيلة التواصل الاجتماعي"
+            },
+            "link": {
+              "type": "path",
+              "label": "رابط التوجية",
+              "default": "/",
+              "description": "أدخل رابط الصفحة أو الحساب على منصة التواصل الاجتماعي"
+            }
+          }
+        }
+      },
+      "presets": [
+        {
+          "category": "Home",
+          "name": "footer",
+          "blocks": [
+            {
+              "block": "social_media",
+              "name": "social_media",
+              "settings": {
+                "icon": "qumra://facebook.png",
+                "link": "#"
+              }
+            },
+            {
+              "block": "social_media",
+              "name": "social_media",
+              "settings": {
+                "icon": "qumra://insta.png",
+                "link": "#"
+              }
+            },
+            {
+              "block": "social_media",
+              "name": "social_media",
+              "settings": {
+                "icon": "qumra://x-twitter.png",
+                "link": "#"
+              }
+            },
+            {
+              "block": "social_media",
+              "name": "social_media",
+              "settings": {
+                "icon": "qumra://snap.png",
+                "link": "#"
+              }
+            }
+          ]
+        }
+      ]
       
 }

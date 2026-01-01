@@ -1,4 +1,39 @@
 // Enhanced Swiper Initialization Script
+(function() {
+  function getActiveSlidesPerView(breakpoints, fallback) {
+    const width = window.innerWidth || 0;
+    const points = Object.keys(breakpoints || {}).map(Number).sort((a, b) => a - b);
+    let current = fallback || 1;
+    points.forEach((bp) => {
+      const config = breakpoints[bp] || {};
+      if (width >= bp && typeof config.slidesPerView !== 'undefined') {
+        current = config.slidesPerView;
+      }
+    });
+    return current;
+  }
+
+  function clampBreakpointsToSlides(breakpoints, slidesCount) {
+    const result = {};
+    Object.keys(breakpoints || {}).forEach((bp) => {
+      const config = breakpoints[bp] || {};
+      result[bp] = { ...config };
+      if (typeof config.slidesPerView !== 'undefined') {
+        result[bp].slidesPerView = Math.min(config.slidesPerView, Math.max(slidesCount, 1));
+      }
+    });
+    return result;
+  }
+
+  window.QSwiperUtils = {
+    getActiveSlidesPerView,
+    clampBreakpointsToSlides,
+    shouldDisableSwiper: function shouldDisableSwiper(slidesCount, breakpoints, fallback) {
+      return slidesCount <= getActiveSlidesPerView(breakpoints, fallback || 1);
+    },
+  };
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
   
   // ===== HERO SWIPER INITIALIZATION =====
@@ -9,14 +44,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const showPagination = heroSwiperElement.dataset.showPagination !== 'false';
     const effect = heroSwiperElement.dataset.effect || 'fade';
     const loop = heroSwiperElement.dataset.loop !== 'false';
+    const heroSlides = heroSwiperElement.querySelectorAll('.swiper-slide').length;
+    const heroBreakpoints = {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      },
+      768: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      },
+      1024: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      }
+    };
+    const heroDisabled = window.QSwiperUtils.shouldDisableSwiper(heroSlides, heroBreakpoints, 1);
     
     const heroSwiper = new Swiper('.hero-swiper', {
       // Core settings
-      loop: loop,
+      loop: !heroDisabled && loop,
       effect: effect,
       speed: 800,
       slidesPerView: 1,
       spaceBetween: 0,
+      watchOverflow: true,
       
       // Fade effect configuration
       fadeEffect: {
@@ -32,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       
       // Autoplay with enhanced controls
-      autoplay: {
+      autoplay: heroDisabled ? false : {
         delay: autoplayDelay,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
@@ -48,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } : false,
       
       // Enhanced pagination
-      pagination: showPagination ? {
+      pagination: showPagination && !heroDisabled ? {
         el: '.hero-pagination',
         clickable: true,
         dynamicBullets: true,
@@ -56,11 +108,11 @@ document.addEventListener('DOMContentLoaded', function() {
       } : false,
       
       // Touch and interaction - Mobile optimized
-      grabCursor: true,
-      allowTouchMove: true,
+      grabCursor: !heroDisabled,
+      allowTouchMove: !heroDisabled,
       touchRatio: 1,
       touchAngle: 45,
-      simulateTouch: true,
+      simulateTouch: !heroDisabled,
       touchStartPreventDefault: false,
       touchMoveStopPropagation: false,
       touchReleaseOnEdges: true,
@@ -83,20 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       
       // Responsive breakpoints
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        },
-        768: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        },
-        1024: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        }
-      },
+      breakpoints: window.QSwiperUtils.clampBreakpointsToSlides(heroBreakpoints, heroSlides),
       
       // Events
       on: {
@@ -111,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Pause autoplay on hover for better UX
     const heroContainer = document.querySelector('.hero-swiper-container');
-    if (heroContainer) {
+    if (heroContainer && !heroDisabled && heroSwiper.autoplay) {
       heroContainer.addEventListener('mouseenter', () => {
         heroSwiper.autoplay.stop();
       });
@@ -129,14 +168,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const showPagination = bannerSwiperElement.dataset.showPagination !== 'false';
     const effect = bannerSwiperElement.dataset.effect || 'slide';
     const loop = bannerSwiperElement.dataset.loop !== 'false';
+    const bannerSlides = bannerSwiperElement.querySelectorAll('.swiper-slide').length;
+    const bannerBreakpoints = {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      },
+      768: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      },
+      1024: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      }
+    };
+    const bannerDisabled = window.QSwiperUtils.shouldDisableSwiper(bannerSlides, bannerBreakpoints, 1);
     
     const bannerSwiper = new Swiper('.banner-swiper', {
       // Core settings
-      loop: loop,
+      loop: !bannerDisabled && loop,
       effect: effect,
       speed: 600,
       slidesPerView: 1,
       spaceBetween: 0,
+      watchOverflow: true,
       
       // Performance optimizations
       preloadImages: false,
@@ -147,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       
       // Autoplay with enhanced controls
-      autoplay: {
+      autoplay: bannerDisabled ? false : {
         delay: autoplayDelay,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
@@ -163,18 +219,18 @@ document.addEventListener('DOMContentLoaded', function() {
       } : false,
       
       // Enhanced pagination
-      pagination: showPagination ? {
+      pagination: showPagination && !bannerDisabled ? {
         el: '.banner-pagination',
         clickable: true,
         dynamicBullets: false
       } : false,
       
       // Touch and interaction - Mobile optimized
-      grabCursor: true,
-      allowTouchMove: true,
+      grabCursor: !bannerDisabled,
+      allowTouchMove: !bannerDisabled,
       touchRatio: 1,
       touchAngle: 45,
-      simulateTouch: true,
+      simulateTouch: !bannerDisabled,
       touchStartPreventDefault: false,
       touchMoveStopPropagation: false,
       touchReleaseOnEdges: true,
@@ -197,20 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       
       // Responsive breakpoints
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        },
-        768: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        },
-        1024: {
-          slidesPerView: 1,
-          spaceBetween: 0
-        }
-      },
+      breakpoints: window.QSwiperUtils.clampBreakpointsToSlides(bannerBreakpoints, bannerSlides),
       
       // Events
       on: {
@@ -225,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Pause autoplay on hover for better UX
     const bannerContainer = document.querySelector('.banner-swiper-container');
-    if (bannerContainer) {
+    if (bannerContainer && !bannerDisabled && bannerSwiper.autoplay) {
       bannerContainer.addEventListener('mouseenter', () => {
         bannerSwiper.autoplay.stop();
       });

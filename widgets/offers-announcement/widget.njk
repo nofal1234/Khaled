@@ -5,32 +5,94 @@
 {% set height = widget.data.height %}
 {% set font_size = widget.data.font_size %}
 {% set show_language = widget.data.show_language %}
+
 {% if top_bar_is_fixed %}
-<div style="height: {{height}}px" class="h-10 md:min-h-[49px]"></div>
+  <div style="height: {{ height }}px"></div>
 {% endif %}
-<!-- Top Bar -->
-<div 
-  style="background-color: {{bg_color}}; color: {{text_color}}; font-size: {{font_size}}px;  height: {{height}}px;"
-  class="w-full z-40 flex items-center {% if top_bar_is_fixed %}fixed top-0 left-0 right-0{% endif %}">
-  <div class="relative  w-full px-2.5 md:px-12 mx-2.5 md:mx-20 flex items-center justify-center">
-    {% set markets_list = markets or data.markets or [] %}
 
-    {# {% ui "market-menu.njk" ,markets=markets_list %} #}
-
-    <div class="flex items-center gap-4 lg:gap-10 mx-auto md:mx-0" dir="ltr">
-      <button class="transition" onclick="previousBrand()">
-        <i style="font-size: {{font_size}}px;" class="ph ph-caret-left text-sm md:text-base px-2 md:px-6"></i>
+<div
+  style="
+    background-color: {{ bg_color }};
+    color: {{ text_color }};
+    font-size: {{ font_size }}px;
+    height: {{ height }}px;
+  "
+  class="w-full z-40 flex items-center {% if top_bar_is_fixed %}fixed top-0 left-0 right-0{% endif %}"
+>
+  <div class=" w-full relative px-2.5 md:px-12 mx-2.5 md:mx-20 flex items-center justify-center">
+    <div class="flex w-[188px] md:w-[312px] relative items-center gap-4 lg:gap-10 " dir="ltr">
+      <button id="topbar-prev-{{ widget.id }}"  type="button" class="transition">
+        <i class="ph ph-caret-left px-2 md:px-6" style="font-size: {{ font_size }}px;color: {{ text_color }};"></i>
       </button>
-      <span style="font-size: {{font_size}}px;" class="text-sm md:text-xl" style="direction: ltr">{{ t(widget.data.brands_text or 'brands_counter') }}</span>
-      <button class="transition" onclick="nextBrand()">
-        <i style="font-size: {{font_size}}px;" class="ph ph-caret-right text-sm md:text-base px-2 md:px-6"></i>
+
+      <div class="text-sm md:text-xl" style="font-size: {{ font_size }}px; direction: ltr; min-width: 120px;">
+        <div id="topbar-swiper-{{ widget.id }}" class="swiper topbar-swiper">
+          <div class="swiper-wrapper">
+            {% for block in widget.blocks %}
+              <div class="swiper-slide text-center" style="color: {{ text_color }};">
+                {{ t(block.data.title or block.name) }}
+              </div>
+            {% endfor %}
+            {% if widget.blocks | length == 0 %}
+              <div class="swiper-slide text-center">
+                {{ t(widget.data.brands_text or 'brands_counter') }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <button id="topbar-next-{{ widget.id }}" type="button" class="transition">
+        <i class="ph ph-caret-right px-2 md:px-6" style="font-size: {{ font_size }}px;color: {{ text_color }};"></i>
       </button>
     </div>
+
     {% if show_language %}
-    <div class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2">
-      {% ui "lang-form.njk"%}
-    </div>
+      <div class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2">
+        {% ui "lang-form.njk" %}
+      </div>
     {% endif %}
+
   </div>
 </div>
 {% endif %}
+
+<script>
+  (function () {
+    function initTopbarBrands() {
+      var swiperElem = document.getElementById("topbar-swiper-{{ widget.id }}");
+      if (!swiperElem || typeof window.Swiper === "undefined") return;
+      const allowTouchMove = '{{ widget.data.allow_touch_move }}' == 'true';
+    const speed = Number('{{ widget.data.speed }}');
+    const grabCursor = '{{ widget.data.grab_cursor }}' == 'true';
+    const autoplay = '{{ widget.data.autoplay }}' == 'true';
+    const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+      new window.Swiper(swiperElem, {
+        loop: true,
+      speed: speed,
+      spaceBetween: 20,
+      slidesPerView: 1,
+      allowTouchMove: allowTouchMove,
+      autoplay: autoplay
+        ? {
+            delay: autoplayDelay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            reverseDirection: true
+          }
+        : false,
+        navigation: {
+          nextEl: "#topbar-next-{{ widget.id }}",
+          prevEl: "#topbar-prev-{{ widget.id }}"
+        }
+      });
+    }
+
+    // ✅ شغّل فورًا لو الصفحة جاهزة، وإلا استنى
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initTopbarBrands);
+    } else {
+      initTopbarBrands();
+    }
+  })();
+</script>

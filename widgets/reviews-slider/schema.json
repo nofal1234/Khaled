@@ -10,7 +10,7 @@
     "title_color": {
       "type": "color",
       "label": "لون العنوان",
-      "default": "#333333"
+      "default": "#000"
     },
     "title_size": {
       "type": "number",
@@ -20,12 +20,12 @@
     "link_color": {
       "type": "color",
       "label": "لون أزرار التنقل",
-      "default": "#6b7280"
+      "default": "#000"
     },
     "user_name_color": {
       "type": "color",
       "label": "لون اسم المستخدم",
-      "default": "#222222"
+      "default": "#000"
     },
     "user_name_size": {
       "type": "number",
@@ -35,12 +35,12 @@
     "user_description_color": {
       "type": "color",
       "label": "لون وصف الرأي",
-      "default": "#777777"
+      "default": "#000"
     },
     "user_description_size": {
       "type": "number",
       "label": "حجم وصف المستخدم",
-      "default": 16
+      "default": 14
     },
     "review_text_color": {
       "type": "color",

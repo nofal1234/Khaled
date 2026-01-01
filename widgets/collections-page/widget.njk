@@ -1,6 +1,5 @@
 {% set button_bg_color = widget.data.button_bg_color %}
 {% set button_text_color = widget.data.button_text_color %}
-{% set button_text_type = widget.data.button_text_type %}
 {% set image_size = widget.data.image_size %}
 {% set title_color = widget.data.title_color %}
 {% set title_size = widget.data.title_size %}
@@ -77,7 +76,6 @@
         {% ui "collection-card.njk", collection=block.data %}
       {% endfor %}
     {% else %}
-      {% log "image_rcccacdius", widget.data.is_image_radius %}
       {% for item in items %}
         {% ui "collection-card.njk", collection=item %}
       {% endfor %}

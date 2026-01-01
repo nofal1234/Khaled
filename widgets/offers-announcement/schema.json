@@ -31,12 +31,66 @@
       "label": "مبدل اللغة",
       "default": "true",
       "description": "عرض/إخفاء مبدل اللغة في الشريط العلوي"
+    },
+    "allow_touch_move": {
+      "type": "boolean",
+      "label": "السماح بالسحب على الشاشات اللمسية",
+      "default": true,
+      "description": "قم بتفعيل هذا الخيار للسماح للمستخدمين بتحريك السلايدر بالسحب على الشاشات اللمسية."
+    },
+    "autoplay": {
+      "type": "boolean",
+      "label": "تشغيل تلقائي",
+      "default": true
+    },
+    "grab_cursor": {
+      "type": "boolean",
+      "label": "تفعيل السحب بالماوس (grab cursor)",
+      "default": true
+    },
+    "autoplay_delay": {
+      "type": "number",
+      "label": "تأخير التشغيل التلقائي (ms)",
+      "default": 3000
+    },
+    "speed": {
+      "type": "number",
+      "label": "سرعة السلايدر (ms)",
+      "default": 900
     }
   },
+  "blocks": {
+  "offers_announcement": {
+    "name": "عرض",
+    "settings": {
+      "title": {
+        "type": "string",
+        "label": "عنوان العرض",
+        "default": ""
+      }
+    }
+  }
+},
   "presets": [
     {
       "category": "banners",
-      "name": "top bar"
+      "name": "top bar",
+      "blocks": [
+        {
+          "block": "offers_announcement",
+          "name": "offer 1",
+          "settings": {
+            "title": "accessories"
+          }
+        },
+        {
+          "block": "offers_announcement",
+          "name": "offer 2",
+          "settings": {
+            "title": "accessories"
+          }
+        }
+      ]
     }
   ]
 }

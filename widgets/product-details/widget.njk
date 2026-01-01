@@ -2,32 +2,26 @@
 {% set title_color = widget.data.title_color %}
 {% set desc_font_size = widget.data.desc_font_size %}
 {% set desc_color = widget.data.desc_color %}
-{% set price_font_size = widget.data.price_font_size %}
 {% set price_color = widget.data.price_color %}
 {% set old_price_color = widget.data.old_price_color %}
 {% set option_selected_bg = widget.data.option_selected_bg %}
 {% set option_unselected_bg = widget.data.option_unselected_bg %}
 {% set option_selected_text = widget.data.option_selected_text %}
 {% set option_unselected_text = widget.data.option_unselected_text %}
-{% set option_font_size = widget.data.option_font_size %}
 {% set option_border_color = widget.data.option_border_color %}
 {% set option_border_show = widget.data.option_border_show %}
 {% set buy_button_text = widget.data.buy_button_text %}
 {% set buy_button_bg = widget.data.buy_button_bg %}
 {% set buy_button_text_color = widget.data.buy_button_text_color %}
+{% set buy_button_border = widget.data.buy_button_border %}
 {% set main_section_padding = widget.data.main_section_padding %}
 {% set add_to_cart_bg = widget.data.add_to_cart_bg %}
 {% set add_to_cart_text_color = widget.data.add_to_cart_text_color %}
 {% set add_to_cart_margin_top = widget.data.add_to_cart_margin_top %}
-{% set cart_font_size = widget.data.cart_font_size %}
 {% set quantity_buttons_color = widget.data.quantity_buttons_color %}
 {% set features_title_color = widget.data.features_title_color %}
-{% set features_title_font_size = widget.data.features_title_font_size %}
 {% set features_bg_color = widget.data.features_bg_color %}
-{% set features_icon_size = widget.data.features_icon_size %}
 {% set additional_title_color = widget.data.additional_title_color %}
-{% set additional_title_font_size = widget.data.additional_title_font_size %}
-{% set additional_icon_size = widget.data.additional_icon_size %}
 {% set image_aspect_ratio = widget.data.image_aspect_ratio | default(50) %}
 {% set info_aspect_ratio = 100 - image_aspect_ratio %}
 {% set thumb_base = 160 %}
@@ -49,20 +43,35 @@
                 <div class="flex lg:sticky lg:top-48 flex-col gap-4 self-start product-left-{{ widget.id }}"
                     x-data="{ imgSelected: 0 }">
                     <!-- Main Image -->
-                    <div class="bg-gray-100 rounded-2xl overflow-hidden">
+                    <div class="bg-gray-100 rounded-xl overflow-hidden">
                         <img :src="context.product?.images?.[imgSelected]?.fileUrl" alt="صورة المنتج"
-                            class="w-full object-cover" />
+                        class="w-full h-[281px] md:h-[762px] rounded-lg object-cover" />
                     </div>
 
                     <!-- Thumbnail Images -->
-                    <div class="grid grid-cols-3 gap-4 md:gap-[32px] thumbs-{{ widget.id }}">
-                        <template x-for="(image, index) in context.product?.images || []" :key="index">
-                            <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 transition"
-                                :class="imgSelected === index ? 'border-stork' : 'border-white hover:border-stork'"
-                                @click="imgSelected = index">
-                                <img :src="image.fileUrl" alt="Thumbnail" class="w-full object-cover" />
-                            </div>
-                        </template>
+                    <div class="flex gap-4 md:gap-[32px] w-full none-scrollbar overflow-auto"
+                         style="max-width:100%;">
+                        <div class="flex w-full gap-4 md:gap-[32px]"
+                             style="min-width:0;">
+                            <template x-for="(image, index) in context.product?.images || []" :key="index">
+                                <div
+                                    x-show="index < 3"
+                                    class="bg-bgItem rounded-[3px] h-[93px] md:h-[242px] md:w-[261px] overflow-hidden cursor-pointer border-[0.77px] transition flex-shrink-0"
+                                    :class="imgSelected === index ? 'border-stork' : 'border-white hover:border-stork'"
+                                    @click="imgSelected = index">
+                                    <img :src="image.fileUrl" alt="Thumbnail" class="h-[93px] md:h-[242px] md:w-[261px] object-cover" />
+                                </div>
+                            </template>
+                            <template x-for="(image, index) in context.product?.images || []" :key="'overflow-' + index">
+                                <div
+                                    x-show="index >= 3"
+                                    class="bg-bgItem rounded-[3px] h-[93px] md:h-[242px] md:w-[261px] overflow-hidden cursor-pointer border-[0.77px] transition flex-shrink-0 opacity-60"
+                                    :class="imgSelected === index ? 'border-stork' : 'border-white hover:border-stork'"
+                                    @click="imgSelected = index">
+                                    <img :src="image.fileUrl" alt="Thumbnail" class="h-[93px] md:h-[242px] md:w-[261px] object-cover" />
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
 
@@ -92,22 +101,23 @@
 
                     <!-- Price -->
                     <div class="flex gap-2 flex-col">
-                        <h1 color: {{ price_color }}; class="text-xl font-medium">{{t('price')}}</h1>
+                        <h1 color: {{ price_color }}; class="md:text-xl md:font-medium">{{t('price')}}</h1>
                         <template
                             x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center">
-                                    <span class="font-bold"
-                                        style="font-size: {{ price_font_size }}px; color: {{ price_color }};"
+                                    <span class="font-bold md:text-xl text-base leading-[150%]"
+                                        style="color: {{ price_color }};"
                                         x-text="context.product?.pricing?.price"></span>
-                                    <span class="text-mainColor" style="font-size: {{ (price_font_size * 0.6) | round(1, 'floor') }}px;">{{
+                                    <span class="text-mainColor font-bold md:text-xl text-base leading-[150%]"
+                                    style="color: {{ price_color }};">{{
                                         globals.app.generalSettings.currency.currencySymbol}}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <span class="text-lg line-through"
+                                    <span class="text-sm font-medium line-through  leading-[150%]"
                                         style="color: {{ old_price_color }};"
                                         x-text="context.product?.pricing?.compareAtPrice"></span>
-                                    <span style="color: {{ old_price_color }};">{{
+                                    <span class="text-sm font-medium  leading-[150%]" style="color: {{ old_price_color }};">{{
                                         globals.app.generalSettings.currency.currencySymbol}}</span>
                                 </div>
                             </div>
@@ -115,10 +125,10 @@
                         <template
                             x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
                             <div class="flex items-center gap-2">
-                                <span class="font-bold"
-                                    style="font-size: {{ price_font_size }}px; color: {{ price_color }};"
+                                <span class="font-bold md:text-xl text-base leading-[150%]"
+                                    color: {{ price_color }};"
                                     x-text="context.product?.pricing?.price"></span>
-                                <span  style="font-size: {{ (price_font_size * 0.6) | round(1, 'floor') }}px; color: {{ price_color }};"">{{ globals.app.generalSettings.currency.currencySymbol
+                                <span  class="md:text-xl text-base leading-[150%]" style="color: {{ price_color }};"">{{ globals.app.generalSettings.currency.currencySymbol
                                     }}</span>
                             </div>
                         </template>
@@ -128,15 +138,16 @@
                     <div x-init="initOptions()" class="mb-2" x-show="context.product?.options?.length > 0">
                         <template x-for="opt in context.product.options" :key="opt._id">
                             <div class="flex flex-col gap-2">
-                                <label class="text-xl font-medium leading-[150%]" x-text="opt.name"></label>
+                                <label class="md:text-xl text-base md:font-medium leading-[150%]" x-text="opt.name"></label>
                                 <div class="flex flex-wrap gap-4">
                                     <template x-for="val in opt.values" :key="val._id">
                                         <button type="button"
-                                            class="p-[9.34px] rounded-full border transition-all duration-200 font-cairo flex items-center gap-2"
+                                            class="md:p-[9.34px] p-[7px] md:min-w-[70px] min-w-[56px] md:text-lg text-xs  justify-center  rounded-full border transition-all duration-200 font-cairo flex items-center gap-2"
                                             :style="selectedOptions[opt._id] === val._id
                                                 ? 'background-color: {{ option_selected_bg }}; color: {{ option_selected_text }}; border-color: {{ option_border_color }};'
                                                 : 'background-color: {{ option_unselected_bg }}; color: {{ option_unselected_text }}; border-color: {{ option_border_show and option_border_color or \"transparent\" }};'"
-                                            style="font-size: {{ option_font_size }}px;"
+                                          
+                                            class="md:p-[9.34px] p-[7px] md:min-w-[70px] min-w-[56px] md:text-lg text-xs justify-center rounded-full border transition-all duration-200 font-cairo flex items-center gap-2 "
                                             @click.prevent="selectOption(context.product,opt._id, val._id)">
                                             <span x-text="val.label"></span>
                                         </button>
@@ -164,7 +175,7 @@
                         <!-- Row: Quantity on one side + add to cart on the other -->
                         <div class="flex items-center gap-2 w-full" style="margin-top: {{ add_to_cart_margin_top }}px;">
                             <!-- Quantity -->
-                            <div class="flex items-center md:h-[57px] h-[45px] px-4  justify-between border rounded-full"
+                            <div class="flex items-center max-md:max-w-[86px] md:h-[57px] h-[45px] px-4  justify-between border rounded-full"
                                 style="border-color: {{ quantity_buttons_color }}; border-radius: 33px; border-width: 1px; padding-top: 8px; padding-bottom: 8px; gap: 12px; width: 120px;">
                                 <input style="color: {{ quantity_buttons_color }}; width: 28px;" type="number" min="1" x-model.number="productQuantity"
                                     class="qty-input text-center border-0 p-0 focus:ring-0 font-semibold" />
@@ -191,8 +202,8 @@
                             <!-- Primary add to cart button takes remaining width -->
                             <button name="addToCart" type="submit"
                                 :disabled="loading.addToCart || loading.optionsLoading || productQuantity === 0"
-                                class="flex-1 rounded-full font-medium flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-300"
-                                style="background-color: {{ add_to_cart_bg }}; color: {{ add_to_cart_text_color }}; padding-top: 12px; padding-bottom: 12px; font-size: {{ cart_font_size }}px;">
+                                class="flex-1 md:text-lg text-sm rounded-full md:py-[15px] font-medium flex items-center justify-center md:min-h-[57px] min-h-[45px] gap-2 hover:scale-[1.01] transition-transform duration-300"
+                                style="background-color: {{ add_to_cart_bg }}; color: {{ add_to_cart_text_color }}; ">
                                 <div x-show="loading.optionsLoading">
                                     {%ui "loading.njk" %}
                                 </div>
@@ -206,8 +217,8 @@
 
                         <!-- Full width buy now button under them -->
                         <button name="buyNow" type="submit"
-                            class="w-full px-6 py-[7.9px] md:pt-5 pb-2.5 font-medium rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-300"
-                            style="background-color: {{ buy_button_bg }}; color: {{ buy_button_text_color }}; border: 1px solid {{ buy_button_bg }}; font-size: {{ cart_font_size }}px;">
+                            class="w-full md:text-lg text-sm md:pt-5 pb-2.5 pt-4 font-medium rounded-full md:h-[57px]  h-[45px] flex items-center justify-center hover:scale-[1.01] transition-transform duration-300"
+                            style="background-color: {{ buy_button_bg }}; color: {{ buy_button_text_color }}; border: 1px solid {{ buy_button_border }}; ">
                             <div x-show="loading.optionsLoading">
                                 {%ui "loading.njk" %}
                             </div>
@@ -218,27 +229,19 @@
                     </form>
                     <!-- Additional Info -->
                     <div class=" flex flex-col gap-4">
-                        <div class="flex items-center gap-3">
-                            <i class="ph-light ph-alarm text-mainColor"
-                               style="color: {{ additional_title_color }};font-size: {{ additional_icon_size }}px;"></i>
-                            <p class="font-medium leading-[150%]"
-                                style="color: {{ additional_title_color }}; font-size: {{ additional_title_font_size }}px;"
-                                x-text="'{{ t('stock_remaining') }}'.replace('{count}', product.quantity || 1)"></p>
-                        </div>
                         {% for block in widget.blocks %}
                         {% if block.blockKey=="productDetails" %}
-                        <div class="flex items-center gap-2">
-                            <i class="ph-light ph-check text-mainColor"
-                               style="font-size: {{ additional_icon_size }}px;"></i>
-                            <p class="font-medium leading-[150%]"
-                               style="color: {{ additional_title_color }}; font-size: {{ additional_title_font_size }}px;">
+                     <div class="flex items-center gap-2">
+                                <img src="{{ block.data.icon.fileUrl }}" class=" md:w-6 md:h-6 w-[18px] h-[18px]">
+                            <p class="font-medium leading-[150%] text-sm"
+                               style="color: {{ additional_title_color }};">
                                {{ t(block.data.title) }}</p>
                         </div>
                         {% endif %}
                         {% endfor %}
-
                     </div>
-                    <!-- Features 2 Section -->
+                    <!-- Featu
+                     res 2 Section -->
                     <section>
                         <div>
                             <div class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
@@ -247,10 +250,10 @@
                                 <div
                                     class=" gap-4 flex flex-col items-center justify-center text-center cursor-pointer p-4 sm:p-5 md:p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:-translate-y-1"
                                     style="background-color: {{ features_bg_color }};">
-                                    <i class="ph-light ph-star"
-                                       style="color: {{ features_title_color }}; font-size: {{ features_icon_size }}px;"></i>
-                                    <h3
-                                      style="color: {{ features_title_color }}; font-size: {{ features_title_font_size }}px;">
+                                    <i class="ph-light ph-star text-lg ext"
+                                       style="color: {{ features_title_color }}; "></i>
+                                    <h3 class="text-xs md:text-[8px]"
+                                      style="color: {{ features_title_color }}; ">
                                       {{ t(block.data.title)}}</h3>
                                 </div>
                                 {% endif %}
@@ -287,4 +290,5 @@
     height: {{ thumb_size }}px;
   }
 }
+
 {% endstyle %}

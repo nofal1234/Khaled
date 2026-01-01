@@ -12,50 +12,20 @@
       "label": "Title Color",
       "default": "#000000"
     },
-    "title_font_size": {
-      "type": "number",
-      "label": "Title Font Size (px)",
-      "default": 32
-    },
     "rating_color": {
       "type": "color",
       "label": "Rating Number Color",
-      "default": "#f5c518"
-    },
-    "rating_font_size": {
-      "type": "number",
-      "label": "Rating Number Font Size (px)",
-      "default": 80
-    },
-    "total_reviews_color": {
-      "type": "color",
-      "label": "Total Reviews Color",
-      "default": "#5a5a5a"
-    },
-    "total_reviews_font_size": {
-      "type": "number",
-      "label": "Total Reviews Font Size (px)",
-      "default": 16
+      "default": "#030317"
     },
     "customer_name_color": {
       "type": "color",
       "label": "Customer Name Color",
       "default": "#222222"
     },
-    "customer_name_font_size": {
-      "type": "number",
-      "label": "Customer Name Font Size (px)",
-      "default": 20
-    },
     "review_text_color": {
       "type": "color",
       "label": "Review Description Color",
       "default": "#23262F"
-    },
-    "review_text_font_size": {
-      "type": "number",
-      "label": "Review Text Font Size (px)",
-      "default": 16
     },
     "review_image_size": {
       "type": "range",
@@ -67,7 +37,7 @@
     "stars_color": {
       "type": "color",
       "label": "Stars Color",
-      "default": "#FFD700"
+      "default": "#EBB11F"
     }
   },
   "presets": [

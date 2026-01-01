@@ -1,23 +1,19 @@
 <section class="product-listing ">
-  <div class="px-4 md:px-8 mx-2.5 md:mx-20 pt-6 md:pt-8 pb-10">
+  <div class=" container flex flex-col gap-4 pt-6 md:pt-8 pb-10">
     <!-- Breadcrumb -->
-    <section class=" py-0 md:py-1">
-      <div class="md:block">
-        <div class="px-0 md:px-0 py-0 mb-3 md:mb-4">
-          <nav class="flex items-center gap-2 text-sm md:text-base text-black-600">
-            <a href="/" class="hover:text-mainColor transition">{{ t('home') }}</a>
+          <div class="flex items-center gap-1.5 text-sm md:text-base">
+            <a href="/" class="hover:text-mainColor transition leading-[150%] ">{{ t('home') }}</a>
             <span>/</span>
-            <span class="text-mainColor font-semibold">{{ context.collection.title }}</span>
-          </nav>
-        </div>
-      </div>
-    </section>
+            <span class="text-mainColor  leading-[150%] ">{{ context.collection.title }}</span>
+          </div>
 
     <!-- Title -->
-    <div class="px-2 md:px-0 mb-6 md:mb-8 mt-2 md:mt-3 flex items-center {% if context.products | length > 0 %}justify-between{% else %}justify-start{% endif %} gap-3">
-      <h1 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">{{ context.collection.title }}</h1>
+     <div class="flex items-center flex-col gap-4">
+
+    <div class=" w-full flex items-center  gap-4 {% if context.products | length > 0 %}justify-between{% else %}justify-start{% endif %} gap-3">
+      <h1 class="text-lg leading-[120%] md:text-[40px] font-bold">{{ context.collection.title }}</h1>
       {% if context.products | length > 0 %}
-      <div class="w-auto ml-3 md:ml-6">
+      <div class="w-auto ">
         <div class="relative w-[140px] h-[36px] md:w-[176px] md:h-[42px]">
           <select class="w-full h-full appearance-none border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-mainColor text-right text-xs md:text-base pr-3 pl-9 md:pr-4 md:pl-10">
             <option>{{ t('sort') }}</option>
@@ -61,6 +57,7 @@
       buy_button_bg=widget.data.buy_button_bg %}
       {% endfor %}
     </div>
+  </div>
     
     <!-- Pagination -->
     <div class="mt-8">

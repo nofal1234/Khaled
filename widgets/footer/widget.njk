@@ -14,39 +14,24 @@
         style="--footer-logo-sm: {{ widget.data.logo_higth_sm | default(29) }}px; --footer-logo-lg: {{ widget.data.logo_higth_lg | default(40) }}px;" />
       <div class="flex flex-col gap-4 md:gap-[30px]">
         <div class="w-full max-h-[96px] overflow-hidden break-words">
-          <p class="text-[#EDEDED] leading-[150%] line-clamp-4" style="color: {{ widget.data.text_color }};">
+          <p class="text-[#EDEDED] md:text-base text-sm leading-[150%] line-clamp-4" style="color: {{ widget.data.text_color }};">
             {{ widget.data.app_description | safe  }}
           </p>
         </div>
         <div class="flex items-center gap-[34px]">
-          {% if widget.data.show_snap_link and widget.data.snap_link %}
-          <a href="{{ widget.data.snap_link }}" target="_blank" aria-label="Snapchat" style="color: {{ widget.data.text_color }};">
-            <i class="ph-thin text-[28px] ph-snapchat-logo"></i>
-          </a>
-          {% endif %}
-          {% if widget.data.show_instagram_link and widget.data.instagram_link %}
-          <a href="{{ widget.data.instagram_link }}" target="_blank" aria-label="Instagram" style="color: {{ widget.data.text_color }};">
-            <i class="ph-thin text-[28px] ph-instagram-logo"></i>
-          </a>
-          {% endif %}
-          {% if widget.data.show_x_link and widget.data.x_link %}
-          <a href="{{ widget.data.x_link }}" target="_blank" aria-label="X" style="color: {{ widget.data.text_color }};">
-            <i class="ph-thin text-[28px] ph-x-logo"></i>
-          </a>
-          {% endif %}
-          {% if widget.data.show_facebook_link and widget.data.facebook_link %}
-          <a href="{{ widget.data.facebook_link }}" target="_blank" aria-label="Facebook" style="color: {{ widget.data.text_color }};">
-            <i class="ph-thin text-[28px] ph-facebook-logo"></i>
-          </a>
-          {% endif %}
+          {% for block in widget.blocks %}
+              <a href="{{ block.data.link }}" class="w-max" target="_blank" aria-label="social link" style="color: {{ widget.data.text_color }};">
+                <img src="{{ block.data.icon.fileUrl or block.data.icon }}" alt="social" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);"/>
+              </a>
+          {% endfor %}
         </div>
       </div>
     </div>
 
     <div class="flex flex-col gap-4">
-      <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">قانوني</span>
+      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">قانوني</span>
       {% for item in widget.data.policy_links %}
-      <a href="{{ item.url }}" class="font-medium" style="color: {{ widget.data.text_color }};">{{ item.title }}</a>
+      <a href="{{ item.url }}" class="md:font-medium md:text-base text-sm" style="color: {{ widget.data.text_color }}; letter-spacing: 0.02em;">{{ item.title }}</a>
       {% endfor %}
     </div>
 
@@ -54,14 +39,14 @@
     <div class="flex flex-col gap-4 truncate">
       <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">{{ t("categories") }}</span>
       {% for item in widget.data.collections %}
-      <a href="/collection/{{ item.handle }}" class="font-medium" style="color: {{ widget.data.text_color }};">{{ item.title }}</a>
+      <a href="/collection/{{ item.handle }}" class="md:font-medium md:text-base text-sm" style="color: {{ widget.data.text_color }};letter-spacing: 0.02em;">{{ item.title }}</a>
       {% endfor %}
     </div>
     {% endif %}
 
     {% if (widget.data.show_contact_location and widget.data.contact_location) or (widget.data.show_contact_email and widget.data.contact_email) or (widget.data.show_contact_phone and widget.data.contact_phone) %}
     <div class="flex flex-col gap-4">
-      <span class="text-xl font-bold leading-[140%]" style="color: {{ widget.data.text_color }};">تواصل معانا</span>
+      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">تواصل معانا</span>
       {% if widget.data.show_contact_location and widget.data.contact_location %}
       <div class="flex items-center gap-2">
         <i class="ph-thin text-2xl ph-map-pin-line" style="color: {{ widget.data.text_color }};"></i>

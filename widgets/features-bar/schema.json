@@ -5,7 +5,7 @@
     "use_container": {
       "type": "checkbox",
       "label": "استخدام الحاوية (Container)",
-      "default": true,
+      "default": false,
       "description": "جعل محتوى الشريط محصورًا في حاوية بعرض محدد"
     },
     "bg_color": {

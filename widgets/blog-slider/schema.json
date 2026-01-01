@@ -2,16 +2,12 @@
   "name": "blog slider",
   "description": "عرض منشورات المدونة مع صور وتأثيرات تفاعلية",
   "settings": {
+
     "section_title": {
       "type": "string",
       "label": "عنوان القسم",
       "default": "features_section",
       "description": "العنوان الذي يظهر أعلى سكشن المميزات"
-    },
-    "title_size": {
-      "type": "number",
-      "label": "حجم العنوان ",
-      "default":18
     },
     "view_all_link": {
       "type": "string",

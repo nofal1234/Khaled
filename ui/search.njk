@@ -1,18 +1,22 @@
 {% set search_text_color_in_page = text_color_in_page  %}
 {% set search_text_color_fixed = text_color_fixed  %}
 {% set search_text_color_scrolled = text_color_scrolled  %}
-
+{% set search_list_is_circle = settings.search_list_is_circle  %}
+{% set search_list_text_color = settings.search_list_text_color  %}
+{% set search_list_image_size = settings.search_list_image_size  %}
+{% set search_list_bg_color = settings.search_list_bg_color  %}
+ 
 <div
-  class="border flex-1 md:flex hidden rounded-full p-3 w-full  items-center gap-2.5 transition-all duration-300 ease-in-out"
+  class="border flex-1 md:flex hidden rounded-full p-3 w-full items-center gap-2.5 transition-all duration-300 ease-in-out relative"
+  @click.outside="suggestions = []" @submit.prevent="setSearch(search)"
   :style="{
     borderColor: scrolled ? '{{ search_text_color_scrolled }}' : (isMain ? '{{ search_text_color_fixed }}' : '{{ search_text_color_in_page }}'),
     color: scrolled ? '{{ search_text_color_scrolled }}' : (isMain ? '{{ search_text_color_fixed }}' : '{{ search_text_color_in_page }}')
   }">
-  {# p-[18px] #}
-  {% form 'search', class="flex-1" %}
+  {% form 'search', class="flex-1 flex items-center gap-2.5" %}
   <i class="ph ph-magnifying-glass"
     :style="{ color: scrolled ? '{{ search_text_color_scrolled }}' : (isMain ? '{{ search_text_color_fixed }}' : '{{ search_text_color_in_page }}') }"></i>
-  <input name="q" type="search"
+  <input name="q" type="search" x-model="search" @focus="updateSuggestions()" @input="onInput()" @keydown.enter.prevent="setSearch(search)"
     class="bg-transparent outline-none transition-all duration-300 ease-in-out flex-1 header-search-input"
     :style="{
       color: scrolled ? '{{ search_text_color_scrolled }}' : (isMain ? '{{ search_text_color_fixed }}' : '{{ search_text_color_in_page }}'),
@@ -20,21 +24,65 @@
     }"
     placeholder='{{data.search_placeholder}}' autocomplete="off" />
   {% endform %}
-</div>
 
+  <div x-cloak x-show="suggestions.length" x-transition
+  style=" background-color: {{search_list_bg_color}}"
+    class="absolute right-0 left-0 top-full mt-2  {%if search_list_is_circle %} rounded-lg {% else %} rounded-none {% endif %} border h-[300px] overflow-y-auto border-stork z-50 overflow-hidden">
+    <template x-for="item in suggestions" :key="item._id">
+      <button type="button" class="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+        @click="goTo(item)">
+        <div style="width: {{ search_list_image_size }}px; height: {{ search_list_image_size }}px;" class=" rounded-xl bg-bgItem overflow-hidden flex items-center justify-center flex-shrink-0">
+          <img class="w-full h-full object-cover"
+            x-show="item.images?.[0]?.fileUrl || item.image?.fileUrl"
+            :src="item.images?.[0]?.fileUrl || item.image?.fileUrl" :alt="item.title" />
+          <span x-show="!(item.images?.[0]?.fileUrl || item.image?.fileUrl)"
+            class="text-xs font-semibold uppercase text-gray-500"
+            x-text="item.__type === 'collection' ? 'C' : 'P'"></span>
+        </div>
+        <div class="min-w-0 text-start">
+          <p style="color: {{ search_list_text_color }};" class="text-sm font-medium truncate" x-text="item.title"></p>
+          <p class="text-xs text-textDescription" x-text="item.__type === 'collection' ? 'Collection' : 'Product'"></p>
+        </div>
+      </button>
+    </template>
+  </div>
+</div>
 <div x-cloak x-show="modal.open && modal.type === 'search'" class="md:hidden flex flex-col w-full fixed inset-0 z-50">
   <div class="absolute inset-0 bg-black/30" @click="toggleModal('search', false)"></div>
-  <div class="relative bg-white w-full flex z-10">
-    {% form 'search' ,class="py-2.5 px-6 w-full " %}
-    <div class="p-3.5 flex items-center w-full rounded-lg bg-bgItem gap-2">
+  <div style=" background-color: {{search_list_bg_color}}" class="relative w-full flex z-10">
+    {% form 'search' ,class="py-2.5 px-6 w-full ", x_on_submit_prevent="setSearch(search)" %}
+    <div class="p-3.5 flex items-center w-full rounded-lg bg-bgItem gap-2 relative">
       <i class="ph ph-magnifying-glass text-textDescription"></i>
-      <input name="q" type="search"
+      <input name="q" type="search" x-model="search" @focus="updateSuggestions()" @input="onInput()" @keydown.enter.prevent="setSearch(search)"
         class="bg-transparent text-black placeholder:text-gray-400 outline-none transition-all duration-300 ease-in-out flex-1"
-        placeholder='{{data.search_placeholder}}'autocomplete="off" />
+        placeholder='{{data.search_placeholder}}' autocomplete="off" />
+
+      <div x-cloak x-show="suggestions.length" x-transition
+        class="absolute right-0 left-0 top-full mt-2 bg-white h-[300px] overflow-y-auto rounded-lg shadow-lg border border-stork z-40 overflow-hidden">
+        <template x-for="item in suggestions" :key="item._id">
+          <button type="button" class="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50"
+            @click="goTo(item)">
+            <div class="w-11 h-11 rounded-lg bg-bgItem overflow-hidden flex items-center justify-center flex-shrink-0">
+              <img class="w-full h-full object-cover"
+                x-show="item.images?.[0]?.fileUrl || item.image?.fileUrl"
+                :src="item.images?.[0]?.fileUrl || item.image?.fileUrl" :alt="item.title" />
+              <span x-show="!(item.images?.[0]?.fileUrl || item.image?.fileUrl)"
+                class="text-xs font-semibold uppercase text-gray-500"
+                x-text="item.__type === 'collection' ? 'C' : 'P'"></span>
+            </div>
+            <div class="min-w-0 text-start">
+              <p style="color: {{ search_list_text_color }};" class="text-sm font-medium truncate" x-text="item.title"></p>
+              <p class="text-xs text-gray-500" x-text="item.__type === 'collection' ? 'Collection' : 'Product'"></p>
+            </div>
+          </button>
+        </template>
+      </div>
     </div>
     {% endform %}
   </div>
 </div>
+
+
 
 <style>
 .header-search-input::placeholder {

@@ -7,13 +7,40 @@
             "name": "Offers Announcement Bar",
             "widget": "offers-announcement",
             "settings": {
-
-                "announcement_link": "#",
-                "announcement_alt": "Offers Announcement",
-                "enable_marquee": true,
-                "marquee_speed": 30,
-                "show_separator": true
-            }
+                "font_size": 18,
+                "height": 48,
+                "bg_color": "#00000",
+                "text_color": "#fff",
+                "show_language": true,
+                "allow_touch_move": true,
+                "autoplay": true,
+                "grab_cursor": true,
+                "autoplay_delay": 3000,
+                "speed": 900
+            },
+            "blocks": [
+                {
+                    "block": "offers_announcement",
+                    "name": "offer 1",
+                    "settings": {
+                        "title": "accescsories"
+                    }
+                },
+                {
+                    "block": "offers_announcement",
+                    "name": "offer 2",
+                    "settings": {
+                        "title": "accescsories"
+                    }
+                },
+                {
+                    "block": "offers_announcement",
+                    "name": "offer 3",
+                    "settings": {
+                        "title": "accescsories"
+                    }
+                }
+            ]
         },
         {
             "allowDeleted": true,

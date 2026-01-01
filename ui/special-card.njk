@@ -9,7 +9,8 @@
            class="special-card-image w-full h-full object-cover rounded-lg transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:rotate-1 group-hover:brightness-110">
       <div class="absolute inset-0 rounded-lg pointer-events-none transition-all duration-500 opacity-0 group-hover:opacity-30 group-hover:bg-black"></div>
   </div>
-  <div class="special-card__content flex flex-col gap-2 transition-colors duration-400 group-hover:bg-gray-50 rounded-lg">
+    {% if data.special.title or data.special.description %}
+    <div class="special-card__content flex flex-col gap-2 transition-colors duration-400 group-hover:bg-gray-50 rounded-lg">
     {% if data.special.title %}
     <span 
       class="special-card__name font-bold text-center block line-clamp-2 transition-colors duration-300 group-hover:text-mainColor"
@@ -29,6 +30,7 @@
     >{{ t(data.special.description)  | safe }}</span>
     {% endif %}
   </div>
+  {% endif %}
 </a>
 
 <style>
@@ -64,7 +66,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 80px;
+  min-height: 50px;
   transition: background 0.3s, color 0.3s;
 }
 

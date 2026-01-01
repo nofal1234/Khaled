@@ -1,11 +1,9 @@
 
 {% set  title_color = widget.data.title_color %}
 {% set title = widget.data.title %}
-{% set title_font_size = widget.data.title_font_size %}
 
 {% set subtitle = widget.data.subtitle %}
 {% set subtitle_color = widget.data.subtitle_color %}
-{% set subtitle_font_size = widget.data.subtitle_font_size %}
 
 {% set button_text = widget.data.button_text %}
 {% set button_text_color = widget.data.button_text_color %}
@@ -36,14 +34,14 @@
       >
         <div class="w-full flex flex-col max-md:items-center md:gap-[11px]">
           <h1
-            class="max-md:text-center font-bold w-full md:w-7/12"
-            style="color: {{ title_color }}; font-size: {{ title_font_size }}px; line-height: 150%;"
+            class="max-md:text-center font-bold w-full md:w-7/12 md:text-[40px] text-[20px] leading-[150%]"
+            style="color: {{ title_color }}; line-height: 150%;"
           >
             {{ t(title) }}
           </h1>
           <div
             class="max-md:text-center text-start leading-[150%] font-medium"
-            style="color: {{ subtitle_color }}; font-size: {{ subtitle_font_size }}px;"
+            style="color: {{ subtitle_color }}; "
           >
             {{ t(subtitle ) | safe }}
           </div>

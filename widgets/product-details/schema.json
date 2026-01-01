@@ -17,8 +17,8 @@
     "desc_font_size": {
       "type": "number",
       "label": "حجم وصف البانر",
-      "default": 20,
-      "min": 10,
+      "default": 14,
+      "min": 8,
       "max": 80
     },
     "desc_color": {
@@ -26,49 +26,36 @@
       "label": "لون وصف البانر",
       "default": "#666666"
     },
-    "price_font_size": {
-      "type": "number",
-      "label": "حجم السعر",
-      "default": 24,
-      "min": 10,
-      "max": 48
-    },
+
     "price_color": {
       "type": "color",
       "label": "لون السعر",
-      "default": "#d0021b"
+      "default": "#000000"
     },
     "old_price_color": {
       "type": "color",
       "label": "لون السعر قبل الخصم",
-      "default": "#999999"
+      "default": "#666666"
     },
     "option_selected_bg": {
       "type": "color",
       "label": "لون خلفية الخيار المحدد",
-      "default": "#003033"
+      "default": "#EBEBEB"
     },
     "option_unselected_bg": {
       "type": "color",
       "label": "لون خلفية الخيار غير المحدد",
-      "default": "#FFFFFF"
+      "default": "#F7F7F7"
     },
     "option_selected_text": {
       "type": "color",
       "label": "لون نص الخيار المحدد",
-      "default": "#FFFFFF"
+      "default": "#000"
     },
     "option_unselected_text": {
       "type": "color",
       "label": "لون نص الخيار غير المحدد",
-      "default": "#003033"
-    },
-    "option_font_size": {
-      "type": "number",
-      "label": "حجم نص الخيار",
-      "default": 18,
-      "min": 10,
-      "max": 40
+      "default": "#8C8C8C"
     },
     "option_border_color": {
       "type": "color",
@@ -88,12 +75,17 @@
     "buy_button_bg": {
       "type": "color",
       "label": "لون خلفية زر الشراء",
-      "default": "#003033"
+      "default": "#fff"
+    },
+    "buy_button_border": {
+      "type": "color",
+      "label": "لون حدود زر الشراء",
+      "default": "#000"
     },
     "buy_button_text_color": {
       "type": "color",
       "label": "لون نص زر الشراء",
-      "default": "#FFFFFF"
+      "default": "#000"
     },
     "main_section_padding": {
       "type": "range",
@@ -105,7 +97,7 @@
     "add_to_cart_bg": {
       "type": "color",
       "label": "لون خلفية زر الإضافة للسلة",
-      "default": "#38B2AC"
+      "default": "#000"
     },
     "add_to_cart_text_color": {
       "type": "color",
@@ -119,13 +111,6 @@
       "max": 60,
       "default": 16
     },
-    "cart_font_size": {
-      "type": "number",
-      "label": "حجم خط زر إضافة للسلة",
-      "default": 18,
-      "min": 10,
-      "max": 40
-    },
     "quantity_buttons_color": {
       "type": "color",
       "label": "لون أزرار التحكم في الكمية",
@@ -134,53 +119,26 @@
     "features_title_color": {
       "type": "color",
       "label": "لون نص مميزات المنتج",
-      "default": "#003033"
-    },
-    "features_title_font_size": {
-      "type": "number",
-      "label": "حجم نص مميزات المنتج",
-      "default": 10,
-      "min": 6,
-      "max": 36
+      "default": "#0000"
     },
     "features_bg_color": {
       "type": "color",
       "label": "لون خلفية كرت ميزة المنتج",
       "default": "#FFFFFF"
     },
-    "features_icon_size": {
-      "type": "number",
-      "label": "حجم الايقونة لمميزات المنتج",
-      "default": 20,
-      "min": 8,
-      "max": 56
-    },
+   
     "image_aspect_ratio": {
       "type": "range",
       "label": "نسبة حجم الصورة (Aspect Ratio)",
       "min": 20,
-      "max": 80,
+      "max": 100,
       "step": 1,
-      "default": 50
+      "default": 60
     },
     "additional_title_color": {
       "type": "color",
       "label": "لون نص Additional Info",
-      "default": "#111111"
-    },
-    "additional_title_font_size": {
-      "type": "number",
-      "label": "حجم نص Additional Info",
-      "default": 14,
-      "min": 8,
-      "max": 36
-    },
-    "additional_icon_size": {
-      "type": "number",
-      "label": "حجم الايقونة لAdditional Info",
-      "default": 20,
-      "min": 8,
-      "max": 56
+      "default": "#000"
     }
   },
   "blocks": {
@@ -191,6 +149,10 @@
           "type": "string",
           "label": "نص الميزة",
           "default": ""
+        },
+        "icon": {
+          "type": "media",
+          "label": "ايقونة الميزة"
         }
       }
     },
@@ -252,14 +214,16 @@
           "block": "productDetails",
           "name": "future 1",
           "settings": {
-            "title": "free_shipping"
+            "title": "free_shipping",
+            "icon": "qumra://ok.png"
           }
         },
         {
           "block": "productDetails",
           "name": "future 2",
           "settings": {
-            "title": "secure_payment"
+            "title": "secure_payment",
+            "icon": "qumra://ok.png"
           }
         }
       ]

@@ -1,16 +1,11 @@
 <!-- ############### START: PROFESSIONAL CART MODAL ############### -->
 {% set cart_title_text = settings.cart_title_text %}
-{% set cart_title_font_size = settings.cart_title_font_size %}
-{% set cart_title_weight = settings.cart_title_weight %}
-{% set button_vertical_padding = settings.button_vertical_padding %}
 {% set cart_vertical_padding = settings.cart_vertical_padding %}
 {% set checkout_button_bg = settings.checkout_button_bg %}
 {% set checkout_button_text_color = settings.checkout_button_text_color %}
 {% set checkout_button_text = settings.checkout_button_text %}
 {% set open_cart_button_text_color = settings.open_cart_button_text_color %}
-{% set open_cart_button_font_size = settings.open_cart_button_font_size %}
 {% set product_title_color = settings.product_title_color %}
-{% set product_title_font_size = settings.product_title_font_size %}
 {% set product_image_size = settings.product_image_size %}
 {% set quantity_buttons_color = settings.quantity_buttons_color %}
 {% set cart_drawer_height_full = settings.cart_drawer_height_full %}
@@ -121,7 +116,7 @@
           <!-- Header -->
           <div class="flex justify-between items-center"
             :class="(globals?.cart?.items?.length > 0) ? 'flex-row' : 'flex-row-reverse'">
-            <h2 class="leading-[140%]" style="font-size: {{ cart_title_font_size }}px; font-weight: {{ cart_title_weight }}; color: {{ product_title_color }};">
+            <h2 class="leading-[140%] font-bold md:text-2xl text-lg" style=" color: {{ product_title_color }};">
               {{ t(cart_title_text) }}
             </h2>
             <button @click="toggleModal('cart')" class="text-textDescription hover:text-gray-700 transition">
@@ -157,8 +152,8 @@
                         class="bg-bgItem rounded-lg object-cover flex-shrink-0"
                         style="width: {{ product_image_size }}px; height: {{ product_image_size }}px;" />
                       <div class="flex-1 flex flex-col gap-2 min-w-0">
-                        <p class="title cart-title-truncate" x-text="item?.productData?.title"
-                           style="color: {{ product_title_color }}; font-size: {{ product_title_font_size }}px;"></p>
+                        <p class="title cart-title-truncate text-xs" x-text="item?.productData?.title"
+                           style="color: {{ product_title_color }};"></p>
 
                         <div class="flex flex-col gap-4">
                           <p x-show="item?.variantData?.options.length > 0" class="text-xs text-textDescription"
@@ -220,8 +215,8 @@
                           class="bg-bgItem rounded-lg object-cover flex-shrink-0"
                           style="width: {{ product_image_size }}px; height: {{ product_image_size }}px;" />
                         <div class="flex-grow flex flex-col gap-2">
-                          <p class="font-medium leading-[150%]" x-text="item?.productData?.title"
-                             style="color: {{ product_title_color }}; font-size: {{ product_title_font_size }}px;"></p>
+                          <p class="font-medium leading-[150%] text-sm " x-text="item?.productData?.title"
+                             style="color: {{ product_title_color }};"></p>
                           <p class="text-textDescription" x-text="(item?.variantData?.options||[]).map(o=>o?.label).join(' / ')"></p>
                         </div>
                       </div>
@@ -279,11 +274,11 @@
           <!-- Footer Buttons -->
           <div class="grid grid-cols-2 gap-2 flex-shrink-0">
             <button
-              class="w-full rounded-full font-medium md:text-base text-sm hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full rounded-full font-medium md:text-lg text-sm hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="{{ t('cart_checkout_now') }}"
               :disabled="globalLoading.checkout"
               @click="checkout()"
-              style="background-color: {{ checkout_button_bg }}; color: {{ checkout_button_text_color }}; padding-top: {{ button_vertical_padding }}px; padding-bottom: {{ button_vertical_padding }}px;">
+              style="background-color: {{ checkout_button_bg }}; color: {{ checkout_button_text_color }};">
               <span x-show="!globalLoading.checkout">{{ t(checkout_button_text) }}</span>
               <template x-if="globalLoading.checkout">
                 <div class="flex justify-center">
@@ -293,9 +288,9 @@
             </button>
 
             <a href="/cart"
-              class="w-full bg-white border border-mainColor rounded-full
-                     font-medium md:text-base text-sm hover:bg-gray-100 text-center transition"
-              style="color: {{ open_cart_button_text_color }}; font-size: {{ open_cart_button_font_size }}px;padding-top: {{ button_vertical_padding }}px; padding-bottom: {{ button_vertical_padding }}px;">
+              class="w-full bg-white border border-mainColor md:py-2.5 py-2 rounded-full 
+                     font-medium md:text-lg text-sm hover:bg-gray-100 text-center transition"
+              style="color: {{ open_cart_button_text_color }};">
               {{ t('cart_open_cart') }}
             </a>
           </div>

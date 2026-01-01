@@ -2,10 +2,10 @@
     <div class="flex items-center justify-center w-24 h-24 rounded-full bg-[#F7F7F7] shadow-inner mb-6">
         <!-- Larger, clearer empty box icon -->
         <svg class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 64 64" stroke="currentColor">
-            <rect x="12" y="22" width="40" height="26" rx="4" fill="#FFF" stroke="#BDBDBD" stroke-width="2"/>
-            <rect x="15" y="25" width="34" height="20" rx="3" fill="#F7F7F7" stroke="#E0E0E0" stroke-width="1.5"/>
-            <rect x="12" y="22" width="40" height="6" rx="3" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="1"/>
+            <rect x="12" y="22" width="40" height="26" rx="4" fill="#FFF" stroke="{{settings.empty_state__color}}" stroke-width="2"/>
+            <rect x="15" y="25" width="34" height="20" rx="3" fill="#F7F7F7" stroke="{{settings.empty_state__color}}" stroke-width="1.5" opacity="0.7"/>
+            <rect x="12" y="22" width="40" height="6" rx="3" fill="#FAFAFA" stroke="{{settings.empty_state__color}}" opacity="0.7"/> stroke-width="1"/>
         </svg>
     </div>
-    <h2 class="text-2xl font-bold mb-2 text-gray-700">{{ t("empty") }}</h2>
+    <h2 style="color: {{settings.empty_state__color}};" class="text-2xl font-bold mb-2 ">{{ t("empty") }}</h2>
 </div>

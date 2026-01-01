@@ -1,10 +1,10 @@
 {
   "layout": "layout",
-  "title": "الصفحة الرئيسية",
+  "title": "صقحة المقال",
   "widgets": [
     {
-      "name": "products",
-      "widget": "products",
+      "name": "blog",
+      "widget": "blog-details",
       "settings": {}
     }
   ]

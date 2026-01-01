@@ -35,7 +35,15 @@
           "ar": "لون نص الباجنيشن",
           "en": "Pagination Text Color"
         },
-        "default": "#ffff"
+        "default": "#fff"
+      },
+      "empty_state__color": {
+        "type": "color",
+        "label": {
+          "ar": "لون الأجزاء الفارغة",
+          "en": "Empty State Background Color"
+        },
+        "default": "#666666"
       }
     }
   },
@@ -75,7 +83,7 @@
           "ar": "هل ارتفاع السلة الجانبية بالكامل",
           "en": "Full Cart Drawer Height"
         },
-        "default": true
+        "default": false
       },
       "cart_title_text": {
         "type": "string",
@@ -84,25 +92,6 @@
           "en": "Cart Title"
         },
         "default": "shopping_cart"
-      },
-      "cart_title_font_size": {
-        "type": "number",
-        "label": {
-          "ar": "حجم عنوان السلة (px)",
-          "en": "Cart Title Font Size (px)"
-        },
-        "default": 24,
-        "min": 12,
-        "max": 64
-      },
-      "cart_title_weight": {
-        "type": "select",
-        "label": {
-          "ar": "نوع خط العنوان",
-          "en": "Title Font Weight"
-        },
-        "options": ["normal", "medium", "bold"],
-        "default": "bold"
       },
       "cart_vertical_padding": {
         "type": "range",
@@ -113,16 +102,6 @@
         "min": 0,
         "max": 80,
         "default": 24
-      },
-      "button_vertical_padding": {
-        "type": "range",
-        "label": {
-          "ar": "هامش رأسي للأزرار (بكسل)",
-          "en": "Button Vertical Padding (px)"
-        },
-        "min": 0,
-        "max": 80,
-        "default": 18
       },
       "checkout_button_bg": {
         "type": "color",
@@ -156,16 +135,6 @@
         },
         "default": "#111111"
       },
-      "open_cart_button_font_size": {
-        "type": "number",
-        "label": {
-          "ar": "حجم نص زر فتح السلة (px)",
-          "en": "Open Cart Button Font Size (px)"
-        },
-        "default": 16,
-        "min": 10,
-        "max": 40
-      },
       "product_title_color": {
         "type": "color",
         "label": {
@@ -173,16 +142,6 @@
           "en": "Product Title Color"
         },
         "default": "#222222"
-      },
-      "product_title_font_size": {
-        "type": "number",
-        "label": {
-          "ar": "حجم اسم المنتج (px)",
-          "en": "Product Title Font Size (px)"
-        },
-        "default": 16,
-        "min": 10,
-        "max": 40
       },
       "product_image_size": {
         "type": "range",
@@ -269,6 +228,48 @@
         "default": 16,
         "min": 10,
         "max": 40
+      }
+    }
+  },
+  {
+    "label": {
+      "ar": "إعدادات قائمة البحث",
+      "en": "Search List Settings"
+    },
+    "settings": {
+      "search_list_is_circle": {
+        "type": "boolean",
+        "label": {
+          "ar": "الخلفية دائرية",
+          "en": "Circular Background"
+        },
+        "default": true
+      },
+      "search_list_bg_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون الخلفية في القائمة",
+          "en": "List Background Color"
+        },
+        "default": "#FFFFFF"
+      },
+      "search_list_text_color": {
+        "type": "color",
+        "label": {
+          "ar": "لون النص في القائمة",
+          "en": "List Text Color"
+        },
+        "default": "#000"
+      },
+      "search_list_image_size": {
+        "type": "range",
+        "label": {
+          "ar": "حجم الصورة (px)",
+          "en": "Image Size (px)"
+        },
+        "min": 24,
+        "max": 100,
+        "default": 44
       }
     }
   }

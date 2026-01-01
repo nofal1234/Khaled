@@ -40,18 +40,25 @@
     <!-- Menu Content -->
     <div class="flex-grow p-4 overflow-y-auto">
       <!-- Menu Items -->
-      <nav class="space-y-1">
+      <nav class="space-y-1 h-full">
         {% if headerMenu | length > 0 %}
         {% for item in headerMenu %}
         <a href="{{ item.url | default('#') }}" @click="toggleModal('sidebar', false)"
           class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
           <span
-            style="font-family: Tajawal; font-weight: 400; font-size: {{ sidebar_font_size }}px; line-height: 150%; letter-spacing: 0%; text-align: right; color: {{ sidebar_text_color }};">{{
-            item.title | default('بدون عنوان') }}</span>
+            style="font-family: Zain; font-weight: 400; font-size: {{ sidebar_font_size }}px; line-height: 150%; letter-spacing: 0%; text-align: right; color: {{ sidebar_text_color }};">{{
+            item.title | t("no_title") }}</span>
         </a>
         {% endfor %}
         {% else %}
-        <p class="text-gray-500 text-sm">لا توجد عناصر في القائمة.</p>
+        <div class="flex flex-col h-full items-center justify-center gap-3 py-10 text-center text-gray-400">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full border border-dashed border-gray-300">
+            <svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7h14M5 12h14M5 17h8" />
+            </svg>
+          </div>
+          <p class="text-sm">لا توجد عناصر في القائمة.</p>
+        </div>
         {% endif %}
       </nav>
     </div>
@@ -62,8 +69,8 @@
     {% set currentLang = localization.language or 'en' %}
 
     <div class="border-t border-gray-100 p-4 bg-white">
-      <div class="flex items-center justify-center">
-        <span class="text-gray-500 text-sm mr-2 font-medium">{{ t("choose_language") }}</span>
+      <div class="flex items-center w-full justify-between">
+        <span class="text-gray-500 text-sm font-medium">{{ t("choose_language") }}</span>
         {% form 'lang' %}
         <div class="flex items-center gap-2">
           {% for lang in localization.availableLanguages %}
@@ -78,7 +85,6 @@
                   bg-gray-100 text-gray-700 hover:bg-[#EF9B13] hover:text-white
                 {% endif %}
               "
-              style="font-family: Tajawal;"
             >
               {{ t(lang) }}
             </button>

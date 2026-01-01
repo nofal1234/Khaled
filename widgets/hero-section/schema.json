@@ -17,12 +17,12 @@
      "image_lg": {
       "type": "media",
       "label": "صورة في الشاشات الكبيرة",
-      "default": "qumra://Hero.png"
+      "default": "qumra://banner.png"
     },
     "image_sm": {
       "type": "media",
       "label": "صورة في الشاشات الصغيرة",
-      "default": "qumra://Hero.png"
+      "default": "qumra://banner.png"
     },
     "title": {
       "type": "string",

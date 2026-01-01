@@ -41,17 +41,12 @@
     "button_bg_color": {
       "type": "color",
       "label": "لون خلفية الزر",
-      "default": "#088e5c"
+      "default": "#000"
     },
     "button_text_color": {
       "type": "color",
       "label": "لون نص الزر",
       "default": "#ffffff"
-    },
-    "button_text_type": {
-      "type": "boolean",
-      "label": "نوع نص الزر",
-      "default": true
     },
     "button_text": {
       "type": "string",
@@ -68,12 +63,12 @@
     "image_size": {
       "type": "number",
       "label": "حجم الصورة (px)",
-      "default": 128
+      "default": 227
     },
     "is_image_radius": {
       "type": "boolean",
       "label": "صورة دائرية",
-      "default": true
+      "default": false
     },
     "title_color": {
       "type": "color",
@@ -83,7 +78,7 @@
     "title_size": {
       "type": "number",
       "label": "حجم العنوان (px)",
-      "default": 22
+      "default": 20
     },
     "rating_bg_color": {
       "type": "color",

@@ -15,22 +15,22 @@
     "card_title_color": {
       "type": "color",
       "label": "لون عنوان الكارد",
-      "default": "#333333"
+      "default": "#000"
     },
     "card_title_size": {
       "type": "number",
       "label": "حجم عنوان الكارد (px)",
-      "default": 18
+      "default": 14
     },
     "card_description_color": {
       "type": "color",
       "label": "لون وصف الكارد",
-      "default": "#6b7280"
+      "default": "#666666"
     },
     "card_description_size": {
       "type": "number",
       "label": "حجم وصف الكارد (px)",
-      "default": 14
+      "default": 12
     },
     "price_before_color": {
       "type": "color",
@@ -65,7 +65,7 @@
     "buy_button_bg": {
       "type": "color",
       "label": "لون خلفية زر الشراء",
-      "default": "#088e5c"
+      "default": "#000"
     },
     "cards_per_row_mobile": {
       "type": "number",

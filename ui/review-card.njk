@@ -1,12 +1,7 @@
 
 <div
   class="review-card max-w-md mx-auto flex flex-col md:gap-[26px] gap-[21px] rounded-[13px] border border-stork px-4 md:px-[26px] py-[20px] md:py-[13px] w-full h-full"
-  style="
-    background: {{ data.review_bg_color }};
-    --review-name-size: {{ data.user_name_size }}px;
-    --review-desc-size: {{ data.user_description_size }}px;
-    --review-text-size: {{ data.title_size }}px;
-  ">
+  style="background: {{ data.review_bg_color }};">
   <div class="flex justify-between items-start md:gap-[26px] gap-5">
     <div class="flex items-center flex-1 truncate gap-[13px]">
       <div class="py-[13.3px] px-[15.8px]">
@@ -14,7 +9,7 @@
       </div>
       <div class="flex flex-col gap-1 flex-1 min-w-0  overflow-hidden">
         <h3 
-          class="truncate font-medium leading-[150%]" 
+          class="truncate font-medium leading-[150%] text-sm md:text-base" 
           style="color: {{ data.user_name_color }};">
             {{ t(data.review.name) }}
         </h3>
@@ -26,25 +21,26 @@
       </div>
     </div>
     <div
-      class="rounded-md px-[10.5px] flex items-center gap-1 font-bold"
+      class="rounded-md leading-[150%] md:w-[70px] w-[55px] justify-center items-center flex items-center gap-1 font-bold"
       style="
         background: {{ data.link_color }};
         color: {{ data.review_text_color }};
-        min-width: 70px;
         font-size: 16px;
         height: 35px;
       "
     >
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.36493 2.556C6.31518 0.852 6.78993 0 7.50018 0C8.21043 0 8.68518 0.852 9.63543 2.556L9.88143 2.997C10.1514 3.4815 10.2864 3.72375 10.4964 3.8835C10.7064 4.04325 10.9689 4.1025 11.4939 4.221L11.9709 4.329C13.8159 4.74675 14.7377 4.95525 14.9574 5.661C15.1764 6.366 14.5479 7.10175 13.2902 8.5725L12.9647 8.95275C12.6077 9.3705 12.4284 9.57975 12.3482 9.83775C12.2679 10.0965 12.2949 10.3755 12.3489 10.9327L12.3984 11.4405C12.5882 13.4032 12.6834 14.3843 12.1089 14.82C11.5344 15.2557 10.6704 14.8582 8.94393 14.0632L8.49618 13.8577C8.00568 13.6312 7.76043 13.5187 7.50018 13.5187C7.23993 13.5187 6.99468 13.6312 6.50418 13.8577L6.05718 14.0632C4.32993 14.8582 3.46593 15.2557 2.89218 14.8207C2.31693 14.3842 2.41218 13.4032 2.60193 11.4405L2.65143 10.9335C2.70543 10.3755 2.73243 10.0965 2.65143 9.8385C2.57193 9.57975 2.39268 9.3705 2.03568 8.9535L1.71018 8.5725C0.452426 7.1025 -0.176074 6.36675 0.0429262 5.661C0.261926 4.95525 1.18518 4.746 3.03018 4.329L3.50718 4.221C4.03143 4.1025 4.29318 4.04325 4.50393 3.8835C4.71468 3.72375 4.84893 3.4815 5.11893 2.997L5.36493 2.556Z" fill="white"/>
+      </svg>
       <span 
-        class="font-medium leading-[150%]" 
-        style="font-size: 18px;">
-        {{ data.review.stars }}
+        class="font-medium md:text-lg text-sm leading-[150%]" 
+       >
+        {{ data.review.stars }}.0
       </span>
-      <i class="ph-fill ph-star text-[15px]"></i>
     </div>
   </div>
   <p
-    class="leading-[150%]"
+    class="leading-[150%] md:text-sm text-xs"
     style="color: {{ data.title_color }};"
   >{{ t(data.review.description) | striptags }}</p>
 </div>

@@ -2,18 +2,18 @@
   {% set current = (context.pagination and context.pagination.currentPage) or 1 %}
   {% set total = (context.pagination and context.pagination.totalPages) or 10 %}
   {% set pagination_background_color = settings.pagination_background_color | default('#f2f2f2') %}
-  {% set pagination_text_color = settings.pagination_text_color | default('#111111') %}
+  {% set pagination_text_color = settings.pagination_text_color  %}
   <div class="flex items-center justify-center mt-6">
     <nav class="flex items-center gap-3">
       {# Prev #}
       {% if current > 1 %}
       <a href="?page={{ current - 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
-        style="background-color: {{ pagination_background_color }}; color: {{ pagination_text_color }};">
-        <span style="color: {{ pagination_text_color }};">‹</span>
+        style="background-color: {{ pagination_background_color }}; color: {{ pagination_background_color }};">
+        <span style="color: {{ transparent }};">‹</span>
       </a>
       {% else %}
       <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 cursor-not-allowed"
-        style="background-color: {{ pagination_background_color }}; color: {{ pagination_text_color }};">‹</span>
+        style="background-color: {{ transparent }}; color: {{ pagination_background_color }};">‹</span>
       {% endif %}
 
       {# Page 1..3 #}
@@ -48,12 +48,12 @@
       {# Next #}
       {% if current < total %}
       <a href="?page={{ current + 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
-        style="background-color: {{ pagination_background_color }}; color: {{ pagination_text_color }};">
-        <span style="color: {{ pagination_text_color }};">›</span>
+        style="background-color: {{ transparent }}; color: {{ pagination_background_color }};">
+        <span style="color: {{ pagination_background_color }};">›</span>
       </a>
       {% else %}
       <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 cursor-not-allowed"
-        style="background-color: {{ pagination_background_color }}; color: {{ pagination_text_color }};">›</span>
+        style="background-color: {{ transparent }}; color: {{ pagination_background_color }};">›</span>
       {% endif %}
     </nav>
   </div>

@@ -21,11 +21,23 @@
 }
 {% endstyle %}
 
-<div x-data="{ scrolled: false, isMain: {{ context.page.isMain}} ? true : false }" x-init="
-    scrolled = window.scrollY > 10;
-    window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 })
-  "
-  :class="scrolled ? 'bg-mainColor fixed top-0 shadow-lg' : (isMain ? 'bg-transparent fixed top-[49px] ' : ' bg-white  sticky top-[49px] border-b  border-stork')"
+<div x-data="(() => {
+    const search = xDataSearch();
+    return {
+      ...search,
+      scrolled: false,
+      isMain: {{ context.page.isMain}} ? true : false,
+      startSearch() {
+        search.init.call(this);
+      },
+      init() {
+        this.scrolled = window.scrollY > 10;
+        window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 10 });
+        this.startSearch();
+      },
+    };
+  })()" x-init="init()"
+  :class="scrolled ? 'bg-mainColor fixed top-0  border-b ' : (isMain ? 'bg-transparent fixed top-[49px] ' : ' bg-white  sticky top-[49px] border-b  border-stork')"
   class="flex max-h-[171px] gap-6 w-full transition-all z-50 duration-200 ease-in-out"
   :style="{ backgroundColor: scrolled ? '{{ bg_color_scrolled }}' : (isMain ? '{{ bg_color_fixed }}' : '{{ bg_in_page }}'), color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
   style="transition-property: background-color, top, box-shadow; ">
@@ -61,19 +73,19 @@
           </button>
           <button @click="toggleModal('search')" type="button" class="focus:outline-none md:hidden flex items-center"
             aria-label="عربة التسوق">
-            <i class="ph text-[22px] ph-magnifying-glass"
+            <i class="ph text-[22px] md:text-[28px] ph-magnifying-glass"
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
           </button>
           {% if customer?._id %}
           <button type="button" class="focus:outline-none flex items-center"  :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }">
-            {{ "<i class='ph text-[22px] md:text-[28px] ph-user'></i>" | customer_logout_link }}
+            {{ "<i class='ph text-[22px] md:text-[28px] align-middle ph-user'></i>" | customer_logout_link }}
           </button>
           {% else %}
           <button type="button" class="focus:outline-none flex items-center"  :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }">
-            {{ "<i class='ph text-[22px] md:text-[28px] ph-user' ></i>" | customer_login_link }}
+            {{ "<i class='ph text-[22px] md:text-[28px] align-middle ph-user' ></i>" | customer_login_link }}
           </button>
           {% endif %}
-          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none" aria-label="حسابي">
+          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none flex items-center" aria-label="حسابي">
             <i 
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
             class="ph text-[22px] md:text-[28px] text-black ph-list"></i>
@@ -82,7 +94,7 @@
       </div>
 
     </div>
-    {% set header_menu = widget.data.header_menu %}
+    {% set header_menu = widget.data.header_menu or [] %}
     {% if widget.data.header_menu | length > 0 and page.isMain == false %}
     <div class="flex justify-center max-md:hidden">
     <div class="w-9/12 px-10 md:px-12">
@@ -90,7 +102,6 @@
         <div id="{{widget.id}}-header-menu" class="swiper header-offers-swiper  ">
           <div class="swiper-wrapper items-center">
             
-            {%log "header_menu",widget.data.header_menu%}
             {% for item in header_menu | concat(header_menu) %}
             <div class="swiper-slide">
               <a  href="{{item.url}}"

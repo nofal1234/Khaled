@@ -27,7 +27,7 @@ class="fixed inset-0 z-50">
           <i class="ph ph-heart text-xl"></i>
         </div>
         <div class="flex flex-col">
-          <span class="font-tajawal font-semibold text-base text-gray-900">{{ t('wishlist') }}</span>
+          <span class=" font-semibold text-base text-gray-900">{{ t('wishlist') }}</span>
           <span class="text-xs text-gray-500" x-text="count() ? count() + ' ' + '{{ t('wishlist_count_suffix') }}' : '{{ t('wishlist_empty_initial') }}'"></span>
         </div>
       </div>
@@ -45,19 +45,20 @@ class="fixed inset-0 z-50">
             <i class="ph ph-heart text-2xl"></i>
           </div>
           <div class="space-y-1">
-            <p class="font-tajawal font-semibold text-sm text-gray-800">{{ t('wishlist_empty_title') }}</p>
+            <p class="font-semibold text-sm text-gray-800">{{ t('wishlist_empty_title') }}</p>
             <p class="text-xs text-gray-500">{{ t('wishlist_empty_desc') }}</p>
           </div>
         </div>
       </template>
 
       <!-- Items List -->
+       <span x-effect="console.log("items",items)"></span>
       <template x-if="items && items.length">
         <div class="flex flex-col gap-3">
           <template x-for="it in items" :key="it._id">
-            <div class="bg-white rounded-2xl border border-gray-100  p-3 flex gap-3 sm:gap-4">
+            <div class="bg-white rounded-lg border border-gray-100  p-3 flex gap-3 sm:gap-4">
               <!-- Image -->
-              <div class="flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center"
+              <div class="flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center"
                 style="width: {{ wishlist_image_size }}px; height: {{ wishlist_image_size }}px;">
                 <template x-if="it.image && it.image.fileUrl">
                   <img :src="it.image.fileUrl" :alt="it.title" class="w-full h-full object-cover" loading="lazy" />
@@ -72,7 +73,7 @@ class="fixed inset-0 z-50">
                 <div class="space-y-1">
                   <!-- العنوان + زر الحذف -->
                   <div class="flex items-center justify-between gap-2">
-                    <p class="font-tajawal font-medium text-[15px] md:text-sm line-clamp-2 min-w-0"
+                    <p class="font-medium text-[15px] md:text-sm line-clamp-2 min-w-0"
                        x-text="it.title"
                        style="color: {{ wishlist_main_color }}"
                     ></p>

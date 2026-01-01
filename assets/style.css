@@ -1,5 +1,5 @@
 /* Import Tajawal Font */
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 
 :root {
     --swiper-navigation-size: 25px;
@@ -12,9 +12,9 @@
     --textDescription:#666666;
 }
 
-/* Apply Tajawal font to all elements */
+/* Apply Zain font to all elements */
 body, html, * {
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'Zain', sans-serif;
 }
 
 [x-cloak] {
@@ -395,4 +395,20 @@ input[type="number"] {
     scrollbar-width: thin;
     scrollbar-color: var(--mainColor) rgba(var(--mainColor-rgb), 0.07);
 }
+
+.none-scrollbar {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+}
+.none-scrollbar::-webkit-scrollbar {
+    width: 0 !important;
+    background: transparent !important;
+}
+.none-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent !important;
+}
+.none-scrollbar::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
 
