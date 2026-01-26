@@ -1,13 +1,13 @@
 <!-- Offers Section - Infinity Autoplay Swiper -->
 {% set related_products = context.related_products or [] %}
-{% set products_collection = widget.data.products_collection.data or widget.data.products_collection %}
-{% set products = related_products | concat(products_collection) %}
+{% set products_collection = widget.data.products or [] %}
+{% set products = related_products  | concat(products_collection) %}
 {% set section_title = widget.data.section_title %}
 {% set view_all_link = widget.data.view_all_link %}
 {% set show_view_all = widget.data.show_view_all %}
-{% set title_color = widget.data.title_color %}
+{% set title_color = widget.data.title_color  %}
 {% set link_color = widget.data.link_color %}
-{% set show_navigation = widget.data.show_navigation %}
+{% set show_navigation = widget.data.show_navigation  %}
 {% set card_title_color = widget.data.card_title_color %}
 {% set card_title_size = widget.data.card_title_size %}
 {% set card_description_color = widget.data.card_description_color %}
@@ -22,6 +22,7 @@
 
 {# ========== read slider settings from widget.data #}
 
+{% if products | length > 0 %}
 <section class="mt-4 md:mt-8 mb-3 md:mb-5 container">
   <div class="flex flex-col gap-4 md:gap-6 py-4">
     <div class="flex items-center justify-between">
@@ -39,7 +40,7 @@
         {% if show_navigation %}
         {% set dir = t('dir') %}
         <div class="flex items-center gap-[38px]">
-
+        
           <div
             class="cursor-pointer hidden md:flex items-center justify-center bg-transparent swiper-button-next-offer">
             {% if dir == 'rtl' %}
@@ -49,48 +50,46 @@
             {% endif %}
           </div>
           <div
-            class="cursor-pointer hidden md:flex items-center justify-center bg-transparent swiper-button-prev-offer">
-            {% if dir == 'ltr' %}
-            <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
-            {% else %}
-            <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
-            {% endif %}
-          </div>
+          class="cursor-pointer hidden md:flex items-center justify-center bg-transparent swiper-button-prev-offer">
+          {% if dir == 'ltr' %}
+          <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% else %}
+          <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% endif %}
+        </div>
         </div>
         {% endif %}
       </div>
     </div>
-    {% if products | length > 0 %}
     <div class="relative">
-
+    
       <div id="offer-swiper-{{ widget.id }}" class="swiper offerSwiper">
         <div class="swiper-wrapper">
           {% for product in products %}
           <div class="swiper-slide  h-full">
             {% ui "product-card.njk", product=product,
-            card_title_color=card_title_color,
-            card_title_size=card_title_size,
-            card_description_color=card_description_color,
-            card_description_size=card_description_size,
-            price_before_color=price_before_color,
-            price_before_size=price_before_size,
-            price_color=price_color,
-            price_size=price_size,
-            discount_color=discount_color,
-            discount_size=discount_size,
-            buy_button_bg=buy_button_bg
+                  card_title_color=card_title_color,
+                  card_title_size=card_title_size,
+                  card_description_color=card_description_color,
+                  card_description_size=card_description_size,
+                  price_before_color=price_before_color,
+                  price_before_size=price_before_size,
+                  price_color=price_color,
+                  price_size=price_size,
+                  discount_color=discount_color,
+                  discount_size=discount_size,
+                  buy_button_bg=buy_button_bg
             %}
           </div>
           {% endfor %}
         </div>
       </div>
     </div>
-    {% else %}
-    {% ui "empty.njk" %}
-    {% endif %}
   </div>
 </section>
-
+{% else %}
+{% ui "empty.njk" %}
+{% endif %}
 <script>
   function initOfferSwiper() {
     const swiperElem = document.getElementById('offer-swiper-{{ widget.id }}');
@@ -110,13 +109,13 @@
     const spaceBetweenSM = Number('{{ widget.data.space_between_sm }}');
     const spaceBetweenMD = Number('{{ widget.data.space_between_md }}');
     const spaceBetweenLG = Number('{{ widget.data.space_between_lg }}');
-    const slides_per_view_xs = Number('{{ widget.data.slides_per_view_xs }}');
-    const space_between_xs = Number('{{ widget.data.space_between_xs }}');
 
     const allowTouchMove = '{{ widget.data.allow_touch_move }}' === 'true';
     const grabCursor = '{{ widget.data.grab_cursor }}' === 'true';
     const speed = Number('{{ widget.data.speed }}');
     const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
+    const slides_per_view_xs = Number('{{ widget.data.slides_per_view_xs }}');
+    const space_between_xs = Number('{{ widget.data.space_between_xs }}');
 
     const swiper = new Swiper('#offer-swiper-{{ widget.id }}', {
       grabCursor,
@@ -205,7 +204,7 @@
 
 {% style %}
 .swiper-button-next-offer, .swiper-button-prev-offer {
-width: 14px;
-height: 27px;
+  width: 14px;
+  height: 27px;
 }
 {% endstyle %}

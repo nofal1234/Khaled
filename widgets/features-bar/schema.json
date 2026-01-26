@@ -108,7 +108,7 @@
   },
   "presets": [
     {
-      "category": "sliders",
+      "category": "General",
       "name": "features slider",
       "blocks": [
         {

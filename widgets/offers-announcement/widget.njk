@@ -17,6 +17,7 @@
     font-size: {{ font_size }}px;
     height: {{ height }}px;
   "
+  id="offers-announcement-{{ widget.id }}"
   class="w-full z-40 flex items-center {% if top_bar_is_fixed %}fixed top-0 left-0 right-0{% endif %}"
 >
   <div class=" w-full relative px-2.5 md:px-12 mx-2.5 md:mx-20 flex items-center justify-center">
@@ -58,6 +59,19 @@
 {% endif %}
 
 <script>
+  var topBarHeight = Number('{{ height }}');
+  function broadcastTopBarHeight() {
+    var barEl = document.getElementById("offers-announcement-{{ widget.id }}");
+    var measuredHeight = barEl ? barEl.offsetHeight : topBarHeight;
+    window.offersAnnouncementHeight = measuredHeight;
+    window.dispatchEvent(new CustomEvent('offersAnnouncementHeightChange', { detail: { height: measuredHeight } }));
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", broadcastTopBarHeight);
+  } else {
+    broadcastTopBarHeight();
+  }
+  window.addEventListener("resize", broadcastTopBarHeight);
   (function () {
     function initTopbarBrands() {
       var swiperElem = document.getElementById("topbar-swiper-{{ widget.id }}");
@@ -88,7 +102,7 @@
       });
     }
 
-    // ✅ شغّل فورًا لو الصفحة جاهزة، وإلا استنى
+    // Initialize immediately if DOM is ready; otherwise wait for DOMContentLoaded
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initTopbarBrands);
     } else {

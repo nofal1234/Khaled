@@ -77,7 +77,7 @@
       }
     },
     {
-      "name": "Offers Slider",
+      "name": "collection products slider",
       "widget": "offers-slider",
       "settings": {
         "section_title": "offers",
@@ -104,6 +104,8 @@
         "grab_cursor": true,
         "autoplay_delay": 3000,
         "speed": 900,
+        "slides_per_view_xs": 2,
+        "space_between_xs": 8,
         "slides_per_view_sm": 2,
         "space_between_sm": 8,
         "slides_per_view_md": 3,
@@ -245,39 +247,7 @@
         { "block": "reviewItem", "name": "review 3", "settings": { "name": "review_3_name", "days_work": "days_work", "description": "review_3_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } },
         { "block": "reviewItem", "name": "review 4", "settings": { "name": "review_1_name", "days_work": "days_work", "description": "review_1_text", "image": "qumra://Review1.png", "stars": 5, "alt": "review_image_alt" } }
       ]
-    },
-    {
-      "name": "blog slider",
-      "widget": "blog-slider",
-      "settings": {
-        "section_title": "features_section",
-        "view_all_link": "#",
-        "title_color": "#333333",
-        "blog_name_color": "#1c1c1c",
-        "blog_name_size": 18,
-        "blog_description_color": "#6b7280",
-        "blog_description_size": 14,
-        "show_view_all": true,
-        "link_color": "#6b7280",
-        "show_navigation": true,
-        "allow_touch_move": true,
-        "autoplay": true,
-        "grab_cursor": true,
-        "autoplay_delay": 3000,
-        "speed": 900,
-        "slides_per_view_sm": 1.5,
-        "space_between_sm": 8,
-        "slides_per_view_md": 2,
-        "space_between_md": 8,
-        "slides_per_view_lg": 4,
-        "space_between_lg": 16
-      },
-      "blocks": [
-        { "block": "blogPost", "name": "blog 1", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog1.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
-        { "block": "blogPost", "name": "blog 2", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog2.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
-        { "block": "blogPost", "name": "blog 3", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog3.png", "button_text": "view_more", "link": "#", "alt_text": "" } },
-        { "block": "blogPost", "name": "blog 4", "settings": { "title": "blog_title", "description": "blog_desc", "image": "qumra://blog2.png", "button_text": "view_more", "link": "#", "alt_text": "" } }
-      ]
     }
   ]
 }
+

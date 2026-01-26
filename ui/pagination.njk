@@ -8,7 +8,7 @@
       {# Prev #}
       {% if current > 1 %}
       <a href="?page={{ current - 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
-        style="background-color: {{ pagination_background_color }}; color: {{ pagination_background_color }};">
+        style="background-color: 'transparent'; color: {{ pagination_background_color }};">
         <span style="color: {{ transparent }};">‹</span>
       </a>
       {% else %}
@@ -48,12 +48,12 @@
       {# Next #}
       {% if current < total %}
       <a href="?page={{ current + 1 }}" class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
-        style="background-color: {{ transparent }}; color: {{ pagination_background_color }};">
+        style="background-color: 'transparent'; color: {{ pagination_background_color }};">
         <span style="color: {{ pagination_background_color }};">›</span>
       </a>
       {% else %}
       <span class="h-8 w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full border border-gray-200 cursor-not-allowed"
-        style="background-color: {{ transparent }}; color: {{ pagination_background_color }};">›</span>
+        style="background-color: 'transparent'; color: {{ pagination_background_color }};">›</span>
       {% endif %}
     </nav>
   </div>

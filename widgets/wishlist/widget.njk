@@ -2,14 +2,14 @@
   <div class="px-2.5 md:px-6 mx-2.5 md:mx-20">
     <nav class="text-sm text-gray-500 mb-2" aria-label="Breadcrumb">
       <ol class="flex items-center gap-1">
-        <li><a href="/" class="hover:underline">الرئيسية</a></li>
+        <li><a href="/" class="hover:underline">{{ t("wishlist_home") }}</a></li>
         <li>/</li>
-        <li class="text-gray-800 font-medium">المفضلة</li>
+        <li class="text-gray-800 font-medium">{{ t("wishlist_title") }}</li>
       </ol>
     </nav>
-    <h1 class="text-2xl md:text-3xl font-bold mb-6 text-right">المفضلة</h1>
+    <h1 class="text-2xl md:text-3xl font-bold mb-6 text-right">{{ t("wishlist_title") }}</h1>
     <div id="wishlistPage" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
-    <p id="wishlistEmpty" class="text-center text-gray-600 mt-10 hidden">لا توجد منتجات في المفضلة حالياً.</p>
+    <p id="wishlistEmpty" class="text-center text-gray-600 mt-10 hidden">{{ t("wishlist_empty") }}</p>
   </div>
 
   <script>
@@ -49,7 +49,7 @@
         const originalHtml = btn.innerHTML;
         btn.disabled = true;
         btn.classList.add('opacity-60', 'cursor-not-allowed');
-        btn.innerHTML = '<span>جارٍ الإضافة...</span>';
+        btn.innerHTML = '<span>{{ t("wishlist_adding") }}</span>';
 
         try {
           if (typeof updateLoading === 'function') {
@@ -64,7 +64,7 @@
                 updateCart(res.addToCart.data);
               }
               if (window.showToast) {
-                window.showToast('تم إضافة المنتج إلى السلة', 'success');
+                window.showToast('{{ t("wishlist_added_to_cart") }}', 'success');
               }
             } catch (_) {}
           })
@@ -72,7 +72,7 @@
             console.error('addToCart from wishlist page error', err);
             try {
               if (window.showToast) {
-                window.showToast('حدث خطأ أثناء الإضافة للسلة', 'error');
+                window.showToast('{{ t("wishlist_add_error") }}', 'error');
               }
             } catch (_) {}
           })
@@ -153,7 +153,7 @@
 
                 <div class="mt-3 flex items-center justify-between gap-2 wishlist-card-controls">
                   <div class="flex items-center gap-1.5 bg-gray-100 rounded-full px-2 py-1">
-                    <span class="text-[11px] text-gray-500">الكمية</span>
+                    <span class="text-[11px] text-gray-500">{{ t("wishlist_quantity") }}</span>
                     <input
                       type="number"
                       min="1"
@@ -167,7 +167,7 @@
                     onclick="event.stopPropagation(); event.preventDefault(); if(window.addWishlistToCart){ window.addWishlistToCart('${p._id}', this); }"
                     class="px-3 py-1.5 rounded-full text-[11px] font-medium flex items-center gap-1.5 bg-mainColor text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <span>إضافة للسلة</span>
+                    <span>{{ t("wishlist_add_to_cart") }}</span>
                   </button>
                 </div>
               </div>

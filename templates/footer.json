@@ -1,49 +1,15 @@
 {
-    "title": "Footer Group",
-    "allowAdd": true,
-    "allowRemove": true,
-    "allowReorder": true,
-    "widgets": [
-        {
-            "name": "footer",
-            "widget": "footer",
-            "settings": {
-                "title": "ok"
-            },
-            "blocks": [
-                {
-                  "block": "social_media",
-                  "name": "social_media",
-                  "settings": {
-                    "icon": "qumra://facebook.png",
-                    "link": "#"
-                  }
-                },
-                {
-                  "block": "social_media",
-                  "name": "social_media",
-                  "settings": {
-                    "icon": "qumra://insta.png",
-                    "link": "#"
-                  }
-                },
-                {
-                  "block": "social_media",
-                  "name": "social_media",
-                  "settings": {
-                    "icon": "qumra://x-twitter.png",
-                    "link": "#"
-                  }
-                },
-                {
-                  "block": "social_media",
-                  "name": "social_media",
-                  "settings": {
-                    "icon": "qumra://snap.png",
-                    "link": "#"
-                  }
-                }
-              ]
-        }
-    ]
+  "title": "Footer Group",
+  "allowAdd": true,
+  "allowRemove": true,
+  "allowReorder": true,
+  "widgets": [
+    {
+      "name": "footer",
+      "widget": "footer",
+      "settings": {
+        "title": "ok"
+      }
+    }
+  ]
 }

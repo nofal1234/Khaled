@@ -42,7 +42,7 @@
   },
   "presets": [
     {
-      "category": "Home",
+      "category": "Products",
       "name": "Product Reviews",
       "settings": {
         "title": "reviews_and_ratings"

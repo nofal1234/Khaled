@@ -20,12 +20,21 @@
         {{ t('view_all') }}
       </a>
       {% if show_navigation %}
+      {% set dir = t('dir') %}
       <div class="flex items-center gap-[38px]" >
         <div class="cursor-pointer  swiper-button-next-special  hidden md:flex items-center justify-center bg-transparent">
-          <i class="ph  ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% if dir == 'rtl' %}
+          <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% else %}
+          <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% endif %}
         </div>
         <div class=" swiper-button-prev-special cursor-pointer hidden md:flex items-center justify-center bg-transparent">
-          <i class="ph  ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% if dir == 'ltr' %}
+          <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% else %}
+          <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% endif %}
         </div>
       </div>
     {% endif %}

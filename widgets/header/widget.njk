@@ -27,17 +27,40 @@
       ...search,
       scrolled: false,
       isMain: {{ context.page.isMain}} ? true : false,
+      topBarHeight: window.offersAnnouncementHeight || 48,
+      wishlistCount: 0,
+      updateTopBarHeight() {
+        const newHeight = window.offersAnnouncementHeight || 48;
+        if (this.topBarHeight !== newHeight) {
+          this.topBarHeight = newHeight;
+        }
+      },
+      updateWishlistCount() {
+        try {
+          const list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+          this.wishlistCount = Array.isArray(list) ? list.length : 0;
+        } catch (_) {
+          this.wishlistCount = 0;
+        }
+      },
       startSearch() {
         search.init.call(this);
       },
       init() {
         this.scrolled = window.scrollY > 10;
         window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 10 });
+        window.addEventListener('offersAnnouncementHeightChange', (e) => {
+          this.topBarHeight = (e && e.detail && e.detail.height) ? e.detail.height : (window.offersAnnouncementHeight || 48);
+        });
+        window.addEventListener('wishlist:changed', () => this.updateWishlistCount());
+        this.updateWishlistCount();
+        // ensure we pick up late updates
+        this.updateTopBarHeight();
         this.startSearch();
       },
     };
   })()" x-init="init()"
-  :class="scrolled ? 'bg-mainColor fixed top-0  border-b ' : (isMain ? 'bg-transparent fixed top-[49px] ' : ' bg-white  sticky top-[49px] border-b  border-stork')"
+  :class="scrolled ? 'bg-mainColor fixed top-0' : (isMain ? `bg-transparent fixed top-[${topBarHeight}px]` : `bg-white sticky top-[${topBarHeight}px] border-b border-stork`)"
   class="flex max-h-[171px] gap-6 w-full transition-all z-50 duration-200 ease-in-out"
   :style="{ backgroundColor: scrolled ? '{{ bg_color_scrolled }}' : (isMain ? '{{ bg_color_fixed }}' : '{{ bg_in_page }}'), color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
   style="transition-property: background-color, top, box-shadow; ">
@@ -61,18 +84,28 @@
         {%ui "search.njk" ,search_placeholder=search_placeholder%}
 
         <div class="flex md:gap-6 gap-[13px] items-center transition-all duration-300 ease-in-out">
-          <button @click="toggleModal('wishlist')" type="button" class="focus:outline-none flex items-center"
-            aria-label="المفضلة">
+          <button @click="toggleModal('wishlist')" type="button" class="focus:outline-none flex items-center relative"
+            aria-label="{{ t('header_wishlist_label') }}">
             <i class="ph text-[22px] md:text-[28px] ph-heart"
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
-          </button>
-          <button @click="toggleModal('cart')" type="button" class="focus:outline-none flex items-center"
-            aria-label="عربة التسوق">
+            <span
+              x-text="wishlistCount"
+              x-show="wishlistCount > 0"
+              class="absolute -top-1 -right-1 text-white bg-mainColor text-[8px] leading-none min-w-[11px] h-[11px] rounded-full flex items-center justify-center px-1 "
+            ></span>
+            </button>
+          <button @click="toggleModal('cart')" type="button" class="focus:outline-none flex items-center relative"
+            aria-label="{{ t('header_cart_label') }}">
             <i class="ph text-[22px] md:text-[28px] ph-shopping-cart"
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
-          </button>
+            <span
+              x-text="globals?.cart?.totalQuantity || globals?.cart?.items?.length || 0"
+              x-show="(globals?.cart?.totalQuantity || globals?.cart?.items?.length || 0) > 0"
+              class="absolute -top-1 -right-1 text-white bg-mainColor text-[8px] leading-none min-w-[11px] h-[11px] rounded-full flex items-center justify-center px-1 "
+            ></span>
+            </button>
           <button @click="toggleModal('search')" type="button" class="focus:outline-none md:hidden flex items-center"
-            aria-label="عربة التسوق">
+            aria-label="{{ t('header_cart_label') }}">
             <i class="ph text-[22px] md:text-[28px] ph-magnifying-glass"
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
           </button>
@@ -85,7 +118,7 @@
             {{ "<i class='ph text-[22px] md:text-[28px] align-middle ph-user' ></i>" | customer_login_link }}
           </button>
           {% endif %}
-          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none flex items-center" aria-label="حسابي">
+          <button @click="toggleModal('sidebar')" type="button"  class="focus:outline-none flex items-center" aria-label="{{ t('header_account_label') }}">
             <i 
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"
             class="ph text-[22px] md:text-[28px] text-black ph-list"></i>

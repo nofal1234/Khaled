@@ -63,7 +63,7 @@
     "image_size": {
       "type": "number",
       "label": "حجم الصورة (px)",
-      "default": 227
+      "default": 400
     },
     "is_image_radius": {
       "type": "boolean",
@@ -144,7 +144,7 @@
   },
   "presets": [
     {
-      "category": "Pages",
+      "category": "Products",
       "name": "Collections"
     }
   ]

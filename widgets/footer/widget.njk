@@ -5,7 +5,7 @@
     {% if widget.data.footer_height %}min-height: {{ widget.data.footer_height }}px;{% endif %}
   ">
   <div
-    class="container grid md:grid-cols-4 grid-cols-1 gap-6 md:gap-12 lg:gap-[89px] py-[22px] md:py-16 lg:md:pt-[96px] lg:p-[70px]">
+    class="container grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-6 md:gap-8 lg:gap-[89px] py-[22px] md:py-16 lg:md:pt-[96px] lg:p-[70px]">
 
     <div class="flex flex-col items-start">
       <img class="footer-logo object-contain"
@@ -18,22 +18,69 @@
             {{ widget.data.app_description | safe  }}
           </p>
         </div>
-        <div class="flex items-center gap-[34px]">
-          {% for block in widget.blocks %}
-              <a href="{{ block.data.link }}" class="w-max" target="_blank" aria-label="social link" style="color: {{ widget.data.text_color }};">
-                <img src="{{ block.data.icon.fileUrl or block.data.icon }}" alt="social" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);"/>
-              </a>
-          {% endfor %}
+        <div class="flex items-center flex-wrap gap-x-[34px] gap-y-3">
+          {% if widget.data.show_facebook and widget.data.facebook_link %}
+            <a href="{{ widget.data.facebook_link | default('#') }}" class="w-max" target="_blank" aria-label="فيسبوك" style="color: {{ widget.data.text_color }};">
+              <img src="{{"facebook.png" | assets }}" alt="فيسبوك" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_instagram and widget.data.instagram_link %}
+            <a href="{{ widget.data.instagram_link | default('#') }}" class="w-max" target="_blank" aria-label="انستجرام" style="color: {{ widget.data.text_color }};">
+              <img src="{{"insta.png" | assets }}" alt="انستجرام" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_x_twitter and widget.data.x_twitter_link %}
+            <a href="{{ widget.data.x_twitter_link | default('#') }}" class="w-max" target="_blank" aria-label="تويتر" style="color: {{ widget.data.text_color }};">
+              <img src="{{"x-twitter.png" | assets }}" alt="تويتر" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_snapchat and widget.data.snapchat_link %}
+            <a href="{{ widget.data.snapchat_link | default('#') }}" class="w-max" target="_blank" aria-label="سناب شات" style="color: {{ widget.data.text_color }};">
+              <img src="{{"snap.png" | assets }}"  alt="سناب شات" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_youtube and widget.data.youtube_link %}
+          <a href="{{ widget.data.youtube_link | default('#') }}" class="w-max" target="_blank" aria-label="سناب شات" style="color: {{ widget.data.text_color }};">
+            <img src="{{"youtube.png" | assets }}"  alt="سناب شات" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+          </a>
+        {% endif %}
+        {% if widget.data.show_telegram and widget.data.telegram_link %}
+        <a href="{{ widget.data.telegram_link | default('#') }}" class="w-max" target="_blank" aria-label="سناب شات" style="color: {{ widget.data.text_color }};">
+          <img src="{{"telegram.png" | assets }}"  alt="سناب شات" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+        </a>
+      {% endif %}
+          {% if widget.data.show_tiktok and widget.data.tiktok_link %}
+            <a href="{{ widget.data.tiktok_link | default('#') }}" class="w-max" target="_blank" aria-label="تيك توك" style="color: {{ widget.data.text_color }};">
+              <img src="{{"tik-tok.png" | assets }}" alt="تيك توك" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_whatsapp and widget.data.whatsapp_link %}
+            {# Construct WhatsApp direct link using contact_phone #}
+            {% set whatsapp_number = widget.data.whatsapp_link | replace(' ', '') | replace('+', '') %}
+            <a href="https://wa.me/{{ whatsapp_number }}" class="w-max" target="_blank" aria-label="واتساب" style="color: {{ widget.data.text_color }};">
+              <img src="{{"whatsapp.png" | assets }}" alt="واتساب" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
+          {% if widget.data.show_email_link and widget.data.email_link %}
+            <a href="mailto:{{ widget.data.email_link }}" class="w-max" target="_blank" aria-label="البريد الإلكتروني" style="color: {{ widget.data.text_color }};">
+              <img src="{{"email.png" | assets }}" alt="البريد الإلكتروني" class="w-7 h-7 object-contain" style="filter: brightness(0) invert(0.9);" />
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
-
+    {% if widget.data.enable_policy_links %}
     <div class="flex flex-col gap-4">
-      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">قانوني</span>
-      {% for item in widget.data.policy_links %}
-      <a href="{{ item.url }}" class="md:font-medium md:text-base text-sm" style="color: {{ widget.data.text_color }}; letter-spacing: 0.02em;">{{ item.title }}</a>
+      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">{{ t("footer_legal") }}</span>
+      {% for i in range(1,5) %}
+        {% set title = widget.data["policy_link_title_" ~ i] %}
+        {% set url = widget.data["policy_link_url_" ~ i] %}
+        {% if title and title | trim != "" %}
+          <a href="{{ url | default('#') }}" class="md:font-medium md:text-base text-sm" style="color: {{ widget.data.text_color }}; letter-spacing: 0.02em;">{{ title }}</a>
+        {% endif %}
       {% endfor %}
     </div>
+    {% endif %}
 
     {% if widget.data.collections | length > 0 %}
     <div class="flex flex-col gap-4 truncate">
@@ -46,7 +93,7 @@
 
     {% if (widget.data.show_contact_location and widget.data.contact_location) or (widget.data.show_contact_email and widget.data.contact_email) or (widget.data.show_contact_phone and widget.data.contact_phone) %}
     <div class="flex flex-col gap-4">
-      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">تواصل معانا</span>
+      <span class="md:text-xl text-lg font-bold md:leading-[140%] leading-[150%]" style="color: {{ widget.data.text_color }};">{{ t("footer_contact_us") }}</span>
       {% if widget.data.show_contact_location and widget.data.contact_location %}
       <div class="flex items-center gap-2">
         <i class="ph-thin text-2xl ph-map-pin-line" style="color: {{ widget.data.text_color }};"></i>
@@ -79,14 +126,18 @@
     {% endif %}
 
   </div>
-
+  {% if widget.data.powered_text %}
   <div class="flex flex-col md:flex-row gap-2 items-center justify-between container py-4">
     <div class="flex items-center gap-[14px]">
       <i class="ph-thin ph-copyright"></i>
       <span style="color: {{ widget.data.text_color }};">{{ widget.data.powered_text }}</span>
     </div>
-    <img src="{{ widget.data.powered_logo }}" alt="">
+    {% if  widget.data.show_powered_logo %}
+    <img src="{{ widget.data.powered_logo.fileUrl }}" alt="">
+    {% endif %}
   </div>
+  {% endif %}
+
 </footer>
 
 <style>

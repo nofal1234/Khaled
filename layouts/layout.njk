@@ -1,6 +1,6 @@
 {% set locale = localization.lang %}
 <!DOCTYPE html>
-<html lang={{locale}} dir="rtl">
+<html lang="{{ locale }}" dir="rtl">
 
 <head>
   <meta charset="UTF-8" />
@@ -12,14 +12,7 @@
   <style>
     :root {
       --mainColor: {{ settings.mainColor }};
-
-      --darkColor: {
-          {
-          settings.darkColor
-        }
-      }
-
-      ;
+      --darkColor: {{ settings.darkColor }};
       --swiper-navigation-size: 25px;
     }
 
@@ -42,7 +35,98 @@
   <link rel="stylesheet" href="{{ 'style.css' | assets }}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  {# ===================== Pixels ===================== #}
 
+  {% if settings.meta_pixel_enabled and settings.meta_pixel_id %}
+    <script>
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq)return;
+        n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];
+        t=b.createElement(e);t.async=!0;
+        t.src=v;
+        s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+      fbq('init','{{ settings.meta_pixel_id }}');
+      fbq('track','PageView');
+    </script>
+  {% endif %}
+
+  {% if settings.tiktok_pixel_enabled and settings.tiktok_pixel_id %}
+    <script>
+      !function (w,d,t){
+        w.TiktokAnalyticsObject=t;
+        var ttq=w[t]=w[t]||[];
+        ttq.methods=["page","track","identify"];
+        ttq.setAndDefer=function(t,e){
+          t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments)))}
+        };
+        for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+        ttq.load=function(e){
+          var i=d.createElement("script");
+          i.async=true;
+          i.src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid="+e;
+          d.getElementsByTagName("script")[0].parentNode.insertBefore(i,d.getElementsByTagName("script")[0]);
+        };
+        ttq.load('{{ settings.tiktok_pixel_id }}');
+        ttq.page();
+      }(window,document,'ttq');
+    </script>
+  {% endif %}
+
+  {% if settings.snapchat_pixel_enabled and settings.snapchat_pixel_id %}
+    <script>
+      (function(e,t,n){
+        if(e.snaptr)return;
+        var a=e.snaptr=function(){a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+        a.queue=[];
+        var s=t.createElement("script");s.async=!0;s.src=n;
+        t.getElementsByTagName("script")[0].parentNode.insertBefore(s,t.getElementsByTagName("script")[0]);
+      })(window,document,'https://sc-static.net/scevent.min.js');
+
+      snaptr('init','{{ settings.snapchat_pixel_id }}');
+      snaptr('track','PAGE_VIEW');
+    </script>
+  {% endif %}
+
+  {# ===================== Tracking Tools ===================== #}
+
+  {% if settings.google_tag_manager_enabled and settings.google_tag_manager_id %}
+    <script>
+      (function(w,d,s,l,i){
+        w[l]=w[l]||[];
+        w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+        j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','{{ settings.google_tag_manager_id }}');
+    </script>
+  {% endif %}
+
+  {% if not settings.google_tag_manager_enabled and settings.google_analytics_enabled and settings.google_analytics_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer=window.dataLayer||[];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js',new Date());
+      gtag('config','{{ settings.google_analytics_id }}');
+    </script>
+  {% endif %}
+
+  {% if settings.microsoft_clarity_enabled and settings.microsoft_clarity_id %}
+    <script>
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window,document,"clarity","script","{{ settings.microsoft_clarity_id }}");
+    </script>
+  {% endif %}
 
   <!-- Tailwind Config -->
   <script>
@@ -72,25 +156,28 @@
 
 </head>
 
-<body style="background-color: {{settings.backgroundColor}};" dir="{{t('dir')}}">
+<body style="background-color: {{ settings.backgroundColor }};" dir="{{ t('dir') }}">
   <div x-data="GlobalState()" x-init="init()">
-    {%ui "loading-screen.njk" %}
+    {% ui "loading-screen.njk" %}
     {% template "header" %}
 
     <main>
       {% content " " %}
     </main>
     {% template "footer" %}
-    {%ui "wishlist-sidebar.njk" %}
-    {%ui "cart.njk" %}
+    {% ui "wishlist-sidebar.njk" %}
+    {% ui "cart.njk" %}
   </div>
   {% qumra_scripts %}
-  <script>
-    console.log("Global Data", __qumra__);
 
-  </script>
   <!-- Swiper JS -->
-
+  <style>
+    {{ settings.css  | safe }}
+  </style>
+  <script>
+    {{ settings.js | safe }}
+  </script>
+  <script src="{{ 'api.js' | assets }}"></script>
   <script src="{{ 'main.js' | assets }}"></script>
   <script src="{{ 'cart.js' | assets }}"></script>
   <script src="{{ 'product.js' | assets }}"></script>

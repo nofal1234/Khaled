@@ -1,5 +1,5 @@
 {
-  "name": "heder",
+  "name": "header",
   "settings": {
     "bg_color_fixed": {
       "type": "color",
@@ -111,8 +111,8 @@
   },
   "presets": [
     {
-      "category": "Home",
-      "name": "heder"
+      "category": "Main",
+      "name": "header"
     }
   ]
 }

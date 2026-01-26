@@ -200,7 +200,7 @@
 
                     <div class="font-bold price" style="color: {{ cart_drawer_price_color }};">
                       <span x-text="item.totalPrice"></span>
-                      <span>{{ globals.currency.currencySymbol }}</span>
+                      <span>{{ localization.currency.currencySymbol }}</span>
                     </div>
                   </div>
 
@@ -225,7 +225,7 @@
 
                   <div class="hidden md:block col-span-4 font-bold price" style="color: {{ cart_drawer_price_color }};">
                     <span x-text="item.totalPrice"></span>
-                    <span>{{ globals.currency.currencySymbol }}</span>
+                    <span>{{ localization.currency.currencySymbol }}</span>
                   </div>
 
                   <div class="hidden md:flex col-span-2 justify-start">
@@ -265,7 +265,7 @@
               <span class="md:text-xl leading-[150%] font-medium text-mainColor">{{ t('cart_total') }}</span>
               <span class="md:text-2xl text-lg leading-[150%] font-bold text-mainColor">
                 <span x-text="globals?.cart?.totalPrice || 0"></span>
-                <span>{{ globals.currency.currencySymbol }}</span>
+                <span>{{ localization.currency.currencySymbol }}</span>
               </span>
             </div>
 
@@ -288,9 +288,10 @@
             </button>
 
             <a href="/cart"
-              class="w-full bg-white border border-mainColor md:py-2.5 py-2 rounded-full 
-                     font-medium md:text-lg text-sm hover:bg-gray-100 text-center transition"
-              style="color: {{ open_cart_button_text_color }};">
+              class="w-full border  md:py-2.5 py-2 rounded-full 
+                     font-medium md:text-lg text-sm hover:opacity-90 text-center transition"
+              style="color: {{ open_cart_button_text_color }}; border-color: {{ open_cart_button_text_color }};"
+              >
               {{ t('cart_open_cart') }}
             </a>
           </div>

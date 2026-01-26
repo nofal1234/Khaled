@@ -4,15 +4,15 @@
   "settings": {
     "font_size": {
       "type": "number",
+      "description": "حجم الخط المستخدم في الشريط العلوي (px) ",
       "label": "حجم الخط",
-      "default": "18",
-      "description": "حجم الخط المستخدم في الشريط العلوي (px) "
+      "default": 18
     },
     "height": {
       "type": "number",
+      "description":"الارتفاع داخل الشريط (px) ",
       "label": "الارتفاع",
-      "default": "48",
-      "description":"الارتفاع داخل الشريط (px) "
+      "default": 48
     },
     "bg_color": {
       "type": "color",
@@ -29,7 +29,7 @@
     "show_language": {
       "type": "boolean",
       "label": "مبدل اللغة",
-      "default": "true",
+      "default": true,
       "description": "عرض/إخفاء مبدل اللغة في الشريط العلوي"
     },
     "allow_touch_move": {
@@ -73,7 +73,7 @@
 },
   "presets": [
     {
-      "category": "banners",
+      "category": "Main",
       "name": "top bar",
       "blocks": [
         {

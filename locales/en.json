@@ -211,6 +211,29 @@
   "shopping_cart": "Shopping cart",
 "choose_language": "Choose language",
 "no_reviews_yet": "No reviews yet",
-"no_title": "No Title"
-
+"no_title": "No Title",
+"blog_details_title": "Future fashion: a journey to a stylish and sustainable look.",
+"blog_details_meta": "This article was posted by Julia Hamble on March 1, 2024.",
+"cart_product_label": "Product",
+"cart_price_label": "Price",
+"cart_quantity_label": "Quantity",
+"cart_total_label": "Total",
+"no_collections": "No collections",
+"header_wishlist_label": "Wishlist",
+"header_cart_label": "Cart",
+"header_account_label": "My account",
+"footer_legal": "Legal",
+"footer_contact_us": "Contact us",
+"product_image_alt": "Product image",
+"product_no_description": "No description available",
+"product_size_weight_guide": "Size and weight guide",
+"wishlist_home": "Home",
+"wishlist_title": "Wishlist",
+"wishlist_empty": "No products in the wishlist right now.",
+"wishlist_added_to_cart": "Product added to cart",
+"wishlist_add_error": "An error occurred while adding to cart",
+"wishlist_quantity": "Quantity",
+"best_sellers": "Best sellers",
+"sidebar_no_items": "No items in the list."
+, "clear_options": "Clear options"
 }

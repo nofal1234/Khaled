@@ -13,11 +13,11 @@
       </div>
     </div>
     {% else %}
-      <p class=" leading-[150%]">{{t("home")}}  /  {{t(context.page.handle)}}</p>
+      <p class=" leading-[150%]  hover:text-mainColor">{{t("home")}}  / <span class=" text-mainColor">{{t(context.page.handle)}}</span></p>
     {% endif %}
     {# <div class="flex justify-end">
       <button  class="md:py-[9px] py-2  rounded md:px-4 px-3 border border-stork flex items-center gap-2">
-        <span class=" text-xs font-medium leading-[150%] md:text-base">افضل المبيعات</span>
+        <span class=" text-xs font-medium leading-[150%] md:text-base">{{ t("best_sellers") }}</span>
         <i class="ph-thin text-xl ph-caret-down"></i>
       </button>
     </div> #}

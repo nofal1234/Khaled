@@ -117,8 +117,8 @@
 
   "presets": [
     {
-      "category": "blog slider",
-      "name": "blog slider"
+      "category": "Products",
+      "name": "collections slider"
     }
   ]
 }

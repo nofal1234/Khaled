@@ -65,7 +65,7 @@
   },
   "presets": [
     {
-      "category": "banners",
+      "category": "General",
       "name": "banner photo with title",
       "settings": {
         "title": "spring_has_arrived",

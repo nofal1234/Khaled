@@ -1,4 +1,4 @@
-<!-- Hero Section مع كلاس مميز -->
+<!-- Hero Section with standout class -->
 
 {% set uniq = widget.data.id %}
 
@@ -11,10 +11,10 @@
 {% set button_text = widget.data.button_text %}
 {% set button_text_color = widget.data.button_text_color %}
 {% set button_link = widget.data.button_link %}
-{% set image_lg = widget.data.image_lg %}
-{% set image_sm = widget.data.image_sm %}
 {% set banner_higth_lg = widget.data.banner_higth_lg %}
 {% set banner_higth_sm = widget.data.banner_higth_sm %}
+{% set bg_image_lg = widget.data.image_lg and widget.data.image_lg.fileUrl or '' %}
+{% set bg_image_sm = widget.data.image_sm and widget.data.image_sm.fileUrl or bg_image_lg %}
 {% set button_bg_color = widget.data.button_bg_color %}
 {% set button_text_font_size = widget.data.button_text_font_size %}
 
@@ -34,8 +34,12 @@
     class="relative flex items-center justify-center hero-section-higth"
 >
     <!-- Background Image -->
-    <img src="{{ image_lg.fileUrl }}" alt="{{t('hero_image_alt')}}"
-        class="absolute inset-0 w-full h-full object-cover">
+    <picture class="absolute inset-0 w-full h-full">
+        <source media="(max-width: 750px)" srcset="{{ bg_image_sm }}">
+        <source media="(min-width: 751px)" srcset="{{ bg_image_lg }}">
+        <img src="{{ bg_image_lg }}" alt="{{t('hero_image_alt')}}"
+            class="absolute inset-0 w-full h-full object-cover">
+    </picture>
 
     <!-- Overlay for better text readability -->
     <div class="absolute inset-0 bg-black bg-opacity-30"></div>

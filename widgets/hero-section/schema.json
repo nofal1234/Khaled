@@ -82,7 +82,7 @@
   },
   "presets": [
     {
-      "category": "Home",
+      "category": "Main",
       "name": "hero",
       "settings": {
         "title": "hero_title_default",

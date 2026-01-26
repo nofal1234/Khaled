@@ -75,7 +75,7 @@
     }
   },
   "presets": [
-    { "category": "Pages", "name": "Cart" }
+    { "category": "General", "name": "Cart" }
   ]
 }
 

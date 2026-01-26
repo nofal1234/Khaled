@@ -139,7 +139,7 @@
       ]
     },
     {
-      "name": "Offers Section",
+      "name": "collection products slider",
       "widget": "offers-slider",
       "settings": {
         "section_title": "offers",
@@ -152,6 +152,8 @@
         "show_navigation": true,
         "autoplay": false,
         "autoplay_delay": 4000,
+        "slides_per_view_xs": 2,
+        "space_between_xs": 8,
         "products_collection": "latest"
       }
     }

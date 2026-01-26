@@ -47,7 +47,7 @@
           class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors">
           <span
             style="font-family: Zain; font-weight: 400; font-size: {{ sidebar_font_size }}px; line-height: 150%; letter-spacing: 0%; text-align: right; color: {{ sidebar_text_color }};">{{
-            item.title | t("no_title") }}</span>
+            item.title | default(t("no_title")) }}</span>
         </a>
         {% endfor %}
         {% else %}
@@ -57,22 +57,21 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7h14M5 12h14M5 17h8" />
             </svg>
           </div>
-          <p class="text-sm">لا توجد عناصر في القائمة.</p>
+          <p class="text-sm">{{ t("sidebar_no_items") }}</p>
         </div>
         {% endif %}
       </nav>
     </div>
 
 
-    <!-- Footer (Language Selector) -->
   
     {% set currentLang = localization.language or 'en' %}
 
     <div class="border-t border-gray-100 p-4 bg-white">
       <div class="flex items-center w-full justify-between">
-        <span class="text-gray-500 text-sm font-medium">{{ t("choose_language") }}</span>
+        <span class="text-gray-500 text-sm text-nowrap font-medium">{{ t("choose_language") }}</span>
         {% form 'lang' %}
-        <div class="flex items-center gap-2">
+        <div class="flex items-center flex-wrap gap-2">
           {% for lang in localization.availableLanguages %}
             <button 
               type="submit" 

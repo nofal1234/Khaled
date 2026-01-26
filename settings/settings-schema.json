@@ -1,8 +1,8 @@
 [
   {
     "label": {
-      "ar": "إعدادات المظهر",
-      "en": "Appearance Settings"
+      "ar": "إعدادات العامة",
+      "en": "General Settings"
     },
     "settings": {
       "mainColor": {
@@ -44,233 +44,360 @@
           "en": "Empty State Background Color"
         },
         "default": "#666666"
+      },
+      "css": {
+        "type": "css",
+        "label": "Css",
+        "default": ""
+      },
+      "js": {
+        "type": "javascript",
+        "label": "Javascript",
+        "default": ""
       }
     }
-  },
+    },
+    {
+      "label": {
+        "ar": "إعدادات السلة الجانية",
+        "en": ""
+      },
+      "settings": {
+        "cart_drawer_background_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية السلة الجانبية",
+            "en": "Cart Drawer Background Color"
+          },
+          "default": "#ffffff"
+        },
+        "cart_drawer_table_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الجدول",
+            "en": "Table Color"
+          },
+          "default": "#000"
+        },
+        "cart_drawer_price_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون السعر",
+            "en": "Price Color"
+          },
+          "default": "#000"
+        },
+        "cart_drawer_height_full": {
+          "type": "boolean",
+          "label": {
+            "ar": "هل ارتفاع السلة الجانبية بالكامل",
+            "en": "Full Cart Drawer Height"
+          },
+          "default": false
+        },
+        "cart_title_text": {
+          "type": "string",
+          "label": {
+            "ar": "عنوان السلة",
+            "en": "Cart Title"
+          },
+          "default": "shopping_cart"
+        },
+        "cart_vertical_padding": {
+          "type": "range",
+          "label": {
+            "ar": "هامش السلة الرأسي (بكسل)",
+            "en": "Cart Button Vertical Padding (px)"
+          },
+          "min": 0,
+          "max": 80,
+          "default": 24
+        },
+        "checkout_button_bg": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية زر الشراء",
+            "en": "Checkout Button Background"
+          },
+          "default": "#003033"
+        },
+        "checkout_button_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون نص زر الشراء",
+            "en": "Checkout Button Text Color"
+          },
+          "default": "#FFFFFF"
+        },
+        "checkout_button_text": {
+          "type": "string",
+          "label": {
+            "ar": "نص زر الشراء",
+            "en": "Checkout Button Text"
+          },
+          "default": "buy_now"
+        },
+        "open_cart_button_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون نص زر فتح السلة",
+            "en": "Open Cart Button Text Color"
+          },
+          "default": "#111111"
+        },
+        "product_title_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون اسم المنتج",
+            "en": "Product Title Color"
+          },
+          "default": "#222222"
+        },
+        "product_image_size": {
+          "type": "range",
+          "label": {
+            "ar": "حجم صورة المنتج (px)",
+            "en": "Product Image Size (px)"
+          },
+          "min": 40,
+          "max": 300,
+          "default": 120
+        },
+        "quantity_buttons_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون أزرار الكمية",
+            "en": "Quantity Controls Color"
+          },
+          "default": "#003033"
+        }
+      }
+    },
+    {
+      "label": {
+        "ar": "إعدادات المفضلة",
+        "en": "Wishlist Settings"
+      },
+      "settings": {
+        "wishlist_main_color": {
+          "type": "color",
+          "label": {
+            "ar": "اللون الرئيسي للمفضلة",
+            "en": "Wishlist Main Color"
+          },
+          "default": "#000"
+        },
+        "wishlist_add_button_bg": {
+          "type": "color",
+          "label": {
+            "ar": "لون زر الإضافة",
+            "en": "Add Button Background"
+          },
+          "default": "#003033"
+        },
+        "wishlist_add_button_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون نص زر الإضافة",
+            "en": "Add Button Text Color"
+          },
+          "default": "#ffffff"
+        },
+        "wishlist_image_size": {
+          "type": "range",
+          "label": {
+            "ar": "حجم صورة المنتج (px)",
+            "en": "Product Image Size (px)"
+          },
+          "min": 40,
+          "max": 300,
+          "default": 120
+        }
+      }
+    },
+    {
+      "label": {
+        "ar": "إعدادات القائمة الجانية",
+        "en": "Sidebar Settings"
+      },
+      "settings": {
+        "sidebar_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص",
+            "en": "Text Color"
+          },
+          "default": "#111111"
+        },
+        "sidebar_font_size": {
+          "type": "number",
+          "label": {
+            "ar": "حجم النص (px)",
+            "en": "Text Font Size (px)"
+          },
+          "default": 16,
+          "min": 10,
+          "max": 40
+        }
+      }
+    },
+    {
+      "label": {
+        "ar": "إعدادات قائمة البحث",
+        "en": "Search List Settings"
+      },
+      "settings": {
+        "search_list_is_circle": {
+          "type": "boolean",
+          "label": {
+            "ar": "الخلفية دائرية",
+            "en": "Circular Background"
+          },
+          "default": true
+        },
+        "search_list_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية في القائمة",
+            "en": "List Background Color"
+          },
+          "default": "#FFFFFF"
+        },
+        "search_list_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص في القائمة",
+            "en": "List Text Color"
+          },
+          "default": "#000"
+        },
+        "search_list_image_size": {
+          "type": "range",
+          "label": {
+            "ar": "حجم الصورة (px)",
+            "en": "Image Size (px)"
+          },
+          "min": 24,
+          "max": 100,
+          "default": 44
+        }
+      }
+    },
+    {
+      "label":{
+        "ar":"اعدادات البيكسل",
+        "en":"Pixel Settings"
+      },
+      "settings":{
+        "tiktok_pixel_enabled":{
+          "type":"boolean",
+          "label":{
+            "ar":"تفعيل تيك توك",
+            "en":"Enable TikTok"
+          },
+          "default":false
+        },
+        "tiktok_pixel_id":{
+          "type":"string",
+          "label":{
+            "ar":"معرف تيك توك",
+            "en":"TikTok ID"
+          },
+          "default":""
+        },
+        "snapchat_pixel_enabled": {
+          "type": "boolean",
+          "label": {
+            "ar": "تفعيل سناب شات",
+            "en": "Enable Snapchat"
+          },
+          "default": false
+        },
+        "snapchat_pixel_id": {
+      "type": "string",
+      "label": {
+        "ar": "معرف سناب شات",
+        "en": "Snapchat Pixel ID"
+      },
+      "default": ""
+    },
+    "meta_pixel_enabled": {
+      "type": "boolean",
+      "label": {
+        "ar": "تفعيل Meta",
+        "en": "Enable Meta"
+      },
+      "default": false
+    },
+  
+    "meta_pixel_id": {
+      "type": "string",
+      "label": {
+        "ar": "معرف Meta (Facebook / Instagram)",
+        "en": "Meta Pixel ID"
+      },
+      "default": ""
+    }
+  }
+  
+    },
   {
     "label": {
-      "ar": "إعدادات السلة الجانية",
-      "en": ""
+      "ar": "أدوات التتبع",
+      "en": "Tracking Tools"
     },
     "settings": {
-      "cart_drawer_background_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون خلفية السلة الجانبية",
-          "en": "Cart Drawer Background Color"
-        },
-        "default": "#ffffff"
-      },
-      "cart_drawer_table_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون الجدول",
-          "en": "Table Color"
-        },
-        "default": "#000"
-      },
-      "cart_drawer_price_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون السعر",
-          "en": "Price Color"
-        },
-        "default": "#000"
-      },
-      "cart_drawer_height_full": {
+      "google_tag_manager_enabled": {
         "type": "boolean",
         "label": {
-          "ar": "هل ارتفاع السلة الجانبية بالكامل",
-          "en": "Full Cart Drawer Height"
+          "ar": "تفعيل Google Tag Manager",
+          "en": "Enable Google Tag Manager"
         },
         "default": false
       },
-      "cart_title_text": {
+      "google_tag_manager_id": {
         "type": "string",
         "label": {
-          "ar": "عنوان السلة",
-          "en": "Cart Title"
+          "ar": "معرف Google Tag Manager",
+          "en": "Google Tag Manager ID"
         },
-        "default": "shopping_cart"
+        "default": ""
       },
-      "cart_vertical_padding": {
-        "type": "range",
-        "label": {
-          "ar": "هامش السلة الرأسي (بكسل)",
-          "en": "Cart Button Vertical Padding (px)"
-        },
-        "min": 0,
-        "max": 80,
-        "default": 24
-      },
-      "checkout_button_bg": {
-        "type": "color",
-        "label": {
-          "ar": "لون خلفية زر الشراء",
-          "en": "Checkout Button Background"
-        },
-        "default": "#003033"
-      },
-      "checkout_button_text_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون نص زر الشراء",
-          "en": "Checkout Button Text Color"
-        },
-        "default": "#FFFFFF"
-      },
-      "checkout_button_text": {
-        "type": "string",
-        "label": {
-          "ar": "نص زر الشراء",
-          "en": "Checkout Button Text"
-        },
-        "default": "buy_now"
-      },
-      "open_cart_button_text_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون نص زر فتح السلة",
-          "en": "Open Cart Button Text Color"
-        },
-        "default": "#111111"
-      },
-      "product_title_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون اسم المنتج",
-          "en": "Product Title Color"
-        },
-        "default": "#222222"
-      },
-      "product_image_size": {
-        "type": "range",
-        "label": {
-          "ar": "حجم صورة المنتج (px)",
-          "en": "Product Image Size (px)"
-        },
-        "min": 40,
-        "max": 300,
-        "default": 120
-      },
-      "quantity_buttons_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون أزرار الكمية",
-          "en": "Quantity Controls Color"
-        },
-        "default": "#003033"
-      }
-    }
-  },
-  {
-    "label": {
-      "ar": "إعدادات المفضلة",
-      "en": "Wishlist Settings"
-    },
-    "settings": {
-      "wishlist_main_color": {
-        "type": "color",
-        "label": {
-          "ar": "اللون الرئيسي للمفضلة",
-          "en": "Wishlist Main Color"
-        },
-        "default": "#000"
-      },
-      "wishlist_add_button_bg": {
-        "type": "color",
-        "label": {
-          "ar": "لون زر الإضافة",
-          "en": "Add Button Background"
-        },
-        "default": "#003033"
-      },
-      "wishlist_add_button_text_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون نص زر الإضافة",
-          "en": "Add Button Text Color"
-        },
-        "default": "#ffffff"
-      },
-      "wishlist_image_size": {
-        "type": "range",
-        "label": {
-          "ar": "حجم صورة المنتج (px)",
-          "en": "Product Image Size (px)"
-        },
-        "min": 40,
-        "max": 300,
-        "default": 120
-      }
-    }
-  },
-  {
-    "label": {
-      "ar": "إعدادات القائمة الجانية",
-      "en": "Sidebar Settings"
-    },
-    "settings": {
-      "sidebar_text_color": {
-        "type": "color",
-        "label": {
-          "ar": "لون النص",
-          "en": "Text Color"
-        },
-        "default": "#111111"
-      },
-      "sidebar_font_size": {
-        "type": "number",
-        "label": {
-          "ar": "حجم النص (px)",
-          "en": "Text Font Size (px)"
-        },
-        "default": 16,
-        "min": 10,
-        "max": 40
-      }
-    }
-  },
-  {
-    "label": {
-      "ar": "إعدادات قائمة البحث",
-      "en": "Search List Settings"
-    },
-    "settings": {
-      "search_list_is_circle": {
+  
+      "google_analytics_enabled": {
         "type": "boolean",
         "label": {
-          "ar": "الخلفية دائرية",
-          "en": "Circular Background"
+          "ar": "تفعيل Google Analytics",
+          "en": "Enable Google Analytics"
         },
-        "default": true
+        "default": false
       },
-      "search_list_bg_color": {
-        "type": "color",
+      "google_analytics_id": {
+        "type": "string",
         "label": {
-          "ar": "لون الخلفية في القائمة",
-          "en": "List Background Color"
+          "ar": "معرف Google Analytics (GA4)",
+          "en": "Google Analytics ID (GA4)"
         },
-        "default": "#FFFFFF"
+        "default": ""
       },
-      "search_list_text_color": {
-        "type": "color",
+  
+      "microsoft_clarity_enabled": {
+        "type": "boolean",
         "label": {
-          "ar": "لون النص في القائمة",
-          "en": "List Text Color"
+          "ar": "تفعيل Microsoft Clarity",
+          "en": "Enable Microsoft Clarity"
         },
-        "default": "#000"
+        "default": false
       },
-      "search_list_image_size": {
-        "type": "range",
+      "microsoft_clarity_id": {
+        "type": "string",
         "label": {
-          "ar": "حجم الصورة (px)",
-          "en": "Image Size (px)"
+          "ar": "معرف Microsoft Clarity (Project ID)",
+          "en": "Microsoft Clarity ID (Project ID)"
         },
-        "min": 24,
-        "max": 100,
-        "default": 44
+        "default": ""
       }
     }
+  
   }
-]
+  ]

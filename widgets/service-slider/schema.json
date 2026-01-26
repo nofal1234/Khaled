@@ -94,7 +94,7 @@
   },
   "presets": [
     {
-      "category": "sliders",
+      "category": "General",
       "name": "service slider",
       "blocks": [
         {

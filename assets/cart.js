@@ -1,52 +1,18 @@
 function xDataCart() {
-  const Request = window.qumra.storeGate;
-  const schema = {
-    removeCartItem: `mutation removeCartItem($data: RemoveCartItemInput!) {
-      removeCartItem(data: $data) {
-        data {
-          _id app
-          items {
-            productId _id variantId
-            productData { title slug app image { _id fileUrl } price }
-            variantData {
-              compareAtPrice
-              options { _id label option { _id name } }
-              price
-            }
-            quantity price compareAtPrice totalPrice totalCompareAtPrice totalSavings
-          }
-          deviceId sessionId status totalQuantity totalPrice totalCompareAtPrice totalSavings isFastOrder
-        }
-        success message
-      }
-    }`,
-    updateCartItem: `mutation UpdateCartItem($data: updateCartItemInput!) {
-      updateCartItem(data: $data) {
-        success message
-        data {
-          _id app
-          items {
-            productId _id variantId
-            productData { title slug app image { fileUrl _id } price }
-            variantData {
-              price compareAtPrice
-              options { label _id option { _id name } }
-            }
-            quantity price compareAtPrice totalPrice totalCompareAtPrice totalSavings
-          }
-          deviceId sessionId status totalQuantity totalPrice totalCompareAtPrice totalSavings isFastOrder
-        }
-      }
-    }`,
-    createCheckoutToken: `mutation UpdateCartItem($input: CreateCheckoutTokenInput!) {
-      createCheckoutToken(input: $input) { success message encryptionKey url }
-    }`,
+  // Helper function for showing toasts
+  const showToast = (message, type = 'info', duration = 3000) => {
+    if (window.showToast) {
+      window.showToast(message, type, duration);
+    } else {
+      console.log(`[${type.toUpperCase()}] ${message}`);
+    }
   };
 
   const updateTimers = {};
   const localQuantities = {};
   const lastSuccessfulQuantities = {}; // آخر كمية ناجحة
   const busy = Alpine.reactive({});
+  let api = null;
 
   // عند تشغيل الكارت أول مرة، خزّن الكميات الحالية كـ ناجحة
   if (globals.cart?.items) {
@@ -54,6 +20,16 @@ function xDataCart() {
       lastSuccessfulQuantities[item._id] = item.quantity;
       localQuantities[item._id] = item.quantity;
     });
+  }
+
+  function getApi() {
+    if (!api) {
+      api = window.Api ? window.Api('/ajax') : null;
+      if (!api) {
+        console.error('Api function is not available');
+      }
+    }
+    return api;
   }
 
   function requestWithTimeout(promise, timeout = 10000) {
@@ -73,45 +49,57 @@ function xDataCart() {
 
       busy[id] = { isBusy: true, lastUpdated: Date.now() };
 
-      requestWithTimeout(Request(schema.updateCartItem, { data: { itemId: id, quantity } }), 10000)
-        .then((res) => {
-          if (res?.updateCartItem?.success) {
-            try {
-              const data = res.updateCartItem.data;
-              console.log('[updateCartItem] success:', {
-                itemId: id,
-                newQuantity: quantity,
-                itemsLength: data?.items?.length,
-                totalQuantity: data?.totalQuantity,
-              });
-            } catch (_) {}
-            updateCart(res.updateCartItem.data);
+      const apiClient = getApi();
+      if (!apiClient) {
+        localQuantities[id] = fallbackQuantity;
+        updateFrontendQuantity(id, fallbackQuantity);
+        delete busy[id];
+        showToast("خطأ في الاتصال بالخادم", "error");
+        return;
+      }
 
-            // ✅ حدّث آخر كمية ناجحة
-            const updatedItem = res.updateCartItem.data.items.find(i => i._id === id);
-            if (updatedItem) {
-              lastSuccessfulQuantities[id] = updatedItem.quantity;
-              localQuantities[id] = updatedItem.quantity;
-              updateFrontendQuantity(id, updatedItem.quantity);
-            }
-          } else {
-            // ❌ رجع لآخر كمية ناجحة
-            localQuantities[id] = fallbackQuantity;
-            updateFrontendQuantity(id, fallbackQuantity);
-            try { console.log('[updateCartItem] failed:', res?.updateCartItem); } catch (_) {}
-            // نفس رسالة تجاوز الكمية المتاحة المستخدمة في صفحة تفاصيل المنتج
-            showToast(res?.updateCartItem?.message || "لا تتوفر كمية أكثر من هذا المنتج للخيارات المختارة", "error");
+      requestWithTimeout(
+        apiClient.post('/cart/change', {
+          itemId: id,
+          quantity: quantity,
+          options: []
+        }),
+        10000
+      )
+        .then((res) => {
+          try {
+            console.log('[updateCartItem] success:', {
+              itemId: id,
+              newQuantity: quantity,
+              itemsLength: res?.items?.length,
+              totalQuantity: res?.totalQuantity,
+            });
+          } catch (_) {}
+          
+          // Update cart with response data
+          if (window.updateCart) {
+            window.updateCart(res);
+          }
+
+          // ✅ حدّث آخر كمية ناجحة
+          const updatedItem = res?.items?.find(i => i._id === id);
+          if (updatedItem) {
+            lastSuccessfulQuantities[id] = updatedItem.quantity;
+            localQuantities[id] = updatedItem.quantity;
+            updateFrontendQuantity(id, updatedItem.quantity);
           }
         })
         .catch((err) => {
+          // ❌ رجع لآخر كمية ناجحة
           localQuantities[id] = fallbackQuantity;
           updateFrontendQuantity(id, fallbackQuantity);
           console.error(`updateCartItem error for item ${id}`, err);
+          showToast(err.message || "لا تتوفر كمية أكثر من هذا المنتج للخيارات المختارة", "error");
         })
         .finally(() => {
           delete busy[id];
         });
-    }, 500);
+    }, 400);
   }
 
   function updateFrontendQuantity(id, quantity) {
@@ -145,13 +133,30 @@ function xDataCart() {
       console.log("🚀 ~ xDataCart ~ id:", id)
       
       busy[id] = { isBusy: true, lastUpdated: Date.now() };
-      requestWithTimeout(Request(schema.removeCartItem, { data: { itemId: id } }), 10000)
+      
+      const apiClient = getApi();
+      if (!apiClient) {
+        delete busy[id];
+        showToast("خطأ في الاتصال بالخادم", "error");
+        return;
+      }
+
+      requestWithTimeout(
+        apiClient.post('/cart/remove', { itemId: id }),
+        10000
+      )
         .then((res) => {
-          updateCart(res.removeCartItem.data);
+          if (window.updateCart) {
+            window.updateCart(res);
+          }
           delete lastSuccessfulQuantities[id];
           delete localQuantities[id];
+          showToast('تم حذف المنتج', 'success');
         })
-        .catch((err) => console.error(`clearCartItem error for item ${id}`, err))
+        .catch((err) => {
+          console.error(`clearCartItem error for item ${id}`, err);
+          showToast(err.message || 'فشل حذف المنتج', 'error');
+        })
         .finally(() => {
           delete busy[id];
         });
@@ -181,8 +186,37 @@ function xDataCart() {
     },
 
     checkout() {
-      updateLoading('checkout', true);
-      window.qumra.checkout().finally(() => updateLoading('checkout', false));
+      if (window.updateLoading) {
+        window.updateLoading('checkout', true);
+      }
+      
+      // Redirect to checkout page
+      window.location.href = '/checkout';
+      
+      // Alternative: if you need to use API for checkout
+      // const apiClient = getApi();
+      // if (apiClient) {
+      //   apiClient.get('/checkout')
+      //     .then((res) => {
+      //       if (res?.url) {
+      //         window.location.href = res.url;
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       console.error('Checkout error:', err);
+      //       showToast(err.message || 'فشل إنشاء صفحة الدفع', 'error');
+      //     })
+      //     .finally(() => {
+      //       if (window.updateLoading) {
+      //         window.updateLoading('checkout', false);
+      //       }
+      //     });
+      // } else {
+      //   window.location.href = '/checkout';
+      //   if (window.updateLoading) {
+      //     window.updateLoading('checkout', false);
+      //   }
+      // }
     },
   };
 }

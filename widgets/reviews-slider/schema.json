@@ -182,7 +182,7 @@
   },
   "presets": [
     {
-      "category": "sliders",
+      "category": "General",
       "name": "reviews slider",
       "blocks": [
         {

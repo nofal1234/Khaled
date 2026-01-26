@@ -13,12 +13,21 @@
     <div class="flex items-center justify-between">
         <h1 class="md:text-[40px] text-lg md:leading-[120%] leading-[150%] font-bold " style="color: {{ link_color }}; ">{{ t(widget.data.title) }}</h1>
         {% if show_navigation %}
+        {% set dir = t('dir') %}
         <div class="flex items-center gap-[38px]" >
-            <div class="cursor-pointer swiper-button-next-reviews hidden md:flex items-center justify-center bg-transparent">
+            <div  class="cursor-pointer swiper-button-next-reviews hidden md:flex items-center justify-center bg-transparent">
+                {% if dir == 'rtl' %}
                 <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
-            </div>
-            <div class="swiper-button-prev-reviews cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+                {% else %}
                 <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+                {% endif %}
+            </div>
+            <div  class="swiper-button-prev-reviews cursor-pointer hidden md:flex items-center justify-center bg-transparent">
+                {% if dir == 'ltr' %}
+                <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+                {% else %}
+                <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+                {% endif %}
             </div>
         </div>
         {% endif %}

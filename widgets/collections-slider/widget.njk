@@ -22,12 +22,21 @@
         {% endif %}
 
         {% if show_navigation %}
+        {% set dir = t('dir') %}
           <div class="flex items-center gap-[38px]" >
             <div class="cursor-pointer  swiper-button-next-category  hidden md:flex items-center justify-center bg-transparent">
-              <i class="ph  ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+              {% if dir == 'rtl' %}
+              <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+              {% else %}
+              <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+              {% endif %}
             </div>
             <div class=" swiper-button-prev-category cursor-pointer hidden md:flex items-center justify-center bg-transparent">
-              <i class="ph  ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+              {% if dir == 'ltr' %}
+              <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+              {% else %}
+              <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+              {% endif %}
             </div>
           </div>
         {% endif %}
@@ -49,7 +58,7 @@
                     <i class="ph ph-image"></i>
                   </span>
                 </div>
-                <span class="text-xs md:text-xl md:font-medium text-center text-gray-400" style="color: {{ collection_title_color }};">{{ t('لا توجد مجموعات') }}</span>
+                <span class="text-xs md:text-xl md:font-medium text-center text-gray-400" style="color: {{ collection_title_color }};">{{ t('no_collections') }}</span>
               </div>
             </div>
             {% endfor %}
@@ -115,13 +124,13 @@
     const grabCursor = '{{ widget.data.grab_cursor }}' === 'true';
     const autoplayDelay = Number('{{ widget.data.autoplay_delay }}');
 
-    // 🔥 حساب autoplay ديناميك حسب حجم الشاشة
+    // Calculate autoplay dynamically based on viewport size
     const currentSlidesPerView = getSlidesPerViewByWidth(window.innerWidth);
     const shouldAutoplay =
       autoplayEnabled && selectedCollectionsCount > currentSlidesPerView;
 
     new window.Swiper('#category-swiper-{{ widget.id }}', {
-      loop: shouldAutoplay, // منطقي جدًا
+      loop: shouldAutoplay, // Loop only when it makes sense
       grabCursor: grabCursor,
       speed: speed,
       allowTouchMove: allowTouchMove,

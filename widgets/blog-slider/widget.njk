@@ -21,12 +21,21 @@
       </a>
       {% endif %}
       {% if show_navigation %}
+      {% set dir = t('dir') %}
       <div class="flex items-center gap-[38px]" >
         <div class="cursor-pointer  swiper-button-next-blog  hidden md:flex items-center justify-center bg-transparent">
-          <i class="ph  ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% if dir == 'rtl' %}
+          <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% else %}
+          <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% endif %}
         </div>
         <div class=" swiper-button-prev-blog cursor-pointer hidden md:flex items-center justify-center bg-transparent">
-          <i class="ph  ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% if dir == 'ltr' %}
+          <i class="ph ph-caret-right text-lg" style="color: {{ link_color }};"></i>
+          {% else %}
+          <i class="ph ph-caret-left text-lg" style="color: {{ link_color }};"></i>
+          {% endif %}
         </div>
       </div>
       {% endif %}
@@ -39,7 +48,7 @@
         {% for block in widget.blocks %}
         <div class="swiper-slide">
           <div class="flex flex-col gap-[34px] h-full">
-            <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt_text | default(block.data.title) }}" class="w-full md:h-[418px] h-[196px] object-cover rounded-lg">
+            <img src="{{ block.data.image.fileUrl }}" alt="{{block.data.title}}"  class="w-full md:h-[418px] h-[196px] object-cover rounded-lg">
             <div class="flex flex-col gap-6">
               <h3 class="md:text-lg text-sm font-bold  line-clamp-2 overflow-hidden"
                 style="color: {{ blog_name_color }}; font-size: {{ blog_name_size }}px; max-height: 3.2em">{{ t(block.data.title) }}</h3>
@@ -60,7 +69,7 @@
     {% else  %}
     {% for block in widget.blocks %}
       <div class="flex flex-col gap-[34px]  h-full">
-        <img src="{{ block.data.image.fileUrl }}" alt="{{ block.data.alt_text | default(block.data.title) }}" class="w-full md:h-[418px] h-[196px] object-cover rounded-lg">
+        <img src="{{ block.data.image.fileUrl }}" alt="{{block.data.title}}" class="w-full md:h-[418px] h-[196px] object-cover rounded-lg">
         <div class="flex flex-col gap-6">
           <h3 class="md:text-lg text-sm font-bold  line-clamp-2 overflow-hidden"
             style="color: {{ blog_name_color }}; font-size: {{ blog_name_size }}px; max-height: 3.2em">{{ t(block.data.title) }}</h3>

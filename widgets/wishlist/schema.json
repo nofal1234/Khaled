@@ -10,8 +10,8 @@
   },
   "presets": [
     {
-      "category": "Pages",
-      "name": "special slider",
+      "category": "Products",
+      "name": "wishlist slider",
       "settings":{}
     }
   ]

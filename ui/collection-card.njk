@@ -5,14 +5,14 @@
 <a style="background-color: {{ data.bg_container }}; border-radius: {{  '8' if card_border_radius else '0' }}px;"
     href="/collection/{{ collection.slug }}"
     class="h-full bg-white rounded-lg border border-gray overflow-hidden flex flex-col ">
-    <div class="relative group overflow-hidden flex items-center justify-center pt-[34px] md:pt-[56px] md:pb-[42px]  pb-[26px] px-[47px]  md:px-[57px]" style="background-color: {{ bg_image }}; 
+    <div class="relative group overflow-hidden flex items-center justify-center " style="background-color: {{ bg_image }}; 
     border-top-left-radius: {{ card_border_radius }}px; 
     border-top-right-radius: {{  '8' if card_border_radius else '0' }}px;
     ">
         <div class="w-full flex items-center justify-center  ">
             <img src="{{ collection.image.fileUrl | default('https://placehold.co/320x420/eeeeee/666?text=No+Image') }}"
-                class="object-contain"
-                style="width: {{ image_size * 0.7 }}px; height: {{ image_size  }}px; border-radius: {{ '50%' if is_image_radius else '0' }};"
+                class="object-cover"
+                style="width: {{ image_size }}px; height: {{ image_size  }}px; border-radius: {{ '50%' if is_image_radius else '0' }};"
                 alt="{{ collection.title }}" />
         </div>
         <div class="absolute top-3 left-3 flex items-center px-[6.85px] md:px-[11px] md:py-[5px] py-[3.11px] rounded-full z-10"

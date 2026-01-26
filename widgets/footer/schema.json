@@ -44,40 +44,50 @@
           "label": "اقسام المعروضه في الفوتر",
           "default": "home-page"
         },
-        "policy_links": {
-          "type": "array",
-          "label": "روابط السياسات",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "label": "عنوان الرابط"
-              },
-              "url": {
-                "type": "string",
-                "label": "رابط الرابط"
-              }
-            }
-          },
-          "default": [
-            {
-              "title": "سياسة الخصوصية",
-              "url": "#"
-            },
-            {
-              "title": "سياسة الاسترجاع",
-              "url": "#"
-            },
-            {
-              "title": "سياسة الشحن",
-              "url": "#"
-            },
-            {
-              "title": "شروط الاستخدام",
-              "url": "#"
-            }
-          ]
+        "enable_policy_links": {
+          "type": "boolean",
+          "label": "تفعيل روابط السياسات",
+          "default": true
+        },
+        "policy_link_title_1": {
+          "type": "string",
+          "label": "عنوان سياسة 1",
+          "default": "سياسة الخصوصية"
+        },
+        "policy_link_url_1": {
+          "type": "string",
+          "label": "رابط سياسة 1",
+          "default": "#"
+        },
+        "policy_link_title_2": {
+          "type": "string",
+          "label": "عنوان سياسة 2",
+          "default": "سياسة الاسترجاع"
+        },
+        "policy_link_url_2": {
+          "type": "string",
+          "label": "رابط سياسة 2",
+          "default": "#"
+        },
+        "policy_link_title_3": {
+          "type": "string",
+          "label": "عنوان سياسة 3",
+          "default": "سياسة الشحن"
+        },
+        "policy_link_url_3": {
+          "type": "string",
+          "label": "رابط سياسة 3",
+          "default": "#"
+        },
+        "policy_link_title_4": {
+          "type": "string",
+          "label": "عنوان سياسة 4",
+          "default": "شروط الاستخدام"
+        },
+        "policy_link_url_4": {
+          "type": "string",
+          "label": "رابط سياسة 4",
+          "default": "#"
         },
         "show_contact_phone": {
           "type": "boolean",
@@ -109,74 +119,116 @@
           "label": "البريد الإلكتروني",
           "default": "info@minikid.com"
         },
+        "show_whatsapp": {
+          "type": "boolean",
+          "label": "إظهار واتساب",
+          "default": false
+        },
+        "whatsapp_link": {
+          "type": "string",
+          "label": "رقم واتساب",
+          "default": "****"
+        },
+        "show_email_link": {
+          "type": "boolean",
+          "label": "إظهار رابط البريد الإلكتروني",
+          "default": false
+        },
+        "email_link": {
+          "type": "string",
+          "label": "البريد الإلكتروني",
+          "default": "****@****"
+        },
         "powered_text": {
           "type": "string",
           "label": "نص المشغل",
           "default": "قمرة . جميع الحقوق محفوظ"
         },
+        "show_powered_logo": {
+          "type": "boolean",
+          "label": "إظهار لوجو المشغل",
+          "default": true
+        },
         "powered_logo": {
           "type": "media",
           "label": "لوجو المشغل",
-          "default": "qumra://payment-methods.jpg"
-        }
-      },
-      "blocks": {
-        "social_media": {
-          "name": "السوشيال ميديا",
-          "settings": {
-            "icon": {
-              "type": "media",
-              "label": "الايقونة المعبرة",
-              "default": "",
-              "description": "أضف أيقونة خاصة بمنصة أو وسيلة التواصل الاجتماعي"
-            },
-            "link": {
-              "type": "path",
-              "label": "رابط التوجية",
-              "default": "/",
-              "description": "أدخل رابط الصفحة أو الحساب على منصة التواصل الاجتماعي"
-            }
-          }
+          "default": "qumra://payment-methods.png"
+        },
+        "show_facebook": {
+          "type": "boolean",
+          "label": "إظهار فيسبوك",
+          "default": true
+        },
+        "facebook_link": {
+          "type": "string",
+          "label": "رابط فيسبوك",
+          "default": "#"
+        },
+        "show_instagram": {
+          "type": "boolean",
+          "label": "إظهار انستجرام",
+          "default": true
+        },
+        "instagram_link": {
+          "type": "string",
+          "label": "رابط انستجرام",
+          "default": "#"
+        },
+        "show_x_twitter": {
+          "type": "boolean",
+          "label": "إظهار X (تويتر سابقاً)",
+          "default": true
+        },
+        "x_twitter_link": {
+          "type": "string",
+          "label": "رابط X (تويتر سابقاً)",
+          "default": "#"
+        },
+        "show_youtube": {
+          "type": "boolean",
+          "label": "إظهار يوتيوب",
+          "default": false
+        },
+        "youtube_link": {
+          "type": "string",
+          "label": "رابط يوتيوب",
+          "default": "#"
+        },
+        "show_telegram": {
+          "type": "boolean",
+          "label": "إظهار تليجرام",
+          "default": false
+        },
+        "telegram_link": {
+          "type": "string",
+          "label": "رابط تليجرام",
+          "default": "#"
+        },
+        "show_snapchat": {
+          "type": "boolean",
+          "label": "إظهار سناب شات",
+          "default": true
+        },
+        "snapchat_link": {
+          "type": "string",
+          "label": "رابط سناب شات",
+          "default": "#"
+        },
+        "show_tiktok": {
+          "type": "boolean",
+          "label": "إظهار تيك توك",
+          "default": false
+        },
+        "tiktok_link": {
+          "type": "string",
+          "label": "رابط تيك توك",
+          "default": "#"
         }
       },
       "presets": [
         {
-          "category": "Home",
-          "name": "footer",
-          "blocks": [
-            {
-              "block": "social_media",
-              "name": "social_media",
-              "settings": {
-                "icon": "qumra://facebook.png",
-                "link": "#"
-              }
-            },
-            {
-              "block": "social_media",
-              "name": "social_media",
-              "settings": {
-                "icon": "qumra://insta.png",
-                "link": "#"
-              }
-            },
-            {
-              "block": "social_media",
-              "name": "social_media",
-              "settings": {
-                "icon": "qumra://x-twitter.png",
-                "link": "#"
-              }
-            },
-            {
-              "block": "social_media",
-              "name": "social_media",
-              "settings": {
-                "icon": "qumra://snap.png",
-                "link": "#"
-              }
-            }
-          ]
+          "category": "Main",
+          "name": "footer"
         }
       ]
       

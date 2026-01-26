@@ -29,7 +29,7 @@
         </div>
     </div>
     {% if show_related_products %}
-    <div class="flex flex-col gap-6  {% if show_related_products %}md:max-w-[43%]{% endif %}">
+    <div class="flex flex-col gap-6  {% if show_related_products %}md:w-[43%]{% endif %}">
         <h3 class="md:text-[32px]  text-lg font-bold">{{t("products_you_may_like")}}</h3>
         {% if context.related_products and context.related_products|length > 0 %}
         <div class="relative max-h-max">
@@ -97,18 +97,12 @@
             swiperEl.swiper.destroy(true, true);
         }
         new window.Swiper(swiperEl, {
-            slidesPerView: 1.1,
+            slidesPerView: 2,
             spaceBetween: 12,
             navigation: {
                 nextEl: '.swiper-button-next-related-{{ widget.id }}',
                 prevEl: '.swiper-button-prev-related-{{ widget.id }}'
             },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 12
-                }
-            }
         });
     }
 

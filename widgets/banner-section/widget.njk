@@ -15,17 +15,27 @@
 
 {% set image_lg = widget.data.image_lg %}
 {% set image_sm = widget.data.image_sm %}
+{% set bg_image_lg = image_lg.fileUrl %}
+{% set bg_image_sm = image_sm.fileUrl if image_sm and image_sm.fileUrl else bg_image_lg %}
+<style>
+  .banner-section-bg{
+    background-image: url('{{ bg_image_lg }}');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    min-height: {{ banner_higth_lg }}px;
+  }
+  @media (max-width: 750px){
+    .banner-section-bg{
+      background-image: url('{{ bg_image_sm }}');
+      background-position: center center;
+      min-height: {{ banner_higth_sm if banner_higth_sm else banner_higth_lg }}px;
+    }
+  }
+</style>
 <section class="my-12 md:my-16 max-md:!px-0 container rounded-xl">
   <div
-    class="relative w-full rounded-none md:rounded-xl flex items-center"
-    style="
-      width: 100%;
-      background-image: url('{{ image_sm.fileUrl if window.innerWidth <= 750 else image_lg.fileUrl }}');
-      background-size: cover;
-      background-position: {% if image_sm.fileUrl and window.innerWidth <= 750 %}center center{% else %}center top{% endif %};
-      background-repeat: no-repeat;
-      min-height: {% if banner_higth_sm and window.innerWidth <= 750 %}{{banner_higth_sm}}{% else %}{{banner_higth_lg}}{% endif %}px;
-    "
+    class="banner-section-bg relative w-full rounded-none md:rounded-xl flex items-center"
   >
     <div class="absolute inset-0 bg-black/30 md:bg-mainColor/30 rounded-none md:rounded-xl"></div>
     <div class="relative w-full flex items-center">

@@ -1,9 +1,9 @@
 {
-  "name": "offers slider",
-  "description": "سلايدر العروض",
+  "name": "collection products slider",
+  "description": "سلايدر منتجات المجموعات",
   "settings": {
     "products_collection": {
-      "type": "products",
+      "type": "collection_products",
       "label": "القسم المعروض"
     },
     "section_title": {
@@ -120,6 +120,16 @@
       "label": "سرعة السلايدر (ms)",
       "default": 900
     },
+    "space_between_xs": {
+      "type": "number",
+      "label": "المسافة بين العناصر (شاشة صغيرة جداً)",
+      "default": 8
+    },
+    "slides_per_view_xs": {
+      "type": "number",
+      "label": "عدد العناصر المعروضة (شاشة صغيرة جداً)",
+      "default": 2
+    },
     "slides_per_view_sm": {
       "type": "number",
       "label": "عدد العناصر المعروضة (شاشة صغيرة)",
@@ -153,8 +163,8 @@
   },
   "presets": [
     {
-      "category": "sliders",
-      "name": "offers"
+      "category": "Products",
+      "name": "collection products slider"
     }
   ]
 }

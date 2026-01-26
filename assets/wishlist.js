@@ -96,7 +96,7 @@ function xDataWishlist() {
         buttons.forEach((btn) => {
           const icon = btn.querySelector('i');
           if (icon) {
-            icon.classList.remove('ph-fill', 'text-red-500');
+            icon.classList.remove('ph-fill', 'text-mainColor');
             icon.classList.add('ph-heart');
           }
         });
@@ -124,7 +124,7 @@ function xDataWishlist() {
         buttons.forEach((btn) => {
           const icon = btn.querySelector('i');
           if (icon) {
-            icon.classList.remove('ph-fill', 'text-red-500');
+            icon.classList.remove('ph-fill', 'text-mainColor');
             icon.classList.add('ph-heart');
           }
         });
@@ -291,9 +291,9 @@ window.xDataWishlist = xDataWishlist;
       if (!icon) return;
       if (set.has(pid)) {
         icon.classList.remove('ph-heart');
-        icon.classList.add('ph-fill', 'ph-heart', 'text-red-500');
+        icon.classList.add('ph-fill', 'ph-heart', 'text-mainColor');
       } else {
-        icon.classList.remove('ph-fill', 'text-red-500');
+        icon.classList.remove('ph-fill', 'text-mainColor');
         icon.classList.add('ph-heart');
       }
     });

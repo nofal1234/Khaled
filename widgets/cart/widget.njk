@@ -12,10 +12,10 @@
         <table class=" w-full ">
           <thead>
             <tr class="">
-              <th style="color: {{text_color}};" class="pb-2 font-medium">المنتج</th>
-              <th style="color: {{text_color}};" class="pb-2 font-medium">السعر</th>
-              <th style="color: {{text_color}};" class="pb-2 font-medium">الكمية</th>
-              <th style="color: {{text_color}};" class="pb-2 text-start font-medium">المجموع الكلي</th>
+              <th style="color: {{text_color}};" class="pb-2 font-medium">{{ t("cart_product_label") }}</th>
+              <th style="color: {{text_color}};" class="pb-2 font-medium">{{ t("cart_price_label") }}</th>
+              <th style="color: {{text_color}};" class="pb-2 font-medium">{{ t("cart_quantity_label") }}</th>
+              <th style="color: {{text_color}};" class="pb-2 text-start font-medium">{{ t("cart_total_label") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -52,12 +52,12 @@
                     <div class="flex flex-col items-center justify-between">
                       <button @click="increaseCartItem(item._id, item.quantity)"
                   style="color: {{text_color}};"
-                        class=" hover:text-gray-800" aria-label="زيادة الكمية">
+                        class=" hover:text-gray-800" aria-label="{{ t('cart_increase_quantity') }}"cart_quantity_label") }}">
                         <i class="ph text-sm ph-caret-up"></i>
                       </button>
                       <button @click="decreaseCartItem(item._id, item.quantity)"
                   style="color: {{text_color}};"
-                  class=" hover:text-gray-800" aria-label="تقليل الكمية">
+                  class=" hover:text-gray-800" aria-label="{{ t('cart_decrease_quantity') }}"cart_quantity_label") }}">
                         <i class="ph text-sm ph-caret-down"></i>
                       </button>
                     </div>
@@ -77,8 +77,8 @@
         <table class=" w-full ">
           <thead>
             <tr class="">
-              <th class="pb-2 text-start text-sm leading-[150%] font-medium" style="color: {{text_color}};">المنتج</th>
-              <th class="pb-2 text-end text-sm leading-[150%] font-medium" style="color: {{text_color}};">السعر</th>
+              <th class="pb-2 text-start text-sm leading-[150%] font-medium" style="color: {{text_color}};">{{ t("cart_product_label") }}</th>
+              <th class="pb-2 text-end text-sm leading-[150%] font-medium" style="color: {{text_color}};">{{ t("cart_price_label") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="flex flex-col gap-1.5 items-center justify-between">
                           <button @click="increaseCartItem(item._id, item.quantity)"
-                            class="text-gray-600 hover:text-gray-800" aria-label="زيادة الكمية">
+                            class="text-gray-600 hover:text-gray-800" aria-label="{{ t('cart_increase_quantity') }}"cart_quantity_label") }}">
                             <svg width="12" height="6" viewBox="0 0 12 6" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <path
@@ -115,7 +115,7 @@
                             </svg>
                           </button>
                           <button @click="decreaseCartItem(item._id, item.quantity)"
-                            class="text-gray-600 hover:text-gray-800" aria-label="تقليل الكمية">
+                            class="text-gray-600 hover:text-gray-800" aria-label="{{ t('cart_decrease_quantity') }}"cart_quantity_label") }}">
                             <svg width="12" height="6" viewBox="0 0 12 6" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <path

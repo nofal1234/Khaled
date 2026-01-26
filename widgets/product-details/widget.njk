@@ -41,10 +41,17 @@
             <div class="relative flex flex-col lg:flex-row gap-4 md:gap-[23px]">
                 <!-- Product Images -->
                 <div class="flex lg:sticky lg:top-48 flex-col gap-4 self-start product-left-{{ widget.id }}"
-                    x-data="{ imgSelected: 0 }">
+                    x-data="{
+                        imgSelected: 0,
+                        get images() {
+                            return (areOptionsSelected && variantImage?.length)
+                                ? variantImage
+                                : (context.product?.images || []);
+                        }
+                    }">
                     <!-- Main Image -->
                     <div class="bg-gray-100 rounded-xl overflow-hidden">
-                        <img :src="context.product?.images?.[imgSelected]?.fileUrl" alt="صورة المنتج"
+                        <img :src="images?.[imgSelected]?.fileUrl" alt="{{ t('product_image_alt') }}"
                         class="w-full h-[281px] md:h-[762px] rounded-lg object-cover" />
                     </div>
 
@@ -53,7 +60,7 @@
                          style="max-width:100%;">
                         <div class="flex w-full gap-4 md:gap-[32px]"
                              style="min-width:0;">
-                            <template x-for="(image, index) in context.product?.images || []" :key="index">
+                            <template x-for="(image, index) in images || []" :key="index">
                                 <div
                                     x-show="index < 3"
                                     class="bg-bgItem rounded-[3px] h-[93px] md:h-[242px] md:w-[261px] overflow-hidden cursor-pointer border-[0.77px] transition flex-shrink-0"
@@ -62,7 +69,7 @@
                                     <img :src="image.fileUrl" alt="Thumbnail" class="h-[93px] md:h-[242px] md:w-[261px] object-cover" />
                                 </div>
                             </template>
-                            <template x-for="(image, index) in context.product?.images || []" :key="'overflow-' + index">
+                            <template x-for="(image, index) in images || []" :key="'overflow-' + index">
                                 <div
                                     x-show="index >= 3"
                                     class="bg-bgItem rounded-[3px] h-[93px] md:h-[242px] md:w-[261px] overflow-hidden cursor-pointer border-[0.77px] transition flex-shrink-0 opacity-60"
@@ -87,7 +94,7 @@
                                 :class="!expanded ? 'line-clamp-3 max-h-[4.5em] overflow-hidden relative' : ''"
                                 class="text-textDescription leading-[150%] text-right transition-all duration-300"
                                 style="font-size: {{ desc_font_size }}px; color: {{ desc_color }};"
-                                x-html="context.product?.description || 'لا يوجد وصف للمنتج'">
+                                x-html="context.product?.description || '{{ t('product_no_description') }}'">
                             </div>
                             <div x-show="$refs.desc && ($refs.desc.scrollHeight > $refs.desc.offsetHeight || expanded)">
                                 <button class="text-black text-sm font-bold leading-[150%]  cursor-pointer"
@@ -101,35 +108,103 @@
 
                     <!-- Price -->
                     <div class="flex gap-2 flex-col">
-                        <h1 color: {{ price_color }}; class="md:text-xl md:font-medium">{{t('price')}}</h1>
-                        <template
-                            x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
-                            <div class="flex items-center gap-4">
-                                <div class="flex items-center">
-                                    <span class="font-bold md:text-xl text-base leading-[150%]"
-                                        style="color: {{ price_color }};"
-                                        x-text="context.product?.pricing?.price"></span>
-                                    <span class="text-mainColor font-bold md:text-xl text-base leading-[150%]"
-                                    style="color: {{ price_color }};">{{
-                                        globals.app.generalSettings.currency.currencySymbol}}</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-sm font-medium line-through  leading-[150%]"
-                                        style="color: {{ old_price_color }};"
-                                        x-text="context.product?.pricing?.compareAtPrice"></span>
-                                    <span class="text-sm font-medium  leading-[150%]" style="color: {{ old_price_color }};">{{
-                                        globals.app.generalSettings.currency.currencySymbol}}</span>
-                                </div>
+                        <h1 style="color: {{ price_color }};" class="md:text-xl md:font-medium">{{ t('price') }}</h1>
+
+                        <template x-if="context.product?.options?.length > 0 && areOptionsSelected">
+                            <div>
+                                <template
+                                    x-if="resolvedPrice?.compareAtPrice && resolvedPrice?.compareAtPrice > resolvedPrice?.price">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex items-center">
+                                            <template x-if="Number(resolvedPrice?.price) > 0">
+                                                <span class="font-bold md:text-xl text-base leading-[150%]"
+                                                    style="color: {{ price_color }};"
+                                                    x-text="resolvedPrice?.price"></span>
+                                            </template>
+                                            <template x-if="Number(resolvedPrice?.price) > 0">
+                                                <span class="text-mainColor font-bold md:text-xl text-base leading-[150%]"
+                                                    style="color: {{ price_color }};">{{
+                                                    globals.app.generalSettings.currency.currencySymbol}}</span>
+                                            </template>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <template x-if="Number(resolvedPrice?.compareAtPrice) > 0">
+                                                <span class="text-sm font-medium line-through leading-[150%]"
+                                                    style="color: {{ old_price_color }};"
+                                                    x-text="resolvedPrice?.compareAtPrice"></span>
+                                            </template>
+                                            <template x-if="Number(resolvedPrice?.compareAtPrice) > 0">
+                                                <span class="text-sm font-medium leading-[150%]"
+                                                    style="color: {{ old_price_color }};">{{
+                                                    globals.app.generalSettings.currency.currencySymbol}}</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template
+                                    x-if="!resolvedPrice?.compareAtPrice || resolvedPrice?.compareAtPrice === resolvedPrice?.price">
+                                    <div class="flex items-center gap-2">
+                                        <template x-if="Number(resolvedPrice?.price) > 0">
+                                            <span class="font-bold md:text-xl text-base leading-[150%]"
+                                                style="color: {{ price_color }};"
+                                                x-text="resolvedPrice?.price"></span>
+                                        </template>
+                                        <template x-if="Number(resolvedPrice?.price) > 0">
+                                            <span class="md:text-xl text-base leading-[150%]"
+                                                style="color: {{ price_color }};">{{
+                                                globals.app.generalSettings.currency.currencySymbol}}</span>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
                         </template>
-                        <template
-                            x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold md:text-xl text-base leading-[150%]"
-                                    color: {{ price_color }};"
-                                    x-text="context.product?.pricing?.price"></span>
-                                <span  class="md:text-xl text-base leading-[150%]" style="color: {{ price_color }};"">{{ globals.app.generalSettings.currency.currencySymbol
-                                    }}</span>
+
+                        <template x-if="!context.product?.options?.length || !areOptionsSelected">
+                            <div>
+                                <template
+                                    x-if="context.product?.pricing?.compareAtPrice && context.product?.pricing?.compareAtPrice > context.product?.pricing?.price">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex items-center">
+                                            <template x-if="Number(context.product?.pricing?.price) > 0">
+                                                <span class="font-bold md:text-xl text-base leading-[150%]"
+                                                    style="color: {{ price_color }};"
+                                                    x-text="context.product?.pricing?.price"></span>
+                                            </template>
+                                            <template x-if="Number(context.product?.pricing?.price) > 0">
+                                                <span class="text-mainColor font-bold md:text-xl text-base leading-[150%]"
+                                                    style="color: {{ price_color }};">{{
+                                                    globals.app.generalSettings.currency.currencySymbol}}</span>
+                                            </template>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <template x-if="Number(context.product?.pricing?.compareAtPrice) > 0">
+                                                <span class="text-sm font-medium line-through leading-[150%]"
+                                                    style="color: {{ old_price_color }};"
+                                                    x-text="context.product?.pricing?.compareAtPrice"></span>
+                                            </template>
+                                            <template x-if="Number(context.product?.pricing?.compareAtPrice) > 0">
+                                                <span class="text-sm font-medium leading-[150%]"
+                                                    style="color: {{ old_price_color }};">{{
+                                                    globals.app.generalSettings.currency.currencySymbol}}</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template
+                                    x-if="!context.product?.pricing?.compareAtPrice || context.product?.pricing?.compareAtPrice === context.product?.pricing?.price">
+                                    <div class="flex items-center gap-2">
+                                        <template x-if="Number(context.product?.pricing?.price) > 0">
+                                            <span class="font-bold md:text-xl text-base leading-[150%]"
+                                                style="color: {{ price_color }};"
+                                                x-text="context.product?.pricing?.price"></span>
+                                        </template>
+                                        <template x-if="Number(context.product?.pricing?.price) > 0">
+                                            <span class="md:text-xl text-base leading-[150%]"
+                                                style="color: {{ price_color }};">{{
+                                                globals.app.generalSettings.currency.currencySymbol}}</span>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
                         </template>
                     </div>
@@ -156,11 +231,20 @@
                             </div>
                         </template>
                     </div>
-
-                    {# <button @click="toggleModal('wishlist')" class="flex items-center gap-2">
+                    <div x-show="areOptionsSelected" >
+                        <button 
+                            type="button"
+                            class="px-3 py-1 rounded-full border text-xs font-medium"
+                            style="background-color: {{ option_unselected_bg }}; color: {{ option_unselected_text }}; border-color: {{ option_border_color }};"
+                            @click="clearOptions()"
+                        >
+                           {{t("clear_options")}}
+                        </button>
+                    </div>
+                    {# <button  class="flex items-center gap-2">
                         <i class="ph ph-ruler text-2xl to-mainColor"></i>
                         <span class="font-bold leading-[150%] underline to-mainColor"
-                            style="letter-spacing:0.02em;">دليل المقاسات والاوزان</span>
+                            style="letter-spacing:0.02em;">{{ t('product_size_weight_guide') }}</span>
                     </button> #}
 
 
