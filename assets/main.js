@@ -212,43 +212,44 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Global quick Add-To-Cart (works from product lists/cards)
   if (!window.addProductToCart) {
-    const Request = window.qumra?.storeGate;
-    const addToCartSchema = `mutation AddToCart($data: AddToCartInput!) {
-  addToCart(data: $data) {
-    data {
-      _id app
-      items {
-        productId _id variantId
-        productData { title slug app image { _id fileUrl } price }
-        variantData { compareAtPrice price options { _id label option { _id name } } }
-        quantity price compareAtPrice totalPrice totalCompareAtPrice totalSavings
-      }
-      deviceId sessionId status totalQuantity totalPrice totalCompareAtPrice totalSavings isFastOrder
-    }
-    success message
-  }
-}`;
-
     window.addProductToCart = function(productId, quantity = 1, options = []) {
-      if (typeof Request !== "function") {
+      // Get API client
+      const api = window.Api ? window.Api('/ajax') : null;
+      if (!api) {
         window.showToast?.("خطأ في الاتصال بالخادم", "error");
+        console.error('Api function is not available');
         return;
       }
+
+      // Prepare request data
       const data = { productId, quantity, options };
+      
+      // Update loading state
       window.updateLoading?.("addToCart", true);
-      Request(addToCartSchema, { data })
+      
+      // Make RESTful API call
+      api.post('/cart/add', data)
         .then((res) => {
-          const ok = res?.addToCart?.success;
-          if (ok) {
-            window.updateCart?.(res.addToCart.data);
-            window.showToast?.(res?.addToCart?.message || "تمت إضافة المنتج للسلة بنجاح", "success");
-            window.dispatchEvent(new CustomEvent("open-cart"));
-          } else {
-            window.showToast?.(res?.addToCart?.message || "فشل إضافة المنتج للسلة", "error");
+          // Update cart with response data
+          if (window.updateCart) {
+            window.updateCart(res?.data || res);
           }
+          
+          // Show success message
+          window.showToast?.(res?.message || "تمت إضافة المنتج للسلة بنجاح", "success");
+          
+          // Open cart modal
+          try {
+            window.dispatchEvent(new CustomEvent("open-cart"));
+          } catch (_) {}
         })
-        .catch(() => window.showToast?.("حدث خطأ أثناء الإضافة للسلة", "error"))
-        .finally(() => window.updateLoading?.("addToCart", false));
+        .catch((error) => {
+          console.error('Add to cart error:', error);
+          window.showToast?.(error?.message || "حدث خطأ أثناء الإضافة للسلة", "error");
+        })
+        .finally(() => {
+          window.updateLoading?.("addToCart", false);
+        });
     }
   }
 

@@ -75,9 +75,9 @@
     "size": 27973
   },
   "assets\\main.js": {
-    "hash": "433c771a95aba66431d608e711fdd716b876854035e0e2b2bd81d90c101bd58c",
-    "lastSynced": "2026-01-26T07:58:05.759Z",
-    "size": 9285
+    "hash": "b55a44591de5db707173d00a6df53af3ec5cd5aaa78efe8527ccf30314fec4dd",
+    "lastSynced": "2026-01-26T09:14:12.060Z",
+    "size": 8972
   },
   "assets\\ok.png": {
     "hash": "36cbe0a7f25b4131b6cad64c3374b68565d35ec3b76af7fcff5c5aefac3463b3",
@@ -395,9 +395,9 @@
     "size": 4281
   },
   "widgets\\header\\widget.njk": {
-    "hash": "4258636923a378cfb2946a99e0af76131f4845becc1613bd355d2ca4850a1f31",
-    "lastSynced": "2026-01-26T09:02:32.842Z",
-    "size": 9683
+    "hash": "eaa4ea1b8f5b4fb4c168dae2dc2641bf1d05af0dd9af52e519f7be08c836bdbe",
+    "lastSynced": "2026-01-26T09:25:49.901Z",
+    "size": 9678
   },
   "widgets\\hero-section\\schema.json": {
     "hash": "a43acf7fd380e328da248566dd66e7c39814b31c74f05ebe45d75d3baa0a4acc",
@@ -415,9 +415,9 @@
     "size": 2715
   },
   "widgets\\offers-announcement\\widget.njk": {
-    "hash": "c120afd3ecd71fc8a6dc7332251d58503a576eb567ce41df2af7c54e78bbc2ae",
-    "lastSynced": "2026-01-26T07:58:58.591Z",
-    "size": 4297
+    "hash": "974ca5d0d968e256df570e9448da85ca81bc7257d346cd568f5de520e4f57fdc",
+    "lastSynced": "2026-01-26T09:17:41.778Z",
+    "size": 4324
   },
   "widgets\\offers-slider\\schema.json": {
     "hash": "7944f230be652dd39a551c6639afa0bb264c54fdb14a14410c59b7db69eb3b05",
