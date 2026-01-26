@@ -11,7 +11,7 @@
           "ar": "اللون الرئيسي",
           "en": "Main Color"
         },
-        "default": "#000000"
+        "default": "#000"
       },
       "backgroundColor": {
         "type": "color",
@@ -19,7 +19,7 @@
           "ar": "لون الخلفية",
           "en": "Background Color"
         },
-        "default": "#ffffff"
+        "default": "#fff"
       },
       "pagination_background_color": {
         "type": "color",
@@ -27,7 +27,7 @@
           "ar": "لون خلفية الباجنيشن",
           "en": "Pagination Background Color"
         },
-        "default": "#0000"
+        "default": "#000"
       },
       "pagination_text_color": {
         "type": "color",

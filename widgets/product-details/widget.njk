@@ -231,7 +231,7 @@
                             </div>
                         </template>
                     </div>
-                    <div x-show="areOptionsSelected" >
+                    <div x-show="context.product?.options?.length && areOptionsSelected" >
                         <button 
                             type="button"
                             class="px-3 py-1 rounded-full border text-xs font-medium"
@@ -301,14 +301,15 @@
 
                         <!-- Full width buy now button under them -->
                         <button name="buyNow" type="submit"
+                            :disabled="loading.buyNow || loading.optionsLoading || productQuantity === 0"
                             class="w-full md:text-lg text-sm md:pt-5 pb-2.5 pt-4 font-medium rounded-full md:h-[57px]  h-[45px] flex items-center justify-center hover:scale-[1.01] transition-transform duration-300"
                             style="background-color: {{ buy_button_bg }}; color: {{ buy_button_text_color }}; border: 1px solid {{ buy_button_border }}; ">
-                            <div x-show="loading.optionsLoading">
+                            <div x-show="loading.optionsLoading || loading.buyNow">
                                 {%ui "loading.njk" %}
                             </div>
                             <span x-show="!loading.buyNow && !loading.optionsLoading">{{ t(buy_button_text) }}</span>
-                            <span x-show="loading.buyNow">{{t("updating_price")}}</span>
-                            <span x-show="loading.optionsLoading">{{t("processing")}}</span>
+                            <span x-show="loading.optionsLoading">{{t("updating_price")}}</span>
+                            <span x-show="loading.buyNow && !loading.optionsLoading">{{t("processing")}}</span>
                         </button>
                     </form>
                     <!-- Additional Info -->

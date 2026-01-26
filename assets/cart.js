@@ -190,8 +190,10 @@ function xDataCart() {
         window.updateLoading('checkout', true);
       }
       
-      // Redirect to checkout page
       window.location.href = '/checkout';
+      setTimeout(() => {
+        window.updateLoading('checkout', false);
+      }, 500);
       
       // Alternative: if you need to use API for checkout
       // const apiClient = getApi();

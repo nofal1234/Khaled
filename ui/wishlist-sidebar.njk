@@ -1,7 +1,7 @@
 {% set wishlist_main_color = settings.wishlist_main_color | default('#000') %}
-{% set wishlist_background_color = settings.wishlist_background_color | default('#ffffff') %}
+{% set wishlist_background_color = settings.wishlist_background_color | default('#fff') %}
 {% set wishlist_add_button_bg = settings.wishlist_add_button_bg | default('#003033') %}
-{% set wishlist_add_button_text_color = settings.wishlist_add_button_text_color | default('#ffffff') %}
+{% set wishlist_add_button_text_color = settings.wishlist_add_button_text_color | default('#fff') %}
 {% set wishlist_image_size = settings.wishlist_image_size | default(120) %}
 
 <div x-data="xDataWishlist()" x-cloak x-show="modal.open && modal.type === 'wishlist'"
@@ -52,7 +52,6 @@ class="fixed inset-0 z-50">
       </template>
 
       <!-- Items List -->
-       <span x-effect="console.log("items",items)"></span>
       <template x-if="items && items.length">
         <div class="flex flex-col gap-3">
           <template x-for="it in items" :key="it._id">

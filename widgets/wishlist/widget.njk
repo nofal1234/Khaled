@@ -17,30 +17,39 @@
       const container = document.getElementById('wishlistPage');
       const emptyMsg = document.getElementById('wishlistEmpty');
 
-      if (!window.qumra || !window.qumra.storeGate) return;
+      const api = window.Api ? window.Api('/ajax') : null;
 
-      const Request = window.qumra.storeGate;
-      const addToCartMutation = `mutation AddToCart($data: AddToCartInput!) {
-  addToCart(data: $data) {
-    data {
-      _id
-      items {
-        productId
-        _id
-        quantity
-        price
-        totalPrice
+      function showToast(message, type = 'info', duration = 3000) {
+        try {
+          if (window.showToast) window.showToast(message, type, duration);
+        } catch (_) {}
       }
-      totalQuantity
-      totalPrice
-    }
-    success
-    message
-  }
-}`;
+
+      function requestWithTimeout(promise, timeout = 10000) {
+        return Promise.race([
+          promise,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), timeout)),
+        ]);
+      }
+
+      function getWishlistItems() {
+        try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch { return []; }
+      }
+
+      function getWishlistIds() {
+        try {
+          const ids = JSON.parse(localStorage.getItem('wishlist_ids') || '[]');
+          if (Array.isArray(ids) && ids.length) return ids;
+        } catch (_) {}
+        const items = getWishlistItems();
+        return items.map(i => i && i._id).filter(Boolean);
+      }
 
       window.addWishlistToCart = function (productId, btn) {
-        if (!productId || typeof Request !== 'function') return;
+        if (!productId || !api) {
+          showToast("خطأ في الاتصال بالخادم", "error");
+          return;
+        }
 
         const controls = btn.closest('.wishlist-card-controls');
         const input = controls && controls.querySelector('input[type="number"]');
@@ -57,24 +66,19 @@
           }
         } catch (_) {}
 
-        Request(addToCartMutation, { data: { productId, quantity, options: [] } })
+        requestWithTimeout(api.post('/cart/add', { productId, quantity, options: [] }), 10000)
           .then(function (res) {
             try {
-              if (typeof updateCart === 'function' && res && res.addToCart && res.addToCart.data) {
-                updateCart(res.addToCart.data);
+              if (typeof updateCart === 'function') {
+                updateCart(res?.data || res);
               }
-              if (window.showToast) {
-                window.showToast('{{ t("wishlist_added_to_cart") }}', 'success');
-              }
+              showToast('{{ t("wishlist_added_to_cart") }}', 'success');
+              try { window.dispatchEvent(new CustomEvent('open-cart')); } catch (_) {}
             } catch (_) {}
           })
           .catch(function (err) {
             console.error('addToCart from wishlist page error', err);
-            try {
-              if (window.showToast) {
-                window.showToast('{{ t("wishlist_add_error") }}', 'error');
-              }
-            } catch (_) {}
+            showToast(err?.message || '{{ t("wishlist_add_error") }}', 'error');
           })
           .finally(function () {
             btn.disabled = false;
@@ -88,123 +92,83 @@
           });
       };
 
-      const query = `query GetAllWishlists($sessionId: String, $accountId: String) {
-  getAllWishlists(sessionId: $sessionId, accountId: $accountId) {
-    success
-    message
-    data {
-      _id
-      accountId
-      sessionId
-      app
-      products {
-        _id
-        title
-        slug
-        images { _id fileUrl }
-        pricing { price compareAtPrice }
-      }
-      createdAt
-      updatedAt
-    }
-  }
-}`;
+      function renderWishlistPage() {
+        if (!container || !emptyMsg) return;
 
-      const globals = window.globals || {};
-      const accountId = globals.customer && globals.customer._id || null;
-      const sessionId = (globals.cart && globals.cart.sessionId) || globals.sessionId || (window.__qumra__ && window.__qumra__.sessionId) || null;
+        const items = getWishlistItems();
+        const ids = getWishlistIds();
+        const set = new Set(ids);
 
-      Request(query, { sessionId, accountId })
-        .then(function (res) {
-          const list = res && res.getAllWishlists && res.getAllWishlists.data || [];
-          const first = Array.isArray(list) ? list[0] : null;
-          const products = first && first.products || [];
+        container.innerHTML = '';
 
-          if (!products.length) {
-            emptyMsg.classList.remove('hidden');
-            return;
-          }
+        if (!items || !items.length) {
+          emptyMsg.classList.remove('hidden');
+          return;
+        }
 
-          products.forEach(function (p) {
-            const card = document.createElement('a');
-            card.href = '/product/' + p.slug;
-            card.className = 'product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col';
-            const img = (p.images && p.images[0] && p.images[0].fileUrl) || 'https://placehold.co/320x420/eeeeee/666?text=No+Image';
-            const price = p.pricing && p.pricing.price != null ? p.pricing.price : '';
+        emptyMsg.classList.add('hidden');
 
-            card.innerHTML = `
-              <div class="relative overflow-hidden bg-gray-100 product-card__image">
-                <img src="${img}" alt="${p.title}">
+        items.forEach(function (p) {
+          const card = document.createElement('a');
+          card.href = '/product/' + (p.slug || '');
+          card.className = 'product-card product-card--uniform bg-white rounded-2xl border border-gray overflow-hidden block flex flex-col';
+          const img = (p.image && p.image.fileUrl) || (p.images && p.images[0] && p.images[0].fileUrl) || 'https://placehold.co/320x420/eeeeee/666?text=No+Image';
+          const price = (p.price != null ? p.price : (p.pricing && p.pricing.price != null ? p.pricing.price : '')) || '';
+          const pid = p._id;
+          const isActive = set.has(pid);
+
+          card.innerHTML = `
+            <div class="relative overflow-hidden bg-gray-100 product-card__image">
+              <img src="${img}" alt="${p.title || ''}">
+              <button
+                class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition wishlist-heart-btn"
+                data-product-id="${pid}"
+                data-product-title="${(p.title || '').replace(/"/g, '&quot;')}"
+                data-product-slug="${(p.slug || '').replace(/"/g, '&quot;')}"
+                data-product-image="${(img || '').replace(/"/g, '&quot;')}"
+                data-product-price="${p.price != null ? p.price : ''}"
+                data-product-compare-at-price="${p.compareAtPrice != null ? p.compareAtPrice : ''}"
+                onclick="event.stopPropagation(); event.preventDefault(); if(window.wishlistToggleFromElement){ window.wishlistToggleFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('${pid}'); }"
+              >
+                <i class="ph ${isActive ? 'ph-fill ph-heart text-red-500' : 'ph-heart'} text-xl"></i>
+              </button>
+            </div>
+            <div class="p-4 product-card__content flex flex-col flex-1">
+              <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">${p.title || ''}</h3>
+              <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
+                <div class="flex flex-col flex-1 gap-1">
+                  <span class="text-xl md:text-2xl font-bold text-black">${price}</span>
+                </div>
+              </div>
+
+              <div class="mt-3 flex items-center justify-between gap-2 wishlist-card-controls">
+                <div class="flex items-center gap-1.5 bg-gray-100 rounded-full px-2 py-1">
+                  <span class="text-[11px] text-gray-500">{{ t("wishlist_quantity") }}</span>
+                  <input
+                    type="number"
+                    min="1"
+                    value="1"
+                    class="w-12 text-center text-[11px] border border-gray-200 rounded-full bg-white focus:outline-none focus:ring-1 focus:ring-mainColor/60 focus:border-mainColor/60"
+                  />
+                </div>
+
                 <button
-                  class="absolute top-3 right-3 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition wishlist-heart-btn"
-                  data-product-id="${p._id}"
-                  onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlist){ window.toggleWishlist('${p._id}'); }"
+                  type="button"
+                  onclick="event.stopPropagation(); event.preventDefault(); if(window.addWishlistToCart){ window.addWishlistToCart('${pid}', this); }"
+                  class="px-3 py-1.5 rounded-full text-[11px] font-medium flex items-center gap-1.5 bg-mainColor text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <i class="ph ph-heart text-xl"></i>
+                  <span>{{ t("wishlist_add_to_cart") }}</span>
                 </button>
               </div>
-              <div class="p-4 product-card__content flex flex-col flex-1">
-                <h3 class="text-lg font-bold text-dark mb-2 line-clamp-2">${p.title}</h3>
-                <div class="flex items-center gap-3 mt-auto justify-between product-card__price-row">
-                  <div class="flex flex-col flex-1 gap-1">
-                    <span class="text-xl md:text-2xl font-bold text-black">${price}</span>
-                  </div>
-                </div>
+            </div>
+          `;
 
-                <div class="mt-3 flex items-center justify-between gap-2 wishlist-card-controls">
-                  <div class="flex items-center gap-1.5 bg-gray-100 rounded-full px-2 py-1">
-                    <span class="text-[11px] text-gray-500">{{ t("wishlist_quantity") }}</span>
-                    <input
-                      type="number"
-                      min="1"
-                      value="1"
-                      class="w-12 text-center text-[11px] border border-gray-200 rounded-full bg-white focus:outline-none focus:ring-1 focus:ring-mainColor/60 focus:border-mainColor/60"
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    onclick="event.stopPropagation(); event.preventDefault(); if(window.addWishlistToCart){ window.addWishlistToCart('${p._id}', this); }"
-                    class="px-3 py-1.5 rounded-full text-[11px] font-medium flex items-center gap-1.5 bg-mainColor text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    <span>{{ t("wishlist_add_to_cart") }}</span>
-                  </button>
-                </div>
-              </div>
-            `;
-
-            container.appendChild(card);
-          });
-
-          if (window.toggleWishlist && typeof window.toggleWishlist === 'function') {
-            setTimeout(function () {
-              if (window.isInWishlist) {
-                const ids = (function () {
-                  try { return JSON.parse(localStorage.getItem('wishlist_ids') || '[]'); } catch { return []; }
-                })();
-                (function syncHeartIcons(ids) {
-                  const set = new Set(ids);
-                  const buttons = document.querySelectorAll('.wishlist-heart-btn[data-product-id]');
-                  buttons.forEach(function (btn) {
-                    const pid = btn.getAttribute('data-product-id');
-                    const icon = btn.querySelector('i');
-                    if (!icon) return;
-                    if (set.has(pid)) {
-                      icon.classList.remove('ph-heart');
-                      icon.classList.add('ph-fill', 'ph-heart', 'text-red-500');
-                    } else {
-                      icon.classList.remove('ph-fill', 'text-red-500');
-                      icon.classList.add('ph-heart');
-                    }
-                  });
-                })(ids);
-              }
-            }, 0);
-          }
-        })
-        .catch(function () {
-          emptyMsg.classList.remove('hidden');
+          container.appendChild(card);
         });
+      }
+
+      renderWishlistPage();
+      window.addEventListener('wishlist:changed', renderWishlistPage);
     });
   </script>
 </section>

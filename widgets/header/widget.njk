@@ -99,9 +99,9 @@
             <i class="ph text-[22px] md:text-[28px] ph-shopping-cart"
               :style="{ color: scrolled ? '{{ text_color_scrolled }}' : (isMain ? '{{ text_color_fixed }}' : '{{ text_color_in_page }}') }"></i>
             <span
-              x-text="globals?.cart?.totalQuantity || globals?.cart?.items?.length || 0"
-              x-show="(globals?.cart?.totalQuantity || globals?.cart?.items?.length || 0) > 0"
-              class="absolute -top-1 -right-1 text-white bg-mainColor text-[8px] leading-none min-w-[11px] h-[11px] rounded-full flex items-center justify-center px-1 "
+              x-text="globals?.cart?.items?.length || 0"
+              x-show=" globals?.cart?.items?.length > 0"
+              class="absolute -top-1 -right-1 text-white bg-mainColor text-[8px] leading-none w-[11px] h-[11px] rounded-full flex items-center justify-center px-1 "
             ></span>
             </button>
           <button @click="toggleModal('search')" type="button" class="focus:outline-none md:hidden flex items-center"

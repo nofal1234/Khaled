@@ -34,7 +34,7 @@
             data-product-image="{{ (product.images[0].fileUrl ) if product.images and product.images[0] else 'https://placehold.co/320x420/eeeeee/666?text=No+Image' }}"
             data-product-price="{{ product.pricing.price }}" {% if product.pricing.compareAtPrice %}
             data-product-compare-at-price="{{ product.pricing.compareAtPrice }}" {% endif %}
-            onclick="event.stopPropagation(); event.preventDefault(); if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }">
+            onclick="event.stopPropagation(); event.preventDefault(); if(window.wishlistToggleFromElement){ window.wishlistToggleFromElement(this); } else if(window.toggleWishlistFromElement){ window.toggleWishlistFromElement(this); } else if(window.toggleWishlist){ window.toggleWishlist('{{ product._id }}'); }">
             <i class="ph ph-heart md:text-xl text-[11px]"></i>
         </button>
         {% if product.averageRating %}

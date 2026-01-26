@@ -23,7 +23,7 @@
     "text_color": {
       "type": "color",
       "label": "لون النص",
-      "default": "#fff",
+      "default": "#000",
       "description": "لون النص المستخدم في الشريط العلوي"
     },
     "show_language": {

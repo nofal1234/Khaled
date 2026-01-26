@@ -143,10 +143,7 @@ function xDataproduct({ product }) {
         },
         { deep: true }
       );
-
-      if (Object.keys(this.selectedOptions).length === 0) {
-        this.fetchVariant();
-      }
+      // لا نستدعي fetchVariant تلقائياً إذا لم يتم اختيار الخيارات
     },
     watchQuantity() {
       this.$watch('productQuantity', value => {
@@ -187,15 +184,7 @@ function xDataproduct({ product }) {
       product.options.forEach((opt) => {
         this.selectedOptions[opt._id] = null;
       });
-
-      this.$nextTick(() => {
-        product.options.forEach((opt) => {
-          const firstValue = opt.values?.[0]?._id;
-          if (firstValue) {
-            this.selectedOptions[opt._id] = firstValue;
-          }
-        });
-      });
+      // لا نحدد الخيارات تلقائياً - المستخدم يحددها بنفسه
     },
 
     selectOption(prod, optionId, valueId) {
@@ -247,15 +236,16 @@ function xDataproduct({ product }) {
         }
       }
 
+       let productAddedToCart = {
+        productId,
+        quantity,
+       };
+    if(this.options && this.options.length > 0) productAddedToCart.options =this.options
       this.api
-        .post('/cart/add', {
-          productId,
-          quantity,
-          options: this.options.length > 0 ? this.options : options,
-        })
+        .post('/cart/add',productAddedToCart)
         .then((res) => {
           if (window.updateCart) {
-            window.updateCart(res.data);
+            window.updateCart(res);
           }
           this.toggleProductModal("productDetails", false);
           showToast(

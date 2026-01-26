@@ -9,7 +9,7 @@
             "settings": {
                 "font_size": 18,
                 "height": 48,
-                "bg_color": "#00000",
+                "bg_color": "#000",
                 "text_color": "#fff",
                 "show_language": true,
                 "allow_touch_move": true,
